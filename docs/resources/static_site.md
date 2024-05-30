@@ -111,7 +111,7 @@ resource "render_static_site" "example" {
 - `environment_id` (String) ID of the environment that the resource belongs to
 - `headers` (Attributes Set) (see [below for nested schema](#nestedatt--headers))
 - `notification_override` (Attributes) Set the notification settings for this service. These will override the notification settings of the owner. (see [below for nested schema](#nestedatt--notification_override))
-- `publish_path` (String) Path to the directory that contains the build artifacts to publish. Defaults to the root directory of the repository.
+- `publish_path` (String) Path to the directory that contains the build artifacts to publish. Defaults to public.
 - `pull_request_previews_enabled` (Boolean) Enable [pull request previews](https://docs.render.com/pull-request-previews#pull-request-previews-git-backed) for the service.
 - `root_directory` (String) Defaults to repository root. When you specify a root directory that is different from your repository root, Render runs all your commands in the specified directory and ignores changes outside the directory.
 - `routes` (Attributes List) (see [below for nested schema](#nestedatt--routes))
