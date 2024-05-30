@@ -1,6 +1,7 @@
 package redis
 
 import (
+	"github.com/hashicorp/terraform-plugin-framework/attr"
 	"github.com/hashicorp/terraform-plugin-framework/diag"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"terraform-provider-render/internal/provider/common"
@@ -16,9 +17,35 @@ type RedisModel struct {
 	Name            types.String `tfsdk:"name"`
 	Plan            types.String `tfsdk:"plan"`
 	Region          types.String `tfsdk:"region"`
+	ConnectionInfo  types.Object `tfsdk:"connection_info"`
 }
 
-func ModelForRedisResult(redis *client.Redis, diags diag.Diagnostics) *RedisModel {
+var connectionInfoTypes = map[string]attr.Type{
+	"external_connection_string": types.StringType,
+	"internal_connection_string": types.StringType,
+	"redis_cli_command":          types.StringType,
+}
+
+func connectionInfoFromClient(c *client.RedisConnectionInfo, diags diag.Diagnostics) types.Object {
+	if c == nil {
+		return types.ObjectNull(connectionInfoTypes)
+	}
+
+	objectValue, objectDiags := types.ObjectValue(
+		connectionInfoTypes,
+		map[string]attr.Value{
+			"external_connection_string": types.StringValue(c.ExternalConnectionString),
+			"internal_connection_string": types.StringValue(c.InternalConnectionString),
+			"redis_cli_command":          types.StringValue(c.RedisCLICommand),
+		},
+	)
+
+	diags.Append(objectDiags...)
+
+	return objectValue
+}
+
+func ModelForRedisResult(redis *client.Redis, connectionInfo *client.RedisConnectionInfo, diags diag.Diagnostics) *RedisModel {
 	return &RedisModel{
 		Id:              types.StringValue(redis.Id),
 		EnvironmentID:   types.StringPointerValue(redis.EnvironmentId),
@@ -27,5 +54,6 @@ func ModelForRedisResult(redis *client.Redis, diags diag.Diagnostics) *RedisMode
 		Name:            types.StringValue(redis.Name),
 		Plan:            types.StringValue(string(redis.Plan)),
 		Region:          types.StringValue(string(redis.Region)),
+		ConnectionInfo:  connectionInfoFromClient(connectionInfo, diags),
 	}
 }

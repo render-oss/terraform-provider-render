@@ -19,6 +19,7 @@ func Schema(ctx context.Context) schema.Schema {
 			"name":              resource.ServiceName,
 			"plan":              resource.RedisPlan,
 			"region":            resource.Region,
+			"connection_info":   resource.ConnectionInfo,
 		},
 	}
 }

@@ -82,7 +82,15 @@ func (r *redisResource) Create(ctx context.Context, req resource.CreateRequest, 
 		return
 	}
 
-	redisModel := redis.ModelForRedisResult(&model, resp.Diagnostics)
+	var connectionInfo client.RedisConnectionInfo
+	if err = common.Get(func() (*http.Response, error) {
+		return r.client.GetRedisConnectionInfo(ctx, model.Id)
+	}, &connectionInfo); err != nil {
+		resp.Diagnostics.AddError("unable to get redis connection info", err.Error())
+		return
+	}
+
+	redisModel := redis.ModelForRedisResult(&model, &connectionInfo, resp.Diagnostics)
 
 	// Set state to fully populated data
 	diags = resp.State.Set(ctx, redisModel)
@@ -114,7 +122,15 @@ func (r *redisResource) Read(ctx context.Context, req resource.ReadRequest, resp
 		return
 	}
 
-	redisModel := redis.ModelForRedisResult(&clientRedis, resp.Diagnostics)
+	var connectionInfo client.RedisConnectionInfo
+	if err = common.Get(func() (*http.Response, error) {
+		return r.client.GetRedisConnectionInfo(ctx, clientRedis.Id)
+	}, &connectionInfo); err != nil {
+		resp.Diagnostics.AddError("unable to get redis connection info", err.Error())
+		return
+	}
+
+	redisModel := redis.ModelForRedisResult(&clientRedis, &connectionInfo, resp.Diagnostics)
 
 	// Set state to fully populated data
 	diags = resp.State.Set(ctx, redisModel)
@@ -155,7 +171,15 @@ func (r *redisResource) Update(ctx context.Context, req resource.UpdateRequest, 
 		return
 	}
 
-	redisModel := redis.ModelForRedisResult(&redisResponse, resp.Diagnostics)
+	var connectionInfo client.RedisConnectionInfo
+	if err = common.Get(func() (*http.Response, error) {
+		return r.client.GetRedisConnectionInfo(ctx, redisResponse.Id)
+	}, &connectionInfo); err != nil {
+		resp.Diagnostics.AddError("unable to get redis connection info", err.Error())
+		return
+	}
+
+	redisModel := redis.ModelForRedisResult(&redisResponse, &connectionInfo, resp.Diagnostics)
 
 	envID, err := common.UpdateEnvironmentID(ctx, r.client, redisModel.Id.ValueString(), &common.EnvironmentIDStateAndPlan{
 		State: state.EnvironmentID.ValueStringPointer(),
