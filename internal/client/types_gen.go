@@ -1106,6 +1106,14 @@ type Postgres struct {
 // PostgresSuspended defines model for Postgres.Suspended.
 type PostgresSuspended string
 
+// PostgresConnectionInfo defines model for postgresConnectionInfo.
+type PostgresConnectionInfo struct {
+	ExternalConnectionString string `json:"externalConnectionString"`
+	InternalConnectionString string `json:"internalConnectionString"`
+	Password                 string `json:"password"`
+	PsqlCommand              string `json:"psqlCommand"`
+}
+
 // PostgresPATCHInput defines model for postgresPATCHInput.
 type PostgresPATCHInput struct {
 	DatadogAPIKey          *string                    `json:"datadogAPIKey,omitempty"`
@@ -1140,14 +1148,6 @@ type PostgresPOSTInput struct {
 
 // PostgresPlans defines model for postgresPlans.
 type PostgresPlans string
-
-// PostgresSecrets defines model for postgresSecrets.
-type PostgresSecrets struct {
-	ExternalConnectionString string `json:"externalConnectionString"`
-	InternalConnectionString string `json:"internalConnectionString"`
-	Password                 string `json:"password"`
-	PsqlCommand              string `json:"psqlCommand"`
-}
 
 // PostgresVersion The PostgreSQL version
 type PostgresVersion string
@@ -1341,6 +1341,18 @@ type Redis struct {
 
 	// Version The version of Redis
 	Version string `json:"version"`
+}
+
+// RedisConnectionInfo A Redis instance
+type RedisConnectionInfo struct {
+	// ExternalConnectionString The connection string to use from outside Render
+	ExternalConnectionString string `json:"externalConnectionString"`
+
+	// InternalConnectionString The connection string to use from within Render
+	InternalConnectionString string `json:"internalConnectionString"`
+
+	// RedisCLICommand The Redis CLI command to connect to the Redis instance
+	RedisCLICommand string `json:"redisCLICommand"`
 }
 
 // RedisOptions Options for a Redis instance
