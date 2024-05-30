@@ -1,0 +1,1985 @@
+---
+version: 2
+interactions:
+    - id: 0
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 516
+        transfer_encoding: []
+        trailer: {}
+        host: https://api.testing.render.com/v1
+        remote_addr: ""
+        request_uri: ""
+        body: '{"envVars":null,"image":{"imagePath":"docker.io/library/redis:latest","ownerId":""},"name":"web-service-autoscaling-tf","ownerId":"some-owner-id","rootDir":"","secretFiles":null,"serviceDetails":{"autoscaling":{"criteria":{"cpu":{"enabled":true,"percentage":60},"memory":{"enabled":false,"percentage":70}},"enabled":true,"max":3,"min":1},"env":"image","envSpecificDetails":{},"healthCheckPath":"","numInstances":1,"plan":"starter","pullRequestPreviewsEnabled":"no","region":"oregon"},"type":"web_service"}'
+        form: {}
+        headers:
+            Authorization:
+                - some-api-key
+            Content-Type:
+                - application/json
+            User-Agent:
+                - terraform-provider-render/test
+        url: https://api.testing.render.com/v1/services
+        method: POST
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: 956
+        uncompressed: false
+        body: |
+            {"deployId":"dep-cpcbi8jievbmau0lengg","service":{"autoDeploy":"yes","createdAt":"2024-05-30T17:36:33.814647Z","id":"srv-cpcbi8bievbmau0lenfg","imagePath":"docker.io/library/redis:latest","name":"web-service-autoscaling-tf","notifyOnFail":"default","ownerId":"some-owner-id","rootDir":"","serviceDetails":{"autoscaling":{"criteria":{"cpu":{"enabled":true,"percentage":60},"memory":{"enabled":false,"percentage":70}},"enabled":true,"max":3,"min":1},"buildPlan":"starter","env":"image","envSpecificDetails":{"dockerCommand":"","dockerContext":"","dockerfilePath":""},"healthCheckPath":"","numInstances":1,"openPorts":[{"port":10000,"protocol":"TCP"}],"plan":"starter","pullRequestPreviewsEnabled":"no","region":"oregon","url":"https://web-service-autoscaling-tf-sbnj.localhost.onrender.com:9443"},"slug":"web-service-autoscaling-tf-sbnj","suspended":"not_suspended","suspenders":[],"type":"web_service","updatedAt":"2024-05-30T17:36:34.272018Z"}}
+        headers:
+            Content-Length:
+                - "956"
+            Content-Type:
+                - application/json; charset=utf-8
+            Date:
+                - Thu, 30 May 2024 17:36:34 GMT
+            Ratelimit-Limit:
+                - "50"
+            Ratelimit-Remaining:
+                - "47"
+            Ratelimit-Reset:
+                - "26"
+            Referrer-Policy:
+                - same-origin
+            Render-Request-Id:
+                - api-5b5df7db7-8txbz/bRDul8FWf5-000297
+            Vary:
+                - Origin
+            X-Content-Type-Options:
+                - nosniff
+            X-Frame-Options:
+                - DENY
+            X-Xss-Protection:
+                - 1; mode=block
+        status: 201 Created
+        code: 201
+        duration: 1.309267334s
+    - id: 1
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 2
+        transfer_encoding: []
+        trailer: {}
+        host: https://api.testing.render.com/v1
+        remote_addr: ""
+        request_uri: ""
+        body: '{}'
+        form: {}
+        headers:
+            Authorization:
+                - some-api-key
+            Content-Type:
+                - application/json
+            User-Agent:
+                - terraform-provider-render/test
+        url: https://api.testing.render.com/v1/notification-settings/overrides/services/srv-cpcbi8bievbmau0lenfg
+        method: PATCH
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: 116
+        uncompressed: false
+        body: |
+            {"id":"srv-cpcbi8bievbmau0lenfg","notificationsToSend":"default","previewNotificationsEnabled":"default","type":""}
+        headers:
+            Content-Length:
+                - "116"
+            Content-Type:
+                - application/json; charset=utf-8
+            Date:
+                - Thu, 30 May 2024 17:36:34 GMT
+            Ratelimit-Limit:
+                - "400"
+                - "100"
+            Ratelimit-Remaining:
+                - "304"
+                - "80"
+            Ratelimit-Reset:
+                - "25"
+                - "25"
+            Referrer-Policy:
+                - same-origin
+            Render-Request-Id:
+                - api-5b5df7db7-8txbz/bRDul8FWf5-000298
+            Vary:
+                - Origin
+            X-Content-Type-Options:
+                - nosniff
+            X-Frame-Options:
+                - DENY
+            X-Xss-Protection:
+                - 1; mode=block
+        status: 200 OK
+        code: 200
+        duration: 20.032875ms
+    - id: 2
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 0
+        transfer_encoding: []
+        trailer: {}
+        host: https://api.testing.render.com/v1
+        remote_addr: ""
+        request_uri: ""
+        body: ""
+        form: {}
+        headers:
+            Authorization:
+                - some-api-key
+            User-Agent:
+                - terraform-provider-render/test
+        url: https://api.testing.render.com/v1/services/srv-cpcbi8bievbmau0lenfg/env-vars
+        method: GET
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: 3
+        uncompressed: false
+        body: |
+            []
+        headers:
+            Content-Length:
+                - "3"
+            Content-Type:
+                - application/json; charset=utf-8
+            Date:
+                - Thu, 30 May 2024 17:36:34 GMT
+            Ratelimit-Limit:
+                - "400"
+            Ratelimit-Remaining:
+                - "303"
+            Ratelimit-Reset:
+                - "25"
+            Referrer-Policy:
+                - same-origin
+            Render-Request-Id:
+                - api-5b5df7db7-8txbz/bRDul8FWf5-000299
+            Vary:
+                - Origin
+            X-Content-Type-Options:
+                - nosniff
+            X-Frame-Options:
+                - DENY
+            X-Xss-Protection:
+                - 1; mode=block
+        status: 200 OK
+        code: 200
+        duration: 19.803541ms
+    - id: 3
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 0
+        transfer_encoding: []
+        trailer: {}
+        host: https://api.testing.render.com/v1
+        remote_addr: ""
+        request_uri: ""
+        body: ""
+        form: {}
+        headers:
+            Authorization:
+                - some-api-key
+            User-Agent:
+                - terraform-provider-render/test
+        url: https://api.testing.render.com/v1/services/srv-cpcbi8bievbmau0lenfg/secret-files
+        method: GET
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: 3
+        uncompressed: false
+        body: |
+            []
+        headers:
+            Content-Length:
+                - "3"
+            Content-Type:
+                - application/json; charset=utf-8
+            Date:
+                - Thu, 30 May 2024 17:36:34 GMT
+            Ratelimit-Limit:
+                - "400"
+            Ratelimit-Remaining:
+                - "302"
+            Ratelimit-Reset:
+                - "25"
+            Referrer-Policy:
+                - same-origin
+            Render-Request-Id:
+                - api-5b5df7db7-8txbz/bRDul8FWf5-000300
+            Vary:
+                - Origin
+            X-Content-Type-Options:
+                - nosniff
+            X-Frame-Options:
+                - DENY
+            X-Xss-Protection:
+                - 1; mode=block
+        status: 200 OK
+        code: 200
+        duration: 18.956959ms
+    - id: 4
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 0
+        transfer_encoding: []
+        trailer: {}
+        host: https://api.testing.render.com/v1
+        remote_addr: ""
+        request_uri: ""
+        body: ""
+        form: {}
+        headers:
+            Authorization:
+                - some-api-key
+            User-Agent:
+                - terraform-provider-render/test
+        url: https://api.testing.render.com/v1/services/srv-cpcbi8bievbmau0lenfg/custom-domains?limit=100
+        method: GET
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: 3
+        uncompressed: false
+        body: |
+            []
+        headers:
+            Content-Length:
+                - "3"
+            Content-Type:
+                - application/json; charset=utf-8
+            Date:
+                - Thu, 30 May 2024 17:36:34 GMT
+            Ratelimit-Limit:
+                - "400"
+            Ratelimit-Remaining:
+                - "301"
+            Ratelimit-Reset:
+                - "25"
+            Referrer-Policy:
+                - same-origin
+            Render-Request-Id:
+                - api-5b5df7db7-8txbz/bRDul8FWf5-000301
+            Vary:
+                - Origin
+            X-Content-Type-Options:
+                - nosniff
+            X-Frame-Options:
+                - DENY
+            X-Xss-Protection:
+                - 1; mode=block
+        status: 200 OK
+        code: 200
+        duration: 23.672709ms
+    - id: 5
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 0
+        transfer_encoding: []
+        trailer: {}
+        host: https://api.testing.render.com/v1
+        remote_addr: ""
+        request_uri: ""
+        body: ""
+        form: {}
+        headers:
+            Authorization:
+                - some-api-key
+            User-Agent:
+                - terraform-provider-render/test
+        url: https://api.testing.render.com/v1/notification-settings/overrides/services/srv-cpcbi8bievbmau0lenfg
+        method: GET
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: 116
+        uncompressed: false
+        body: |
+            {"id":"srv-cpcbi8bievbmau0lenfg","notificationsToSend":"default","previewNotificationsEnabled":"default","type":""}
+        headers:
+            Content-Length:
+                - "116"
+            Content-Type:
+                - application/json; charset=utf-8
+            Date:
+                - Thu, 30 May 2024 17:36:34 GMT
+            Ratelimit-Limit:
+                - "400"
+            Ratelimit-Remaining:
+                - "300"
+            Ratelimit-Reset:
+                - "25"
+            Referrer-Policy:
+                - same-origin
+            Render-Request-Id:
+                - api-5b5df7db7-8txbz/bRDul8FWf5-000302
+            Vary:
+                - Origin
+            X-Content-Type-Options:
+                - nosniff
+            X-Frame-Options:
+                - DENY
+            X-Xss-Protection:
+                - 1; mode=block
+        status: 200 OK
+        code: 200
+        duration: 22.527583ms
+    - id: 6
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 0
+        transfer_encoding: []
+        trailer: {}
+        host: https://api.testing.render.com/v1
+        remote_addr: ""
+        request_uri: ""
+        body: ""
+        form: {}
+        headers:
+            Authorization:
+                - some-api-key
+            User-Agent:
+                - terraform-provider-render/test
+        url: https://api.testing.render.com/v1/services?name=web-service-autoscaling-tf&ownerId=some-owner-id&type=web_service
+        method: GET
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: 964
+        uncompressed: false
+        body: |
+            [{"cursor":"W5ufAyYUt6xpOGJpZXZibWF1MGxlbmZn","service":{"autoDeploy":"yes","createdAt":"2024-05-30T17:36:33.814647Z","id":"srv-cpcbi8bievbmau0lenfg","imagePath":"docker.io/library/redis:latest","name":"web-service-autoscaling-tf","notifyOnFail":"default","ownerId":"some-owner-id","rootDir":"","serviceDetails":{"autoscaling":{"criteria":{"cpu":{"enabled":true,"percentage":60},"memory":{"enabled":false,"percentage":70}},"enabled":true,"max":3,"min":1},"buildPlan":"starter","env":"image","envSpecificDetails":{"dockerCommand":"","dockerContext":"","dockerfilePath":""},"healthCheckPath":"","numInstances":1,"openPorts":[{"port":10000,"protocol":"TCP"}],"plan":"starter","pullRequestPreviewsEnabled":"no","region":"oregon","url":"https://web-service-autoscaling-tf-sbnj.localhost.onrender.com:9443"},"slug":"web-service-autoscaling-tf-sbnj","suspended":"not_suspended","suspenders":[],"type":"web_service","updatedAt":"2024-05-30T17:36:34.272018Z"}}]
+        headers:
+            Content-Length:
+                - "964"
+            Content-Type:
+                - application/json; charset=utf-8
+            Date:
+                - Thu, 30 May 2024 17:36:34 GMT
+            Ratelimit-Limit:
+                - "400"
+            Ratelimit-Remaining:
+                - "299"
+            Ratelimit-Reset:
+                - "25"
+            Referrer-Policy:
+                - same-origin
+            Render-Request-Id:
+                - api-5b5df7db7-8txbz/bRDul8FWf5-000303
+            Vary:
+                - Origin
+            X-Content-Type-Options:
+                - nosniff
+            X-Frame-Options:
+                - DENY
+            X-Xss-Protection:
+                - 1; mode=block
+        status: 200 OK
+        code: 200
+        duration: 31.251375ms
+    - id: 7
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 0
+        transfer_encoding: []
+        trailer: {}
+        host: https://api.testing.render.com/v1
+        remote_addr: ""
+        request_uri: ""
+        body: ""
+        form: {}
+        headers:
+            Authorization:
+                - some-api-key
+            User-Agent:
+                - terraform-provider-render/test
+        url: https://api.testing.render.com/v1/services/srv-cpcbi8bievbmau0lenfg/env-vars
+        method: GET
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: 3
+        uncompressed: false
+        body: |
+            []
+        headers:
+            Content-Length:
+                - "3"
+            Content-Type:
+                - application/json; charset=utf-8
+            Date:
+                - Thu, 30 May 2024 17:36:34 GMT
+            Ratelimit-Limit:
+                - "400"
+            Ratelimit-Remaining:
+                - "298"
+            Ratelimit-Reset:
+                - "25"
+            Referrer-Policy:
+                - same-origin
+            Render-Request-Id:
+                - api-5b5df7db7-8txbz/bRDul8FWf5-000304
+            Vary:
+                - Origin
+            X-Content-Type-Options:
+                - nosniff
+            X-Frame-Options:
+                - DENY
+            X-Xss-Protection:
+                - 1; mode=block
+        status: 200 OK
+        code: 200
+        duration: 20.604ms
+    - id: 8
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 0
+        transfer_encoding: []
+        trailer: {}
+        host: https://api.testing.render.com/v1
+        remote_addr: ""
+        request_uri: ""
+        body: ""
+        form: {}
+        headers:
+            Authorization:
+                - some-api-key
+            User-Agent:
+                - terraform-provider-render/test
+        url: https://api.testing.render.com/v1/services/srv-cpcbi8bievbmau0lenfg/secret-files
+        method: GET
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: 3
+        uncompressed: false
+        body: |
+            []
+        headers:
+            Content-Length:
+                - "3"
+            Content-Type:
+                - application/json; charset=utf-8
+            Date:
+                - Thu, 30 May 2024 17:36:34 GMT
+            Ratelimit-Limit:
+                - "400"
+            Ratelimit-Remaining:
+                - "297"
+            Ratelimit-Reset:
+                - "25"
+            Referrer-Policy:
+                - same-origin
+            Render-Request-Id:
+                - api-5b5df7db7-8txbz/bRDul8FWf5-000305
+            Vary:
+                - Origin
+            X-Content-Type-Options:
+                - nosniff
+            X-Frame-Options:
+                - DENY
+            X-Xss-Protection:
+                - 1; mode=block
+        status: 200 OK
+        code: 200
+        duration: 25.13625ms
+    - id: 9
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 0
+        transfer_encoding: []
+        trailer: {}
+        host: https://api.testing.render.com/v1
+        remote_addr: ""
+        request_uri: ""
+        body: ""
+        form: {}
+        headers:
+            Authorization:
+                - some-api-key
+            User-Agent:
+                - terraform-provider-render/test
+        url: https://api.testing.render.com/v1/services/srv-cpcbi8bievbmau0lenfg/custom-domains?limit=100
+        method: GET
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: 3
+        uncompressed: false
+        body: |
+            []
+        headers:
+            Content-Length:
+                - "3"
+            Content-Type:
+                - application/json; charset=utf-8
+            Date:
+                - Thu, 30 May 2024 17:36:34 GMT
+            Ratelimit-Limit:
+                - "400"
+            Ratelimit-Remaining:
+                - "296"
+            Ratelimit-Reset:
+                - "25"
+            Referrer-Policy:
+                - same-origin
+            Render-Request-Id:
+                - api-5b5df7db7-8txbz/bRDul8FWf5-000306
+            Vary:
+                - Origin
+            X-Content-Type-Options:
+                - nosniff
+            X-Frame-Options:
+                - DENY
+            X-Xss-Protection:
+                - 1; mode=block
+        status: 200 OK
+        code: 200
+        duration: 28.214375ms
+    - id: 10
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 0
+        transfer_encoding: []
+        trailer: {}
+        host: https://api.testing.render.com/v1
+        remote_addr: ""
+        request_uri: ""
+        body: ""
+        form: {}
+        headers:
+            Authorization:
+                - some-api-key
+            User-Agent:
+                - terraform-provider-render/test
+        url: https://api.testing.render.com/v1/notification-settings/overrides/services/srv-cpcbi8bievbmau0lenfg
+        method: GET
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: 116
+        uncompressed: false
+        body: |
+            {"id":"srv-cpcbi8bievbmau0lenfg","notificationsToSend":"default","previewNotificationsEnabled":"default","type":""}
+        headers:
+            Content-Length:
+                - "116"
+            Content-Type:
+                - application/json; charset=utf-8
+            Date:
+                - Thu, 30 May 2024 17:36:34 GMT
+            Ratelimit-Limit:
+                - "400"
+            Ratelimit-Remaining:
+                - "295"
+            Ratelimit-Reset:
+                - "25"
+            Referrer-Policy:
+                - same-origin
+            Render-Request-Id:
+                - api-5b5df7db7-8txbz/bRDul8FWf5-000307
+            Vary:
+                - Origin
+            X-Content-Type-Options:
+                - nosniff
+            X-Frame-Options:
+                - DENY
+            X-Xss-Protection:
+                - 1; mode=block
+        status: 200 OK
+        code: 200
+        duration: 24.357542ms
+    - id: 11
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 0
+        transfer_encoding: []
+        trailer: {}
+        host: https://api.testing.render.com/v1
+        remote_addr: ""
+        request_uri: ""
+        body: ""
+        form: {}
+        headers:
+            Authorization:
+                - some-api-key
+            User-Agent:
+                - terraform-provider-render/test
+        url: https://api.testing.render.com/v1/services/srv-cpcbi8bievbmau0lenfg
+        method: GET
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: 906
+        uncompressed: false
+        body: |
+            {"autoDeploy":"yes","createdAt":"2024-05-30T17:36:33.814647Z","id":"srv-cpcbi8bievbmau0lenfg","imagePath":"docker.io/library/redis:latest","name":"web-service-autoscaling-tf","notifyOnFail":"default","ownerId":"some-owner-id","rootDir":"","serviceDetails":{"autoscaling":{"criteria":{"cpu":{"enabled":true,"percentage":60},"memory":{"enabled":false,"percentage":70}},"enabled":true,"max":3,"min":1},"buildPlan":"starter","env":"image","envSpecificDetails":{"dockerCommand":"","dockerContext":"","dockerfilePath":""},"healthCheckPath":"","numInstances":1,"openPorts":[{"port":10000,"protocol":"TCP"}],"plan":"starter","pullRequestPreviewsEnabled":"no","region":"oregon","url":"https://web-service-autoscaling-tf-sbnj.localhost.onrender.com:9443"},"slug":"web-service-autoscaling-tf-sbnj","suspended":"not_suspended","suspenders":[],"type":"web_service","updatedAt":"2024-05-30T17:36:34.272018Z"}
+        headers:
+            Content-Length:
+                - "906"
+            Content-Type:
+                - application/json; charset=utf-8
+            Date:
+                - Thu, 30 May 2024 17:36:34 GMT
+            Ratelimit-Limit:
+                - "400"
+            Ratelimit-Remaining:
+                - "294"
+            Ratelimit-Reset:
+                - "25"
+            Referrer-Policy:
+                - same-origin
+            Render-Request-Id:
+                - api-5b5df7db7-8txbz/bRDul8FWf5-000308
+            Vary:
+                - Origin
+            X-Content-Type-Options:
+                - nosniff
+            X-Frame-Options:
+                - DENY
+            X-Xss-Protection:
+                - 1; mode=block
+        status: 200 OK
+        code: 200
+        duration: 22.566541ms
+    - id: 12
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 0
+        transfer_encoding: []
+        trailer: {}
+        host: https://api.testing.render.com/v1
+        remote_addr: ""
+        request_uri: ""
+        body: ""
+        form: {}
+        headers:
+            Authorization:
+                - some-api-key
+            User-Agent:
+                - terraform-provider-render/test
+        url: https://api.testing.render.com/v1/services/srv-cpcbi8bievbmau0lenfg/env-vars
+        method: GET
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: 3
+        uncompressed: false
+        body: |
+            []
+        headers:
+            Content-Length:
+                - "3"
+            Content-Type:
+                - application/json; charset=utf-8
+            Date:
+                - Thu, 30 May 2024 17:36:34 GMT
+            Ratelimit-Limit:
+                - "400"
+            Ratelimit-Remaining:
+                - "293"
+            Ratelimit-Reset:
+                - "25"
+            Referrer-Policy:
+                - same-origin
+            Render-Request-Id:
+                - api-5b5df7db7-8txbz/bRDul8FWf5-000309
+            Vary:
+                - Origin
+            X-Content-Type-Options:
+                - nosniff
+            X-Frame-Options:
+                - DENY
+            X-Xss-Protection:
+                - 1; mode=block
+        status: 200 OK
+        code: 200
+        duration: 26.786583ms
+    - id: 13
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 0
+        transfer_encoding: []
+        trailer: {}
+        host: https://api.testing.render.com/v1
+        remote_addr: ""
+        request_uri: ""
+        body: ""
+        form: {}
+        headers:
+            Authorization:
+                - some-api-key
+            User-Agent:
+                - terraform-provider-render/test
+        url: https://api.testing.render.com/v1/services/srv-cpcbi8bievbmau0lenfg/secret-files
+        method: GET
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: 3
+        uncompressed: false
+        body: |
+            []
+        headers:
+            Content-Length:
+                - "3"
+            Content-Type:
+                - application/json; charset=utf-8
+            Date:
+                - Thu, 30 May 2024 17:36:34 GMT
+            Ratelimit-Limit:
+                - "400"
+            Ratelimit-Remaining:
+                - "292"
+            Ratelimit-Reset:
+                - "25"
+            Referrer-Policy:
+                - same-origin
+            Render-Request-Id:
+                - api-5b5df7db7-8txbz/bRDul8FWf5-000310
+            Vary:
+                - Origin
+            X-Content-Type-Options:
+                - nosniff
+            X-Frame-Options:
+                - DENY
+            X-Xss-Protection:
+                - 1; mode=block
+        status: 200 OK
+        code: 200
+        duration: 19.96925ms
+    - id: 14
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 0
+        transfer_encoding: []
+        trailer: {}
+        host: https://api.testing.render.com/v1
+        remote_addr: ""
+        request_uri: ""
+        body: ""
+        form: {}
+        headers:
+            Authorization:
+                - some-api-key
+            User-Agent:
+                - terraform-provider-render/test
+        url: https://api.testing.render.com/v1/services/srv-cpcbi8bievbmau0lenfg/custom-domains?limit=100
+        method: GET
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: 3
+        uncompressed: false
+        body: |
+            []
+        headers:
+            Content-Length:
+                - "3"
+            Content-Type:
+                - application/json; charset=utf-8
+            Date:
+                - Thu, 30 May 2024 17:36:34 GMT
+            Ratelimit-Limit:
+                - "400"
+            Ratelimit-Remaining:
+                - "291"
+            Ratelimit-Reset:
+                - "25"
+            Referrer-Policy:
+                - same-origin
+            Render-Request-Id:
+                - api-5b5df7db7-8txbz/bRDul8FWf5-000311
+            Vary:
+                - Origin
+            X-Content-Type-Options:
+                - nosniff
+            X-Frame-Options:
+                - DENY
+            X-Xss-Protection:
+                - 1; mode=block
+        status: 200 OK
+        code: 200
+        duration: 20.570459ms
+    - id: 15
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 0
+        transfer_encoding: []
+        trailer: {}
+        host: https://api.testing.render.com/v1
+        remote_addr: ""
+        request_uri: ""
+        body: ""
+        form: {}
+        headers:
+            Authorization:
+                - some-api-key
+            User-Agent:
+                - terraform-provider-render/test
+        url: https://api.testing.render.com/v1/notification-settings/overrides/services/srv-cpcbi8bievbmau0lenfg
+        method: GET
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: 116
+        uncompressed: false
+        body: |
+            {"id":"srv-cpcbi8bievbmau0lenfg","notificationsToSend":"default","previewNotificationsEnabled":"default","type":""}
+        headers:
+            Content-Length:
+                - "116"
+            Content-Type:
+                - application/json; charset=utf-8
+            Date:
+                - Thu, 30 May 2024 17:36:34 GMT
+            Ratelimit-Limit:
+                - "400"
+            Ratelimit-Remaining:
+                - "290"
+            Ratelimit-Reset:
+                - "25"
+            Referrer-Policy:
+                - same-origin
+            Render-Request-Id:
+                - api-5b5df7db7-8txbz/bRDul8FWf5-000312
+            Vary:
+                - Origin
+            X-Content-Type-Options:
+                - nosniff
+            X-Frame-Options:
+                - DENY
+            X-Xss-Protection:
+                - 1; mode=block
+        status: 200 OK
+        code: 200
+        duration: 22.808166ms
+    - id: 16
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 0
+        transfer_encoding: []
+        trailer: {}
+        host: https://api.testing.render.com/v1
+        remote_addr: ""
+        request_uri: ""
+        body: ""
+        form: {}
+        headers:
+            Authorization:
+                - some-api-key
+            User-Agent:
+                - terraform-provider-render/test
+        url: https://api.testing.render.com/v1/services/srv-cpcbi8bievbmau0lenfg
+        method: GET
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: 906
+        uncompressed: false
+        body: |
+            {"autoDeploy":"yes","createdAt":"2024-05-30T17:36:33.814647Z","id":"srv-cpcbi8bievbmau0lenfg","imagePath":"docker.io/library/redis:latest","name":"web-service-autoscaling-tf","notifyOnFail":"default","ownerId":"some-owner-id","rootDir":"","serviceDetails":{"autoscaling":{"criteria":{"cpu":{"enabled":true,"percentage":60},"memory":{"enabled":false,"percentage":70}},"enabled":true,"max":3,"min":1},"buildPlan":"starter","env":"image","envSpecificDetails":{"dockerCommand":"","dockerContext":"","dockerfilePath":""},"healthCheckPath":"","numInstances":1,"openPorts":[{"port":10000,"protocol":"TCP"}],"plan":"starter","pullRequestPreviewsEnabled":"no","region":"oregon","url":"https://web-service-autoscaling-tf-sbnj.localhost.onrender.com:9443"},"slug":"web-service-autoscaling-tf-sbnj","suspended":"not_suspended","suspenders":[],"type":"web_service","updatedAt":"2024-05-30T17:36:34.272018Z"}
+        headers:
+            Content-Length:
+                - "906"
+            Content-Type:
+                - application/json; charset=utf-8
+            Date:
+                - Thu, 30 May 2024 17:36:35 GMT
+            Ratelimit-Limit:
+                - "400"
+            Ratelimit-Remaining:
+                - "289"
+            Ratelimit-Reset:
+                - "24"
+            Referrer-Policy:
+                - same-origin
+            Render-Request-Id:
+                - api-5b5df7db7-8txbz/bRDul8FWf5-000313
+            Vary:
+                - Origin
+            X-Content-Type-Options:
+                - nosniff
+            X-Frame-Options:
+                - DENY
+            X-Xss-Protection:
+                - 1; mode=block
+        status: 200 OK
+        code: 200
+        duration: 27.06175ms
+    - id: 17
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 0
+        transfer_encoding: []
+        trailer: {}
+        host: https://api.testing.render.com/v1
+        remote_addr: ""
+        request_uri: ""
+        body: ""
+        form: {}
+        headers:
+            Authorization:
+                - some-api-key
+            User-Agent:
+                - terraform-provider-render/test
+        url: https://api.testing.render.com/v1/services/srv-cpcbi8bievbmau0lenfg/env-vars
+        method: GET
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: 3
+        uncompressed: false
+        body: |
+            []
+        headers:
+            Content-Length:
+                - "3"
+            Content-Type:
+                - application/json; charset=utf-8
+            Date:
+                - Thu, 30 May 2024 17:36:35 GMT
+            Ratelimit-Limit:
+                - "400"
+            Ratelimit-Remaining:
+                - "288"
+            Ratelimit-Reset:
+                - "24"
+            Referrer-Policy:
+                - same-origin
+            Render-Request-Id:
+                - api-5b5df7db7-8txbz/bRDul8FWf5-000314
+            Vary:
+                - Origin
+            X-Content-Type-Options:
+                - nosniff
+            X-Frame-Options:
+                - DENY
+            X-Xss-Protection:
+                - 1; mode=block
+        status: 200 OK
+        code: 200
+        duration: 22.40875ms
+    - id: 18
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 0
+        transfer_encoding: []
+        trailer: {}
+        host: https://api.testing.render.com/v1
+        remote_addr: ""
+        request_uri: ""
+        body: ""
+        form: {}
+        headers:
+            Authorization:
+                - some-api-key
+            User-Agent:
+                - terraform-provider-render/test
+        url: https://api.testing.render.com/v1/services/srv-cpcbi8bievbmau0lenfg/secret-files
+        method: GET
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: 3
+        uncompressed: false
+        body: |
+            []
+        headers:
+            Content-Length:
+                - "3"
+            Content-Type:
+                - application/json; charset=utf-8
+            Date:
+                - Thu, 30 May 2024 17:36:35 GMT
+            Ratelimit-Limit:
+                - "400"
+            Ratelimit-Remaining:
+                - "287"
+            Ratelimit-Reset:
+                - "24"
+            Referrer-Policy:
+                - same-origin
+            Render-Request-Id:
+                - api-5b5df7db7-8txbz/bRDul8FWf5-000315
+            Vary:
+                - Origin
+            X-Content-Type-Options:
+                - nosniff
+            X-Frame-Options:
+                - DENY
+            X-Xss-Protection:
+                - 1; mode=block
+        status: 200 OK
+        code: 200
+        duration: 21.463125ms
+    - id: 19
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 0
+        transfer_encoding: []
+        trailer: {}
+        host: https://api.testing.render.com/v1
+        remote_addr: ""
+        request_uri: ""
+        body: ""
+        form: {}
+        headers:
+            Authorization:
+                - some-api-key
+            User-Agent:
+                - terraform-provider-render/test
+        url: https://api.testing.render.com/v1/services/srv-cpcbi8bievbmau0lenfg/custom-domains?limit=100
+        method: GET
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: 3
+        uncompressed: false
+        body: |
+            []
+        headers:
+            Content-Length:
+                - "3"
+            Content-Type:
+                - application/json; charset=utf-8
+            Date:
+                - Thu, 30 May 2024 17:36:35 GMT
+            Ratelimit-Limit:
+                - "400"
+            Ratelimit-Remaining:
+                - "286"
+            Ratelimit-Reset:
+                - "24"
+            Referrer-Policy:
+                - same-origin
+            Render-Request-Id:
+                - api-5b5df7db7-8txbz/bRDul8FWf5-000316
+            Vary:
+                - Origin
+            X-Content-Type-Options:
+                - nosniff
+            X-Frame-Options:
+                - DENY
+            X-Xss-Protection:
+                - 1; mode=block
+        status: 200 OK
+        code: 200
+        duration: 21.866167ms
+    - id: 20
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 0
+        transfer_encoding: []
+        trailer: {}
+        host: https://api.testing.render.com/v1
+        remote_addr: ""
+        request_uri: ""
+        body: ""
+        form: {}
+        headers:
+            Authorization:
+                - some-api-key
+            User-Agent:
+                - terraform-provider-render/test
+        url: https://api.testing.render.com/v1/notification-settings/overrides/services/srv-cpcbi8bievbmau0lenfg
+        method: GET
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: 116
+        uncompressed: false
+        body: |
+            {"id":"srv-cpcbi8bievbmau0lenfg","notificationsToSend":"default","previewNotificationsEnabled":"default","type":""}
+        headers:
+            Content-Length:
+                - "116"
+            Content-Type:
+                - application/json; charset=utf-8
+            Date:
+                - Thu, 30 May 2024 17:36:35 GMT
+            Ratelimit-Limit:
+                - "400"
+            Ratelimit-Remaining:
+                - "285"
+            Ratelimit-Reset:
+                - "24"
+            Referrer-Policy:
+                - same-origin
+            Render-Request-Id:
+                - api-5b5df7db7-8txbz/bRDul8FWf5-000317
+            Vary:
+                - Origin
+            X-Content-Type-Options:
+                - nosniff
+            X-Frame-Options:
+                - DENY
+            X-Xss-Protection:
+                - 1; mode=block
+        status: 200 OK
+        code: 200
+        duration: 22.855584ms
+    - id: 21
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 0
+        transfer_encoding: []
+        trailer: {}
+        host: https://api.testing.render.com/v1
+        remote_addr: ""
+        request_uri: ""
+        body: ""
+        form: {}
+        headers:
+            Authorization:
+                - some-api-key
+            User-Agent:
+                - terraform-provider-render/test
+        url: https://api.testing.render.com/v1/services/srv-cpcbi8bievbmau0lenfg/autoscaling
+        method: DELETE
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: 0
+        uncompressed: false
+        body: ""
+        headers:
+            Date:
+                - Thu, 30 May 2024 17:36:35 GMT
+            Ratelimit-Limit:
+                - "100"
+            Ratelimit-Remaining:
+                - "79"
+            Ratelimit-Reset:
+                - "24"
+            Referrer-Policy:
+                - same-origin
+            Render-Request-Id:
+                - api-5b5df7db7-8txbz/bRDul8FWf5-000318
+            Vary:
+                - Origin
+            X-Content-Type-Options:
+                - nosniff
+            X-Frame-Options:
+                - DENY
+            X-Xss-Protection:
+                - 1; mode=block
+        status: 204 No Content
+        code: 204
+        duration: 80.29975ms
+    - id: 22
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 315
+        transfer_encoding: []
+        trailer: {}
+        host: https://api.testing.render.com/v1
+        remote_addr: ""
+        request_uri: ""
+        body: '{"image":{"imagePath":"docker.io/library/redis:latest","ownerId":"some-owner-id"},"name":"web-service-autoscaling-tf","rootDir":"","serviceDetails":{"envSpecificDetails":{"dockerCommand":""},"healthCheckPath":"","plan":"starter","preDeployCommand":"","pullRequestPreviewsEnabled":"no","runtime":"image"}}'
+        form: {}
+        headers:
+            Authorization:
+                - some-api-key
+            Content-Type:
+                - application/json
+            User-Agent:
+                - terraform-provider-render/test
+        url: https://api.testing.render.com/v1/services/srv-cpcbi8bievbmau0lenfg
+        method: PATCH
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: 764
+        uncompressed: false
+        body: |
+            {"autoDeploy":"yes","createdAt":"2024-05-30T17:36:33.814647Z","id":"srv-cpcbi8bievbmau0lenfg","imagePath":"docker.io/library/redis:latest","name":"web-service-autoscaling-tf","notifyOnFail":"default","ownerId":"some-owner-id","rootDir":"","serviceDetails":{"buildPlan":"starter","env":"image","envSpecificDetails":{"dockerCommand":"","dockerContext":"","dockerfilePath":""},"healthCheckPath":"","numInstances":1,"openPorts":[{"port":10000,"protocol":"TCP"}],"plan":"starter","pullRequestPreviewsEnabled":"no","region":"oregon","url":"https://web-service-autoscaling-tf-sbnj.localhost.onrender.com:9443"},"slug":"web-service-autoscaling-tf-sbnj","suspended":"not_suspended","suspenders":[],"type":"web_service","updatedAt":"2024-05-30T17:36:34.272018Z"}
+        headers:
+            Content-Length:
+                - "764"
+            Content-Type:
+                - application/json; charset=utf-8
+            Date:
+                - Thu, 30 May 2024 17:36:35 GMT
+            Ratelimit-Limit:
+                - "10"
+            Ratelimit-Remaining:
+                - "9"
+            Ratelimit-Reset:
+                - "24"
+            Referrer-Policy:
+                - same-origin
+            Render-Request-Id:
+                - api-5b5df7db7-8txbz/bRDul8FWf5-000319
+            Vary:
+                - Origin
+            X-Content-Type-Options:
+                - nosniff
+            X-Frame-Options:
+                - DENY
+            X-Xss-Protection:
+                - 1; mode=block
+        status: 200 OK
+        code: 200
+        duration: 350.516166ms
+    - id: 23
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 4
+        transfer_encoding: []
+        trailer: {}
+        host: https://api.testing.render.com/v1
+        remote_addr: ""
+        request_uri: ""
+        body: "null"
+        form: {}
+        headers:
+            Authorization:
+                - some-api-key
+            Content-Type:
+                - application/json
+            User-Agent:
+                - terraform-provider-render/test
+        url: https://api.testing.render.com/v1/services/srv-cpcbi8bievbmau0lenfg/env-vars
+        method: PUT
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: 3
+        uncompressed: false
+        body: |
+            []
+        headers:
+            Content-Length:
+                - "3"
+            Content-Type:
+                - application/json; charset=utf-8
+            Date:
+                - Thu, 30 May 2024 17:36:35 GMT
+            Ratelimit-Limit:
+                - "100"
+            Ratelimit-Remaining:
+                - "78"
+            Ratelimit-Reset:
+                - "24"
+            Referrer-Policy:
+                - same-origin
+            Render-Request-Id:
+                - api-5b5df7db7-8txbz/bRDul8FWf5-000320
+            Vary:
+                - Origin
+            X-Content-Type-Options:
+                - nosniff
+            X-Frame-Options:
+                - DENY
+            X-Xss-Protection:
+                - 1; mode=block
+        status: 200 OK
+        code: 200
+        duration: 23.721916ms
+    - id: 24
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 4
+        transfer_encoding: []
+        trailer: {}
+        host: https://api.testing.render.com/v1
+        remote_addr: ""
+        request_uri: ""
+        body: "null"
+        form: {}
+        headers:
+            Authorization:
+                - some-api-key
+            Content-Type:
+                - application/json
+            User-Agent:
+                - terraform-provider-render/test
+        url: https://api.testing.render.com/v1/services/srv-cpcbi8bievbmau0lenfg/secret-files
+        method: PUT
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: 3
+        uncompressed: false
+        body: |
+            []
+        headers:
+            Content-Length:
+                - "3"
+            Content-Type:
+                - application/json; charset=utf-8
+            Date:
+                - Thu, 30 May 2024 17:36:35 GMT
+            Ratelimit-Limit:
+                - "100"
+            Ratelimit-Remaining:
+                - "77"
+            Ratelimit-Reset:
+                - "24"
+            Referrer-Policy:
+                - same-origin
+            Render-Request-Id:
+                - api-5b5df7db7-8txbz/bRDul8FWf5-000321
+            Vary:
+                - Origin
+            X-Content-Type-Options:
+                - nosniff
+            X-Frame-Options:
+                - DENY
+            X-Xss-Protection:
+                - 1; mode=block
+        status: 200 OK
+        code: 200
+        duration: 22.398959ms
+    - id: 25
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 2
+        transfer_encoding: []
+        trailer: {}
+        host: https://api.testing.render.com/v1
+        remote_addr: ""
+        request_uri: ""
+        body: '{}'
+        form: {}
+        headers:
+            Authorization:
+                - some-api-key
+            Content-Type:
+                - application/json
+            User-Agent:
+                - terraform-provider-render/test
+        url: https://api.testing.render.com/v1/notification-settings/overrides/services/srv-cpcbi8bievbmau0lenfg
+        method: PATCH
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: 116
+        uncompressed: false
+        body: |
+            {"id":"srv-cpcbi8bievbmau0lenfg","notificationsToSend":"default","previewNotificationsEnabled":"default","type":""}
+        headers:
+            Content-Length:
+                - "116"
+            Content-Type:
+                - application/json; charset=utf-8
+            Date:
+                - Thu, 30 May 2024 17:36:35 GMT
+            Ratelimit-Limit:
+                - "400"
+                - "100"
+            Ratelimit-Remaining:
+                - "284"
+                - "76"
+            Ratelimit-Reset:
+                - "24"
+                - "24"
+            Referrer-Policy:
+                - same-origin
+            Render-Request-Id:
+                - api-5b5df7db7-8txbz/bRDul8FWf5-000322
+            Vary:
+                - Origin
+            X-Content-Type-Options:
+                - nosniff
+            X-Frame-Options:
+                - DENY
+            X-Xss-Protection:
+                - 1; mode=block
+        status: 200 OK
+        code: 200
+        duration: 23.736625ms
+    - id: 26
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 0
+        transfer_encoding: []
+        trailer: {}
+        host: https://api.testing.render.com/v1
+        remote_addr: ""
+        request_uri: ""
+        body: ""
+        form: {}
+        headers:
+            Authorization:
+                - some-api-key
+            User-Agent:
+                - terraform-provider-render/test
+        url: https://api.testing.render.com/v1/services/srv-cpcbi8bievbmau0lenfg/custom-domains?limit=100
+        method: GET
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: 3
+        uncompressed: false
+        body: |
+            []
+        headers:
+            Content-Length:
+                - "3"
+            Content-Type:
+                - application/json; charset=utf-8
+            Date:
+                - Thu, 30 May 2024 17:36:35 GMT
+            Ratelimit-Limit:
+                - "400"
+            Ratelimit-Remaining:
+                - "283"
+            Ratelimit-Reset:
+                - "24"
+            Referrer-Policy:
+                - same-origin
+            Render-Request-Id:
+                - api-5b5df7db7-8txbz/bRDul8FWf5-000323
+            Vary:
+                - Origin
+            X-Content-Type-Options:
+                - nosniff
+            X-Frame-Options:
+                - DENY
+            X-Xss-Protection:
+                - 1; mode=block
+        status: 200 OK
+        code: 200
+        duration: 22.758708ms
+    - id: 27
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 2
+        transfer_encoding: []
+        trailer: {}
+        host: https://api.testing.render.com/v1
+        remote_addr: ""
+        request_uri: ""
+        body: '{}'
+        form: {}
+        headers:
+            Authorization:
+                - some-api-key
+            Content-Type:
+                - application/json
+            User-Agent:
+                - terraform-provider-render/test
+        url: https://api.testing.render.com/v1/services/srv-cpcbi8bievbmau0lenfg/deploys
+        method: POST
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: 325
+        uncompressed: false
+        body: |
+            {"id":"dep-cpcbi93ievbmau0lenjg","commit":null,"image":{"ref":"docker.io/library/redis:latest","sha":"sha256:276dd5763e8a5380d0ce922af362f0cd706f55caef83f8f3eee743552420c692"},"status":"update_in_progress","trigger":"api","createdAt":"2024-05-30T17:36:36.087811Z","updatedAt":"2024-05-30T17:36:36.328893Z","finishedAt":null}
+        headers:
+            Content-Length:
+                - "325"
+            Content-Type:
+                - application/json; charset=utf-8
+            Date:
+                - Thu, 30 May 2024 17:36:36 GMT
+            Ratelimit-Limit:
+                - "10"
+            Ratelimit-Remaining:
+                - "8"
+            Ratelimit-Reset:
+                - "24"
+            Referrer-Policy:
+                - same-origin
+            Render-Request-Id:
+                - api-5b5df7db7-8txbz/bRDul8FWf5-000324
+            Vary:
+                - Origin
+            X-Content-Type-Options:
+                - nosniff
+            X-Frame-Options:
+                - DENY
+            X-Xss-Protection:
+                - 1; mode=block
+        status: 201 Created
+        code: 201
+        duration: 553.6235ms
+    - id: 28
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 0
+        transfer_encoding: []
+        trailer: {}
+        host: https://api.testing.render.com/v1
+        remote_addr: ""
+        request_uri: ""
+        body: ""
+        form: {}
+        headers:
+            Authorization:
+                - some-api-key
+            User-Agent:
+                - terraform-provider-render/test
+        url: https://api.testing.render.com/v1/services/srv-cpcbi8bievbmau0lenfg
+        method: GET
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: 764
+        uncompressed: false
+        body: |
+            {"autoDeploy":"yes","createdAt":"2024-05-30T17:36:33.814647Z","id":"srv-cpcbi8bievbmau0lenfg","imagePath":"docker.io/library/redis:latest","name":"web-service-autoscaling-tf","notifyOnFail":"default","ownerId":"some-owner-id","rootDir":"","serviceDetails":{"buildPlan":"starter","env":"image","envSpecificDetails":{"dockerCommand":"","dockerContext":"","dockerfilePath":""},"healthCheckPath":"","numInstances":1,"openPorts":[{"port":10000,"protocol":"TCP"}],"plan":"starter","pullRequestPreviewsEnabled":"no","region":"oregon","url":"https://web-service-autoscaling-tf-sbnj.localhost.onrender.com:9443"},"slug":"web-service-autoscaling-tf-sbnj","suspended":"not_suspended","suspenders":[],"type":"web_service","updatedAt":"2024-05-30T17:36:36.239999Z"}
+        headers:
+            Content-Length:
+                - "764"
+            Content-Type:
+                - application/json; charset=utf-8
+            Date:
+                - Thu, 30 May 2024 17:36:36 GMT
+            Ratelimit-Limit:
+                - "400"
+            Ratelimit-Remaining:
+                - "282"
+            Ratelimit-Reset:
+                - "23"
+            Referrer-Policy:
+                - same-origin
+            Render-Request-Id:
+                - api-5b5df7db7-8txbz/bRDul8FWf5-000325
+            Vary:
+                - Origin
+            X-Content-Type-Options:
+                - nosniff
+            X-Frame-Options:
+                - DENY
+            X-Xss-Protection:
+                - 1; mode=block
+        status: 200 OK
+        code: 200
+        duration: 27.638458ms
+    - id: 29
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 0
+        transfer_encoding: []
+        trailer: {}
+        host: https://api.testing.render.com/v1
+        remote_addr: ""
+        request_uri: ""
+        body: ""
+        form: {}
+        headers:
+            Authorization:
+                - some-api-key
+            User-Agent:
+                - terraform-provider-render/test
+        url: https://api.testing.render.com/v1/services/srv-cpcbi8bievbmau0lenfg/env-vars
+        method: GET
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: 3
+        uncompressed: false
+        body: |
+            []
+        headers:
+            Content-Length:
+                - "3"
+            Content-Type:
+                - application/json; charset=utf-8
+            Date:
+                - Thu, 30 May 2024 17:36:36 GMT
+            Ratelimit-Limit:
+                - "400"
+            Ratelimit-Remaining:
+                - "281"
+            Ratelimit-Reset:
+                - "23"
+            Referrer-Policy:
+                - same-origin
+            Render-Request-Id:
+                - api-5b5df7db7-8txbz/bRDul8FWf5-000326
+            Vary:
+                - Origin
+            X-Content-Type-Options:
+                - nosniff
+            X-Frame-Options:
+                - DENY
+            X-Xss-Protection:
+                - 1; mode=block
+        status: 200 OK
+        code: 200
+        duration: 15.407041ms
+    - id: 30
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 0
+        transfer_encoding: []
+        trailer: {}
+        host: https://api.testing.render.com/v1
+        remote_addr: ""
+        request_uri: ""
+        body: ""
+        form: {}
+        headers:
+            Authorization:
+                - some-api-key
+            User-Agent:
+                - terraform-provider-render/test
+        url: https://api.testing.render.com/v1/services/srv-cpcbi8bievbmau0lenfg/secret-files
+        method: GET
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: 3
+        uncompressed: false
+        body: |
+            []
+        headers:
+            Content-Length:
+                - "3"
+            Content-Type:
+                - application/json; charset=utf-8
+            Date:
+                - Thu, 30 May 2024 17:36:36 GMT
+            Ratelimit-Limit:
+                - "400"
+            Ratelimit-Remaining:
+                - "280"
+            Ratelimit-Reset:
+                - "23"
+            Referrer-Policy:
+                - same-origin
+            Render-Request-Id:
+                - api-5b5df7db7-8txbz/bRDul8FWf5-000327
+            Vary:
+                - Origin
+            X-Content-Type-Options:
+                - nosniff
+            X-Frame-Options:
+                - DENY
+            X-Xss-Protection:
+                - 1; mode=block
+        status: 200 OK
+        code: 200
+        duration: 17.533584ms
+    - id: 31
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 0
+        transfer_encoding: []
+        trailer: {}
+        host: https://api.testing.render.com/v1
+        remote_addr: ""
+        request_uri: ""
+        body: ""
+        form: {}
+        headers:
+            Authorization:
+                - some-api-key
+            User-Agent:
+                - terraform-provider-render/test
+        url: https://api.testing.render.com/v1/services/srv-cpcbi8bievbmau0lenfg/custom-domains?limit=100
+        method: GET
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: 3
+        uncompressed: false
+        body: |
+            []
+        headers:
+            Content-Length:
+                - "3"
+            Content-Type:
+                - application/json; charset=utf-8
+            Date:
+                - Thu, 30 May 2024 17:36:36 GMT
+            Ratelimit-Limit:
+                - "400"
+            Ratelimit-Remaining:
+                - "279"
+            Ratelimit-Reset:
+                - "23"
+            Referrer-Policy:
+                - same-origin
+            Render-Request-Id:
+                - api-5b5df7db7-8txbz/bRDul8FWf5-000328
+            Vary:
+                - Origin
+            X-Content-Type-Options:
+                - nosniff
+            X-Frame-Options:
+                - DENY
+            X-Xss-Protection:
+                - 1; mode=block
+        status: 200 OK
+        code: 200
+        duration: 17.164541ms
+    - id: 32
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 0
+        transfer_encoding: []
+        trailer: {}
+        host: https://api.testing.render.com/v1
+        remote_addr: ""
+        request_uri: ""
+        body: ""
+        form: {}
+        headers:
+            Authorization:
+                - some-api-key
+            User-Agent:
+                - terraform-provider-render/test
+        url: https://api.testing.render.com/v1/notification-settings/overrides/services/srv-cpcbi8bievbmau0lenfg
+        method: GET
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: 116
+        uncompressed: false
+        body: |
+            {"id":"srv-cpcbi8bievbmau0lenfg","notificationsToSend":"default","previewNotificationsEnabled":"default","type":""}
+        headers:
+            Content-Length:
+                - "116"
+            Content-Type:
+                - application/json; charset=utf-8
+            Date:
+                - Thu, 30 May 2024 17:36:36 GMT
+            Ratelimit-Limit:
+                - "400"
+            Ratelimit-Remaining:
+                - "278"
+            Ratelimit-Reset:
+                - "23"
+            Referrer-Policy:
+                - same-origin
+            Render-Request-Id:
+                - api-5b5df7db7-8txbz/bRDul8FWf5-000329
+            Vary:
+                - Origin
+            X-Content-Type-Options:
+                - nosniff
+            X-Frame-Options:
+                - DENY
+            X-Xss-Protection:
+                - 1; mode=block
+        status: 200 OK
+        code: 200
+        duration: 20.083916ms
+    - id: 33
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 0
+        transfer_encoding: []
+        trailer: {}
+        host: https://api.testing.render.com/v1
+        remote_addr: ""
+        request_uri: ""
+        body: ""
+        form: {}
+        headers:
+            Authorization:
+                - some-api-key
+            User-Agent:
+                - terraform-provider-render/test
+        url: https://api.testing.render.com/v1/services/srv-cpcbi8bievbmau0lenfg
+        method: DELETE
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: 0
+        uncompressed: false
+        body: ""
+        headers:
+            Date:
+                - Thu, 30 May 2024 17:36:36 GMT
+            Ratelimit-Limit:
+                - "100"
+            Ratelimit-Remaining:
+                - "75"
+            Ratelimit-Reset:
+                - "23"
+            Referrer-Policy:
+                - same-origin
+            Render-Request-Id:
+                - api-5b5df7db7-8txbz/bRDul8FWf5-000330
+            Vary:
+                - Origin
+            X-Content-Type-Options:
+                - nosniff
+            X-Frame-Options:
+                - DENY
+            X-Xss-Protection:
+                - 1; mode=block
+        status: 204 No Content
+        code: 204
+        duration: 193.220333ms

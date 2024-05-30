@@ -1,0 +1,855 @@
+---
+version: 2
+interactions:
+    - id: 0
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 454
+        transfer_encoding: []
+        trailer: {}
+        host: https://api.testing.render.com/v1
+        remote_addr: ""
+        request_uri: ""
+        body: '{"envVars":[{"key":"DATABASE_URL","value":"postgresql://user:password@localhost/mydb"},{"key":"DEBUG_MODE","value":"false"},{"generateValue":true,"key":"INSTANCE_ID"}],"name":"my-environment-group","ownerId":"some-owner-id","secretFiles":[{"content":"username:password","name":"credentials.txt"},{"content":"{\"aws_access_key\":\"AKIAIOSFODNN7EXAMPLE\",\"aws_secret_key\":\"wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY\"}","name":"secrets.json"}]}'
+        form: {}
+        headers:
+            Authorization:
+                - some-api-key
+            Content-Type:
+                - application/json
+            User-Agent:
+                - terraform-provider-render/test
+        url: https://api.testing.render.com/v1/env-groups
+        method: POST
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: 539
+        uncompressed: false
+        body: |
+            {"envVars":[{"key":"INSTANCE_ID","value":"bMymF2vEgfAUe86s5hHLdkSzOcrpHzso9JENN7uxq7c="},{"key":"DEBUG_MODE","value":"false"},{"key":"DATABASE_URL","value":"postgresql://user:password@localhost/mydb"}],"id":"evg-cp70lahk64ms73e22hng","name":"my-environment-group","ownerId":"some-owner-id","secretFiles":[{"content":"{\"aws_access_key\":\"AKIAIOSFODNN7EXAMPLE\",\"aws_secret_key\":\"wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY\"}","name":"secrets.json"},{"content":"username:password","name":"credentials.txt"}],"serviceLinks":[]}
+        headers:
+            Content-Length:
+                - "539"
+            Content-Type:
+                - application/json; charset=utf-8
+            Date:
+                - Wed, 22 May 2024 15:09:30 GMT
+            Ratelimit-Limit:
+                - "30"
+            Ratelimit-Remaining:
+                - "29"
+            Ratelimit-Reset:
+                - "30"
+            Referrer-Policy:
+                - same-origin
+            Render-Request-Id:
+                - api-7646845948-lnw4k/9sMaqLcoUR-000057
+            Vary:
+                - Origin
+            X-Content-Type-Options:
+                - nosniff
+            X-Frame-Options:
+                - DENY
+            X-Xss-Protection:
+                - 1; mode=block
+        status: 201 Created
+        code: 201
+        duration: 340.113834ms
+    - id: 1
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 0
+        transfer_encoding: []
+        trailer: {}
+        host: https://api.testing.render.com/v1
+        remote_addr: ""
+        request_uri: ""
+        body: ""
+        form: {}
+        headers:
+            Authorization:
+                - some-api-key
+            User-Agent:
+                - terraform-provider-render/test
+        url: https://api.testing.render.com/v1/env-groups/evg-cp70lahk64ms73e22hng
+        method: GET
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: 539
+        uncompressed: false
+        body: |
+            {"envVars":[{"key":"DATABASE_URL","value":"postgresql://user:password@localhost/mydb"},{"key":"DEBUG_MODE","value":"false"},{"key":"INSTANCE_ID","value":"bMymF2vEgfAUe86s5hHLdkSzOcrpHzso9JENN7uxq7c="}],"id":"evg-cp70lahk64ms73e22hng","name":"my-environment-group","ownerId":"some-owner-id","secretFiles":[{"content":"username:password","name":"credentials.txt"},{"content":"{\"aws_access_key\":\"AKIAIOSFODNN7EXAMPLE\",\"aws_secret_key\":\"wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY\"}","name":"secrets.json"}],"serviceLinks":[]}
+        headers:
+            Content-Length:
+                - "539"
+            Content-Type:
+                - application/json; charset=utf-8
+            Date:
+                - Wed, 22 May 2024 15:09:30 GMT
+            Ratelimit-Limit:
+                - "400"
+            Ratelimit-Remaining:
+                - "399"
+            Ratelimit-Reset:
+                - "29"
+            Referrer-Policy:
+                - same-origin
+            Render-Request-Id:
+                - api-7646845948-lnw4k/9sMaqLcoUR-000058
+            Vary:
+                - Origin
+            X-Content-Type-Options:
+                - nosniff
+            X-Frame-Options:
+                - DENY
+            X-Xss-Protection:
+                - 1; mode=block
+        status: 200 OK
+        code: 200
+        duration: 71.002292ms
+    - id: 2
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 0
+        transfer_encoding: []
+        trailer: {}
+        host: https://api.testing.render.com/v1
+        remote_addr: ""
+        request_uri: ""
+        body: ""
+        form: {}
+        headers:
+            Authorization:
+                - some-api-key
+            User-Agent:
+                - terraform-provider-render/test
+        url: https://api.testing.render.com/v1/env-groups/evg-cp70lahk64ms73e22hng
+        method: GET
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: 539
+        uncompressed: false
+        body: |
+            {"envVars":[{"key":"DATABASE_URL","value":"postgresql://user:password@localhost/mydb"},{"key":"DEBUG_MODE","value":"false"},{"key":"INSTANCE_ID","value":"bMymF2vEgfAUe86s5hHLdkSzOcrpHzso9JENN7uxq7c="}],"id":"evg-cp70lahk64ms73e22hng","name":"my-environment-group","ownerId":"some-owner-id","secretFiles":[{"content":"username:password","name":"credentials.txt"},{"content":"{\"aws_access_key\":\"AKIAIOSFODNN7EXAMPLE\",\"aws_secret_key\":\"wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY\"}","name":"secrets.json"}],"serviceLinks":[]}
+        headers:
+            Content-Length:
+                - "539"
+            Content-Type:
+                - application/json; charset=utf-8
+            Date:
+                - Wed, 22 May 2024 15:09:30 GMT
+            Ratelimit-Limit:
+                - "400"
+            Ratelimit-Remaining:
+                - "398"
+            Ratelimit-Reset:
+                - "29"
+            Referrer-Policy:
+                - same-origin
+            Render-Request-Id:
+                - api-7646845948-lnw4k/9sMaqLcoUR-000059
+            Vary:
+                - Origin
+            X-Content-Type-Options:
+                - nosniff
+            X-Frame-Options:
+                - DENY
+            X-Xss-Protection:
+                - 1; mode=block
+        status: 200 OK
+        code: 200
+        duration: 77.68075ms
+    - id: 3
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 34
+        transfer_encoding: []
+        trailer: {}
+        host: https://api.testing.render.com/v1
+        remote_addr: ""
+        request_uri: ""
+        body: '{"key":"key1","value":"new-value"}'
+        form: {}
+        headers:
+            Authorization:
+                - some-api-key
+            Content-Type:
+                - application/json
+            User-Agent:
+                - terraform-provider-render/test
+        url: https://api.testing.render.com/v1/env-groups/evg-cp70lahk64ms73e22hng/env-vars/key1
+        method: PUT
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: 574
+        uncompressed: false
+        body: |
+            {"envVars":[{"key":"DATABASE_URL","value":"postgresql://user:password@localhost/mydb"},{"key":"DEBUG_MODE","value":"false"},{"key":"INSTANCE_ID","value":"bMymF2vEgfAUe86s5hHLdkSzOcrpHzso9JENN7uxq7c="},{"key":"key1","value":"new-value"}],"id":"evg-cp70lahk64ms73e22hng","name":"my-environment-group","ownerId":"some-owner-id","secretFiles":[{"content":"username:password","name":"credentials.txt"},{"content":"{\"aws_access_key\":\"AKIAIOSFODNN7EXAMPLE\",\"aws_secret_key\":\"wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY\"}","name":"secrets.json"}],"serviceLinks":[]}
+        headers:
+            Content-Length:
+                - "574"
+            Content-Type:
+                - application/json; charset=utf-8
+            Date:
+                - Wed, 22 May 2024 15:09:31 GMT
+            Ratelimit-Limit:
+                - "30"
+            Ratelimit-Remaining:
+                - "28"
+            Ratelimit-Reset:
+                - "28"
+            Referrer-Policy:
+                - same-origin
+            Render-Request-Id:
+                - api-7646845948-lnw4k/9sMaqLcoUR-000060
+            Vary:
+                - Origin
+            X-Content-Type-Options:
+                - nosniff
+            X-Frame-Options:
+                - DENY
+            X-Xss-Protection:
+                - 1; mode=block
+        status: 200 OK
+        code: 200
+        duration: 90.844833ms
+    - id: 4
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 38
+        transfer_encoding: []
+        trailer: {}
+        host: https://api.testing.render.com/v1
+        remote_addr: ""
+        request_uri: ""
+        body: '{"key":"new-key","value":"some-value"}'
+        form: {}
+        headers:
+            Authorization:
+                - some-api-key
+            Content-Type:
+                - application/json
+            User-Agent:
+                - terraform-provider-render/test
+        url: https://api.testing.render.com/v1/env-groups/evg-cp70lahk64ms73e22hng/env-vars/new-key
+        method: PUT
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: 613
+        uncompressed: false
+        body: |
+            {"envVars":[{"key":"DATABASE_URL","value":"postgresql://user:password@localhost/mydb"},{"key":"DEBUG_MODE","value":"false"},{"key":"INSTANCE_ID","value":"bMymF2vEgfAUe86s5hHLdkSzOcrpHzso9JENN7uxq7c="},{"key":"key1","value":"new-value"},{"key":"new-key","value":"some-value"}],"id":"evg-cp70lahk64ms73e22hng","name":"my-environment-group","ownerId":"some-owner-id","secretFiles":[{"content":"username:password","name":"credentials.txt"},{"content":"{\"aws_access_key\":\"AKIAIOSFODNN7EXAMPLE\",\"aws_secret_key\":\"wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY\"}","name":"secrets.json"}],"serviceLinks":[]}
+        headers:
+            Content-Length:
+                - "613"
+            Content-Type:
+                - application/json; charset=utf-8
+            Date:
+                - Wed, 22 May 2024 15:09:31 GMT
+            Ratelimit-Limit:
+                - "30"
+            Ratelimit-Remaining:
+                - "27"
+            Ratelimit-Reset:
+                - "28"
+            Referrer-Policy:
+                - same-origin
+            Render-Request-Id:
+                - api-7646845948-lnw4k/9sMaqLcoUR-000061
+            Vary:
+                - Origin
+            X-Content-Type-Options:
+                - nosniff
+            X-Frame-Options:
+                - DENY
+            X-Xss-Protection:
+                - 1; mode=block
+        status: 200 OK
+        code: 200
+        duration: 90.138833ms
+    - id: 5
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 0
+        transfer_encoding: []
+        trailer: {}
+        host: https://api.testing.render.com/v1
+        remote_addr: ""
+        request_uri: ""
+        body: ""
+        form: {}
+        headers:
+            Authorization:
+                - some-api-key
+            User-Agent:
+                - terraform-provider-render/test
+        url: https://api.testing.render.com/v1/env-groups/evg-cp70lahk64ms73e22hng/env-vars/DATABASE_URL
+        method: DELETE
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: 0
+        uncompressed: false
+        body: ""
+        headers:
+            Date:
+                - Wed, 22 May 2024 15:09:31 GMT
+            Ratelimit-Limit:
+                - "30"
+            Ratelimit-Remaining:
+                - "26"
+            Ratelimit-Reset:
+                - "28"
+            Referrer-Policy:
+                - same-origin
+            Render-Request-Id:
+                - api-7646845948-lnw4k/9sMaqLcoUR-000062
+            Vary:
+                - Origin
+            X-Content-Type-Options:
+                - nosniff
+            X-Frame-Options:
+                - DENY
+            X-Xss-Protection:
+                - 1; mode=block
+        status: 204 No Content
+        code: 204
+        duration: 76.298042ms
+    - id: 6
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 0
+        transfer_encoding: []
+        trailer: {}
+        host: https://api.testing.render.com/v1
+        remote_addr: ""
+        request_uri: ""
+        body: ""
+        form: {}
+        headers:
+            Authorization:
+                - some-api-key
+            User-Agent:
+                - terraform-provider-render/test
+        url: https://api.testing.render.com/v1/env-groups/evg-cp70lahk64ms73e22hng/env-vars/DEBUG_MODE
+        method: DELETE
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: 0
+        uncompressed: false
+        body: ""
+        headers:
+            Date:
+                - Wed, 22 May 2024 15:09:31 GMT
+            Ratelimit-Limit:
+                - "30"
+            Ratelimit-Remaining:
+                - "25"
+            Ratelimit-Reset:
+                - "28"
+            Referrer-Policy:
+                - same-origin
+            Render-Request-Id:
+                - api-7646845948-lnw4k/9sMaqLcoUR-000063
+            Vary:
+                - Origin
+            X-Content-Type-Options:
+                - nosniff
+            X-Frame-Options:
+                - DENY
+            X-Xss-Protection:
+                - 1; mode=block
+        status: 204 No Content
+        code: 204
+        duration: 76.690708ms
+    - id: 7
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 0
+        transfer_encoding: []
+        trailer: {}
+        host: https://api.testing.render.com/v1
+        remote_addr: ""
+        request_uri: ""
+        body: ""
+        form: {}
+        headers:
+            Authorization:
+                - some-api-key
+            User-Agent:
+                - terraform-provider-render/test
+        url: https://api.testing.render.com/v1/env-groups/evg-cp70lahk64ms73e22hng/env-vars/INSTANCE_ID
+        method: DELETE
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: 0
+        uncompressed: false
+        body: ""
+        headers:
+            Date:
+                - Wed, 22 May 2024 15:09:31 GMT
+            Ratelimit-Limit:
+                - "30"
+            Ratelimit-Remaining:
+                - "24"
+            Ratelimit-Reset:
+                - "28"
+            Referrer-Policy:
+                - same-origin
+            Render-Request-Id:
+                - api-7646845948-lnw4k/9sMaqLcoUR-000064
+            Vary:
+                - Origin
+            X-Content-Type-Options:
+                - nosniff
+            X-Frame-Options:
+                - DENY
+            X-Xss-Protection:
+                - 1; mode=block
+        status: 204 No Content
+        code: 204
+        duration: 77.436084ms
+    - id: 8
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 26
+        transfer_encoding: []
+        trailer: {}
+        host: https://api.testing.render.com/v1
+        remote_addr: ""
+        request_uri: ""
+        body: '{"content":"some-content"}'
+        form: {}
+        headers:
+            Authorization:
+                - some-api-key
+            Content-Type:
+                - application/json
+            User-Agent:
+                - terraform-provider-render/test
+        url: https://api.testing.render.com/v1/env-groups/evg-cp70lahk64ms73e22hng/secret-files/new-file
+        method: PUT
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: 469
+        uncompressed: false
+        body: |
+            {"envVars":[{"key":"key1","value":"new-value"},{"key":"new-key","value":"some-value"}],"id":"evg-cp70lahk64ms73e22hng","name":"my-environment-group","ownerId":"some-owner-id","secretFiles":[{"content":"username:password","name":"credentials.txt"},{"content":"{\"aws_access_key\":\"AKIAIOSFODNN7EXAMPLE\",\"aws_secret_key\":\"wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY\"}","name":"secrets.json"},{"content":"some-content","name":"new-file"}],"serviceLinks":[]}
+        headers:
+            Content-Length:
+                - "469"
+            Content-Type:
+                - application/json; charset=utf-8
+            Date:
+                - Wed, 22 May 2024 15:09:31 GMT
+            Ratelimit-Limit:
+                - "30"
+            Ratelimit-Remaining:
+                - "23"
+            Ratelimit-Reset:
+                - "28"
+            Referrer-Policy:
+                - same-origin
+            Render-Request-Id:
+                - api-7646845948-lnw4k/9sMaqLcoUR-000065
+            Vary:
+                - Origin
+            X-Content-Type-Options:
+                - nosniff
+            X-Frame-Options:
+                - DENY
+            X-Xss-Protection:
+                - 1; mode=block
+        status: 200 OK
+        code: 200
+        duration: 98.375916ms
+    - id: 9
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 25
+        transfer_encoding: []
+        trailer: {}
+        host: https://api.testing.render.com/v1
+        remote_addr: ""
+        request_uri: ""
+        body: '{"content":"new-content"}'
+        form: {}
+        headers:
+            Authorization:
+                - some-api-key
+            Content-Type:
+                - application/json
+            User-Agent:
+                - terraform-provider-render/test
+        url: https://api.testing.render.com/v1/env-groups/evg-cp70lahk64ms73e22hng/secret-files/file1
+        method: PUT
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: 510
+        uncompressed: false
+        body: |
+            {"envVars":[{"key":"key1","value":"new-value"},{"key":"new-key","value":"some-value"}],"id":"evg-cp70lahk64ms73e22hng","name":"my-environment-group","ownerId":"some-owner-id","secretFiles":[{"content":"username:password","name":"credentials.txt"},{"content":"{\"aws_access_key\":\"AKIAIOSFODNN7EXAMPLE\",\"aws_secret_key\":\"wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY\"}","name":"secrets.json"},{"content":"some-content","name":"new-file"},{"content":"new-content","name":"file1"}],"serviceLinks":[]}
+        headers:
+            Content-Length:
+                - "510"
+            Content-Type:
+                - application/json; charset=utf-8
+            Date:
+                - Wed, 22 May 2024 15:09:32 GMT
+            Ratelimit-Limit:
+                - "30"
+            Ratelimit-Remaining:
+                - "22"
+            Ratelimit-Reset:
+                - "27"
+            Referrer-Policy:
+                - same-origin
+            Render-Request-Id:
+                - api-7646845948-lnw4k/9sMaqLcoUR-000066
+            Vary:
+                - Origin
+            X-Content-Type-Options:
+                - nosniff
+            X-Frame-Options:
+                - DENY
+            X-Xss-Protection:
+                - 1; mode=block
+        status: 200 OK
+        code: 200
+        duration: 93.695083ms
+    - id: 10
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 0
+        transfer_encoding: []
+        trailer: {}
+        host: https://api.testing.render.com/v1
+        remote_addr: ""
+        request_uri: ""
+        body: ""
+        form: {}
+        headers:
+            Authorization:
+                - some-api-key
+            User-Agent:
+                - terraform-provider-render/test
+        url: https://api.testing.render.com/v1/env-groups/evg-cp70lahk64ms73e22hng/secret-files/credentials.txt
+        method: DELETE
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: 0
+        uncompressed: false
+        body: ""
+        headers:
+            Date:
+                - Wed, 22 May 2024 15:09:32 GMT
+            Ratelimit-Limit:
+                - "30"
+            Ratelimit-Remaining:
+                - "21"
+            Ratelimit-Reset:
+                - "27"
+            Referrer-Policy:
+                - same-origin
+            Render-Request-Id:
+                - api-7646845948-lnw4k/9sMaqLcoUR-000067
+            Vary:
+                - Origin
+            X-Content-Type-Options:
+                - nosniff
+            X-Frame-Options:
+                - DENY
+            X-Xss-Protection:
+                - 1; mode=block
+        status: 204 No Content
+        code: 204
+        duration: 78.467667ms
+    - id: 11
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 0
+        transfer_encoding: []
+        trailer: {}
+        host: https://api.testing.render.com/v1
+        remote_addr: ""
+        request_uri: ""
+        body: ""
+        form: {}
+        headers:
+            Authorization:
+                - some-api-key
+            User-Agent:
+                - terraform-provider-render/test
+        url: https://api.testing.render.com/v1/env-groups/evg-cp70lahk64ms73e22hng/secret-files/secrets.json
+        method: DELETE
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: 0
+        uncompressed: false
+        body: ""
+        headers:
+            Date:
+                - Wed, 22 May 2024 15:09:32 GMT
+            Ratelimit-Limit:
+                - "30"
+            Ratelimit-Remaining:
+                - "20"
+            Ratelimit-Reset:
+                - "27"
+            Referrer-Policy:
+                - same-origin
+            Render-Request-Id:
+                - api-7646845948-lnw4k/9sMaqLcoUR-000068
+            Vary:
+                - Origin
+            X-Content-Type-Options:
+                - nosniff
+            X-Frame-Options:
+                - DENY
+            X-Xss-Protection:
+                - 1; mode=block
+        status: 204 No Content
+        code: 204
+        duration: 74.404083ms
+    - id: 12
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 19
+        transfer_encoding: []
+        trailer: {}
+        host: https://api.testing.render.com/v1
+        remote_addr: ""
+        request_uri: ""
+        body: '{"name":"new-name"}'
+        form: {}
+        headers:
+            Authorization:
+                - some-api-key
+            Content-Type:
+                - application/json
+            User-Agent:
+                - terraform-provider-render/test
+        url: https://api.testing.render.com/v1/env-groups/evg-cp70lahk64ms73e22hng
+        method: PATCH
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: 295
+        uncompressed: false
+        body: |
+            {"envVars":[{"key":"key1","value":"new-value"},{"key":"new-key","value":"some-value"}],"id":"evg-cp70lahk64ms73e22hng","name":"new-name","ownerId":"some-owner-id","secretFiles":[{"content":"some-content","name":"new-file"},{"content":"new-content","name":"file1"}],"serviceLinks":[]}
+        headers:
+            Content-Length:
+                - "295"
+            Content-Type:
+                - application/json; charset=utf-8
+            Date:
+                - Wed, 22 May 2024 15:09:32 GMT
+            Ratelimit-Limit:
+                - "30"
+            Ratelimit-Remaining:
+                - "19"
+            Ratelimit-Reset:
+                - "27"
+            Referrer-Policy:
+                - same-origin
+            Render-Request-Id:
+                - api-7646845948-lnw4k/9sMaqLcoUR-000069
+            Vary:
+                - Origin
+            X-Content-Type-Options:
+                - nosniff
+            X-Frame-Options:
+                - DENY
+            X-Xss-Protection:
+                - 1; mode=block
+        status: 200 OK
+        code: 200
+        duration: 102.859ms
+    - id: 13
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 0
+        transfer_encoding: []
+        trailer: {}
+        host: https://api.testing.render.com/v1
+        remote_addr: ""
+        request_uri: ""
+        body: ""
+        form: {}
+        headers:
+            Authorization:
+                - some-api-key
+            User-Agent:
+                - terraform-provider-render/test
+        url: https://api.testing.render.com/v1/env-groups/evg-cp70lahk64ms73e22hng
+        method: GET
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: 295
+        uncompressed: false
+        body: |
+            {"envVars":[{"key":"key1","value":"new-value"},{"key":"new-key","value":"some-value"}],"id":"evg-cp70lahk64ms73e22hng","name":"new-name","ownerId":"some-owner-id","secretFiles":[{"content":"some-content","name":"new-file"},{"content":"new-content","name":"file1"}],"serviceLinks":[]}
+        headers:
+            Content-Length:
+                - "295"
+            Content-Type:
+                - application/json; charset=utf-8
+            Date:
+                - Wed, 22 May 2024 15:09:32 GMT
+            Ratelimit-Limit:
+                - "400"
+            Ratelimit-Remaining:
+                - "397"
+            Ratelimit-Reset:
+                - "27"
+            Referrer-Policy:
+                - same-origin
+            Render-Request-Id:
+                - api-7646845948-lnw4k/9sMaqLcoUR-000070
+            Vary:
+                - Origin
+            X-Content-Type-Options:
+                - nosniff
+            X-Frame-Options:
+                - DENY
+            X-Xss-Protection:
+                - 1; mode=block
+        status: 200 OK
+        code: 200
+        duration: 74.0275ms
+    - id: 14
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 0
+        transfer_encoding: []
+        trailer: {}
+        host: https://api.testing.render.com/v1
+        remote_addr: ""
+        request_uri: ""
+        body: ""
+        form: {}
+        headers:
+            Authorization:
+                - some-api-key
+            User-Agent:
+                - terraform-provider-render/test
+        url: https://api.testing.render.com/v1/env-groups/evg-cp70lahk64ms73e22hng
+        method: DELETE
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: 0
+        uncompressed: false
+        body: ""
+        headers:
+            Date:
+                - Wed, 22 May 2024 15:09:33 GMT
+            Ratelimit-Limit:
+                - "30"
+            Ratelimit-Remaining:
+                - "18"
+            Ratelimit-Reset:
+                - "26"
+            Referrer-Policy:
+                - same-origin
+            Render-Request-Id:
+                - api-7646845948-lnw4k/9sMaqLcoUR-000071
+            Vary:
+                - Origin
+            X-Content-Type-Options:
+                - nosniff
+            X-Frame-Options:
+                - DENY
+            X-Xss-Protection:
+                - 1; mode=block
+        status: 204 No Content
+        code: 204
+        duration: 86.251708ms

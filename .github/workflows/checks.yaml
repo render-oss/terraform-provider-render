@@ -1,0 +1,40 @@
+---
+name: checks
+
+on:
+  push:
+    branches:
+    - master
+  pull_request:
+
+env:
+  GIT_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.sha }}
+  cancel-in-progress: true
+jobs:
+  test:
+    runs-on: arc-runner-2cpu
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+    - name: Setup Go
+      uses: actions/setup-go@v5
+      with:
+        go-version: '1.22.2'
+    - name: Run tests
+      run: TF_ACC=1 go test ./...
+  lint:
+    runs-on: arc-runner-2cpu
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+    - name: Setup Go
+      uses: actions/setup-go@v5
+      with:
+        go-version: '1.22.2'
+    - name: vet
+      run: go vet ./...
+    - name: lint
+      run: golangci-lint run

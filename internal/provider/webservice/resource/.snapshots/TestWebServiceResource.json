@@ -1,0 +1,43 @@
+{
+	"envVars": [
+		{
+			"key": "key2",
+			"value": "val2"
+		},
+		{
+			"key": "key1",
+			"value": "val1"
+		}
+	],
+	"image": {
+		"imagePath": "docker.io/library/redis:latest",
+		"ownerId": ""
+	},
+	"name": "web-service-tf",
+	"ownerId": "some-owner-id",
+	"secretFiles": [
+		{
+			"content": "val1",
+			"name": "file1"
+		},
+		{
+			"content": "val2",
+			"name": "file2"
+		}
+	],
+	"serviceDetails": {
+		"disk": {
+			"mountPath": "/data",
+			"name": "some-disk",
+			"sizeGB": 1
+		},
+		"env": "image",
+		"envSpecificDetails": {},
+		"healthCheckPath": "",
+		"numInstances": 1,
+		"plan": "starter",
+		"pullRequestPreviewsEnabled": "no",
+		"region": "oregon"
+	},
+	"type": "web_service"
+}
