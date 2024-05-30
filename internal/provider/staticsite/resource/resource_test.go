@@ -158,12 +158,38 @@ func TestStaticSiteResource(t *testing.T) {
 					resource.TestCheckResourceAttr(resourceName, "auto_deploy", "false"),
 					resource.TestCheckResourceAttr(resourceName, "pull_request_previews_enabled", "false"),
 					resource.TestCheckResourceAttr(resourceName, "build_command", "npm install && npm run build"),
-					resource.TestCheckResourceAttr(resourceName, "publish_path", "build"),
+					resource.TestCheckResourceAttr(resourceName, "publish_path", "public"),
 					resource.TestCheckNoResourceAttr(resourceName, "environment_id"),
 					resource.TestCheckNoResourceAttr(resourceName, "build_filter"),
 					resource.TestCheckNoResourceAttr(resourceName, "env_vars"),
 					resource.TestCheckNoResourceAttr(resourceName, "routes"),
 					resource.TestCheckNoResourceAttr(resourceName, "custom_domains"),
+				),
+			},
+		},
+	})
+
+	resource.Test(t, resource.TestCase{
+		// create a new static site with a minimal number of fields to ensure we correctly handle default values
+		ProtoV6ProviderFactories: th.SetupRecordingProvider(t, "create_minimal_cassette"),
+		Steps: []resource.TestStep{
+			{
+				ResourceName: resourceName,
+				ConfigFile:   config.StaticFile("./testdata/minimal.tf"),
+				ConfigPlanChecks: resource.ConfigPlanChecks{
+					PreApply: []plancheck.PlanCheck{
+						checks.ExpectNoReplace(),
+					},
+				},
+				Check: resource.ComposeAggregateTestCheckFunc(
+					resource.TestCheckResourceAttrWith(resourceName, "id", th.CheckIDPrefix("srv-")),
+					resource.TestCheckResourceAttr(resourceName, "name", "updated-static-site"),
+					resource.TestCheckResourceAttr(resourceName, "repo_url", "https://github.com/render-examples/sveltekit-static"),
+					resource.TestCheckResourceAttr(resourceName, "branch", "main"),
+					resource.TestCheckResourceAttr(resourceName, "auto_deploy", "false"),
+					resource.TestCheckResourceAttr(resourceName, "pull_request_previews_enabled", "false"),
+					resource.TestCheckResourceAttr(resourceName, "build_command", "npm install && npm run build"),
+					resource.TestCheckResourceAttr(resourceName, "publish_path", "public"),
 				),
 			},
 		},
