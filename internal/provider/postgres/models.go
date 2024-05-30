@@ -25,7 +25,7 @@ type PostgresModel struct {
 	Region                  types.String                  `tfsdk:"region"`
 	Role                    types.String                  `tfsdk:"role"`
 	Version                 types.String                  `tfsdk:"version"`
-	Secrets                 types.Object                  `tfsdk:"secrets"`
+	ConnectionInfo          types.Object                  `tfsdk:"connection_info"`
 }
 
 type ReadReplica struct {
@@ -33,7 +33,7 @@ type ReadReplica struct {
 	ID   types.String `tfsdk:"id"`
 }
 
-type Secrets struct {
+type ConnectionInfo struct {
 	Password                 types.String `tfsdk:"password"`
 	ExternalConnectionString types.String `tfsdk:"external_connection_string"`
 	InternalConnectionString types.String `tfsdk:"internal_connection_string"`
@@ -62,20 +62,20 @@ func ReadReplicaInputFromModel(r []ReadReplica) []client.ReadReplicaInput {
 	return res
 }
 
-var secretTypes = map[string]attr.Type{
+var connectionInfoTypes = map[string]attr.Type{
 	"password":                   types.StringType,
 	"external_connection_string": types.StringType,
 	"internal_connection_string": types.StringType,
 	"psql_command":               types.StringType,
 }
 
-func secretsFromClient(c *client.PostgresSecrets, diags diag.Diagnostics) types.Object {
+func connectionInfoFromClient(c *client.PostgresConnectionInfo, diags diag.Diagnostics) types.Object {
 	if c == nil {
-		return types.ObjectNull(secretTypes)
+		return types.ObjectNull(connectionInfoTypes)
 	}
 
 	objectValue, objectDiags := types.ObjectValue(
-		secretTypes,
+		connectionInfoTypes,
 		map[string]attr.Value{
 			"password":                   types.StringValue(c.Password),
 			"external_connection_string": types.StringValue(c.ExternalConnectionString),
@@ -89,7 +89,7 @@ func secretsFromClient(c *client.PostgresSecrets, diags diag.Diagnostics) types.
 	return objectValue
 }
 
-func ModelFromClient(postgres *client.Postgres, secrets *client.PostgresSecrets, existingModel PostgresModel, diags diag.Diagnostics) PostgresModel {
+func ModelFromClient(postgres *client.Postgres, connectionInfo *client.PostgresConnectionInfo, existingModel PostgresModel, diags diag.Diagnostics) PostgresModel {
 	postgresModel := PostgresModel{
 		ID:                      types.StringValue(postgres.Id),
 		Name:                    types.StringValue(postgres.Name),
@@ -105,7 +105,7 @@ func ModelFromClient(postgres *client.Postgres, secrets *client.PostgresSecrets,
 		HighAvailabilityEnabled: types.BoolValue(postgres.HighAvailabilityEnabled),
 		ReadReplicas:            ReadReplicaFromClient(postgres.ReadReplicas),
 		Version:                 types.StringValue(string(postgres.Version)),
-		Secrets:                 secretsFromClient(secrets, diags),
+		ConnectionInfo:          connectionInfoFromClient(connectionInfo, diags),
 	}
 	return postgresModel
 }

@@ -111,16 +111,16 @@ func (r *postgresResource) Create(ctx context.Context, req resource.CreateReques
 		return
 	}
 
-	var secrets client.PostgresSecrets
+	var connectionInfo client.PostgresConnectionInfo
 	if err = common.Get(func() (*http.Response, error) {
-		return r.client.GetPostgresSecrets(ctx, pg.Id)
-	}, &secrets); err != nil {
-		resp.Diagnostics.AddError("unable to get postgres secrets", err.Error())
+		return r.client.GetPostgresConnectionInfo(ctx, pg.Id)
+	}, &connectionInfo); err != nil {
+		resp.Diagnostics.AddError("unable to get postgres connection info", err.Error())
 		return
 	}
 
 	// Set state to fully populated data
-	diags = resp.State.Set(ctx, postgres.ModelFromClient(&pg, &secrets, plan, resp.Diagnostics))
+	diags = resp.State.Set(ctx, postgres.ModelFromClient(&pg, &connectionInfo, plan, resp.Diagnostics))
 	resp.Diagnostics.Append(diags...)
 }
 
@@ -154,16 +154,16 @@ func (r *postgresResource) Read(ctx context.Context, req resource.ReadRequest, r
 		return
 	}
 
-	var secrets client.PostgresSecrets
+	var connectionInfo client.PostgresConnectionInfo
 	if err = common.Get(func() (*http.Response, error) {
-		return r.client.GetPostgresSecrets(ctx, id)
-	}, &secrets); err != nil {
-		resp.Diagnostics.AddError("unable to get postgres secrets", err.Error())
+		return r.client.GetPostgresConnectionInfo(ctx, id)
+	}, &connectionInfo); err != nil {
+		resp.Diagnostics.AddError("unable to get postgres connection info", err.Error())
 		return
 	}
 
 	// Set refreshed state
-	diags = resp.State.Set(ctx, postgres.ModelFromClient(&pg, &secrets, state, resp.Diagnostics))
+	diags = resp.State.Set(ctx, postgres.ModelFromClient(&pg, &connectionInfo, state, resp.Diagnostics))
 	resp.Diagnostics.Append(diags...)
 }
 
@@ -215,16 +215,16 @@ func (r *postgresResource) Update(ctx context.Context, req resource.UpdateReques
 	}
 	pg.EnvironmentId = envID
 
-	var secrets client.PostgresSecrets
+	var connectionInfo client.PostgresConnectionInfo
 	if err = common.Get(func() (*http.Response, error) {
-		return r.client.GetPostgresSecrets(ctx, plan.ID.ValueString())
-	}, &secrets); err != nil {
-		resp.Diagnostics.AddError("unable to get postgres secrets", err.Error())
+		return r.client.GetPostgresConnectionInfo(ctx, plan.ID.ValueString())
+	}, &connectionInfo); err != nil {
+		resp.Diagnostics.AddError("unable to get postgres connection info", err.Error())
 		return
 	}
 
 	// Set state to fully populated data
-	diags = resp.State.Set(ctx, postgres.ModelFromClient(&pg, &secrets, plan, resp.Diagnostics))
+	diags = resp.State.Set(ctx, postgres.ModelFromClient(&pg, &connectionInfo, plan, resp.Diagnostics))
 	resp.Diagnostics.Append(diags...)
 }
 

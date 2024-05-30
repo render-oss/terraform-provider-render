@@ -69,11 +69,11 @@ func (d *postgresDataSource) Read(ctx context.Context, req datasource.ReadReques
 		return
 	}
 
-	var secrets client.PostgresSecrets
+	var secrets client.PostgresConnectionInfo
 	if err = common.Get(func() (*http.Response, error) {
-		return d.client.GetPostgresSecrets(ctx, plan.ID.ValueString())
+		return d.client.GetPostgresConnectionInfo(ctx, plan.ID.ValueString())
 	}, &secrets); err != nil {
-		resp.Diagnostics.AddError("unable to get postgres secrets", err.Error())
+		resp.Diagnostics.AddError("unable to get postgres connection info", err.Error())
 		return
 	}
 

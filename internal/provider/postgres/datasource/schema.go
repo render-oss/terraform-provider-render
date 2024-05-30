@@ -85,9 +85,9 @@ func PostgresDataSourceSchema(ctx context.Context) schema.Schema {
 				MarkdownDescription: "Whether this postgres is a primary or replica",
 				Computed:            true,
 			},
-			"secrets": schema.SingleNestedAttribute{
-				Description:         "Database connection secrets.",
-				MarkdownDescription: "Database connection secrets.",
+			"connection_info": schema.SingleNestedAttribute{
+				Description:         "Database connection info.",
+				MarkdownDescription: "Database connection info.",
 				Computed:            true,
 				Sensitive:           true,
 				Attributes: map[string]schema.Attribute{
