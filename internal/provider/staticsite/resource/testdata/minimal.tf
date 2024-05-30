@@ -19,6 +19,5 @@ resource "render_static_site" "example" {
   build_command = "npm install && npm run build"
 
   branch         = "main"
-  publish_path   = "build"
   auto_deploy    = false
 }

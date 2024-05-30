@@ -110,7 +110,9 @@ var PRPreviewsEnabled = schema.BoolAttribute{
 
 var PublishPath = schema.StringAttribute{
 	Optional:    true,
-	Description: "Path to the directory that contains the build artifacts to publish. Defaults to the root directory of the repository.",
+	Computed:    true,
+	Default:     stringdefault.StaticString("public"),
+	Description: "Path to the directory that contains the build artifacts to publish. Defaults to public.",
 }
 
 var AutoDeploy = schema.BoolAttribute{
