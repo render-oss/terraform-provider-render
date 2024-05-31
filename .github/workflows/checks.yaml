@@ -42,6 +42,6 @@ jobs:
       - name: vet
         run: go vet ./...
       - name: lint
-        run: golangci-lint run
+        run: golangci-lint run --timeout 10m
         env:
           GIT_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
