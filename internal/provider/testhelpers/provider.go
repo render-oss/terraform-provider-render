@@ -21,7 +21,7 @@ func SetupRecordingProvider(t *testing.T, casetteName string) map[string]func() 
 	return SetupRecordingProviderConfigureWait(t, casetteName, false)
 }
 
-var emailRegex = regexp.MustCompile(`[a-z0-9._%+\-]+@[a-z0-9.\-]+\.[a-z]{2,4}`)
+var emailRegex = regexp.MustCompile(`[a-z0-9._%+]+@[a-z0-9.]+\.[a-z]{2,4}`)
 
 func scrubString(i *cassette.Interaction, from, to string) {
 	i.Request.URL = strings.ReplaceAll(i.Request.URL, from, to)
@@ -29,7 +29,7 @@ func scrubString(i *cassette.Interaction, from, to string) {
 	i.Response.Body = strings.ReplaceAll(i.Response.Body, from, to)
 }
 
-func scrubeRegex(i *cassette.Interaction, re *regexp.Regexp, to string) {
+func scrubRegex(i *cassette.Interaction, re *regexp.Regexp, to string) {
 	i.Request.URL = re.ReplaceAllString(i.Request.URL, to)
 	i.Request.Body = re.ReplaceAllString(i.Request.Body, to)
 	i.Response.Body = re.ReplaceAllString(i.Response.Body, to)
@@ -81,15 +81,15 @@ func SetupRecordingProviderConfigureWait(t *testing.T, casetteName string, waitF
 	r.AddHook(replaceOwnerID, recorder.AfterCaptureHook)
 
 	replaceEmail := func(i *cassette.Interaction) error {
-		scrubeRegex(i, emailRegex, "email@example.com")
+		scrubRegex(i, emailRegex, "email@example.com")
 		return nil
 	}
 	r.AddHook(replaceEmail, recorder.AfterCaptureHook)
 
 	replacePostgresConnectionInfo := func(i *cassette.Interaction) error {
-		scrubeRegex(i, regexp.MustCompile(`PGPASSWORD=[^ ]+`), "PGPASSWORD=thirtytwocharacterpasswooooooord")
-		scrubeRegex(i, regexp.MustCompile(`(postgres://[^:]+:)[^@]+(@)`), `$1thirtytwocharacterpasswooooooord$2`)
-		scrubeRegex(i, regexp.MustCompile(`"password":"[^"]+"`), `"password":"thirtytwocharacterpasswooooooord"`)
+		scrubRegex(i, regexp.MustCompile(`PGPASSWORD=[^ ]+`), "PGPASSWORD=thirtytwocharacterpasswooooooord")
+		scrubRegex(i, regexp.MustCompile(`(postgres://[^:]+:)[^@]+(@)`), `${1}thirtytwocharacterpasswooooooord${2}`)
+		scrubRegex(i, regexp.MustCompile(`"password":"[^"]+"`), `"password":"thirtytwocharacterpasswooooooord"`)
 		return nil
 	}
 	r.AddHook(replacePostgresConnectionInfo, recorder.AfterCaptureHook)

@@ -2,6 +2,7 @@ package resource_test
 
 import (
 	"fmt"
+	"regexp"
 	"strings"
 	"testing"
 
@@ -18,7 +19,7 @@ func TestAccPostgresResource(t *testing.T) {
 	var firstEnvironmentID string
 
 	resource.Test(t, resource.TestCase{
-		ProtoV6ProviderFactories: th.SetupRecordingProvider(t, "postgres_cassette"),
+		ProtoV6ProviderFactories: th.SetupRecordingProviderConfigureWait(t, "postgres_cassette", true),
 		Steps: []resource.TestStep{
 			{
 				ConfigFile: config.StaticFile("./testdata/postgres.tf"),
@@ -59,10 +60,34 @@ func TestAccPostgresResource(t *testing.T) {
 					resource.TestCheckResourceAttr(resourceName, "version", "15"),
 					resource.TestCheckResourceAttr(resourceName, "high_availability_enabled", "false"),
 
-					resource.TestCheckResourceAttrWith(resourceName, "secrets.password", func(value string) error {
+					resource.TestCheckResourceAttrWith(resourceName, "connection_info.password", func(value string) error {
 						if len(value) != 32 {
 							return fmt.Errorf("expected password to be 32 characters, got: %d", len(value))
 						}
+						return nil
+					}),
+
+					resource.TestCheckResourceAttrWith(resourceName, "connection_info.internal_connection_string", func(value string) error {
+						if !regexp.MustCompile(`^postgres://db_user.*:.{32}@dpg-.*/db_name.*$`).MatchString(value) {
+							return fmt.Errorf("expected internal_connection_string: %s to match regex", value)
+						}
+
+						return nil
+					}),
+
+					resource.TestCheckResourceAttrWith(resourceName, "connection_info.external_connection_string", func(value string) error {
+						if !regexp.MustCompile(`^postgres://db_user.*:.{32}@dpg-.*:5434/db_name.*$`).MatchString(value) {
+							return fmt.Errorf("expected external_connection_string: %s to match regex", value)
+						}
+
+						return nil
+					}),
+
+					resource.TestCheckResourceAttrWith(resourceName, "connection_info.psql_command", func(value string) error {
+						if !regexp.MustCompile(`^PGPASSWORD=.{32} psql -h dpg-.* -p 5434 -U db_user.* db_name.*$`).MatchString(value) {
+							return fmt.Errorf("expected psql_command: %s to match regex", value)
+						}
+
 						return nil
 					}),
 

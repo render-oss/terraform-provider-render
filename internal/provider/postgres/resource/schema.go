@@ -124,9 +124,9 @@ func PostgresResourceSchema(ctx context.Context) schema.Schema {
 					stringplanmodifier.UseStateForUnknown(),
 				},
 			},
-			"secrets": schema.SingleNestedAttribute{
-				Description:         "Database connection secrets.",
-				MarkdownDescription: "Database connection secrets.",
+			"connection_info": schema.SingleNestedAttribute{
+				Description:         "Database connection info.",
+				MarkdownDescription: "Database connection info.",
 				Computed:            true,
 				Sensitive:           true,
 				Attributes: map[string]schema.Attribute{

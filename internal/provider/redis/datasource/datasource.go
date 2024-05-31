@@ -2,8 +2,10 @@ package datasource
 
 import (
 	"context"
+	"net/http"
 
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
+	"terraform-provider-render/internal/provider/common"
 
 	"terraform-provider-render/internal/provider/redis"
 
@@ -58,22 +60,23 @@ func (d *redisSource) Read(ctx context.Context, req datasource.ReadRequest, resp
 		return
 	}
 
-	redisResponse, err := d.client.GetRedisWithResponse(ctx, plan.Id.ValueString())
-	if err != nil {
-		resp.Diagnostics.AddError("Unable to get service", err.Error())
+	var redisResponse client.Redis
+	if err := common.Get(func() (*http.Response, error) {
+		return d.client.GetRedis(ctx, plan.Id.ValueString())
+	}, &redisResponse); err != nil {
+		resp.Diagnostics.AddError("unable to get redis", err.Error())
 		return
 	}
 
-	if redisResponse.StatusCode() != 200 {
-		resp.Diagnostics.AddError("Unable to get service", err.Error())
+	var connectionInfo client.RedisConnectionInfo
+	if err := common.Get(func() (*http.Response, error) {
+		return d.client.GetRedisConnectionInfo(ctx, redisResponse.Id)
+	}, &connectionInfo); err != nil {
+		resp.Diagnostics.AddError("unable to get redis connection info", err.Error())
 		return
 	}
 
-	redisModel := redis.ModelForRedisResult(redisResponse.JSON200, resp.Diagnostics)
-	if err != nil {
-		resp.Diagnostics.AddError("Unable to apply service result to model", err.Error())
-		return
-	}
+	redisModel := redis.ModelForRedisResult(&redisResponse, &connectionInfo, resp.Diagnostics)
 
 	resp.State.Set(ctx, redisModel)
 }

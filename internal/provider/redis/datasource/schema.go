@@ -18,6 +18,7 @@ func Schema(ctx context.Context) schema.Schema {
 			"name":              datasource.ServiceName,
 			"plan":              datasource.RedisPlan,
 			"region":            datasource.Region,
+			"connection_info":   datasource.ConnectionInfo,
 		},
 	}
 }

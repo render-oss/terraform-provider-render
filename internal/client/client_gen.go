@@ -279,11 +279,11 @@ type ClientInterface interface {
 
 	UpdatePostgres(ctx context.Context, postgresId string, body UpdatePostgresJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
 
+	// GetPostgresConnectionInfo request
+	GetPostgresConnectionInfo(ctx context.Context, postgresId string, reqEditors ...RequestEditorFn) (*http.Response, error)
+
 	// ResumePostgres request
 	ResumePostgres(ctx context.Context, postgresId string, reqEditors ...RequestEditorFn) (*http.Response, error)
-
-	// GetPostgresSecrets request
-	GetPostgresSecrets(ctx context.Context, postgresId string, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// SuspendPostgres request
 	SuspendPostgres(ctx context.Context, postgresId string, reqEditors ...RequestEditorFn) (*http.Response, error)
@@ -325,6 +325,9 @@ type ClientInterface interface {
 	UpdateRedisWithBody(ctx context.Context, redisId string, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	UpdateRedis(ctx context.Context, redisId string, body UpdateRedisJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// GetRedisConnectionInfo request
+	GetRedisConnectionInfo(ctx context.Context, redisId string, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// GetRegistryCredentials request
 	GetRegistryCredentials(ctx context.Context, params *GetRegistryCredentialsParams, reqEditors ...RequestEditorFn) (*http.Response, error)
@@ -1333,8 +1336,8 @@ func (c *Client) UpdatePostgres(ctx context.Context, postgresId string, body Upd
 	return c.Client.Do(req)
 }
 
-func (c *Client) ResumePostgres(ctx context.Context, postgresId string, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewResumePostgresRequest(c.Server, postgresId)
+func (c *Client) GetPostgresConnectionInfo(ctx context.Context, postgresId string, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewGetPostgresConnectionInfoRequest(c.Server, postgresId)
 	if err != nil {
 		return nil, err
 	}
@@ -1345,8 +1348,8 @@ func (c *Client) ResumePostgres(ctx context.Context, postgresId string, reqEdito
 	return c.Client.Do(req)
 }
 
-func (c *Client) GetPostgresSecrets(ctx context.Context, postgresId string, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewGetPostgresSecretsRequest(c.Server, postgresId)
+func (c *Client) ResumePostgres(ctx context.Context, postgresId string, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewResumePostgresRequest(c.Server, postgresId)
 	if err != nil {
 		return nil, err
 	}
@@ -1527,6 +1530,18 @@ func (c *Client) UpdateRedisWithBody(ctx context.Context, redisId string, conten
 
 func (c *Client) UpdateRedis(ctx context.Context, redisId string, body UpdateRedisJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewUpdateRedisRequest(c.Server, redisId, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) GetRedisConnectionInfo(ctx context.Context, redisId string, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewGetRedisConnectionInfoRequest(c.Server, redisId)
 	if err != nil {
 		return nil, err
 	}
@@ -6340,6 +6355,40 @@ func NewUpdatePostgresRequestWithBody(server string, postgresId string, contentT
 	return req, nil
 }
 
+// NewGetPostgresConnectionInfoRequest generates requests for GetPostgresConnectionInfo
+func NewGetPostgresConnectionInfoRequest(server string, postgresId string) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithLocation("simple", false, "postgresId", runtime.ParamLocationPath, postgresId)
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/postgres/%s/connection-info", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest("GET", queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	return req, nil
+}
+
 // NewResumePostgresRequest generates requests for ResumePostgres
 func NewResumePostgresRequest(server string, postgresId string) (*http.Request, error) {
 	var err error
@@ -6367,40 +6416,6 @@ func NewResumePostgresRequest(server string, postgresId string) (*http.Request, 
 	}
 
 	req, err := http.NewRequest("POST", queryURL.String(), nil)
-	if err != nil {
-		return nil, err
-	}
-
-	return req, nil
-}
-
-// NewGetPostgresSecretsRequest generates requests for GetPostgresSecrets
-func NewGetPostgresSecretsRequest(server string, postgresId string) (*http.Request, error) {
-	var err error
-
-	var pathParam0 string
-
-	pathParam0, err = runtime.StyleParamWithLocation("simple", false, "postgresId", runtime.ParamLocationPath, postgresId)
-	if err != nil {
-		return nil, err
-	}
-
-	serverURL, err := url.Parse(server)
-	if err != nil {
-		return nil, err
-	}
-
-	operationPath := fmt.Sprintf("/postgres/%s/secrets", pathParam0)
-	if operationPath[0] == '/' {
-		operationPath = "." + operationPath
-	}
-
-	queryURL, err := serverURL.Parse(operationPath)
-	if err != nil {
-		return nil, err
-	}
-
-	req, err := http.NewRequest("GET", queryURL.String(), nil)
 	if err != nil {
 		return nil, err
 	}
@@ -7102,6 +7117,40 @@ func NewUpdateRedisRequestWithBody(server string, redisId string, contentType st
 	}
 
 	req.Header.Add("Content-Type", contentType)
+
+	return req, nil
+}
+
+// NewGetRedisConnectionInfoRequest generates requests for GetRedisConnectionInfo
+func NewGetRedisConnectionInfoRequest(server string, redisId string) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithLocation("simple", false, "redisId", runtime.ParamLocationPath, redisId)
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/redis/%s/connection-info", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest("GET", queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
 
 	return req, nil
 }
@@ -10390,11 +10439,11 @@ type ClientWithResponsesInterface interface {
 
 	UpdatePostgresWithResponse(ctx context.Context, postgresId string, body UpdatePostgresJSONRequestBody, reqEditors ...RequestEditorFn) (*UpdatePostgresResponse, error)
 
+	// GetPostgresConnectionInfoWithResponse request
+	GetPostgresConnectionInfoWithResponse(ctx context.Context, postgresId string, reqEditors ...RequestEditorFn) (*GetPostgresConnectionInfoResponse, error)
+
 	// ResumePostgresWithResponse request
 	ResumePostgresWithResponse(ctx context.Context, postgresId string, reqEditors ...RequestEditorFn) (*ResumePostgresResponse, error)
-
-	// GetPostgresSecretsWithResponse request
-	GetPostgresSecretsWithResponse(ctx context.Context, postgresId string, reqEditors ...RequestEditorFn) (*GetPostgresSecretsResponse, error)
 
 	// SuspendPostgresWithResponse request
 	SuspendPostgresWithResponse(ctx context.Context, postgresId string, reqEditors ...RequestEditorFn) (*SuspendPostgresResponse, error)
@@ -10436,6 +10485,9 @@ type ClientWithResponsesInterface interface {
 	UpdateRedisWithBodyWithResponse(ctx context.Context, redisId string, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UpdateRedisResponse, error)
 
 	UpdateRedisWithResponse(ctx context.Context, redisId string, body UpdateRedisJSONRequestBody, reqEditors ...RequestEditorFn) (*UpdateRedisResponse, error)
+
+	// GetRedisConnectionInfoWithResponse request
+	GetRedisConnectionInfoWithResponse(ctx context.Context, redisId string, reqEditors ...RequestEditorFn) (*GetRedisConnectionInfoResponse, error)
 
 	// GetRegistryCredentialsWithResponse request
 	GetRegistryCredentialsWithResponse(ctx context.Context, params *GetRegistryCredentialsParams, reqEditors ...RequestEditorFn) (*GetRegistryCredentialsResponse, error)
@@ -12093,6 +12145,34 @@ func (r UpdatePostgresResponse) StatusCode() int {
 	return 0
 }
 
+type GetPostgresConnectionInfoResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	JSON200      *PostgresConnectionInfo
+	JSON400      *N400BadRequest
+	JSON401      *N401Unauthorized
+	JSON404      *N404NotFound
+	JSON429      *N429RateLimit
+	JSON500      *N500InternalServerError
+	JSON503      *N503ServiceUnavailable
+}
+
+// Status returns HTTPResponse.Status
+func (r GetPostgresConnectionInfoResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r GetPostgresConnectionInfoResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
 type ResumePostgresResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
@@ -12117,34 +12197,6 @@ func (r ResumePostgresResponse) Status() string {
 
 // StatusCode returns HTTPResponse.StatusCode
 func (r ResumePostgresResponse) StatusCode() int {
-	if r.HTTPResponse != nil {
-		return r.HTTPResponse.StatusCode
-	}
-	return 0
-}
-
-type GetPostgresSecretsResponse struct {
-	Body         []byte
-	HTTPResponse *http.Response
-	JSON200      *PostgresSecrets
-	JSON400      *N400BadRequest
-	JSON401      *N401Unauthorized
-	JSON404      *N404NotFound
-	JSON429      *N429RateLimit
-	JSON500      *N500InternalServerError
-	JSON503      *N503ServiceUnavailable
-}
-
-// Status returns HTTPResponse.Status
-func (r GetPostgresSecretsResponse) Status() string {
-	if r.HTTPResponse != nil {
-		return r.HTTPResponse.Status
-	}
-	return http.StatusText(0)
-}
-
-// StatusCode returns HTTPResponse.StatusCode
-func (r GetPostgresSecretsResponse) StatusCode() int {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.StatusCode
 	}
@@ -12460,6 +12512,34 @@ func (r UpdateRedisResponse) Status() string {
 
 // StatusCode returns HTTPResponse.StatusCode
 func (r UpdateRedisResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+type GetRedisConnectionInfoResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	JSON200      *RedisConnectionInfo
+	JSON400      *N400BadRequest
+	JSON401      *N401Unauthorized
+	JSON404      *N404NotFound
+	JSON429      *N429RateLimit
+	JSON500      *N500InternalServerError
+	JSON503      *N503ServiceUnavailable
+}
+
+// Status returns HTTPResponse.Status
+func (r GetRedisConnectionInfoResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r GetRedisConnectionInfoResponse) StatusCode() int {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.StatusCode
 	}
@@ -14573,6 +14653,15 @@ func (c *ClientWithResponses) UpdatePostgresWithResponse(ctx context.Context, po
 	return ParseUpdatePostgresResponse(rsp)
 }
 
+// GetPostgresConnectionInfoWithResponse request returning *GetPostgresConnectionInfoResponse
+func (c *ClientWithResponses) GetPostgresConnectionInfoWithResponse(ctx context.Context, postgresId string, reqEditors ...RequestEditorFn) (*GetPostgresConnectionInfoResponse, error) {
+	rsp, err := c.GetPostgresConnectionInfo(ctx, postgresId, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseGetPostgresConnectionInfoResponse(rsp)
+}
+
 // ResumePostgresWithResponse request returning *ResumePostgresResponse
 func (c *ClientWithResponses) ResumePostgresWithResponse(ctx context.Context, postgresId string, reqEditors ...RequestEditorFn) (*ResumePostgresResponse, error) {
 	rsp, err := c.ResumePostgres(ctx, postgresId, reqEditors...)
@@ -14580,15 +14669,6 @@ func (c *ClientWithResponses) ResumePostgresWithResponse(ctx context.Context, po
 		return nil, err
 	}
 	return ParseResumePostgresResponse(rsp)
-}
-
-// GetPostgresSecretsWithResponse request returning *GetPostgresSecretsResponse
-func (c *ClientWithResponses) GetPostgresSecretsWithResponse(ctx context.Context, postgresId string, reqEditors ...RequestEditorFn) (*GetPostgresSecretsResponse, error) {
-	rsp, err := c.GetPostgresSecrets(ctx, postgresId, reqEditors...)
-	if err != nil {
-		return nil, err
-	}
-	return ParseGetPostgresSecretsResponse(rsp)
 }
 
 // SuspendPostgresWithResponse request returning *SuspendPostgresResponse
@@ -14720,6 +14800,15 @@ func (c *ClientWithResponses) UpdateRedisWithResponse(ctx context.Context, redis
 		return nil, err
 	}
 	return ParseUpdateRedisResponse(rsp)
+}
+
+// GetRedisConnectionInfoWithResponse request returning *GetRedisConnectionInfoResponse
+func (c *ClientWithResponses) GetRedisConnectionInfoWithResponse(ctx context.Context, redisId string, reqEditors ...RequestEditorFn) (*GetRedisConnectionInfoResponse, error) {
+	rsp, err := c.GetRedisConnectionInfo(ctx, redisId, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseGetRedisConnectionInfoResponse(rsp)
 }
 
 // GetRegistryCredentialsWithResponse request returning *GetRegistryCredentialsResponse
@@ -18639,6 +18728,74 @@ func ParseUpdatePostgresResponse(rsp *http.Response) (*UpdatePostgresResponse, e
 	return response, nil
 }
 
+// ParseGetPostgresConnectionInfoResponse parses an HTTP response from a GetPostgresConnectionInfoWithResponse call
+func ParseGetPostgresConnectionInfoResponse(rsp *http.Response) (*GetPostgresConnectionInfoResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &GetPostgresConnectionInfoResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest PostgresConnectionInfo
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
+		var dest N400BadRequest
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON400 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest N401Unauthorized
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest N404NotFound
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON404 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 429:
+		var dest N429RateLimit
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON429 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 500:
+		var dest N500InternalServerError
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON500 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 503:
+		var dest N503ServiceUnavailable
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON503 = &dest
+
+	}
+
+	return response, nil
+}
+
 // ParseResumePostgresResponse parses an HTTP response from a ResumePostgresWithResponse call
 func ParseResumePostgresResponse(rsp *http.Response) (*ResumePostgresResponse, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
@@ -18694,74 +18851,6 @@ func ParseResumePostgresResponse(rsp *http.Response) (*ResumePostgresResponse, e
 			return nil, err
 		}
 		response.JSON410 = &dest
-
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 429:
-		var dest N429RateLimit
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.JSON429 = &dest
-
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 500:
-		var dest N500InternalServerError
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.JSON500 = &dest
-
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 503:
-		var dest N503ServiceUnavailable
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.JSON503 = &dest
-
-	}
-
-	return response, nil
-}
-
-// ParseGetPostgresSecretsResponse parses an HTTP response from a GetPostgresSecretsWithResponse call
-func ParseGetPostgresSecretsResponse(rsp *http.Response) (*GetPostgresSecretsResponse, error) {
-	bodyBytes, err := io.ReadAll(rsp.Body)
-	defer func() { _ = rsp.Body.Close() }()
-	if err != nil {
-		return nil, err
-	}
-
-	response := &GetPostgresSecretsResponse{
-		Body:         bodyBytes,
-		HTTPResponse: rsp,
-	}
-
-	switch {
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
-		var dest PostgresSecrets
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.JSON200 = &dest
-
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
-		var dest N400BadRequest
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.JSON400 = &dest
-
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
-		var dest N401Unauthorized
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.JSON401 = &dest
-
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
-		var dest N404NotFound
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.JSON404 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 429:
 		var dest N429RateLimit
@@ -19529,6 +19618,74 @@ func ParseUpdateRedisResponse(rsp *http.Response) (*UpdateRedisResponse, error) 
 			return nil, err
 		}
 		response.JSON409 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 429:
+		var dest N429RateLimit
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON429 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 500:
+		var dest N500InternalServerError
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON500 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 503:
+		var dest N503ServiceUnavailable
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON503 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseGetRedisConnectionInfoResponse parses an HTTP response from a GetRedisConnectionInfoWithResponse call
+func ParseGetRedisConnectionInfoResponse(rsp *http.Response) (*GetRedisConnectionInfoResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &GetRedisConnectionInfoResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest RedisConnectionInfo
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
+		var dest N400BadRequest
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON400 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest N401Unauthorized
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest N404NotFound
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON404 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 429:
 		var dest N429RateLimit

@@ -2,6 +2,7 @@ package datasource_test
 
 import (
 	"fmt"
+	"regexp"
 	"strings"
 	"testing"
 
@@ -39,10 +40,34 @@ func TestAccPostgresDataSource(t *testing.T) {
 					resource.TestCheckResourceAttr(resourceName, "role", "primary"),
 					resource.TestCheckResourceAttr(resourceName, "version", "16"),
 
-					resource.TestCheckResourceAttrWith(resourceName, "secrets.password", func(value string) error {
+					resource.TestCheckResourceAttrWith(resourceName, "connection_info.password", func(value string) error {
 						if len(value) != 32 {
 							return fmt.Errorf("expected password to be 32 characters, got: %d", len(value))
 						}
+						return nil
+					}),
+
+					resource.TestCheckResourceAttrWith(resourceName, "connection_info.internal_connection_string", func(value string) error {
+						if !regexp.MustCompile(`^postgres://test_user.*:.{32}@dpg-.*/test_name.*$`).MatchString(value) {
+							return fmt.Errorf("expected internal_connection_string: %s to match regex", value)
+						}
+
+						return nil
+					}),
+
+					resource.TestCheckResourceAttrWith(resourceName, "connection_info.external_connection_string", func(value string) error {
+						if !regexp.MustCompile(`^postgres://test_user.*:.{32}@dpg-.*:5434/test_name.*$`).MatchString(value) {
+							return fmt.Errorf("expected external_connection_string: %s to match regex", value)
+						}
+
+						return nil
+					}),
+
+					resource.TestCheckResourceAttrWith(resourceName, "connection_info.psql_command", func(value string) error {
+						if !regexp.MustCompile(`^PGPASSWORD=.{32} psql -h dpg-.* -p 5434 -U test_user.* test_name.*$`).MatchString(value) {
+							return fmt.Errorf("expected psql_command: %s to match regex", value)
+						}
+
 						return nil
 					}),
 				),
