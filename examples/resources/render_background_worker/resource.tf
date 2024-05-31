@@ -1,13 +1,3 @@
-terraform {
-  required_providers {
-    render = {
-      source = "registry.terraform.io/render/render"
-    }
-  }
-}
-
-provider "render" {}
-
 resource "render_background_worker" "git_example" {
   name   = "git-background-worker"
   plan   = "starter"

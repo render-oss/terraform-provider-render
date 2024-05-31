@@ -39,7 +39,7 @@ func main() {
 	flag.Parse()
 
 	opts := providerserver.ServeOpts{
-		Address: "registry.terraform.io/render/render",
+		Address: "registry.terraform.io/render-oss/render",
 		Debug:   debug,
 	}
 

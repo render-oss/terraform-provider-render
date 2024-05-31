@@ -41,7 +41,7 @@ Then commit the changes to `go.mod` and `go.sum`.
    ```hcl
    provider_installation {
       dev_overrides {
-       "registry.terraform.io/render/render" = "<GOPATH>/bin"
+       "registry.terraform.io/render-oss/render" = "<GOPATH>/bin"
       }
 
       # For all other providers, install them directly from their origin provider
@@ -56,7 +56,7 @@ Then commit the changes to `go.mod` and `go.sum`.
       terraform {
         required_providers {
           render = {
-            source = "registry.terraform.io/render/render"
+            source = "registry.terraform.io/render-oss/render"
           }
         }
       }
