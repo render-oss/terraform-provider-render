@@ -20,4 +20,9 @@ resource "render_cron_job" "cron-job-example" {
       runtime  = "python"
     }
   }
+
+  env_vars = {
+    "key1" = { value = "val1" },
+    "key2" = { value = "val2" },
+  }
 }
