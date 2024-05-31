@@ -16,7 +16,7 @@ Provides a Render Background Worker resource.
 terraform {
   required_providers {
     render = {
-      source = "registry.terraform.io/render/render"
+      source = "registry.terraform.io/render-oss/render"
     }
   }
 }
