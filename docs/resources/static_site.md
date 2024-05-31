@@ -97,7 +97,7 @@ resource "render_static_site" "example" {
 
 ### Required
 
-- `branch` (String) Repository branch to build.
+- `branch` (String) Branch of the git repository to build.
 - `build_command` (String) Command to build the service
 - `name` (String) Name of the service
 - `repo_url` (String) URL of the git repository to build.
@@ -105,16 +105,16 @@ resource "render_static_site" "example" {
 ### Optional
 
 - `auto_deploy` (Boolean) [Automatic deploy](https://docs.render.com/deploys#automatic-git-deploys) on every push to your repository, or changes to your service settings or environment.
-- `build_filter` (Attributes) Filter for files and paths to monitor for automatic deploys. Filter paths are relative to the root of the repository. If you've defined a root directory, you can still define paths outside of the root directory. (see [below for nested schema](#nestedatt--build_filter))
+- `build_filter` (Attributes) Apply [build filters](https://docs.render.com/monorepo-support#build-filters) to configure which changes in your git repository trigger automatic deploys. If you've defined a root directory, you can still define paths outside of the root directory. (see [below for nested schema](#nestedatt--build_filter))
 - `custom_domains` (Attributes Set) Custom domains to associate with the service. (see [below for nested schema](#nestedatt--custom_domains))
 - `env_vars` (Attributes Map) Map of environment variable names to their values. (see [below for nested schema](#nestedatt--env_vars))
-- `environment_id` (String) ID of the environment that the resource belongs to
-- `headers` (Attributes Set) (see [below for nested schema](#nestedatt--headers))
-- `notification_override` (Attributes) Set the notification settings for this service. These will override the notification settings of the owner. (see [below for nested schema](#nestedatt--notification_override))
-- `publish_path` (String) Path to the directory that contains the build artifacts to publish. Defaults to public.
+- `environment_id` (String) ID of the [project environment](https://docs.render.com/projects) that the resource belongs to
+- `headers` (Attributes Set) List of [headers](https://docs.render.com/static-site-headers) to apply to requests for static sites (see [below for nested schema](#nestedatt--headers))
+- `notification_override` (Attributes) Configure the [notification settings](https://docs.render.com/notifications) for this service. These will override the global notification settings of the user or team. (see [below for nested schema](#nestedatt--notification_override))
+- `publish_path` (String) Path to the directory that contains the build artifacts to publish for a static site. Defaults to public/.
 - `pull_request_previews_enabled` (Boolean) Enable [pull request previews](https://docs.render.com/pull-request-previews#pull-request-previews-git-backed) for the service.
-- `root_directory` (String) Defaults to repository root. When you specify a root directory that is different from your repository root, Render runs all your commands in the specified directory and ignores changes outside the directory.
-- `routes` (Attributes List) (see [below for nested schema](#nestedatt--routes))
+- `root_directory` (String) When you specify a [root directory](https://docs.render.com/monorepo-support#root-directory), Render runs all your commands in the specified directory and ignores changes outside the directory. Defaults to the repository root.
+- `routes` (Attributes List) List of [redirect and rewrite rules](https://docs.render.com/redirects-rewrites) to apply to a static site. (see [below for nested schema](#nestedatt--routes))
 
 ### Read-Only
 

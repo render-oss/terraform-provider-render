@@ -35,6 +35,11 @@ resource "render_cron_job" "cron-job-example" {
       runtime  = "python"
     }
   }
+
+  env_vars = {
+    "key1" = { value = "val1" },
+    "key2" = { value = "val2" },
+  }
 }
 ```
 
@@ -45,18 +50,18 @@ resource "render_cron_job" "cron-job-example" {
 
 - `name` (String) Name of the service
 - `plan` (String) Plan to use for the service. Must be one of `starter`, `standard`, `pro`, `pro_plus`, `pro_max`, `pro_ultra`, or a custom plan.
-- `region` (String) Region to deploy the service
-- `runtime_source` (Attributes) Source of the build artifacts or image that run your service. (see [below for nested schema](#nestedatt--runtime_source))
+- `region` (String) [Region](https://docs.render.com/regions) to deploy the service. One of `frankfurt`, `ohio`, `oregon`, `singapore`, `virginia`.
+- `runtime_source` (Attributes) Source of the build artifacts or image that run your service. You must provide one of [native_runtime](https://docs.render.com/native-runtimes), [docker](https://docs.render.com/docker), or [image](https://docs.render.com/deploy-an-image). (see [below for nested schema](#nestedatt--runtime_source))
 - `schedule` (String) Cron schedule to run the job
 
 ### Optional
 
 - `env_vars` (Attributes Map) Map of environment variable names to their values. (see [below for nested schema](#nestedatt--env_vars))
-- `environment_id` (String) ID of the environment that the resource belongs to
-- `notification_override` (Attributes) Set the notification settings for this service. These will override the notification settings of the owner. (see [below for nested schema](#nestedatt--notification_override))
-- `root_directory` (String) Defaults to repository root. When you specify a root directory that is different from your repository root, Render runs all your commands in the specified directory and ignores changes outside the directory.
+- `environment_id` (String) ID of the [project environment](https://docs.render.com/projects) that the resource belongs to
+- `notification_override` (Attributes) Configure the [notification settings](https://docs.render.com/notifications) for this service. These will override the global notification settings of the user or team. (see [below for nested schema](#nestedatt--notification_override))
+- `root_directory` (String) When you specify a [root directory](https://docs.render.com/monorepo-support#root-directory), Render runs all your commands in the specified directory and ignores changes outside the directory. Defaults to the repository root.
 - `secret_files` (Attributes Map) A map of secret file paths to their contents. (see [below for nested schema](#nestedatt--secret_files))
-- `start_command` (String) Command to run the service. When using native runtimes, this will be used as the start command. For [Docker](https://docs.render.com/docker) and [image-backed](https://docs.render.com/deploy-an-image) services, this will override the default Docker command for the image.
+- `start_command` (String) Command to run the service. When using native runtimes, this will be used as the start command and is required. For [Docker](https://docs.render.com/docker) and [image-backed](https://docs.render.com/deploy-an-image) services, this will override the default Docker command for the image.
 
 ### Read-Only
 
@@ -68,22 +73,22 @@ resource "render_cron_job" "cron-job-example" {
 
 Optional:
 
-- `docker` (Attributes) Details for building and deploying a Dockerfile. (see [below for nested schema](#nestedatt--runtime_source--docker))
-- `image` (Attributes) (see [below for nested schema](#nestedatt--runtime_source--image))
-- `native_runtime` (Attributes) (see [below for nested schema](#nestedatt--runtime_source--native_runtime))
+- `docker` (Attributes) Details for building and deploying a service [using a Dockerfile](https://docs.render.com/docker). (see [below for nested schema](#nestedatt--runtime_source--docker))
+- `image` (Attributes) Details for deploying a service using a [Docker image from a registry](https://docs.render.com/deploy-an-image). (see [below for nested schema](#nestedatt--runtime_source--image))
+- `native_runtime` (Attributes) Details for building and deploying a service using one of Render's [native runtimes](https://docs.render.com/native-runtimes). (see [below for nested schema](#nestedatt--runtime_source--native_runtime))
 
 <a id="nestedatt--runtime_source--docker"></a>
 ### Nested Schema for `runtime_source.docker`
 
 Required:
 
-- `branch` (String) Repository branch to build.
+- `branch` (String) Branch of the git repository to build.
 - `repo_url` (String) URL of the git repository to build.
 
 Optional:
 
 - `auto_deploy` (Boolean) [Automatic deploy](https://docs.render.com/deploys#automatic-git-deploys) on every push to your repository, or changes to your service settings or environment.
-- `build_filter` (Attributes) Filter for files and paths to monitor for automatic deploys. Filter paths are relative to the root of the repository. If you've defined a root directory, you can still define paths outside of the root directory. (see [below for nested schema](#nestedatt--runtime_source--docker--build_filter))
+- `build_filter` (Attributes) Apply [build filters](https://docs.render.com/monorepo-support#build-filters) to configure which changes in your git repository trigger automatic deploys. If you've defined a root directory, you can still define paths outside of the root directory. (see [below for nested schema](#nestedatt--runtime_source--docker--build_filter))
 - `context` (String) [Docker build context directory.](https://docs.docker.com/reference/dockerfile/#usage) This is relative to your repository root. Defaults to the root.
 - `dockerfile_path` (String) Path to your Dockerfile relative to the repository root. This is not relative to your Docker build context. Example: `./subdir/Dockerfile.`
 - `registry_credential_id` (String) ID of the registry credential to use when pulling the image.
@@ -115,7 +120,7 @@ Optional:
 
 Required:
 
-- `branch` (String) Repository branch to build.
+- `branch` (String) Branch of the git repository to build.
 - `build_command` (String) Command to build the service
 - `repo_url` (String) URL of the git repository to build.
 - `runtime` (String) Runtime of the service to use. Must be one of `elixir`, `go`, `node`, `python`, `ruby`, `rust`.
@@ -123,7 +128,7 @@ Required:
 Optional:
 
 - `auto_deploy` (Boolean) [Automatic deploy](https://docs.render.com/deploys#automatic-git-deploys) on every push to your repository, or changes to your service settings or environment.
-- `build_filter` (Attributes) Filter for files and paths to monitor for automatic deploys. Filter paths are relative to the root of the repository. If you've defined a root directory, you can still define paths outside of the root directory. (see [below for nested schema](#nestedatt--runtime_source--native_runtime--build_filter))
+- `build_filter` (Attributes) Apply [build filters](https://docs.render.com/monorepo-support#build-filters) to configure which changes in your git repository trigger automatic deploys. If you've defined a root directory, you can still define paths outside of the root directory. (see [below for nested schema](#nestedatt--runtime_source--native_runtime--build_filter))
 
 <a id="nestedatt--runtime_source--native_runtime--build_filter"></a>
 ### Nested Schema for `runtime_source.native_runtime.build_filter`

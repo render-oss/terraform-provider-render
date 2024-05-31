@@ -35,16 +35,17 @@ resource "render_redis" "example" {
 
 - `max_memory_policy` (String) Policy for evicting keys when the maxmemory limit is reached. Valid values are `allkeys_lfu`, `allkeys_lru`, `allkeys_random`, `noeviction`, `volatile_lfu`, `volatile_lru`, `volatile_random`, `volatile_ttl.`
 - `name` (String) Name of the service
-- `region` (String) Region to deploy the service
+- `region` (String) [Region](https://docs.render.com/regions) to deploy the service. One of `frankfurt`, `ohio`, `oregon`, `singapore`, `virginia`.
 
 ### Optional
 
-- `environment_id` (String) ID of the environment that the resource belongs to
+- `environment_id` (String) ID of the [project environment](https://docs.render.com/projects) that the resource belongs to
 - `ip_allow_list` (Attributes Set) List of IP addresses that are allowed to connect to the instance. If no IP addresses are provided, only connections via the private network will be allowed. (see [below for nested schema](#nestedatt--ip_allow_list))
 - `plan` (String) Plan for the Redis instance. Must be one of `free`, `starter`, `standard`, `pro`, `pro_plus`, or a custom plan.
 
 ### Read-Only
 
+- `connection_info` (Attributes, Sensitive) Database connection info. (see [below for nested schema](#nestedatt--connection_info))
 - `id` (String) Unique identifier for the service
 
 <a id="nestedatt--ip_allow_list"></a>
@@ -54,3 +55,13 @@ Required:
 
 - `cidr_block` (String) CIDR block that is allowed to connect to the Redis instance. (0.0.0.0/0 to allow traffic from all IPs)
 - `description` (String) Description of the IP address or range. This is used to help identify the IP address or range in the list.
+
+
+<a id="nestedatt--connection_info"></a>
+### Nested Schema for `connection_info`
+
+Read-Only:
+
+- `external_connection_string` (String, Sensitive) Connection string for external access. Use this to connect to the redis from outside of Render.
+- `internal_connection_string` (String, Sensitive) Connection string for internal access. Use this to connect to the redis from within the same Render region.
+- `redis_cli_command` (String, Sensitive) Command to connect to the redis using the redis command line tool.

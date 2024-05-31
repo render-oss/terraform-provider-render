@@ -26,6 +26,7 @@ description: |-
 
 ### Read-Only
 
+- `connection_info` (Attributes, Sensitive) Database connection info. (see [below for nested schema](#nestedatt--connection_info))
 - `database_name` (String) Name of the database in the postgres instance
 - `database_user` (String) Name of the user in the postgres instance
 - `environment_id` (String) Unique identifier for the environment
@@ -36,8 +37,18 @@ description: |-
 - `read_replicas` (Attributes Set) List of read replicas. (see [below for nested schema](#nestedatt--read_replicas))
 - `region` (String) Region the postgres instance in
 - `role` (String) Whether this postgres is a primary or replica
-- `secrets` (Attributes, Sensitive) Database connection secrets. (see [below for nested schema](#nestedatt--secrets))
 - `version` (String) The Postgres version
+
+<a id="nestedatt--connection_info"></a>
+### Nested Schema for `connection_info`
+
+Read-Only:
+
+- `external_connection_string` (String, Sensitive) Connection string for external access. Use this to connect to the database from outside of Render.
+- `internal_connection_string` (String, Sensitive) Connection string for internal access. Use this to connect to the database from within the same Render region.
+- `password` (String, Sensitive) Password for the postgres user.
+- `psql_command` (String, Sensitive) Command to connect to the database using the `psql` command line tool.
+
 
 <a id="nestedatt--ip_allow_list"></a>
 ### Nested Schema for `ip_allow_list`
@@ -55,14 +66,3 @@ Read-Only:
 
 - `id` (String) ID of the read replica.
 - `name` (String) Name of the read replica.
-
-
-<a id="nestedatt--secrets"></a>
-### Nested Schema for `secrets`
-
-Read-Only:
-
-- `external_connection_string` (String, Sensitive) Connection string for external access. Use this to connect to the database from outside of Render.
-- `internal_connection_string` (String, Sensitive) Connection string for internal access. Use this to connect to the database from within the same Render region.
-- `password` (String, Sensitive) Password for the postgres user.
-- `psql_command` (String, Sensitive) Command to connect to the database using the `psql` command line tool.

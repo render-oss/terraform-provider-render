@@ -41,17 +41,17 @@ resource "render_postgres" "example" {
 - `database_name` (String) Name of the database in the postgres instance
 - `database_user` (String) Name of the user in the postgres instance
 - `datadog_api_key` (String, Sensitive) Datadog API key to use when sending postgres metrics
-- `environment_id` (String) ID of the environment that the resource belongs to
+- `environment_id` (String) ID of the [project environment](https://docs.render.com/projects) that the resource belongs to
 - `high_availability_enabled` (Boolean) Whether high availability is enabled for this postgres
 - `ip_allow_list` (Attributes Set) List of IP addresses that are allowed to connect to the instance. If no IP addresses are provided, only connections via the private network will be allowed. (see [below for nested schema](#nestedatt--ip_allow_list))
 - `read_replicas` (Attributes Set) List of read replicas. (see [below for nested schema](#nestedatt--read_replicas))
 
 ### Read-Only
 
+- `connection_info` (Attributes, Sensitive) Database connection info. (see [below for nested schema](#nestedatt--connection_info))
 - `id` (String) Unique identifier for this postgres
 - `primary_postgres_id` (String) If this is a replica, the ID of the primary postgres instance
 - `role` (String) Whether this postgres is a primary or replica
-- `secrets` (Attributes, Sensitive) Database connection secrets. (see [below for nested schema](#nestedatt--secrets))
 
 <a id="nestedatt--ip_allow_list"></a>
 ### Nested Schema for `ip_allow_list`
@@ -74,8 +74,8 @@ Read-Only:
 - `id` (String) ID of the read replica.
 
 
-<a id="nestedatt--secrets"></a>
-### Nested Schema for `secrets`
+<a id="nestedatt--connection_info"></a>
+### Nested Schema for `connection_info`
 
 Read-Only:
 
