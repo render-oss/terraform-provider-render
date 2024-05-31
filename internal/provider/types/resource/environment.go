@@ -12,8 +12,9 @@ import (
 )
 
 var ResourceEnvironmentID = schema.StringAttribute{
-	Optional:    true,
-	Description: "ID of the environment that the resource belongs to",
+	Optional:            true,
+	Description:         "ID of the project environment that the resource belongs to",
+	MarkdownDescription: "ID of the [project environment](https://docs.render.com/projects) that the resource belongs to",
 }
 
 var EnvironmentID = schema.StringAttribute{

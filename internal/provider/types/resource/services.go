@@ -79,29 +79,27 @@ var ConnectionInfo = schema.SingleNestedAttribute{
 	Sensitive:           true,
 	Attributes: map[string]schema.Attribute{
 		"external_connection_string": schema.StringAttribute{
-			Description:         "Connection string for external access. Use this to connect to the redis from outside of Render.",
-			MarkdownDescription: "Connection string for external access. Use this to connect to the redis from outside of Render.",
-			Computed:            true,
-			Sensitive:           true,
+			Description: "Connection string for external access. Use this to connect to the redis from outside of Render.",
+			Computed:    true,
+			Sensitive:   true,
 		},
 		"internal_connection_string": schema.StringAttribute{
-			Description:         "Connection string for internal access. Use this to connect to the redis from within the same Render region.",
-			MarkdownDescription: "Connection string for internal access. Use this to connect to the redis from within the same Render region.",
-			Computed:            true,
-			Sensitive:           true,
+			Description: "Connection string for internal access. Use this to connect to the redis from within the same Render region.",
+			Computed:    true,
+			Sensitive:   true,
 		},
 		"redis_cli_command": schema.StringAttribute{
-			Description:         "Command to connect to the redis using the redis command line tool.",
-			MarkdownDescription: "Command to connect to the redis using the redis command line tool.",
-			Computed:            true,
-			Sensitive:           true,
+			Description: "Command to connect to the redis using the redis command line tool.",
+			Computed:    true,
+			Sensitive:   true,
 		},
 	},
 }
 
 var Region = schema.StringAttribute{
-	Required:    true,
-	Description: "Region to deploy the service",
+	Required:            true,
+	Description:         "Region to deploy the service. One of frankfurt, ohio, oregon, singapore, virginia.",
+	MarkdownDescription: "[Region](https://docs.render.com/regions) to deploy the service. One of `frankfurt`, `ohio`, `oregon`, `singapore`, `virginia`.",
 	Validators: []validator.String{
 		RegionValidator,
 	},
@@ -121,7 +119,7 @@ var HealthCheckPath = schema.StringAttribute{
 var NumInstances = schema.Int64Attribute{
 	Optional:    true,
 	Computed:    true,
-	Description: "Number of replicas of the service to run. Defaults to 1 on service creation and current instance count on update. If you want to manage the service's instance count outside terraform, leave num_instances unset.",
+	Description: "Number of replicas of the service to run. Defaults to 1 on service creation and current instance count on update. If you want to manage the service's instance count outside Terraform, leave num_instances unset.",
 	Validators: []validator.Int64{
 		int64validator.Between(1, 100),
 	},
@@ -139,7 +137,7 @@ var PublishPath = schema.StringAttribute{
 	Optional:    true,
 	Computed:    true,
 	Default:     stringdefault.StaticString("public"),
-	Description: "Path to the directory that contains the build artifacts to publish. Defaults to public.",
+	Description: "Path to the directory that contains the build artifacts to publish for a static site. Defaults to public/.",
 }
 
 var AutoDeploy = schema.BoolAttribute{
@@ -158,12 +156,12 @@ var BuildCommand = schema.StringAttribute{
 var StartCommand = schema.StringAttribute{
 	Optional:            true,
 	Description:         "Command to run the service. When using native runtimes, this will be used as the start command. For Docker and image-backed services, this will override the default Docker command for the image.",
-	MarkdownDescription: "Command to run the service. When using native runtimes, this will be used as the start command. For [Docker](https://docs.render.com/docker) and [image-backed](https://docs.render.com/deploy-an-image) services, this will override the default Docker command for the image.",
+	MarkdownDescription: "Command to run the service. When using native runtimes, this will be used as the start command and is required. For [Docker](https://docs.render.com/docker) and [image-backed](https://docs.render.com/deploy-an-image) services, this will override the default Docker command for the image.",
 }
 
 var Branch = schema.StringAttribute{
 	Required:    true,
-	Description: "Repository branch to build.",
+	Description: "Branch of the git repository to build.",
 }
 
 var RepoURL = schema.StringAttribute{
@@ -173,13 +171,16 @@ var RepoURL = schema.StringAttribute{
 }
 
 var RootDirectory = schema.StringAttribute{
-	Computed:    true,
-	Optional:    true,
-	Description: "Defaults to repository root. When you specify a root directory that is different from your repository root, Render runs all your commands in the specified directory and ignores changes outside the directory.",
+	Computed:            true,
+	Optional:            true,
+	Description:         "When you specify a root directory, Render runs all your commands in the specified directory and ignores changes outside the directory. Defaults to the repository root.",
+	MarkdownDescription: "When you specify a [root directory](https://docs.render.com/monorepo-support#root-directory), Render runs all your commands in the specified directory and ignores changes outside the directory. Defaults to the repository root.",
 }
 
 var Routes = schema.ListNestedAttribute{
-	Optional: true,
+	Optional:            true,
+	Description:         "List of redirect and rewrite rules to apply to a static site.",
+	MarkdownDescription: "List of [redirect and rewrite rules](https://docs.render.com/redirects-rewrites) to apply to a static site.",
 	NestedObject: schema.NestedAttributeObject{
 		Attributes: map[string]schema.Attribute{
 			"source": schema.StringAttribute{
@@ -213,7 +214,9 @@ var ServiceURL = schema.StringAttribute{
 }
 
 var Disk = schema.SingleNestedAttribute{
-	Optional: true,
+	Description:         "Persistent disk to attach to the service.",
+	MarkdownDescription: "[Persistent disk](https://docs.render.com/disks) to attach to the service.",
+	Optional:            true,
 	Attributes: map[string]schema.Attribute{
 		"id": schema.StringAttribute{
 			Computed:    true,
@@ -249,8 +252,9 @@ type BuildFilterModel struct {
 }
 
 var BuildFilter = schema.SingleNestedAttribute{
-	Optional:    true,
-	Description: "Filter for files and paths to monitor for automatic deploys. Filter paths are relative to the root of the repository. If you've defined a root directory, you can still define paths outside of the root directory.",
+	Optional:            true,
+	Description:         "Apply build filters to configure which changes in your git repository trigger automatic deploys. If you've defined a root directory, you can still define paths outside of the root directory.",
+	MarkdownDescription: "Apply [build filters](https://docs.render.com/monorepo-support#build-filters) to configure which changes in your git repository trigger automatic deploys. If you've defined a root directory, you can still define paths outside of the root directory.",
 	Attributes: map[string]schema.Attribute{
 		"paths": schema.ListAttribute{
 			ElementType: types.StringType,

@@ -7,13 +7,16 @@ import (
 )
 
 var Autoscaling = schema.SingleNestedAttribute{
+	Description:         "Autoscaling settings for the service",
+	MarkdownDescription: "[Autoscaling settings](https://docs.render.com/scaling#autoscaling) for the service",
 	Attributes: map[string]schema.Attribute{
 		"criteria": schema.SingleNestedAttribute{
 			Attributes: map[string]schema.Attribute{
 				"cpu": schema.SingleNestedAttribute{
 					Attributes: map[string]schema.Attribute{
 						"enabled": schema.BoolAttribute{
-							Required: true,
+							Required:    true,
+							Description: "Whether CPU-based autoscaling is enabled for the service",
 						},
 						"percentage": schema.Int64Attribute{
 							Required:    true,
@@ -29,7 +32,8 @@ var Autoscaling = schema.SingleNestedAttribute{
 				"memory": schema.SingleNestedAttribute{
 					Attributes: map[string]schema.Attribute{
 						"enabled": schema.BoolAttribute{
-							Required: true,
+							Required:    true,
+							Description: "Whether memory-based autoscaling is enabled for the service",
 						},
 						"percentage": schema.Int64Attribute{
 							Required:    true,
@@ -46,17 +50,16 @@ var Autoscaling = schema.SingleNestedAttribute{
 			Required: true,
 		},
 		"enabled": schema.BoolAttribute{
-			Required: true,
+			Required:    true,
+			Description: "Whether autoscaling is enabled for the service",
 		},
 		"max": schema.Int64Attribute{
-			Required:            true,
-			Description:         "The maximum number of instances for the service",
-			MarkdownDescription: "The maximum number of instances for the service",
+			Required:    true,
+			Description: "The maximum number of instances for the service",
 		},
 		"min": schema.Int64Attribute{
-			Required:            true,
-			Description:         "The minimum number of instances for the service",
-			MarkdownDescription: "The minimum number of instances for the service",
+			Required:    true,
+			Description: "The minimum number of instances for the service",
 		},
 	},
 	Optional: true,
