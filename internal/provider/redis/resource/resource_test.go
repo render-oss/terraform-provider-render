@@ -60,7 +60,7 @@ func TestRedisResource(t *testing.T) {
 					resource.TestCheckResourceAttr(resourceName, "ip_allow_list.1.description", "test-2"),
 
 					resource.TestCheckResourceAttrWith(resourceName, "connection_info.internal_connection_string", func(value string) error {
-						if !regexp.MustCompile("^redis:\\/\\/red-.*:6379$").MatchString(value) {
+						if !regexp.MustCompile(`^redis://red-.*:6379$`).MatchString(value) {
 							return fmt.Errorf("expected internal_connection_string: %s to match regex", value)
 						}
 
@@ -68,7 +68,7 @@ func TestRedisResource(t *testing.T) {
 					}),
 
 					resource.TestCheckResourceAttrWith(resourceName, "connection_info.external_connection_string", func(value string) error {
-						if !regexp.MustCompile("^rediss:\\/\\/red-[a-z0-9]+:.{32}@.*-.*.com:637[7|9]$").MatchString(value) {
+						if !regexp.MustCompile(`^rediss://red-[a-z0-9]+:.{32}@.*-.*.com:637[7|9]$`).MatchString(value) {
 							return fmt.Errorf("expected external_connection_string: %s to match regex", value)
 						}
 
@@ -76,7 +76,7 @@ func TestRedisResource(t *testing.T) {
 					}),
 
 					resource.TestCheckResourceAttrWith(resourceName, "connection_info.redis_cli_command", func(value string) error {
-						if !regexp.MustCompile("^ REDISCLI_AUTH=.{32} redis-cli --user red-[a-z0-9]+ -h .*-.*.com -p 637[7|9] --tls$").MatchString(value) {
+						if !regexp.MustCompile(`^ REDISCLI_AUTH=.{32} redis-cli --user red-[a-z0-9]+ -h .*-.*.com -p 637[7|9] --tls$`).MatchString(value) {
 							return fmt.Errorf("expected redis_cli_command: %s to match regex", value)
 						}
 
