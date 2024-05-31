@@ -21,12 +21,23 @@ Provides information about a Render Redis instance.
 
 ### Read-Only
 
+- `connection_info` (Attributes, Sensitive) Database connection info. (see [below for nested schema](#nestedatt--connection_info))
 - `environment_id` (String) Unique identifier for the environment that the resource belongs to
 - `ip_allow_list` (Attributes Set) List of IP addresses that are allowed to connect to the Redis instance. If no IP addresses are provided, only connections via the private network will be allowed. (see [below for nested schema](#nestedatt--ip_allow_list))
 - `max_memory_policy` (String) Policy for evicting keys when the maxmemory limit is reached
 - `name` (String) Name of the service
 - `plan` (String) Plan for the Redis instance
 - `region` (String) Region to deploy the service
+
+<a id="nestedatt--connection_info"></a>
+### Nested Schema for `connection_info`
+
+Read-Only:
+
+- `external_connection_string` (String, Sensitive) Connection string for external access. Use this to connect to the redis from outside of Render.
+- `internal_connection_string` (String, Sensitive) Connection string for internal access. Use this to connect to the redis from within the same Render region.
+- `redis_cli_command` (String, Sensitive) Command to connect to the redis using the redis command line tool.
+
 
 <a id="nestedatt--ip_allow_list"></a>
 ### Nested Schema for `ip_allow_list`
