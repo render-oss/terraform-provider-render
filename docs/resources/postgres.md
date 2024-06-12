@@ -83,3 +83,12 @@ Read-Only:
 - `internal_connection_string` (String, Sensitive) Connection string for internal access. Use this to connect to the database from within the same Render region.
 - `password` (String, Sensitive) Password for the postgres user.
 - `psql_command` (String, Sensitive) Command to connect to the database using the `psql` command line tool.
+
+## Import
+
+Import is supported using the following syntax:
+
+```shell
+# Import this resource using the database ID
+terraform import render_postgres.resource_name dpg-cmtus5u22nds73amqgkg
+```

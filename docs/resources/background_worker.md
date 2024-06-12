@@ -13,16 +13,6 @@ Provides a Render Background Worker resource.
 ## Example Usage
 
 ```terraform
-terraform {
-  required_providers {
-    render = {
-      source = "registry.terraform.io/render-oss/render"
-    }
-  }
-}
-
-provider "render" {}
-
 resource "render_background_worker" "git_example" {
   name   = "git-background-worker"
   plan   = "starter"
@@ -264,3 +254,12 @@ Optional:
 Required:
 
 - `content` (String, Sensitive) The content of the secret file.
+
+## Import
+
+Import is supported using the following syntax:
+
+```shell
+# Import this resource using the service ID
+terraform import render_background_worker.resource_name srv-cmtus5u22nds73amqgkg
+```

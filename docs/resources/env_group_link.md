@@ -48,3 +48,12 @@ resource "render_env_group_link" "envgroup_links" {
 
 - `env_group_id` (String) Unique identifier for the environment group
 - `service_ids` (List of String) List of service ids linked to the environment group
+
+## Import
+
+Import is supported using the following syntax:
+
+```shell
+# Import this resource using the env group ID
+terraform import render_env_group_link.resource_name evg-comelc212bfj73aa6550
+```

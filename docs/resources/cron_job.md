@@ -165,3 +165,12 @@ Optional:
 Required:
 
 - `content` (String, Sensitive) The content of the secret file.
+
+## Import
+
+Import is supported using the following syntax:
+
+```shell
+# Import this resource using the service ID
+terraform import render_cron_job.resource_name crn-cmtus5u22nds73amqgkg
+```

@@ -65,3 +65,12 @@ Read-Only:
 - `external_connection_string` (String, Sensitive) Connection string for external access. Use this to connect to the redis from outside of Render.
 - `internal_connection_string` (String, Sensitive) Connection string for internal access. Use this to connect to the redis from within the same Render region.
 - `redis_cli_command` (String, Sensitive) Command to connect to the redis using the redis command line tool.
+
+## Import
+
+Import is supported using the following syntax:
+
+```shell
+# Import this resource using the redis ID
+terraform import render_redis.resource_name red-cmtus5u22nds73amqgkg
+```
