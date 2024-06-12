@@ -182,3 +182,12 @@ Required:
 - `destination` (String) Destination path to route to.
 - `source` (String) Source path to match.
 - `type` (String) Type of route. Either redirect or rewrite.
+
+## Import
+
+Import is supported using the following syntax:
+
+```shell
+# Import this resource using the service ID
+terraform import render_static_site.resource_name srv-cmtus5u22nds73amqgkg
+```

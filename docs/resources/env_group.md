@@ -74,3 +74,12 @@ Optional:
 Required:
 
 - `content` (String, Sensitive) The content of the secret file.
+
+## Import
+
+Import is supported using the following syntax:
+
+```shell
+# Import this resource using the env group ID
+terraform import render_env_group.resource_name evg-comelc212bfj73aa6550
+```
