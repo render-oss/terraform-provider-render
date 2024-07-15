@@ -61,7 +61,7 @@ func (d *envGroupLinkDataSource) Read(ctx context.Context, req datasource.ReadRe
 
 	var envGroupLink client.EnvGroup
 	err := common.Get(func() (*http.Response, error) {
-		return d.client.GetEnvGroup(ctx, plan.EnvGroupId.ValueString())
+		return d.client.RetrieveEnvGroup(ctx, plan.EnvGroupId.ValueString())
 	}, &envGroupLink)
 	if err != nil {
 		resp.Diagnostics.AddError("Unable to get environment variable group link", err.Error())

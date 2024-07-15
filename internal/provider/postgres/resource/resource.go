@@ -12,6 +12,7 @@ import (
 	"terraform-provider-render/internal/provider/postgres"
 
 	"terraform-provider-render/internal/client"
+	clientpostgres "terraform-provider-render/internal/client/postgres"
 	rendertypes "terraform-provider-render/internal/provider/types"
 )
 
@@ -81,7 +82,7 @@ func (r *postgresResource) Create(ctx context.Context, req resource.CreateReques
 			EnableHighAvailability: plan.HighAvailabilityEnabled.ValueBoolPointer(),
 			EnvironmentId:          plan.EnvironmentID.ValueStringPointer(),
 			IpAllowList:            common.From(ipAllowList),
-			Plan:                   client.PostgresPlans(plan.Plan.ValueString()),
+			Plan:                   clientpostgres.PostgresPlans(plan.Plan.ValueString()),
 			ReadReplicas:           common.From(postgres.ReadReplicaInputFromModel(plan.ReadReplicas)),
 			Region:                 plan.Region.ValueStringPointer(),
 			Version:                client.PostgresVersion(plan.Version.ValueString()),
@@ -98,7 +99,7 @@ func (r *postgresResource) Create(ctx context.Context, req resource.CreateReques
 	err = r.poller.Poll(ctx, func() (bool, error) {
 		var polledPG client.Postgres
 		err := common.Get(func() (*http.Response, error) {
-			return r.client.GetPostgres(ctx, pg.Id)
+			return r.client.RetrievePostgres(ctx, pg.Id)
 		}, &polledPG)
 		if err != nil {
 			return false, err
@@ -113,7 +114,7 @@ func (r *postgresResource) Create(ctx context.Context, req resource.CreateReques
 
 	var connectionInfo client.PostgresConnectionInfo
 	if err = common.Get(func() (*http.Response, error) {
-		return r.client.GetPostgresConnectionInfo(ctx, pg.Id)
+		return r.client.RetrievePostgresConnectionInfo(ctx, pg.Id)
 	}, &connectionInfo); err != nil {
 		resp.Diagnostics.AddError("unable to get postgres connection info", err.Error())
 		return
@@ -141,7 +142,7 @@ func (r *postgresResource) Read(ctx context.Context, req resource.ReadRequest, r
 	var pg client.Postgres
 
 	err := common.Get(func() (*http.Response, error) {
-		return r.client.GetPostgres(ctx, id)
+		return r.client.RetrievePostgres(ctx, id)
 	}, &pg)
 	if common.IsNotFoundErr(err) {
 		common.EmitNotFoundWarning(id, &diags)
@@ -156,7 +157,7 @@ func (r *postgresResource) Read(ctx context.Context, req resource.ReadRequest, r
 
 	var connectionInfo client.PostgresConnectionInfo
 	if err = common.Get(func() (*http.Response, error) {
-		return r.client.GetPostgresConnectionInfo(ctx, id)
+		return r.client.RetrievePostgresConnectionInfo(ctx, id)
 	}, &connectionInfo); err != nil {
 		resp.Diagnostics.AddError("unable to get postgres connection info", err.Error())
 		return
@@ -195,7 +196,7 @@ func (r *postgresResource) Update(ctx context.Context, req resource.UpdateReques
 			EnableHighAvailability: plan.HighAvailabilityEnabled.ValueBoolPointer(),
 			IpAllowList:            common.From(ipAllowList),
 			Name:                   plan.Name.ValueStringPointer(),
-			Plan:                   common.From(client.PostgresPlans(plan.Plan.ValueString())),
+			Plan:                   common.From(clientpostgres.PostgresPlans(plan.Plan.ValueString())),
 			DatadogAPIKey:          plan.DatadogAPIKey.ValueStringPointer(),
 			ReadReplicas:           common.From(postgres.ReadReplicaInputFromModel(plan.ReadReplicas)),
 		})
@@ -217,7 +218,7 @@ func (r *postgresResource) Update(ctx context.Context, req resource.UpdateReques
 
 	var connectionInfo client.PostgresConnectionInfo
 	if err = common.Get(func() (*http.Response, error) {
-		return r.client.GetPostgresConnectionInfo(ctx, plan.ID.ValueString())
+		return r.client.RetrievePostgresConnectionInfo(ctx, plan.ID.ValueString())
 	}, &connectionInfo); err != nil {
 		resp.Diagnostics.AddError("unable to get postgres connection info", err.Error())
 		return

@@ -2,7 +2,8 @@ package notifications
 
 import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
-	"terraform-provider-render/internal/client"
+
+	"terraform-provider-render/internal/client/notifications"
 )
 
 type NotificationSettingModel struct {
@@ -12,7 +13,7 @@ type NotificationSettingModel struct {
 	SlackEnabled                types.Bool   `tfsdk:"slack_enabled"`
 }
 
-func ModelFromClient(notificationSetting *client.NotificationSetting) NotificationSettingModel {
+func ModelFromClient(notificationSetting *notifications.NotificationSetting) NotificationSettingModel {
 	postgresModel := NotificationSettingModel{
 		EmailEnabled:                types.BoolValue(notificationSetting.EmailEnabled),
 		NotificationsToSend:         types.StringValue(string(notificationSetting.NotificationsToSend)),

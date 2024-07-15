@@ -84,7 +84,7 @@ func (r *redisResource) Create(ctx context.Context, req resource.CreateRequest, 
 
 	var connectionInfo client.RedisConnectionInfo
 	if err = common.Get(func() (*http.Response, error) {
-		return r.client.GetRedisConnectionInfo(ctx, model.Id)
+		return r.client.RetrieveRedisConnectionInfo(ctx, model.Id)
 	}, &connectionInfo); err != nil {
 		resp.Diagnostics.AddError("unable to get redis connection info", err.Error())
 		return
@@ -108,7 +108,7 @@ func (r *redisResource) Read(ctx context.Context, req resource.ReadRequest, resp
 
 	var clientRedis client.Redis
 	err := common.Get(func() (*http.Response, error) {
-		return r.client.GetRedis(ctx, state.Id.ValueString())
+		return r.client.RetrieveRedis(ctx, state.Id.ValueString())
 	}, &clientRedis)
 	if common.IsNotFoundErr(err) {
 		common.EmitNotFoundWarning(state.Id.ValueString(), &diags)
@@ -124,7 +124,7 @@ func (r *redisResource) Read(ctx context.Context, req resource.ReadRequest, resp
 
 	var connectionInfo client.RedisConnectionInfo
 	if err = common.Get(func() (*http.Response, error) {
-		return r.client.GetRedisConnectionInfo(ctx, clientRedis.Id)
+		return r.client.RetrieveRedisConnectionInfo(ctx, clientRedis.Id)
 	}, &connectionInfo); err != nil {
 		resp.Diagnostics.AddError("unable to get redis connection info", err.Error())
 		return
@@ -173,7 +173,7 @@ func (r *redisResource) Update(ctx context.Context, req resource.UpdateRequest, 
 
 	var connectionInfo client.RedisConnectionInfo
 	if err = common.Get(func() (*http.Response, error) {
-		return r.client.GetRedisConnectionInfo(ctx, redisResponse.Id)
+		return r.client.RetrieveRedisConnectionInfo(ctx, redisResponse.Id)
 	}, &connectionInfo); err != nil {
 		resp.Diagnostics.AddError("unable to get redis connection info", err.Error())
 		return

@@ -111,7 +111,7 @@ func (r *envGroupResource) Read(ctx context.Context, req resource.ReadRequest, r
 
 	envGroup := client.EnvGroup{}
 	err := common.Get(func() (*http.Response, error) {
-		return r.client.GetEnvGroup(ctx, id)
+		return r.client.RetrieveEnvGroup(ctx, id)
 	}, &envGroup)
 
 	if common.IsNotFoundErr(err) {
@@ -206,7 +206,7 @@ func (r *envGroupResource) Update(ctx context.Context, req resource.UpdateReques
 		}
 	} else {
 		err := common.Get(func() (*http.Response, error) {
-			return r.client.GetEnvGroup(ctx, envGroupID)
+			return r.client.RetrieveEnvGroup(ctx, envGroupID)
 		}, envGroup)
 		if err != nil {
 			resp.Diagnostics.AddError("unable to get environment group", err.Error())
@@ -220,7 +220,7 @@ func (r *envGroupResource) Update(ctx context.Context, req resource.UpdateReques
 }
 
 func (r *envGroupResource) updateEnvVar(ctx context.Context, envGroupID, key string, value common.EnvVarModel) error {
-	body, err := common.EnvVarToClient(key, value)
+	body, err := common.EnvVarAddUpdateToClient(key, value)
 	if err != nil {
 		return err
 	}

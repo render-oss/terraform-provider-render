@@ -6,7 +6,8 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/attr"
 	"github.com/hashicorp/terraform-plugin-framework/diag"
 	"github.com/hashicorp/terraform-plugin-framework/types"
-	"terraform-provider-render/internal/client"
+
+	"terraform-provider-render/internal/client/notifications"
 )
 
 var notificationTypes = map[string]attr.Type{
@@ -14,7 +15,7 @@ var notificationTypes = map[string]attr.Type{
 	"notifications_to_send":         types.StringType,
 }
 
-func NotificationOverrideFromClient(client *client.NotificationOverride, diags diag.Diagnostics) types.Object {
+func NotificationOverrideFromClient(client *notifications.NotificationOverride, diags diag.Diagnostics) types.Object {
 	if client == nil {
 		return types.ObjectNull(notificationTypes)
 	}
@@ -32,33 +33,33 @@ func NotificationOverrideFromClient(client *client.NotificationOverride, diags d
 	return objectValue
 }
 
-func NotificationOverrideToClient(model types.Object) (*client.NotificationServiceOverridePATCH, error) {
+func NotificationOverrideToClient(model types.Object) (*notifications.NotificationServiceOverridePATCH, error) {
 	if model.IsNull() {
 		return nil, nil
 	}
 
 	attrs := model.Attributes()
 
-	var previewNotificationEnabled *client.NotifyPreviewOverride
+	var previewNotificationEnabled *notifications.NotifyPreviewOverride
 	if attrs["preview_notifications_enabled"] != nil && !attrs["preview_notifications_enabled"].IsNull() && !attrs["preview_notifications_enabled"].IsUnknown() {
 		str, ok := attrs["preview_notifications_enabled"].(types.String)
 		if !ok {
 			// This should never happen
 			return nil, fmt.Errorf("unexpected type for preview_notifications_enabled: %T", attrs["preview_notifications_enabled"])
 		}
-		previewNotificationEnabled = From(client.NotifyPreviewOverride(str.ValueString()))
+		previewNotificationEnabled = From(notifications.NotifyPreviewOverride(str.ValueString()))
 	}
-	var notificationsToSend *client.NotifyOverride
+	var notificationsToSend *notifications.NotifyOverride
 	if attrs["notifications_to_send"] != nil && !attrs["notifications_to_send"].IsNull() && !attrs["notifications_to_send"].IsUnknown() {
 		str, ok := attrs["notifications_to_send"].(types.String)
 		if !ok {
 			// This should never happen
 			return nil, fmt.Errorf("unexpected type for notifications_to_send: %T", attrs["notifications_to_send"])
 		}
-		notificationsToSend = From(client.NotifyOverride(str.ValueString()))
+		notificationsToSend = From(notifications.NotifyOverride(str.ValueString()))
 	}
 
-	return &client.NotificationServiceOverridePATCH{
+	return &notifications.NotificationServiceOverridePATCH{
 		PreviewNotificationsEnabled: previewNotificationEnabled,
 		NotificationsToSend:         notificationsToSend,
 	}, nil

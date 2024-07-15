@@ -30,7 +30,7 @@ func UpdateServiceRequestFromModel(plan webservice.WebServiceModel, ownerID stri
 		HealthCheckPath:            plan.HealthCheckPath.ValueStringPointer(),
 		PreDeployCommand:           &preDeployCommand,
 		PullRequestPreviewsEnabled: &pullRequestPreviewsEnabled,
-		Runtime:                    common.From(client.ServiceEnv(plan.RuntimeSource.Runtime())),
+		Runtime:                    common.From(client.ServiceRuntime(plan.RuntimeSource.Runtime())),
 	}
 
 	serviceDetails := &client.ServicePATCH_ServiceDetails{}

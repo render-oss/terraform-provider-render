@@ -58,7 +58,7 @@ func (d *staticSiteSource) Read(ctx context.Context, req datasource.ReadRequest,
 		return
 	}
 
-	staticSite, err := d.client.GetServiceWithResponse(ctx, plan.Id.ValueString())
+	staticSite, err := d.client.RetrieveServiceWithResponse(ctx, plan.Id.ValueString())
 	if err != nil {
 		resp.Diagnostics.AddError("Unable to get static site", err.Error())
 		return

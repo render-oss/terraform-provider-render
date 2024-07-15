@@ -14,6 +14,8 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 
 	"terraform-provider-render/internal/client"
+	"terraform-provider-render/internal/client/disks"
+	"terraform-provider-render/internal/client/notifications"
 )
 
 var errNotFound = fmt.Errorf("not found")
@@ -155,7 +157,7 @@ type WrappedService struct {
 	CustomDomains        *[]client.CustomDomain
 	EnvVars              *[]client.EnvVarWithCursor
 	SecretFiles          *[]client.SecretFileWithCursor
-	NotificationOverride *client.NotificationOverride
+	NotificationOverride *notifications.NotificationOverride
 }
 
 func WrapService(ctx context.Context, apiClient *client.ClientWithResponses, service *client.Service) (*WrappedService, error) {
@@ -214,7 +216,7 @@ type serviceWithCursor struct {
 func getServiceByName(ctx context.Context, apiClient *client.ClientWithResponses, owner, name string, serviceType client.ServiceType) (*client.Service, error) {
 	var res []serviceWithCursor
 	err := Get(func() (*http.Response, error) {
-		return apiClient.GetServices(ctx, &client.GetServicesParams{
+		return apiClient.ListServices(ctx, &client.ListServicesParams{
 			Name:    From([]string{name}),
 			OwnerId: From([]string{owner}),
 			Type:    From([]client.ServiceType{serviceType}),
@@ -233,7 +235,7 @@ func getServiceByName(ctx context.Context, apiClient *client.ClientWithResponses
 func GetService(ctx context.Context, apiClient *client.ClientWithResponses, serviceID string) (*client.Service, error) {
 	var res client.Service
 	err := Get(func() (*http.Response, error) {
-		return apiClient.GetService(ctx, serviceID)
+		return apiClient.RetrieveService(ctx, serviceID)
 	}, &res)
 	if err != nil {
 		return nil, fmt.Errorf("could not get service: %w", err)
@@ -271,7 +273,7 @@ func getSecretFiles(ctx context.Context, apiClient *client.ClientWithResponses, 
 	for {
 		var secretFiles []client.SecretFileWithCursor
 		err := Get(func() (*http.Response, error) {
-			return apiClient.GetSecretFilesForService(ctx, serviceID, &client.GetSecretFilesForServiceParams{Cursor: cursor})
+			return apiClient.ListSecretFilesForService(ctx, serviceID, &client.ListSecretFilesForServiceParams{Cursor: cursor})
 		}, &secretFiles)
 		if err != nil {
 			return nil, fmt.Errorf("unable to get secret files for service: %w", err)
@@ -290,7 +292,7 @@ func getSecretFiles(ctx context.Context, apiClient *client.ClientWithResponses, 
 func GetEnvironmentById(ctx context.Context, apiClient *client.ClientWithResponses, envID string) (*client.Environment, error) {
 	var res client.Environment
 	err := Get(func() (*http.Response, error) {
-		return apiClient.GetEnvironment(ctx, envID)
+		return apiClient.RetrieveEnvironment(ctx, envID)
 	}, &res)
 	if err != nil {
 		return nil, fmt.Errorf("could not get environment id %s: %w", envID, err)
@@ -298,10 +300,10 @@ func GetEnvironmentById(ctx context.Context, apiClient *client.ClientWithRespons
 	return &res, nil
 }
 
-func getNotificationOverrides(ctx context.Context, apiClient *client.ClientWithResponses, serviceID string) (*client.NotificationOverride, error) {
-	var res client.NotificationOverride
+func getNotificationOverrides(ctx context.Context, apiClient *client.ClientWithResponses, serviceID string) (*notifications.NotificationOverride, error) {
+	var res notifications.NotificationOverride
 	err := Get(func() (*http.Response, error) {
-		return apiClient.GetServiceNotificationOverrides(ctx, serviceID)
+		return apiClient.ListNotificationOverrides(ctx, &client.ListNotificationOverridesParams{ServiceId: &[]string{serviceID}})
 	}, &res)
 	if err != nil {
 		return nil, fmt.Errorf("could not get notification override for service: %w", err)
@@ -389,9 +391,9 @@ func getCustomDomains(ctx context.Context, apiClient *client.ClientWithResponses
 	for {
 		var cds []*client.CustomDomainWithCursor
 		err := Get(func() (*http.Response, error) {
-			return apiClient.GetCustomDomains(ctx, service.Id, &client.GetCustomDomainsParams{
+			return apiClient.ListCustomDomains(ctx, service.Id, &client.ListCustomDomainsParams{
 				Cursor: cursor,
-				Limit:  From(client.LimitParam(limit)),
+				Limit:  From(limit),
 			})
 		}, &cds)
 		if err != nil {
@@ -399,7 +401,7 @@ func getCustomDomains(ctx context.Context, apiClient *client.ClientWithResponses
 		}
 
 		for _, cd := range cds {
-			res = append(res, *cd.CustomDomain)
+			res = append(res, cd.CustomDomain)
 		}
 
 		if len(cds) < limit {
@@ -420,7 +422,7 @@ func WaitForService(ctx context.Context, poller *Poller, apiClient *client.Clien
 	return poller.Poll(ctx, func() (bool, error) {
 		var deploys []DeployWithCursor
 		err := Get(func() (*http.Response, error) {
-			return apiClient.GetDeploys(ctx, serviceID, nil)
+			return apiClient.ListDeploys(ctx, serviceID, nil)
 		}, &deploys)
 		if err != nil {
 			return false, err
@@ -439,11 +441,11 @@ func WaitForService(ctx context.Context, poller *Poller, apiClient *client.Clien
 
 		if latestDeploy.Deploy != nil && latestDeploy.Deploy.Status != nil {
 			switch *latestDeploy.Deploy.Status {
-			case client.Live:
+			case client.DeployStatusLive:
 				return true, nil
-			case client.BuildFailed, client.Canceled, client.Deactivated, client.PreDeployFailed, client.UpdateFailed:
+			case client.DeployStatusBuildFailed, client.DeployStatusCanceled, client.DeployStatusDeactivated, client.DeployStatusPreDeployFailed, client.DeployStatusUpdateFailed:
 				return false, fmt.Errorf("deploy failed")
-			case client.BuildInProgress, client.Created, client.PreDeployInProgress, client.UpdateInProgress:
+			case client.DeployStatusBuildInProgress, client.DeployStatusCreated, client.DeployStatusPreDeployInProgress, client.DeployStatusUpdateInProgress:
 				return false, nil
 			}
 		}
@@ -466,7 +468,7 @@ type UpdateServiceReq struct {
 	Disk                 *DiskStateAndPlan
 	InstanceCount        *int64
 	Autoscaling          *AutoscalingStateAndPlan
-	NotificationOverride *client.NotificationServiceOverridePATCH
+	NotificationOverride *notifications.NotificationServiceOverridePATCH
 }
 
 type AutoscalingStateAndPlan struct {
@@ -635,7 +637,7 @@ func updateSecretFiles(ctx context.Context, apiClient *client.ClientWithResponse
 	return &secretFileResp, nil
 }
 
-func updateDisk(ctx context.Context, apiClient *client.ClientWithResponses, req UpdateServiceReq) (*client.DiskDetails, error) {
+func updateDisk(ctx context.Context, apiClient *client.ClientWithResponses, req UpdateServiceReq) (*disks.DiskDetails, error) {
 	if req.Disk == nil || req.Disk.Plan == nil && req.Disk.State == nil {
 		return nil, nil
 	}
@@ -651,7 +653,7 @@ func updateDisk(ctx context.Context, apiClient *client.ClientWithResponses, req 
 		return nil, nil
 	}
 
-	var diskResp client.DiskDetails
+	var diskResp disks.DiskDetails
 
 	if req.Disk.Plan != nil && req.Disk.State == nil {
 		// The disk was added
@@ -674,12 +676,12 @@ func updateDisk(ctx context.Context, apiClient *client.ClientWithResponses, req 
 	return &diskResp, nil
 }
 
-func updateNotificationOverride(ctx context.Context, apiClient *client.ClientWithResponses, req UpdateServiceReq) (*client.NotificationOverride, error) {
+func updateNotificationOverride(ctx context.Context, apiClient *client.ClientWithResponses, req UpdateServiceReq) (*notifications.NotificationOverride, error) {
 	if req.NotificationOverride == nil {
 		return nil, nil
 	}
 
-	var notificationOverrideResp client.NotificationOverride
+	var notificationOverrideResp notifications.NotificationOverride
 	err := Update(func() (*http.Response, error) {
 		return apiClient.PatchServiceNotificationOverrides(ctx, req.ServiceID, *req.NotificationOverride)
 	}, &notificationOverrideResp)

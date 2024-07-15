@@ -37,7 +37,7 @@ func CreateServiceRequestFromModel(ownerID string, plan webservice.WebServiceMod
 
 	webServiceDetails := client.WebServiceDetailsPOST{
 		Disk:                       common.DiskToClientCreate(plan.Disk),
-		Env:                        common.ToClientRuntime(plan.RuntimeSource.Runtime()),
+		Runtime:                    common.ToClientRuntime(plan.RuntimeSource.Runtime()),
 		EnvSpecificDetails:         envSpecificDetails,
 		HealthCheckPath:            plan.HealthCheckPath.ValueStringPointer(),
 		NumInstances:               &numInstances,

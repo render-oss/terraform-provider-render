@@ -6,6 +6,8 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/attr"
 	"github.com/hashicorp/terraform-plugin-framework/diag"
 	"github.com/hashicorp/terraform-plugin-framework/types"
+
+	"terraform-provider-render/internal/client/autoscaling"
 	commontypes "terraform-provider-render/internal/provider/common/types"
 
 	"terraform-provider-render/internal/client"
@@ -21,7 +23,7 @@ var criteriaTypes = map[string]attr.Type{
 	CriteriaPercentage: types.Int64Type,
 }
 
-func AutoscalingFromClient(autoscaling *client.AutoscalingConfig, diags diag.Diagnostics) *AutoscalingModel {
+func AutoscalingFromClient(autoscaling *autoscaling.AutoscalingConfig, diags diag.Diagnostics) *AutoscalingModel {
 	if autoscaling == nil {
 		return nil
 	}
@@ -55,14 +57,14 @@ func AutoscalingFromClient(autoscaling *client.AutoscalingConfig, diags diag.Dia
 	}
 }
 
-func AutoscalingRequest(autoscaling *AutoscalingModel) (*client.AutoscalingConfig, error) {
-	if autoscaling == nil {
+func AutoscalingRequest(am *AutoscalingModel) (*autoscaling.AutoscalingConfig, error) {
+	if am == nil {
 		return nil, nil
 	}
 
-	var cpu client.AutoscalingCriteriaPercentage
-	if !autoscaling.Criteria.Cpu.IsNull() && !autoscaling.Criteria.Cpu.IsUnknown() {
-		cpuAttributes := autoscaling.Criteria.Cpu.Attributes()
+	var cpu autoscaling.AutoscalingCriteriaPercentage
+	if !am.Criteria.Cpu.IsNull() && !am.Criteria.Cpu.IsUnknown() {
+		cpuAttributes := am.Criteria.Cpu.Attributes()
 		cpuEnabled, ok := cpuAttributes[CriteriaEnabled].(types.Bool)
 		if !ok {
 			return nil, fmt.Errorf("expected cpu %s to be a bool", CriteriaEnabled)
@@ -73,15 +75,15 @@ func AutoscalingRequest(autoscaling *AutoscalingModel) (*client.AutoscalingConfi
 			return nil, fmt.Errorf("expected cpu %s to be an int64", CriteriaPercentage)
 		}
 
-		cpu = client.AutoscalingCriteriaPercentage{
+		cpu = autoscaling.AutoscalingCriteriaPercentage{
 			Enabled:    cpuEnabled.ValueBool(),
 			Percentage: int(cpuPercentage.ValueInt64()),
 		}
 	}
 
-	var memory client.AutoscalingCriteriaPercentage
-	if !autoscaling.Criteria.Memory.IsNull() && !autoscaling.Criteria.Memory.IsUnknown() {
-		memoryAttributes := autoscaling.Criteria.Memory.Attributes()
+	var memory autoscaling.AutoscalingCriteriaPercentage
+	if !am.Criteria.Memory.IsNull() && !am.Criteria.Memory.IsUnknown() {
+		memoryAttributes := am.Criteria.Memory.Attributes()
 		memoryEnabled, ok := memoryAttributes[CriteriaEnabled].(types.Bool)
 		if !ok {
 			return nil, fmt.Errorf("expected memory %s to be a bool", CriteriaEnabled)
@@ -91,26 +93,26 @@ func AutoscalingRequest(autoscaling *AutoscalingModel) (*client.AutoscalingConfi
 		if !ok {
 			return nil, fmt.Errorf("expected memory %s to be an int64", CriteriaPercentage)
 		}
-		memory = client.AutoscalingCriteriaPercentage{
+		memory = autoscaling.AutoscalingCriteriaPercentage{
 			Enabled:    memoryEnabled.ValueBool(),
 			Percentage: int(memoryPercentage.ValueInt64()),
 		}
 	}
 
-	return &client.AutoscalingConfig{
-		Criteria: client.AutoscalingCriteria{
+	return &autoscaling.AutoscalingConfig{
+		Criteria: autoscaling.AutoscalingCriteria{
 			Cpu:    cpu,
 			Memory: memory,
 		},
-		Enabled: autoscaling.Enabled.ValueBool(),
-		Max:     int(autoscaling.Max.ValueInt64()),
-		Min:     int(autoscaling.Min.ValueInt64()),
+		Enabled: am.Enabled.ValueBool(),
+		Max:     int(am.Max.ValueInt64()),
+		Min:     int(am.Min.ValueInt64()),
 	}, nil
 }
 
-func RuntimeSourceFromClient(service *client.Service, env client.ServiceEnv, envDetails client.EnvSpecificDetails) (*RuntimeSourceModel, error) {
+func RuntimeSourceFromClient(service *client.Service, env client.ServiceRuntime, envDetails client.EnvSpecificDetails) (*RuntimeSourceModel, error) {
 	runtimeSource := &RuntimeSourceModel{}
-	if env == client.ServiceEnvImage {
+	if env == client.ServiceRuntimeImage {
 		imageRuntime, err := ImageRuntimeSource(service, envDetails)
 		if err != nil {
 			return nil, err
@@ -118,7 +120,7 @@ func RuntimeSourceFromClient(service *client.Service, env client.ServiceEnv, env
 
 		runtimeSource.Image = imageRuntime
 
-	} else if env == client.ServiceEnvDocker {
+	} else if env == client.ServiceRuntimeDocker {
 		dockerRuntime, err := DockerRuntimeSource(service, envDetails)
 		if err != nil {
 			return nil, err
@@ -137,7 +139,7 @@ func RuntimeSourceFromClient(service *client.Service, env client.ServiceEnv, env
 	return runtimeSource, nil
 }
 
-func NativeRuntimeSource(service *client.Service, env client.ServiceEnv, envDetails client.EnvSpecificDetails) (*NativeRuntimeModel, error) {
+func NativeRuntimeSource(service *client.Service, env client.ServiceRuntime, envDetails client.EnvSpecificDetails) (*NativeRuntimeModel, error) {
 	nativeRuntime := &NativeRuntimeModel{}
 
 	if service.Repo != nil {

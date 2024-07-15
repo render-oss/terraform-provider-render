@@ -2,25 +2,25 @@ package common
 
 import "terraform-provider-render/internal/client"
 
-func ToClientRuntime(runtime string) client.ServiceEnv {
+func ToClientRuntime(runtime string) client.ServiceRuntime {
 	switch runtime {
 	case "docker":
-		return client.ServiceEnvDocker
+		return client.ServiceRuntimeDocker
 	case "image":
-		return client.ServiceEnvImage
+		return client.ServiceRuntimeImage
 	case "node":
-		return client.ServiceEnvNode
+		return client.ServiceRuntimeNode
 	case "python":
-		return client.ServiceEnvPython
+		return client.ServiceRuntimePython
 	case "ruby":
-		return client.ServiceEnvRuby
+		return client.ServiceRuntimeRuby
 	case "rust":
-		return client.ServiceEnvRust
+		return client.ServiceRuntimeRust
 	case "go":
-		return client.ServiceEnvGo
+		return client.ServiceRuntimeGo
 	case "elixir":
-		return client.ServiceEnvElixir
+		return client.ServiceRuntimeElixir
 	}
 
-	return client.ServiceEnv("")
+	return ""
 }

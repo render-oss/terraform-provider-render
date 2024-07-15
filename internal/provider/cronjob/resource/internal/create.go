@@ -16,7 +16,7 @@ func CreateServiceRequestFromModel(ownerID string, plan cronJob.CronJobModel) (c
 	region := client.Region(plan.Region.ValueString())
 
 	cronJobDetails := client.CronJobDetailsPOST{
-		Env:                client.ServiceEnv(plan.RuntimeSource.Runtime()),
+		Runtime:            client.ServiceRuntime(plan.RuntimeSource.Runtime()),
 		EnvSpecificDetails: envSpecificDetails,
 		Plan:               &servicePlan,
 		Region:             &region,

@@ -38,7 +38,7 @@ func CreateServiceRequestFromModel(ownerID string, plan privateservice.PrivateSe
 	privateServiceDetails := client.PrivateServiceDetailsPOST{
 		Autoscaling:                autoscaling,
 		Disk:                       common.DiskToClientCreate(plan.Disk),
-		Env:                        client.ServiceEnv(plan.RuntimeSource.Runtime()),
+		Runtime:                    client.ServiceRuntime(plan.RuntimeSource.Runtime()),
 		EnvSpecificDetails:         envSpecificDetails,
 		NumInstances:               &numInstances,
 		Plan:                       &servicePlan,
