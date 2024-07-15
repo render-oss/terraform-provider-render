@@ -303,7 +303,7 @@ func GetEnvironmentById(ctx context.Context, apiClient *client.ClientWithRespons
 func getNotificationOverrides(ctx context.Context, apiClient *client.ClientWithResponses, serviceID string) (*notifications.NotificationOverride, error) {
 	var res notifications.NotificationOverride
 	err := Get(func() (*http.Response, error) {
-		return apiClient.ListNotificationOverrides(ctx, &client.ListNotificationOverridesParams{ServiceId: &[]string{serviceID}})
+		return apiClient.RetrieveServiceNotificationOverrides(ctx, serviceID)
 	}, &res)
 	if err != nil {
 		return nil, fmt.Errorf("could not get notification override for service: %w", err)
