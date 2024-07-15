@@ -24,7 +24,6 @@ func isNonCustomPostgresPlanFunc() validator.String {
 		string(postgres.Standard),
 		string(postgres.Pro),
 		string(postgres.ProPlus),
-		string(postgres.Custom),
 	)
 }
 
