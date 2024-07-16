@@ -86,10 +86,6 @@ func (r *backgroundWorkerResource) Create(ctx context.Context, req resource.Crea
 		resp.Diagnostics.AddError(
 			"Error creating background worker", "Could not create background worker, unexpected error: "+err.Error(),
 		)
-		// We don't return early here because we want to add the service to the state
-		// if it was created. Even if there was an error during creation, the service
-		// may be in a partial created state.
-		shouldWaitForServiceCompletion = false
 	}
 
 	service, err := common.GetWrappedServiceByName(ctx, r.client, r.ownerID, plan.Name.ValueString(), client.BackgroundWorker)

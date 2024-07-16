@@ -4,6 +4,7 @@ import (
 	"context"
 	"net/http"
 	"os"
+	"strings"
 
 	projectdatasource "terraform-provider-render/internal/provider/project/datasource"
 	projectresource "terraform-provider-render/internal/provider/project/resource"
@@ -45,8 +46,9 @@ import (
 
 // renderProviderModel maps provider schema data to a Go type.
 type renderProviderModel struct {
-	APIKey  types.String `tfsdk:"api_key"`
-	OwnerID types.String `tfsdk:"owner_id"`
+	APIKey                  types.String `tfsdk:"api_key"`
+	OwnerID                 types.String `tfsdk:"owner_id"`
+	WaitForDeployCompletion types.Bool   `tfsdk:"wait_for_deploy_completion"`
 }
 
 // Ensure the implementation satisfies the expected interfaces.
@@ -97,8 +99,7 @@ func WithWaitForDeployCompletion(wait bool) ConfigFunc {
 func New(version string, configFuncs ...ConfigFunc) func() provider.Provider {
 	return func() provider.Provider {
 		p := &renderProvider{
-			version:                 version,
-			waitForDeployCompletion: true,
+			version: version,
 		}
 
 		for _, f := range configFuncs {
@@ -146,6 +147,10 @@ func (p *renderProvider) Schema(_ context.Context, _ provider.SchemaRequest, res
 			"owner_id": schema.StringAttribute{
 				Optional:    true,
 				Description: "The user or team ID that owns the managed resources. All resources will be created under this owner ID. You can find the owner ID in the Render dashboard by navigating to the user or team settings and finding the ID in the URL. The ID will start with usr- for individual accounts and tea- for team accounts. The provider will read this value from the RENDER_OWNER_ID environment variable if set.",
+			},
+			"wait_for_deploy_completion": schema.BoolAttribute{
+				Optional:    true,
+				Description: "If set to true, the provider will wait for deployments to complete when creating web services, private services, and background workers before continuing. This is useful when you have services that depend on one another and the dependencies must be live for the dependent service to successfully start. The default value is false. The provider will read this value from the RENDER_WAIT_FOR_DEPLOY_COMPLETION environment variable if set.",
 			},
 		},
 	}
@@ -211,6 +216,15 @@ func (p *renderProvider) Configure(ctx context.Context, req provider.ConfigureRe
 
 	if !config.OwnerID.IsNull() {
 		p.OwnerID = config.OwnerID.ValueString()
+	}
+
+	p.waitForDeployCompletion = false
+	if value := os.Getenv("RENDER_WAIT_FOR_DEPLOY_COMPLETION"); value != "" {
+		p.waitForDeployCompletion = strings.ToLower(value) == "true"
+	}
+
+	if !config.WaitForDeployCompletion.IsNull() {
+		p.waitForDeployCompletion = config.WaitForDeployCompletion.ValueBool()
 	}
 
 	// If any of the expected configurations are missing, return
