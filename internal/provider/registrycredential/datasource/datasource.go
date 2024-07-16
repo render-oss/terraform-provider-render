@@ -57,7 +57,7 @@ func (d *registryDataSource) Read(ctx context.Context, req datasource.ReadReques
 		return
 	}
 
-	registryCredentials, err := d.client.GetRegistrycredentialsRegistryCredentialIdWithResponse(ctx, plan.Id.ValueString())
+	registryCredentials, err := d.client.RetrieveRegistryCredentialWithResponse(ctx, plan.Id.ValueString())
 	if err != nil {
 		resp.Diagnostics.AddError("Unable to get registry credentials", err.Error())
 		return

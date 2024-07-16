@@ -56,6 +56,29 @@ func EnvVarToClient(k string, v EnvVarModel) (*client.EnvVarInput, error) {
 	return evItem, nil
 }
 
+func EnvVarAddUpdateToClient(k string, v EnvVarModel) (*client.AddUpdateEnvVarInput, error) {
+	evItem := &client.AddUpdateEnvVarInput{}
+
+	if !v.Value.IsNull() && !v.Value.IsUnknown() {
+		err := evItem.FromEnvVarValue(client.EnvVarValue{
+			Value: v.Value.ValueString(),
+		})
+		if err != nil {
+			return nil, err
+		}
+	} else if v.GenerateValue.ValueBool() {
+		err := evItem.FromEnvVarGenerateValue(client.EnvVarGenerateValue{
+			GenerateValue: true,
+		})
+		if err != nil {
+			return nil, err
+		}
+	} else {
+		return nil, fmt.Errorf("env var %s has no value, either provide a value or set generate_value to true", k)
+	}
+	return evItem, nil
+}
+
 func EnvVarsFromClientCursors(evs *[]client.EnvVarWithCursor, planEVs map[string]EnvVarModel) map[string]EnvVarModel {
 	res := map[string]EnvVarModel{}
 

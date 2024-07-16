@@ -7,6 +7,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 
 	"terraform-provider-render/internal/client"
+	clientnotifications "terraform-provider-render/internal/client/notifications"
 	"terraform-provider-render/internal/provider/common"
 	"terraform-provider-render/internal/provider/notifications"
 	rendertypes "terraform-provider-render/internal/provider/types"
@@ -59,7 +60,7 @@ func (r *notificationSettingResource) Create(ctx context.Context, req resource.C
 		return
 	}
 
-	var notifs client.NotificationSetting
+	var notifs clientnotifications.NotificationSetting
 
 	patch := r.notificationPatch(plan)
 
@@ -86,10 +87,10 @@ func (r *notificationSettingResource) Read(ctx context.Context, req resource.Rea
 		return
 	}
 
-	var notifs client.NotificationSetting
+	var notifs clientnotifications.NotificationSetting
 
 	err := common.Get(func() (*http.Response, error) {
-		return r.client.GetOwnerNotificationSettings(ctx, r.ownerID)
+		return r.client.RetrieveOwnerNotificationSettings(ctx, r.ownerID)
 	}, &notifs)
 	if common.IsNotFoundErr(err) {
 		common.EmitNotFoundWarning(r.ownerID, &diags)
@@ -114,7 +115,7 @@ func (r *notificationSettingResource) Update(ctx context.Context, req resource.U
 		return
 	}
 
-	var notifs client.NotificationSetting
+	var notifs clientnotifications.NotificationSetting
 
 	patch := r.notificationPatch(plan)
 
@@ -131,7 +132,7 @@ func (r *notificationSettingResource) Update(ctx context.Context, req resource.U
 	resp.Diagnostics.Append(diags...)
 }
 
-func (r *notificationSettingResource) notificationPatch(plan notifications.NotificationSettingModel) client.NotificationSettingPATCH {
+func (r *notificationSettingResource) notificationPatch(plan notifications.NotificationSettingModel) clientnotifications.NotificationSettingPATCH {
 	emailEnabled := plan.EmailEnabled.ValueBoolPointer()
 	if plan.EmailEnabled.IsUnknown() {
 		emailEnabled = nil
@@ -142,13 +143,13 @@ func (r *notificationSettingResource) notificationPatch(plan notifications.Notif
 		prevNotifsEnabled = nil
 	}
 
-	var notifsToSend *client.NotifySettingV2
+	var notifsToSend *clientnotifications.NotifySettingV2
 	if plan.NotificationsToSend.IsUnknown() || plan.NotificationsToSend.IsNull() {
 		notifsToSend = nil
 	} else {
-		notifsToSend = common.From(client.NotifySettingV2(plan.NotificationsToSend.ValueString()))
+		notifsToSend = common.From(clientnotifications.NotifySettingV2(plan.NotificationsToSend.ValueString()))
 	}
-	return client.NotificationSettingPATCH{
+	return clientnotifications.NotificationSettingPATCH{
 		EmailEnabled:                emailEnabled,
 		NotificationsToSend:         notifsToSend,
 		PreviewNotificationsEnabled: prevNotifsEnabled,

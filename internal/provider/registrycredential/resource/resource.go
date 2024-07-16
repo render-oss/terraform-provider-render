@@ -63,14 +63,14 @@ func (r *registryCredentialResource) Create(ctx context.Context, req resource.Cr
 		return
 	}
 
-	var registry client.CreateRegistryCredentialJSONBodyRegistry
+	var registry client.RegistryCredentialRegistry
 	switch plan.Registry {
 	case types.StringValue("GITHUB"):
-		registry = client.CreateRegistryCredentialJSONBodyRegistryGITHUB
+		registry = client.GITHUB
 	case types.StringValue("GITLAB"):
-		registry = client.CreateRegistryCredentialJSONBodyRegistryGITLAB
+		registry = client.GITLAB
 	case types.StringValue("DOCKER"):
-		registry = client.CreateRegistryCredentialJSONBodyRegistryDOCKER
+		registry = client.DOCKER
 	default:
 		resp.Diagnostics.AddError(
 			"Error creating registry credential",
@@ -127,7 +127,7 @@ func (r *registryCredentialResource) Read(ctx context.Context, req resource.Read
 		return
 	}
 
-	response, err := r.client.GetRegistrycredentialsRegistryCredentialIdWithResponse(ctx, state.Id.ValueString())
+	response, err := r.client.RetrieveRegistryCredentialWithResponse(ctx, state.Id.ValueString())
 	if common.IsNotFoundErr(err) {
 		common.EmitNotFoundWarning(state.Id.ValueString(), &diags)
 		resp.State.RemoveResource(ctx)
@@ -198,7 +198,7 @@ func (r *registryCredentialResource) Update(ctx context.Context, req resource.Up
 	requestBody := client.UpdateRegistryCredentialJSONRequestBody{
 		AuthToken: plan.AuthToken.ValueString(),
 		Name:      plan.Name.ValueString(),
-		Registry:  client.UpdateRegistryCredentialJSONBodyRegistry(plan.Registry.ValueString()),
+		Registry:  client.RegistryCredentialRegistry(plan.Registry.ValueString()),
 		Username:  plan.Username.ValueString(),
 	}
 

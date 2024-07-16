@@ -5,6 +5,7 @@ import (
 	"net/http"
 
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
+
 	"terraform-provider-render/internal/provider/common"
 
 	"terraform-provider-render/internal/provider/redis"
@@ -62,7 +63,7 @@ func (d *redisSource) Read(ctx context.Context, req datasource.ReadRequest, resp
 
 	var redisResponse client.Redis
 	if err := common.Get(func() (*http.Response, error) {
-		return d.client.GetRedis(ctx, plan.Id.ValueString())
+		return d.client.RetrieveRedis(ctx, plan.Id.ValueString())
 	}, &redisResponse); err != nil {
 		resp.Diagnostics.AddError("unable to get redis", err.Error())
 		return
@@ -70,7 +71,7 @@ func (d *redisSource) Read(ctx context.Context, req datasource.ReadRequest, resp
 
 	var connectionInfo client.RedisConnectionInfo
 	if err := common.Get(func() (*http.Response, error) {
-		return d.client.GetRedisConnectionInfo(ctx, redisResponse.Id)
+		return d.client.RetrieveRedisConnectionInfo(ctx, redisResponse.Id)
 	}, &connectionInfo); err != nil {
 		resp.Diagnostics.AddError("unable to get redis connection info", err.Error())
 		return

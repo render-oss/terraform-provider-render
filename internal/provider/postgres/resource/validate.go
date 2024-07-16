@@ -5,7 +5,9 @@ import (
 
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
+
 	"terraform-provider-render/internal/client"
+	"terraform-provider-render/internal/client/postgres"
 )
 
 func ValidatePostgresPlanFunc() validator.String {
@@ -17,12 +19,11 @@ func ValidatePostgresPlanFunc() validator.String {
 
 func isNonCustomPostgresPlanFunc() validator.String {
 	return stringvalidator.OneOf(
-		string(client.PostgresPlansFree),
-		string(client.PostgresPlansStarter),
-		string(client.PostgresPlansStandard),
-		string(client.PostgresPlansPro),
-		string(client.PostgresPlansProPlus),
-		string(client.PostgresPlansCustom),
+		string(postgres.Free),
+		string(postgres.Starter),
+		string(postgres.Standard),
+		string(postgres.Pro),
+		string(postgres.ProPlus),
 	)
 }
 

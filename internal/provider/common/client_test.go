@@ -10,6 +10,7 @@ import (
 	"github.com/stretchr/testify/require"
 
 	"terraform-provider-render/internal/client"
+	"terraform-provider-render/internal/client/disks"
 	"terraform-provider-render/internal/provider/common"
 	th "terraform-provider-render/internal/provider/testhelpers"
 )
@@ -115,7 +116,7 @@ func TestUpdateService(t *testing.T) {
 					{SecretFile: client.SecretFile{Name: "updated-secret-file", Content: "val1"}},
 				},
 			),
-			"/disks/some-disk-id": th.StaticResponse(client.DiskDetails{Name: "updated-disk"}),
+			"/disks/some-disk-id": th.StaticResponse(disks.DiskDetails{Name: "updated-disk"}),
 			"/services/some-service-id/deploys": func(resp http.ResponseWriter, req *http.Request) {
 				deployCalled = true
 				resp.WriteHeader(http.StatusCreated)

@@ -62,7 +62,7 @@ func (d *postgresDataSource) Read(ctx context.Context, req datasource.ReadReques
 
 	var pg client.Postgres
 	err := common.Get(func() (*http.Response, error) {
-		return d.client.GetPostgres(ctx, plan.ID.ValueString())
+		return d.client.RetrievePostgres(ctx, plan.ID.ValueString())
 	}, &pg)
 	if err != nil {
 		resp.Diagnostics.AddError("unable to get postgres", err.Error())
@@ -71,7 +71,7 @@ func (d *postgresDataSource) Read(ctx context.Context, req datasource.ReadReques
 
 	var secrets client.PostgresConnectionInfo
 	if err = common.Get(func() (*http.Response, error) {
-		return d.client.GetPostgresConnectionInfo(ctx, plan.ID.ValueString())
+		return d.client.RetrievePostgresConnectionInfo(ctx, plan.ID.ValueString())
 	}, &secrets); err != nil {
 		resp.Diagnostics.AddError("unable to get postgres connection info", err.Error())
 		return

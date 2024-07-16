@@ -95,7 +95,7 @@ func (r *envGroupLinkResource) Read(ctx context.Context, req resource.ReadReques
 }
 
 func (r *envGroupLinkResource) getEnvGroup(ctx context.Context, id string) (*client.EnvGroup, error) {
-	envGroupLinkResp, err := r.client.GetEnvGroupWithResponse(ctx, id)
+	envGroupLinkResp, err := r.client.RetrieveEnvGroupWithResponse(ctx, id)
 	if err != nil {
 		return nil, err
 	}

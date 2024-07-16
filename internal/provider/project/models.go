@@ -5,6 +5,7 @@ import (
 	"net/http"
 
 	"github.com/hashicorp/terraform-plugin-framework/types"
+
 	"terraform-provider-render/internal/client"
 	"terraform-provider-render/internal/provider/common"
 )
@@ -56,7 +57,7 @@ func ModelForProjectResult(project *client.Project, environments map[string]*cli
 func Read(ctx context.Context, c *client.ClientWithResponses, proj ProjectModel) (*ProjectModel, error) {
 	var projectResponse client.Project
 	err := common.Get(func() (*http.Response, error) {
-		return c.GetProject(ctx, proj.Id.ValueString())
+		return c.RetrieveProject(ctx, proj.Id.ValueString())
 	}, &projectResponse)
 
 	if err != nil {
@@ -69,7 +70,7 @@ func Read(ctx context.Context, c *client.ClientWithResponses, proj ProjectModel)
 		var environmentResponse *client.Environment
 
 		err := common.Get(func() (*http.Response, error) {
-			return c.GetEnvironment(ctx, envId)
+			return c.RetrieveEnvironment(ctx, envId)
 		}, &environmentResponse)
 
 		if err != nil {

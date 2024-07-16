@@ -27,7 +27,7 @@ func UpdateServiceRequestFromModel(plan cronJob.CronJobModel, ownerID string) (c
 	}
 
 	var image *client.Image
-	if plan.RuntimeSource.Runtime() == string(client.ServiceEnvImage) {
+	if plan.RuntimeSource.Runtime() == string(client.ServiceRuntimeImage) {
 		image = &client.Image{
 			OwnerId:              ownerID,
 			ImagePath:            plan.RuntimeSource.Image.ImageURL.ValueString(),

@@ -6,6 +6,7 @@ import (
 	"net/http"
 
 	"terraform-provider-render/internal/client"
+	"terraform-provider-render/internal/client/notifications"
 )
 
 type WrappedStaticSite struct {
@@ -13,7 +14,7 @@ type WrappedStaticSite struct {
 	CustomDomains        *[]client.CustomDomain
 	EnvVars              *[]client.EnvVarWithCursor
 	Headers              *[]client.Header
-	NotificationOverride *client.NotificationOverride
+	NotificationOverride *notifications.NotificationOverride
 	Routes               *[]client.Route
 }
 
@@ -24,7 +25,7 @@ type UpdateStaticSiteReq struct {
 	EnvironmentID        *EnvironmentIDStateAndPlan
 	EnvVars              client.EnvVarInputArray
 	Headers              []client.HeaderInput
-	NotificationOverride *client.NotificationServiceOverridePATCH
+	NotificationOverride *notifications.NotificationServiceOverridePATCH
 	Routes               []client.RoutePut
 }
 
@@ -95,7 +96,7 @@ func UpdateStaticSite(ctx context.Context, apiClient *client.ClientWithResponses
 }
 
 func getHeaders(ctx context.Context, apiClient *client.ClientWithResponses, serviceID string) (*[]client.Header, error) {
-	var limit float32 = 100
+	var limit = 100
 	var headers []client.Header
 	var cursor *string
 
@@ -104,7 +105,7 @@ func getHeaders(ctx context.Context, apiClient *client.ClientWithResponses, serv
 
 		var headerResp []client.HeaderWithCursor
 		err := Get(func() (*http.Response, error) {
-			return apiClient.RetrieveHeaders(ctx, serviceID, &client.RetrieveHeadersParams{
+			return apiClient.ListHeaders(ctx, serviceID, &client.ListHeadersParams{
 				Cursor: c,
 				Limit:  &limit,
 			})
@@ -115,7 +116,7 @@ func getHeaders(ctx context.Context, apiClient *client.ClientWithResponses, serv
 		}
 
 		headers = append(headers, HeaderResponseToClientHeaders(headerResp)...)
-		if len(headerResp) < int(limit) {
+		if len(headerResp) < limit {
 			break
 		}
 
@@ -127,7 +128,7 @@ func getHeaders(ctx context.Context, apiClient *client.ClientWithResponses, serv
 }
 
 func getRoutes(ctx context.Context, apiClient *client.ClientWithResponses, serviceID string) (*[]client.Route, error) {
-	var limit float32 = 100
+	var limit = 100
 	var routes []client.Route
 	var cursor string
 
@@ -136,7 +137,7 @@ func getRoutes(ctx context.Context, apiClient *client.ClientWithResponses, servi
 
 		var routeResp []client.RouteWithCursor
 		err := Get(func() (*http.Response, error) {
-			return apiClient.RetrieveRoutes(ctx, serviceID, &client.RetrieveRoutesParams{
+			return apiClient.ListRoutes(ctx, serviceID, &client.ListRoutesParams{
 				Cursor: &c,
 				Limit:  &limit,
 			})
@@ -147,7 +148,7 @@ func getRoutes(ctx context.Context, apiClient *client.ClientWithResponses, servi
 
 		routes = append(routes, RouteResponseToClientRoutes(routeResp)...)
 
-		if len(routeResp) < int(limit) {
+		if len(routeResp) < limit {
 			break
 		}
 

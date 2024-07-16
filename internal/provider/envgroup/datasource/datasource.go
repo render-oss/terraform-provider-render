@@ -61,7 +61,7 @@ func (d *envGroupDataSource) Read(ctx context.Context, req datasource.ReadReques
 
 	var envGroup client.EnvGroup
 	err := common.Get(func() (*http.Response, error) {
-		return d.client.GetEnvGroup(ctx, plan.Id.ValueString())
+		return d.client.RetrieveEnvGroup(ctx, plan.Id.ValueString())
 	}, &envGroup)
 	if err != nil {
 		resp.Diagnostics.AddError("Unable to get envGroup", err.Error())

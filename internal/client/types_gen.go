@@ -7,6 +7,16 @@ import (
 	"encoding/json"
 	"time"
 
+	externalRef0 "terraform-provider-render/internal/client/autoscaling"
+	externalRef1 "terraform-provider-render/internal/client/blueprints"
+	externalRef2 "terraform-provider-render/internal/client/disks"
+	externalRef3 "terraform-provider-render/internal/client/events"
+	externalRef5 "terraform-provider-render/internal/client/logs"
+	externalRef6 "terraform-provider-render/internal/client/maintenance"
+	externalRef7 "terraform-provider-render/internal/client/metrics"
+	externalRef8 "terraform-provider-render/internal/client/notifications"
+	externalRef9 "terraform-provider-render/internal/client/postgres"
+
 	"github.com/oapi-codegen/runtime"
 )
 
@@ -36,6 +46,14 @@ const (
 const (
 	BuildPlanPerformance BuildPlan = "performance"
 	BuildPlanStarter     BuildPlan = "starter"
+)
+
+// Defines values for CronJobRunStatus.
+const (
+	CronJobRunStatusCanceled     CronJobRunStatus = "canceled"
+	CronJobRunStatusPending      CronJobRunStatus = "pending"
+	CronJobRunStatusSuccessful   CronJobRunStatus = "successful"
+	CronJobRunStatusUnsuccessful CronJobRunStatus = "unsuccessful"
 )
 
 // Defines values for CustomDomainDomainType.
@@ -73,16 +91,16 @@ const (
 
 // Defines values for DeployStatus.
 const (
-	BuildFailed         DeployStatus = "build_failed"
-	BuildInProgress     DeployStatus = "build_in_progress"
-	Canceled            DeployStatus = "canceled"
-	Created             DeployStatus = "created"
-	Deactivated         DeployStatus = "deactivated"
-	Live                DeployStatus = "live"
-	PreDeployFailed     DeployStatus = "pre_deploy_failed"
-	PreDeployInProgress DeployStatus = "pre_deploy_in_progress"
-	UpdateFailed        DeployStatus = "update_failed"
-	UpdateInProgress    DeployStatus = "update_in_progress"
+	DeployStatusBuildFailed         DeployStatus = "build_failed"
+	DeployStatusBuildInProgress     DeployStatus = "build_in_progress"
+	DeployStatusCanceled            DeployStatus = "canceled"
+	DeployStatusCreated             DeployStatus = "created"
+	DeployStatusDeactivated         DeployStatus = "deactivated"
+	DeployStatusLive                DeployStatus = "live"
+	DeployStatusPreDeployFailed     DeployStatus = "pre_deploy_failed"
+	DeployStatusPreDeployInProgress DeployStatus = "pre_deploy_in_progress"
+	DeployStatusUpdateFailed        DeployStatus = "update_failed"
+	DeployStatusUpdateInProgress    DeployStatus = "update_in_progress"
 )
 
 // Defines values for DeployTrigger.
@@ -99,28 +117,6 @@ const (
 	ServiceUpdated   DeployTrigger = "service_updated"
 )
 
-// Defines values for FilterApplicationValuesCollectionFilter.
-const (
-	Instance FilterApplicationValuesCollectionFilter = "instance"
-)
-
-// Defines values for FilterHTTPValuesCollectionFilter.
-const (
-	FilterHTTPValuesCollectionFilterHost       FilterHTTPValuesCollectionFilter = "host"
-	FilterHTTPValuesCollectionFilterStatusCode FilterHTTPValuesCollectionFilter = "statusCode"
-)
-
-// Defines values for MaintenanceState.
-const (
-	MaintenanceStateCancelled       MaintenanceState = "cancelled"
-	MaintenanceStateFailed          MaintenanceState = "failed"
-	MaintenanceStateInProgress      MaintenanceState = "in_progress"
-	MaintenanceStateNotified        MaintenanceState = "notified"
-	MaintenanceStateScheduled       MaintenanceState = "scheduled"
-	MaintenanceStateSucceeded       MaintenanceState = "succeeded"
-	MaintenanceStateUserFixRequired MaintenanceState = "user_fix_required"
-)
-
 // Defines values for MaxmemoryPolicy.
 const (
 	AllkeysLfu     MaxmemoryPolicy = "allkeys_lfu"
@@ -133,38 +129,11 @@ const (
 	VolatileTtl    MaxmemoryPolicy = "volatile_ttl"
 )
 
-// Defines values for NotificationOverrideType.
-const (
-	NotificationOverrideTypeService NotificationOverrideType = "service"
-)
-
-// Defines values for NotifyOverride.
-const (
-	NotifyOverrideAll     NotifyOverride = "all"
-	NotifyOverrideDefault NotifyOverride = "default"
-	NotifyOverrideFailure NotifyOverride = "failure"
-	NotifyOverrideNone    NotifyOverride = "none"
-)
-
-// Defines values for NotifyPreviewOverride.
-const (
-	NotifyPreviewOverrideDefault NotifyPreviewOverride = "default"
-	NotifyPreviewOverrideFalse   NotifyPreviewOverride = "false"
-	NotifyPreviewOverrideTrue    NotifyPreviewOverride = "true"
-)
-
 // Defines values for NotifySetting.
 const (
 	Default NotifySetting = "default"
 	Ignore  NotifySetting = "ignore"
 	Notify  NotifySetting = "notify"
-)
-
-// Defines values for NotifySettingV2.
-const (
-	All     NotifySettingV2 = "all"
-	Failure NotifySettingV2 = "failure"
-	None    NotifySettingV2 = "none"
 )
 
 // Defines values for OwnerType.
@@ -203,14 +172,10 @@ const (
 	PostgresSuspendedSuspended    PostgresSuspended = "suspended"
 )
 
-// Defines values for PostgresPlans.
+// Defines values for PostgresDetailSuspended.
 const (
-	PostgresPlansCustom   PostgresPlans = "custom"
-	PostgresPlansFree     PostgresPlans = "free"
-	PostgresPlansPro      PostgresPlans = "pro"
-	PostgresPlansProPlus  PostgresPlans = "pro_plus"
-	PostgresPlansStandard PostgresPlans = "standard"
-	PostgresPlansStarter  PostgresPlans = "starter"
+	PostgresDetailSuspendedNotSuspended PostgresDetailSuspended = "not_suspended"
+	PostgresDetailSuspendedSuspended    PostgresDetailSuspended = "suspended"
 )
 
 // Defines values for PostgresVersion.
@@ -249,12 +214,12 @@ const (
 
 // Defines values for RedisPlan.
 const (
-	Custom   RedisPlan = "custom"
-	Free     RedisPlan = "free"
-	Pro      RedisPlan = "pro"
-	ProPlus  RedisPlan = "pro_plus"
-	Standard RedisPlan = "standard"
-	Starter  RedisPlan = "starter"
+	RedisPlanCustom   RedisPlan = "custom"
+	RedisPlanFree     RedisPlan = "free"
+	RedisPlanPro      RedisPlan = "pro"
+	RedisPlanProPlus  RedisPlan = "pro_plus"
+	RedisPlanStandard RedisPlan = "standard"
+	RedisPlanStarter  RedisPlan = "starter"
 )
 
 // Defines values for Region.
@@ -263,13 +228,15 @@ const (
 	Ohio      Region = "ohio"
 	Oregon    Region = "oregon"
 	Singapore Region = "singapore"
+	Virginia  Region = "virginia"
 )
 
 // Defines values for RegistryCredentialRegistry.
 const (
-	RegistryCredentialRegistryDOCKER RegistryCredentialRegistry = "DOCKER"
-	RegistryCredentialRegistryGITHUB RegistryCredentialRegistry = "GITHUB"
-	RegistryCredentialRegistryGITLAB RegistryCredentialRegistry = "GITLAB"
+	DOCKER         RegistryCredentialRegistry = "DOCKER"
+	GITHUB         RegistryCredentialRegistry = "GITHUB"
+	GITLAB         RegistryCredentialRegistry = "GITLAB"
+	GOOGLEARTIFACT RegistryCredentialRegistry = "GOOGLE_ARTIFACT"
 )
 
 // Defines values for RouteType.
@@ -300,6 +267,18 @@ const (
 	ServiceEnvPython ServiceEnv = "python"
 	ServiceEnvRuby   ServiceEnv = "ruby"
 	ServiceEnvRust   ServiceEnv = "rust"
+)
+
+// Defines values for ServiceRuntime.
+const (
+	ServiceRuntimeDocker ServiceRuntime = "docker"
+	ServiceRuntimeElixir ServiceRuntime = "elixir"
+	ServiceRuntimeGo     ServiceRuntime = "go"
+	ServiceRuntimeImage  ServiceRuntime = "image"
+	ServiceRuntimeNode   ServiceRuntime = "node"
+	ServiceRuntimePython ServiceRuntime = "python"
+	ServiceRuntimeRuby   ServiceRuntime = "ruby"
+	ServiceRuntimeRust   ServiceRuntime = "rust"
 )
 
 // Defines values for ServiceType.
@@ -353,17 +332,14 @@ const (
 	WebServiceDetailsPOSTPullRequestPreviewsEnabledYes WebServiceDetailsPOSTPullRequestPreviewsEnabled = "yes"
 )
 
-// Defines values for ApplicationMetricAggregationMethod.
+// Defines values for ListLogsValuesParamsLabel.
 const (
-	AVG ApplicationMetricAggregationMethod = "AVG"
-	MAX ApplicationMetricAggregationMethod = "MAX"
-	MIN ApplicationMetricAggregationMethod = "MIN"
-)
-
-// Defines values for HttpAggregateBy.
-const (
-	HttpAggregateByHost       HttpAggregateBy = "host"
-	HttpAggregateByStatusCode HttpAggregateBy = "statusCode"
+	Host       ListLogsValuesParamsLabel = "host"
+	Instance   ListLogsValuesParamsLabel = "instance"
+	Level      ListLogsValuesParamsLabel = "level"
+	Method     ListLogsValuesParamsLabel = "method"
+	StatusCode ListLogsValuesParamsLabel = "statusCode"
+	Type       ListLogsValuesParamsLabel = "type"
 )
 
 // Defines values for ListPostgresParamsSuspended.
@@ -372,44 +348,22 @@ const (
 	ListPostgresParamsSuspendedSuspended    ListPostgresParamsSuspended = "suspended"
 )
 
-// Defines values for GetRegistryCredentialsParamsType.
+// Defines values for ListServicesParamsSuspended.
 const (
-	GetRegistryCredentialsParamsTypeDOCKER         GetRegistryCredentialsParamsType = "DOCKER"
-	GetRegistryCredentialsParamsTypeGITHUB         GetRegistryCredentialsParamsType = "GITHUB"
-	GetRegistryCredentialsParamsTypeGITLAB         GetRegistryCredentialsParamsType = "GITLAB"
-	GetRegistryCredentialsParamsTypeGOOGLEARTIFACT GetRegistryCredentialsParamsType = "GOOGLE_ARTIFACT"
+	ListServicesParamsSuspendedNotSuspended ListServicesParamsSuspended = "not_suspended"
+	ListServicesParamsSuspendedSuspended    ListServicesParamsSuspended = "suspended"
 )
 
-// Defines values for CreateRegistryCredentialJSONBodyRegistry.
+// Defines values for ListCustomDomainsParamsDomainType.
 const (
-	CreateRegistryCredentialJSONBodyRegistryDOCKER CreateRegistryCredentialJSONBodyRegistry = "DOCKER"
-	CreateRegistryCredentialJSONBodyRegistryGITHUB CreateRegistryCredentialJSONBodyRegistry = "GITHUB"
-	CreateRegistryCredentialJSONBodyRegistryGITLAB CreateRegistryCredentialJSONBodyRegistry = "GITLAB"
+	ListCustomDomainsParamsDomainTypeApex      ListCustomDomainsParamsDomainType = "apex"
+	ListCustomDomainsParamsDomainTypeSubdomain ListCustomDomainsParamsDomainType = "subdomain"
 )
 
-// Defines values for UpdateRegistryCredentialJSONBodyRegistry.
+// Defines values for ListCustomDomainsParamsVerificationStatus.
 const (
-	UpdateRegistryCredentialJSONBodyRegistryDOCKER UpdateRegistryCredentialJSONBodyRegistry = "DOCKER"
-	UpdateRegistryCredentialJSONBodyRegistryGITHUB UpdateRegistryCredentialJSONBodyRegistry = "GITHUB"
-	UpdateRegistryCredentialJSONBodyRegistryGITLAB UpdateRegistryCredentialJSONBodyRegistry = "GITLAB"
-)
-
-// Defines values for GetServicesParamsSuspended.
-const (
-	NotSuspended GetServicesParamsSuspended = "not_suspended"
-	Suspended    GetServicesParamsSuspended = "suspended"
-)
-
-// Defines values for GetCustomDomainsParamsDomainType.
-const (
-	GetCustomDomainsParamsDomainTypeApex      GetCustomDomainsParamsDomainType = "apex"
-	GetCustomDomainsParamsDomainTypeSubdomain GetCustomDomainsParamsDomainType = "subdomain"
-)
-
-// Defines values for GetCustomDomainsParamsVerificationStatus.
-const (
-	GetCustomDomainsParamsVerificationStatusUnverified GetCustomDomainsParamsVerificationStatus = "unverified"
-	GetCustomDomainsParamsVerificationStatusVerified   GetCustomDomainsParamsVerificationStatus = "verified"
+	ListCustomDomainsParamsVerificationStatusUnverified ListCustomDomainsParamsVerificationStatus = "unverified"
+	ListCustomDomainsParamsVerificationStatusVerified   ListCustomDomainsParamsVerificationStatus = "verified"
 )
 
 // Defines values for CreateDeployJSONBodyClearCache.
@@ -420,16 +374,16 @@ const (
 
 // Defines values for ListJobParamsStatus.
 const (
-	ListJobParamsStatusFailed    ListJobParamsStatus = "failed"
-	ListJobParamsStatusPending   ListJobParamsStatus = "pending"
-	ListJobParamsStatusRunning   ListJobParamsStatus = "running"
-	ListJobParamsStatusSucceeded ListJobParamsStatus = "succeeded"
+	Failed    ListJobParamsStatus = "failed"
+	Pending   ListJobParamsStatus = "pending"
+	Running   ListJobParamsStatus = "running"
+	Succeeded ListJobParamsStatus = "succeeded"
 )
 
-// Defines values for RetrieveRoutesParamsType.
+// Defines values for ListRoutesParamsType.
 const (
-	RetrieveRoutesParamsTypeRedirect RetrieveRoutesParamsType = "redirect"
-	RetrieveRoutesParamsTypeRewrite  RetrieveRoutesParamsType = "rewrite"
+	ListRoutesParamsTypeRedirect ListRoutesParamsType = "redirect"
+	ListRoutesParamsTypeRewrite  ListRoutesParamsType = "rewrite"
 )
 
 // AddUpdateEnvVarInput defines model for addUpdateEnvVarInput.
@@ -440,40 +394,14 @@ type AddUpdateEnvVarInput struct {
 // AutoDeploy defines model for autoDeploy.
 type AutoDeploy string
 
-// AutoscalingConfig defines model for autoscalingConfig.
-type AutoscalingConfig struct {
-	Criteria AutoscalingCriteria `json:"criteria"`
-	Enabled  bool                `json:"enabled"`
-
-	// Max The maximum number of instances for the service
-	Max int `json:"max"`
-
-	// Min The minimum number of instances for the service
-	Min int `json:"min"`
-}
-
-// AutoscalingCriteria defines model for autoscalingCriteria.
-type AutoscalingCriteria struct {
-	Cpu    AutoscalingCriteriaPercentage `json:"cpu"`
-	Memory AutoscalingCriteriaPercentage `json:"memory"`
-}
-
-// AutoscalingCriteriaPercentage defines model for autoscalingCriteriaPercentage.
-type AutoscalingCriteriaPercentage struct {
-	Enabled bool `json:"enabled"`
-
-	// Percentage Determines when your service will be scaled. If the average resource utilization is significantly above/below the target, we will increase/decrease the number of instances.
-	Percentage int `json:"percentage"`
-}
-
 // BackgroundWorkerDetails defines model for backgroundWorkerDetails.
 type BackgroundWorkerDetails struct {
-	Autoscaling *AutoscalingConfig `json:"autoscaling,omitempty"`
-	BuildPlan   BuildPlan          `json:"buildPlan"`
-	Disk        *Disk              `json:"disk,omitempty"`
+	Autoscaling *externalRef0.AutoscalingConfig `json:"autoscaling,omitempty"`
+	BuildPlan   BuildPlan                       `json:"buildPlan"`
+	Disk        *externalRef2.Disk              `json:"disk,omitempty"`
 
-	// Env Environment (runtime)
-	Env                ServiceEnv         `json:"env"`
+	// Env Runtime
+	Env                ServiceRuntime     `json:"env"`
 	EnvSpecificDetails EnvSpecificDetails `json:"envSpecificDetails"`
 
 	// NumInstances For a *manually* scaled service, this is the number of instances the service is scaled to. DOES NOT indicate the number of running instances for an *autoscaled* service.
@@ -497,8 +425,8 @@ type BackgroundWorkerDetailsPATCH struct {
 	PreDeployCommand           *string                                                 `json:"preDeployCommand,omitempty"`
 	PullRequestPreviewsEnabled *BackgroundWorkerDetailsPATCHPullRequestPreviewsEnabled `json:"pullRequestPreviewsEnabled,omitempty"`
 
-	// Runtime Environment (runtime)
-	Runtime *ServiceEnv `json:"runtime,omitempty"`
+	// Runtime Runtime
+	Runtime *ServiceRuntime `json:"runtime,omitempty"`
 }
 
 // BackgroundWorkerDetailsPATCHPullRequestPreviewsEnabled defines model for BackgroundWorkerDetailsPATCH.PullRequestPreviewsEnabled.
@@ -506,11 +434,12 @@ type BackgroundWorkerDetailsPATCHPullRequestPreviewsEnabled string
 
 // BackgroundWorkerDetailsPOST defines model for backgroundWorkerDetailsPOST.
 type BackgroundWorkerDetailsPOST struct {
-	Autoscaling *AutoscalingConfig `json:"autoscaling,omitempty"`
-	Disk        *ServiceDisk       `json:"disk,omitempty"`
+	Autoscaling *externalRef0.AutoscalingConfig `json:"autoscaling,omitempty"`
+	Disk        *ServiceDisk                    `json:"disk,omitempty"`
 
-	// Env Environment (runtime)
-	Env                ServiceEnv              `json:"env"`
+	// Env This field has been deprecated, runtime should be used in its place.
+	// Deprecated:
+	Env                *ServiceEnv             `json:"env,omitempty"`
 	EnvSpecificDetails *EnvSpecificDetailsPOST `json:"envSpecificDetails,omitempty"`
 
 	// NumInstances Defaults to 1
@@ -525,10 +454,19 @@ type BackgroundWorkerDetailsPOST struct {
 
 	// Region Defaults to "oregon"
 	Region *Region `json:"region,omitempty"`
+
+	// Runtime Runtime
+	Runtime ServiceRuntime `json:"runtime"`
 }
 
 // BackgroundWorkerDetailsPOSTPullRequestPreviewsEnabled Defaults to "no"
 type BackgroundWorkerDetailsPOSTPullRequestPreviewsEnabled string
+
+// BlueprintWithCursor A blueprint with a cursor
+type BlueprintWithCursor struct {
+	Blueprint externalRef1.Blueprint `json:"blueprint"`
+	Cursor    Cursor                 `json:"cursor"`
+}
 
 // BuildFilter defines model for buildFilter.
 type BuildFilter struct {
@@ -551,8 +489,8 @@ type CidrBlockAndDescription struct {
 type CronJobDetails struct {
 	BuildPlan BuildPlan `json:"buildPlan"`
 
-	// Env Environment (runtime)
-	Env                 ServiceEnv         `json:"env"`
+	// Env Runtime
+	Env                 ServiceRuntime     `json:"env"`
 	EnvSpecificDetails  EnvSpecificDetails `json:"envSpecificDetails"`
 	LastSuccessfulRunAt *time.Time         `json:"lastSuccessfulRunAt,omitempty"`
 
@@ -571,24 +509,46 @@ type CronJobDetailsPATCH struct {
 	// Plan Defaults to "starter"
 	Plan *PaidPlan `json:"plan,omitempty"`
 
-	// Runtime Environment (runtime)
-	Runtime  *ServiceEnv `json:"runtime,omitempty"`
-	Schedule *string     `json:"schedule,omitempty"`
+	// Runtime Runtime
+	Runtime  *ServiceRuntime `json:"runtime,omitempty"`
+	Schedule *string         `json:"schedule,omitempty"`
 }
 
 // CronJobDetailsPOST defines model for cronJobDetailsPOST.
 type CronJobDetailsPOST struct {
-	// Env Environment (runtime)
-	Env                ServiceEnv          `json:"env"`
+	// Env This field has been deprecated, runtime should be used in its place.
+	// Deprecated:
+	Env                *ServiceEnv         `json:"env,omitempty"`
 	EnvSpecificDetails *EnvSpecificDetails `json:"envSpecificDetails,omitempty"`
 
 	// Plan Defaults to "starter"
 	Plan *PaidPlan `json:"plan,omitempty"`
 
 	// Region Defaults to "oregon"
-	Region   *Region `json:"region,omitempty"`
-	Schedule string  `json:"schedule"`
+	Region *Region `json:"region,omitempty"`
+
+	// Runtime Runtime
+	Runtime  ServiceRuntime `json:"runtime"`
+	Schedule string         `json:"schedule"`
 }
+
+// CronJobRun A run of a cron job
+type CronJobRun struct {
+	// CanceledBy user who cancelled the cron job run
+	CanceledBy *string    `json:"canceledBy,omitempty"`
+	FinishedAt *time.Time `json:"finishedAt,omitempty"`
+
+	// Id The ID of the run
+	Id        string           `json:"id"`
+	StartedAt *time.Time       `json:"startedAt,omitempty"`
+	Status    CronJobRunStatus `json:"status"`
+
+	// TriggeredBy user who triggered the cron job run
+	TriggeredBy *string `json:"triggeredBy,omitempty"`
+}
+
+// CronJobRunStatus defines model for CronJobRun.Status.
+type CronJobRunStatus string
 
 // Cursor defines model for cursor.
 type Cursor = string
@@ -616,8 +576,8 @@ type CustomDomainVerificationStatus string
 
 // CustomDomainWithCursor defines model for customDomainWithCursor.
 type CustomDomainWithCursor struct {
-	Cursor       Cursor        `json:"cursor"`
-	CustomDomain *CustomDomain `json:"customDomain,omitempty"`
+	Cursor       Cursor       `json:"cursor"`
+	CustomDomain CustomDomain `json:"customDomain"`
 }
 
 // DatabaseRole defines model for databaseRole.
@@ -659,40 +619,6 @@ type DeployStatus string
 // DeployTrigger defines model for Deploy.Trigger.
 type DeployTrigger string
 
-// Disk defines model for disk.
-type Disk struct {
-	Id        string `json:"id"`
-	MountPath string `json:"mountPath"`
-	Name      string `json:"name"`
-	SizeGB    int    `json:"sizeGB"`
-}
-
-// DiskDetails defines model for diskDetails.
-type DiskDetails struct {
-	CreatedAt time.Time `json:"createdAt"`
-	Id        string    `json:"id"`
-	MountPath string    `json:"mountPath"`
-	Name      string    `json:"name"`
-	ServiceId *string   `json:"serviceId,omitempty"`
-	SizeGB    int       `json:"sizeGB"`
-	UpdatedAt time.Time `json:"updatedAt"`
-}
-
-// DiskPATCH defines model for diskPATCH.
-type DiskPATCH struct {
-	MountPath *string `json:"mountPath,omitempty"`
-	Name      *string `json:"name,omitempty"`
-	SizeGB    *int    `json:"sizeGB,omitempty"`
-}
-
-// DiskPOST defines model for diskPOST.
-type DiskPOST struct {
-	MountPath string `json:"mountPath"`
-	Name      string `json:"name"`
-	ServiceId string `json:"serviceId"`
-	SizeGB    int    `json:"sizeGB"`
-}
-
 // DiskSnapshot defines model for diskSnapshot.
 type DiskSnapshot struct {
 	CreatedAt *time.Time `json:"createdAt,omitempty"`
@@ -704,8 +630,8 @@ type DiskSnapshot struct {
 
 // DiskWithCursor defines model for diskWithCursor.
 type DiskWithCursor struct {
-	Cursor Cursor      `json:"cursor"`
-	Disk   DiskDetails `json:"disk"`
+	Cursor Cursor                   `json:"cursor"`
+	Disk   externalRef2.DiskDetails `json:"disk"`
 }
 
 // DockerDetails defines model for dockerDetails.
@@ -737,6 +663,7 @@ type DockerDetailsPOST struct {
 
 // EnvGroup defines model for envGroup.
 type EnvGroup struct {
+	CreatedAt     time.Time    `json:"createdAt"`
 	EnvVars       []EnvVar     `json:"envVars"`
 	EnvironmentId *string      `json:"environmentId,omitempty"`
 	Id            string       `json:"id"`
@@ -746,17 +673,20 @@ type EnvGroup struct {
 
 	// ServiceLinks List of serviceIds linked to the envGroup
 	ServiceLinks []ServiceLink `json:"serviceLinks"`
+	UpdatedAt    time.Time     `json:"updatedAt"`
 }
 
 // EnvGroupMeta defines model for envGroupMeta.
 type EnvGroupMeta struct {
-	EnvironmentId *string `json:"environmentId,omitempty"`
-	Id            string  `json:"id"`
-	Name          string  `json:"name"`
-	OwnerId       string  `json:"ownerId"`
+	CreatedAt     time.Time `json:"createdAt"`
+	EnvironmentId *string   `json:"environmentId,omitempty"`
+	Id            string    `json:"id"`
+	Name          string    `json:"name"`
+	OwnerId       string    `json:"ownerId"`
 
 	// ServiceLinks List of serviceIds linked to the envGroup
 	ServiceLinks []ServiceLink `json:"serviceLinks"`
+	UpdatedAt    time.Time     `json:"updatedAt"`
 }
 
 // EnvGroupPATCHInput defines model for envGroupPATCHInput.
@@ -855,15 +785,11 @@ type EnvironmentPATCHInput struct {
 
 // EnvironmentPOSTInput defines model for environmentPOSTInput.
 type EnvironmentPOSTInput struct {
-	DatabasesIds *[]string `json:"databasesIds,omitempty"`
-	EnvGroupIds  *[]string `json:"envGroupIds,omitempty"`
-	Name         string    `json:"name"`
-	ProjectId    string    `json:"projectId"`
+	Name      string `json:"name"`
+	ProjectId string `json:"projectId"`
 
 	// ProtectedStatus Indicates whether an environment is `unprotected` or `protected`. Only admin users can perform destructive actions in `protected` environments.
 	ProtectedStatus *ProtectedStatus `json:"protectedStatus,omitempty"`
-	RedisIds        *[]string        `json:"redisIds,omitempty"`
-	ServiceIds      *[]string        `json:"serviceIds,omitempty"`
 }
 
 // EnvironmentResourcesPOSTInput defines model for environmentResourcesPOSTInput.
@@ -882,27 +808,6 @@ type Error struct {
 	Id      *string `json:"id,omitempty"`
 	Message *string `json:"message,omitempty"`
 }
-
-// FilterApplicationValuesCollection A collection of filter values for application metrics
-type FilterApplicationValuesCollection = []struct {
-	Filter *FilterApplicationValuesCollectionFilter `json:"filter,omitempty"`
-	Values *[]string                                `json:"values,omitempty"`
-}
-
-// FilterApplicationValuesCollectionFilter defines model for FilterApplicationValuesCollection.Filter.
-type FilterApplicationValuesCollectionFilter string
-
-// FilterHTTPValuesCollection A collection of filter values for HTTP metrics
-type FilterHTTPValuesCollection = []struct {
-	Filter *FilterHTTPValuesCollectionFilter `json:"filter,omitempty"`
-	Values *[]string                         `json:"values,omitempty"`
-}
-
-// FilterHTTPValuesCollectionFilter defines model for FilterHTTPValuesCollection.Filter.
-type FilterHTTPValuesCollectionFilter string
-
-// FilterPathValuesCollection A collection of suggested paths to filter by
-type FilterPathValuesCollection = []string
 
 // Header defines model for header.
 type Header struct {
@@ -945,36 +850,6 @@ type Image struct {
 // InstanceId When a service with a disk is scaled, the instanceId is used to identify the instance that the disk is attached to. Each instance's disks get their own snapshots, and can be restored separately.
 type InstanceId = string
 
-// Job defines model for job.
-type Job struct {
-	CreatedAt    time.Time  `json:"createdAt"`
-	FinishedAt   *time.Time `json:"finishedAt,omitempty"`
-	Id           string     `json:"id"`
-	PlanId       string     `json:"planId"`
-	ServiceId    string     `json:"serviceId"`
-	StartCommand string     `json:"startCommand"`
-	StartedAt    *time.Time `json:"startedAt,omitempty"`
-	Status       *string    `json:"status,omitempty"`
-}
-
-// Label A time series datapoint label
-type Label struct {
-	Field string `json:"field"`
-	Value string `json:"value"`
-}
-
-// MaintenanceInfo defines model for maintenanceInfo.
-type MaintenanceInfo struct {
-	Id                   string           `json:"id"`
-	PendingMaintenanceBy *time.Time       `json:"pendingMaintenanceBy,omitempty"`
-	ScheduledAt          time.Time        `json:"scheduledAt"`
-	State                MaintenanceState `json:"state"`
-	Type                 string           `json:"type"`
-}
-
-// MaintenanceState defines model for maintenanceState.
-type MaintenanceState string
-
 // MaxmemoryPolicy The eviction policy for the Redis instance
 type MaxmemoryPolicy string
 
@@ -997,70 +872,24 @@ type NativeEnvironmentDetailsPOST struct {
 	StartCommand string `json:"startCommand"`
 }
 
-// NotificationOverride defines model for notificationOverride.
-type NotificationOverride struct {
-	Id                          string                   `json:"id"`
-	NotificationsToSend         NotifyOverride           `json:"notificationsToSend"`
-	PreviewNotificationsEnabled NotifyPreviewOverride    `json:"previewNotificationsEnabled"`
-	Type                        NotificationOverrideType `json:"type"`
-}
-
-// NotificationOverrideType defines model for NotificationOverride.Type.
-type NotificationOverrideType string
-
 // NotificationOverrideWithCursor defines model for notificationOverrideWithCursor.
 type NotificationOverrideWithCursor struct {
-	Cursor   Cursor               `json:"cursor"`
-	Override NotificationOverride `json:"override"`
+	Cursor   Cursor                            `json:"cursor"`
+	Override externalRef8.NotificationOverride `json:"override"`
 }
-
-// NotificationServiceOverride defines model for notificationServiceOverride.
-type NotificationServiceOverride struct {
-	NotificationsToSend         NotifyOverride        `json:"notificationsToSend"`
-	PreviewNotificationsEnabled NotifyPreviewOverride `json:"previewNotificationsEnabled"`
-	ServiceId                   string                `json:"serviceId"`
-}
-
-// NotificationServiceOverridePATCH defines model for notificationServiceOverridePATCH.
-type NotificationServiceOverridePATCH struct {
-	NotificationsToSend         *NotifyOverride        `json:"notificationsToSend,omitempty"`
-	PreviewNotificationsEnabled *NotifyPreviewOverride `json:"previewNotificationsEnabled,omitempty"`
-}
-
-// NotificationSetting defines model for notificationSetting.
-type NotificationSetting struct {
-	EmailEnabled                bool            `json:"emailEnabled"`
-	NotificationsToSend         NotifySettingV2 `json:"notificationsToSend"`
-	OwnerId                     string          `json:"ownerId"`
-	PreviewNotificationsEnabled bool            `json:"previewNotificationsEnabled"`
-	SlackEnabled                bool            `json:"slackEnabled"`
-}
-
-// NotificationSettingPATCH defines model for notificationSettingPATCH.
-type NotificationSettingPATCH struct {
-	EmailEnabled                *bool            `json:"emailEnabled,omitempty"`
-	NotificationsToSend         *NotifySettingV2 `json:"notificationsToSend,omitempty"`
-	PreviewNotificationsEnabled *bool            `json:"previewNotificationsEnabled,omitempty"`
-}
-
-// NotifyOverride defines model for notifyOverride.
-type NotifyOverride string
-
-// NotifyPreviewOverride defines model for notifyPreviewOverride.
-type NotifyPreviewOverride string
 
 // NotifySetting defines model for notifySetting.
 type NotifySetting string
 
-// NotifySettingV2 defines model for notifySettingV2.
-type NotifySettingV2 string
-
 // Owner defines model for owner.
 type Owner struct {
-	Email string    `json:"email"`
-	Id    string    `json:"id"`
-	Name  string    `json:"name"`
-	Type  OwnerType `json:"type"`
+	Email string `json:"email"`
+	Id    string `json:"id"`
+	Name  string `json:"name"`
+
+	// TwoFactorAuthEnabled Whether two-factor authentication is enabled for the owner. Only present for user owners.
+	TwoFactorAuthEnabled *bool     `json:"twoFactorAuthEnabled,omitempty"`
+	Type                 OwnerType `json:"type"`
 }
 
 // OwnerType defines model for Owner.Type.
@@ -1074,22 +903,24 @@ type Plan string
 
 // Postgres defines model for postgres.
 type Postgres struct {
-	CreatedAt     time.Time `json:"createdAt"`
-	DatabaseName  string    `json:"databaseName"`
-	DatabaseUser  string    `json:"databaseUser"`
-	EnvironmentId *string   `json:"environmentId,omitempty"`
+	CreatedAt time.Time `json:"createdAt"`
+
+	// DashboardUrl The URL to view the PostgreSQL instance in the Render Dashboard
+	DashboardUrl  string  `json:"dashboardUrl"`
+	DatabaseName  string  `json:"databaseName"`
+	DatabaseUser  string  `json:"databaseUser"`
+	EnvironmentId *string `json:"environmentId,omitempty"`
 
 	// ExpiresAt The time at which the database will be expire. Applies to free tier databases only.
-	ExpiresAt               *time.Time                `json:"expiresAt,omitempty"`
-	HighAvailabilityEnabled bool                      `json:"highAvailabilityEnabled"`
-	Id                      string                    `json:"id"`
-	IpAllowList             []CidrBlockAndDescription `json:"ipAllowList"`
-	Maintenance             *MaintenanceInfo          `json:"maintenance,omitempty"`
-	Name                    string                    `json:"name"`
-	Owner                   Owner                     `json:"owner"`
-	Plan                    PostgresPlans             `json:"plan"`
-	PrimaryPostgresID       *string                   `json:"primaryPostgresID,omitempty"`
-	ReadReplicas            ReadReplicas              `json:"readReplicas"`
+	ExpiresAt               *time.Time                 `json:"expiresAt,omitempty"`
+	HighAvailabilityEnabled bool                       `json:"highAvailabilityEnabled"`
+	Id                      string                     `json:"id"`
+	IpAllowList             []CidrBlockAndDescription  `json:"ipAllowList"`
+	Name                    string                     `json:"name"`
+	Owner                   Owner                      `json:"owner"`
+	Plan                    externalRef9.PostgresPlans `json:"plan"`
+	PrimaryPostgresID       *string                    `json:"primaryPostgresID,omitempty"`
+	ReadReplicas            ReadReplicas               `json:"readReplicas"`
 
 	// Region Defaults to "oregon"
 	Region     Region            `json:"region"`
@@ -1114,14 +945,51 @@ type PostgresConnectionInfo struct {
 	PsqlCommand              string `json:"psqlCommand"`
 }
 
+// PostgresDetail defines model for postgresDetail.
+type PostgresDetail struct {
+	CreatedAt time.Time `json:"createdAt"`
+
+	// DashboardUrl The URL to view the PostgreSQL instance in the Render Dashboard
+	DashboardUrl  string  `json:"dashboardUrl"`
+	DatabaseName  string  `json:"databaseName"`
+	DatabaseUser  string  `json:"databaseUser"`
+	EnvironmentId *string `json:"environmentId,omitempty"`
+
+	// ExpiresAt The time at which the database will be expire. Applies to free tier databases only.
+	ExpiresAt               *time.Time                   `json:"expiresAt,omitempty"`
+	HighAvailabilityEnabled bool                         `json:"highAvailabilityEnabled"`
+	Id                      string                       `json:"id"`
+	IpAllowList             []CidrBlockAndDescription    `json:"ipAllowList"`
+	Maintenance             *externalRef6.MaintenanceRun `json:"maintenance,omitempty"`
+	Name                    string                       `json:"name"`
+	Owner                   Owner                        `json:"owner"`
+	Plan                    externalRef9.PostgresPlans   `json:"plan"`
+	PrimaryPostgresID       *string                      `json:"primaryPostgresID,omitempty"`
+	ReadReplicas            ReadReplicas                 `json:"readReplicas"`
+
+	// Region Defaults to "oregon"
+	Region     Region                  `json:"region"`
+	Role       DatabaseRole            `json:"role"`
+	Status     DatabaseStatus          `json:"status"`
+	Suspended  PostgresDetailSuspended `json:"suspended"`
+	Suspenders []SuspenderType         `json:"suspenders"`
+	UpdatedAt  time.Time               `json:"updatedAt"`
+
+	// Version The PostgreSQL version
+	Version PostgresVersion `json:"version"`
+}
+
+// PostgresDetailSuspended defines model for PostgresDetail.Suspended.
+type PostgresDetailSuspended string
+
 // PostgresPATCHInput defines model for postgresPATCHInput.
 type PostgresPATCHInput struct {
-	DatadogAPIKey          *string                    `json:"datadogAPIKey,omitempty"`
-	EnableHighAvailability *bool                      `json:"enableHighAvailability,omitempty"`
-	IpAllowList            *[]CidrBlockAndDescription `json:"ipAllowList,omitempty"`
-	Name                   *string                    `json:"name,omitempty"`
-	Plan                   *PostgresPlans             `json:"plan,omitempty"`
-	ReadReplicas           *ReadReplicasInput         `json:"readReplicas,omitempty"`
+	DatadogAPIKey          *string                     `json:"datadogAPIKey,omitempty"`
+	EnableHighAvailability *bool                       `json:"enableHighAvailability,omitempty"`
+	IpAllowList            *[]CidrBlockAndDescription  `json:"ipAllowList,omitempty"`
+	Name                   *string                     `json:"name,omitempty"`
+	Plan                   *externalRef9.PostgresPlans `json:"plan,omitempty"`
+	ReadReplicas           *ReadReplicasInput          `json:"readReplicas,omitempty"`
 }
 
 // PostgresPOSTInput Input for creating a database
@@ -1133,21 +1001,18 @@ type PostgresPOSTInput struct {
 	EnvironmentId          *string                    `json:"environmentId,omitempty"`
 	IpAllowList            *[]CidrBlockAndDescription `json:"ipAllowList,omitempty"`
 
-	// Name The name of the database as it will appear in the Render dashboard
+	// Name The name of the database as it will appear in the Render Dashboard
 	Name string `json:"name"`
 
 	// OwnerId The ID of the owner (team or personal user) whose resources should be returned
-	OwnerId      string             `json:"ownerId"`
-	Plan         PostgresPlans      `json:"plan"`
-	ReadReplicas *ReadReplicasInput `json:"readReplicas,omitempty"`
-	Region       *string            `json:"region,omitempty"`
+	OwnerId      string                     `json:"ownerId"`
+	Plan         externalRef9.PostgresPlans `json:"plan"`
+	ReadReplicas *ReadReplicasInput         `json:"readReplicas,omitempty"`
+	Region       *string                    `json:"region,omitempty"`
 
 	// Version The PostgreSQL version
 	Version PostgresVersion `json:"version"`
 }
-
-// PostgresPlans defines model for postgresPlans.
-type PostgresPlans string
 
 // PostgresVersion The PostgreSQL version
 type PostgresVersion string
@@ -1166,12 +1031,12 @@ type PreviewInput struct {
 
 // PrivateServiceDetails defines model for privateServiceDetails.
 type PrivateServiceDetails struct {
-	Autoscaling *AutoscalingConfig `json:"autoscaling,omitempty"`
-	BuildPlan   BuildPlan          `json:"buildPlan"`
-	Disk        *Disk              `json:"disk,omitempty"`
+	Autoscaling *externalRef0.AutoscalingConfig `json:"autoscaling,omitempty"`
+	BuildPlan   BuildPlan                       `json:"buildPlan"`
+	Disk        *externalRef2.Disk              `json:"disk,omitempty"`
 
-	// Env Environment (runtime)
-	Env                ServiceEnv         `json:"env"`
+	// Env Runtime
+	Env                ServiceRuntime     `json:"env"`
 	EnvSpecificDetails EnvSpecificDetails `json:"envSpecificDetails"`
 
 	// NumInstances For a *manually* scaled service, this is the number of instances the service is scaled to. DOES NOT indicate the number of running instances for an *autoscaled* service.
@@ -1197,8 +1062,8 @@ type PrivateServiceDetailsPATCH struct {
 	PreDeployCommand           *string                                               `json:"preDeployCommand,omitempty"`
 	PullRequestPreviewsEnabled *PrivateServiceDetailsPATCHPullRequestPreviewsEnabled `json:"pullRequestPreviewsEnabled,omitempty"`
 
-	// Runtime Environment (runtime)
-	Runtime *ServiceEnv `json:"runtime,omitempty"`
+	// Runtime Runtime
+	Runtime *ServiceRuntime `json:"runtime,omitempty"`
 }
 
 // PrivateServiceDetailsPATCHPullRequestPreviewsEnabled defines model for PrivateServiceDetailsPATCH.PullRequestPreviewsEnabled.
@@ -1206,11 +1071,12 @@ type PrivateServiceDetailsPATCHPullRequestPreviewsEnabled string
 
 // PrivateServiceDetailsPOST defines model for privateServiceDetailsPOST.
 type PrivateServiceDetailsPOST struct {
-	Autoscaling *AutoscalingConfig `json:"autoscaling,omitempty"`
-	Disk        *ServiceDisk       `json:"disk,omitempty"`
+	Autoscaling *externalRef0.AutoscalingConfig `json:"autoscaling,omitempty"`
+	Disk        *ServiceDisk                    `json:"disk,omitempty"`
 
-	// Env Environment (runtime)
-	Env                ServiceEnv              `json:"env"`
+	// Env This field has been deprecated, runtime should be used in its place.
+	// Deprecated:
+	Env                *ServiceEnv             `json:"env,omitempty"`
 	EnvSpecificDetails *EnvSpecificDetailsPOST `json:"envSpecificDetails,omitempty"`
 
 	// NumInstances Defaults to 1
@@ -1225,6 +1091,9 @@ type PrivateServiceDetailsPOST struct {
 
 	// Region Defaults to "oregon"
 	Region *Region `json:"region,omitempty"`
+
+	// Runtime Runtime
+	Runtime ServiceRuntime `json:"runtime"`
 }
 
 // PrivateServiceDetailsPOSTPullRequestPreviewsEnabled Defaults to "no"
@@ -1253,14 +1122,10 @@ type ProjectPATCHInput struct {
 
 // ProjectPOSTEnvironmentInput defines model for projectPOSTEnvironmentInput.
 type ProjectPOSTEnvironmentInput struct {
-	DatabasesIds *[]string `json:"databasesIds,omitempty"`
-	EnvGroupsIds *[]string `json:"envGroupsIds,omitempty"`
-	Name         string    `json:"name"`
+	Name string `json:"name"`
 
 	// ProtectedStatus Indicates whether an environment is `unprotected` or `protected`. Only admin users can perform destructive actions in `protected` environments.
 	ProtectedStatus *ProtectedStatus `json:"protectedStatus,omitempty"`
-	RedisIds        *[]string        `json:"redisIds,omitempty"`
-	ServicesIds     *[]string        `json:"servicesIds,omitempty"`
 }
 
 // ProjectPOSTInput defines model for projectPOSTInput.
@@ -1315,6 +1180,9 @@ type Redis struct {
 	// CreatedAt The creation time of the Redis instance
 	CreatedAt time.Time `json:"createdAt"`
 
+	// DashboardUrl The URL to view the Redis instance in the Render Dashboard
+	DashboardUrl string `json:"dashboardUrl"`
+
 	// EnvironmentId The ID of the environment the Redis instance is associated with
 	EnvironmentId *string `json:"environmentId,omitempty"`
 
@@ -1353,6 +1221,40 @@ type RedisConnectionInfo struct {
 
 	// RedisCLICommand The Redis CLI command to connect to the Redis instance
 	RedisCLICommand string `json:"redisCLICommand"`
+}
+
+// RedisDetail A Redis instance
+type RedisDetail struct {
+	// CreatedAt The creation time of the Redis instance
+	CreatedAt time.Time `json:"createdAt"`
+
+	// EnvironmentId The ID of the environment the Redis instance is associated with
+	EnvironmentId *string `json:"environmentId,omitempty"`
+
+	// Id The ID of the Redis instance
+	Id string `json:"id"`
+
+	// IpAllowList The IP allow list for the Redis instance
+	IpAllowList []CidrBlockAndDescription    `json:"ipAllowList"`
+	Maintenance *externalRef6.MaintenanceRun `json:"maintenance,omitempty"`
+
+	// Name The name of the Redis instance
+	Name string `json:"name"`
+
+	// Options Options for a Redis instance
+	Options RedisOptions `json:"options"`
+	Owner   Owner        `json:"owner"`
+	Plan    RedisPlan    `json:"plan"`
+
+	// Region Defaults to "oregon"
+	Region Region         `json:"region"`
+	Status DatabaseStatus `json:"status"`
+
+	// UpdatedAt The last updated time of the Redis instance
+	UpdatedAt time.Time `json:"updatedAt"`
+
+	// Version The version of Redis
+	Version string `json:"version"`
 }
 
 // RedisOptions Options for a Redis instance
@@ -1499,10 +1401,13 @@ type ServerPortProtocol string
 
 // Service defines model for service.
 type Service struct {
-	AutoDeploy         AutoDeploy                 `json:"autoDeploy"`
-	Branch             *string                    `json:"branch,omitempty"`
-	BuildFilter        *BuildFilter               `json:"buildFilter,omitempty"`
-	CreatedAt          time.Time                  `json:"createdAt"`
+	AutoDeploy  AutoDeploy   `json:"autoDeploy"`
+	Branch      *string      `json:"branch,omitempty"`
+	BuildFilter *BuildFilter `json:"buildFilter,omitempty"`
+	CreatedAt   time.Time    `json:"createdAt"`
+
+	// DashboardUrl The URL to view the service in the Render Dashboard
+	DashboardUrl       string                     `json:"dashboardUrl"`
 	EnvironmentId      *string                    `json:"environmentId,omitempty"`
 	Id                 string                     `json:"id"`
 	ImagePath          *string                    `json:"imagePath,omitempty"`
@@ -1543,8 +1448,13 @@ type ServiceDisk struct {
 	SizeGB *int `json:"sizeGB,omitempty"`
 }
 
-// ServiceEnv Environment (runtime)
+// ServiceEnv This field has been deprecated, runtime should be used in its place.
 type ServiceEnv string
+
+// ServiceEventWithCursor A service event with a cursor
+type ServiceEventWithCursor struct {
+	Event externalRef3.ServiceEvent `json:"event"`
+}
 
 // ServiceLink defines model for serviceLink.
 type ServiceLink struct {
@@ -1594,6 +1504,9 @@ type ServicePOST struct {
 type ServicePOST_ServiceDetails struct {
 	union json.RawMessage
 }
+
+// ServiceRuntime Runtime
+type ServiceRuntime string
 
 // ServiceType defines model for serviceType.
 type ServiceType string
@@ -1647,36 +1560,20 @@ type StaticSiteDetailsPOSTPullRequestPreviewsEnabled string
 // SuspenderType defines model for suspenderType.
 type SuspenderType string
 
-// TimeSeries A time series data point
-type TimeSeries struct {
-	// Labels List of labels describing the time series
-	Labels []Label `json:"labels"`
-	Unit   Unit    `json:"unit"`
-
-	// Values The values of the time series
-	Values []TimeSeriesValue `json:"values"`
+// SyncWithCursor A blueprint sync with a cursor
+type SyncWithCursor struct {
+	Cursor Cursor            `json:"cursor"`
+	Sync   externalRef1.Sync `json:"sync"`
 }
-
-// TimeSeriesCollection A collection of time series
-type TimeSeriesCollection = []TimeSeries
-
-// TimeSeriesValue A time series datapoint value
-type TimeSeriesValue struct {
-	Timestamp time.Time `json:"timestamp"`
-	Value     float32   `json:"value"`
-}
-
-// Unit defines model for unit.
-type Unit = string
 
 // WebServiceDetails defines model for webServiceDetails.
 type WebServiceDetails struct {
-	Autoscaling *AutoscalingConfig `json:"autoscaling,omitempty"`
-	BuildPlan   BuildPlan          `json:"buildPlan"`
-	Disk        *Disk              `json:"disk,omitempty"`
+	Autoscaling *externalRef0.AutoscalingConfig `json:"autoscaling,omitempty"`
+	BuildPlan   BuildPlan                       `json:"buildPlan"`
+	Disk        *externalRef2.Disk              `json:"disk,omitempty"`
 
-	// Env Environment (runtime)
-	Env                ServiceEnv         `json:"env"`
+	// Env Runtime
+	Env                ServiceRuntime     `json:"env"`
 	EnvSpecificDetails EnvSpecificDetails `json:"envSpecificDetails"`
 	HealthCheckPath    string             `json:"healthCheckPath"`
 
@@ -1704,8 +1601,8 @@ type WebServiceDetailsPATCH struct {
 	PreDeployCommand           *string                                           `json:"preDeployCommand,omitempty"`
 	PullRequestPreviewsEnabled *WebServiceDetailsPATCHPullRequestPreviewsEnabled `json:"pullRequestPreviewsEnabled,omitempty"`
 
-	// Runtime Environment (runtime)
-	Runtime *ServiceEnv `json:"runtime,omitempty"`
+	// Runtime Runtime
+	Runtime *ServiceRuntime `json:"runtime,omitempty"`
 }
 
 // WebServiceDetailsPATCHPullRequestPreviewsEnabled defines model for WebServiceDetailsPATCH.PullRequestPreviewsEnabled.
@@ -1713,11 +1610,12 @@ type WebServiceDetailsPATCHPullRequestPreviewsEnabled string
 
 // WebServiceDetailsPOST defines model for webServiceDetailsPOST.
 type WebServiceDetailsPOST struct {
-	Autoscaling *AutoscalingConfig `json:"autoscaling,omitempty"`
-	Disk        *ServiceDisk       `json:"disk,omitempty"`
+	Autoscaling *externalRef0.AutoscalingConfig `json:"autoscaling,omitempty"`
+	Disk        *ServiceDisk                    `json:"disk,omitempty"`
 
-	// Env Environment (runtime)
-	Env                ServiceEnv              `json:"env"`
+	// Env This field has been deprecated, runtime should be used in its place.
+	// Deprecated:
+	Env                *ServiceEnv             `json:"env,omitempty"`
 	EnvSpecificDetails *EnvSpecificDetailsPOST `json:"envSpecificDetails,omitempty"`
 	HealthCheckPath    *string                 `json:"healthCheckPath,omitempty"`
 
@@ -1733,19 +1631,22 @@ type WebServiceDetailsPOST struct {
 
 	// Region Defaults to "oregon"
 	Region *Region `json:"region,omitempty"`
+
+	// Runtime Runtime
+	Runtime ServiceRuntime `json:"runtime"`
 }
 
 // WebServiceDetailsPOSTPullRequestPreviewsEnabled Defaults to "no"
 type WebServiceDetailsPOSTPullRequestPreviewsEnabled string
-
-// ApplicationMetricAggregationMethod defines model for applicationMetricAggregationMethod.
-type ApplicationMetricAggregationMethod string
 
 // CreatedAfterParam defines model for createdAfterParam.
 type CreatedAfterParam = time.Time
 
 // CreatedBeforeParam defines model for createdBeforeParam.
 type CreatedBeforeParam = time.Time
+
+// CronJobIdParam defines model for cronJobIdParam.
+type CronJobIdParam = string
 
 // CursorParam defines model for cursorParam.
 type CursorParam = string
@@ -1763,7 +1664,7 @@ type EndTimeParam = time.Time
 type EnvGroupIdParam = string
 
 // EnvParam defines model for envParam.
-type EnvParam = []ServiceEnv
+type EnvParam = []ServiceRuntime
 
 // EnvVarKeyParam defines model for envVarKeyParam.
 type EnvVarKeyParam = string
@@ -1771,26 +1672,16 @@ type EnvVarKeyParam = string
 // EnvironmentIdParam defines model for environmentIdParam.
 type EnvironmentIdParam = []string
 
-// HostQueryParam defines model for hostQueryParam.
-type HostQueryParam = string
-
-// HttpAggregateBy defines model for httpAggregateBy.
-type HttpAggregateBy string
-
-// HttpStatusCode defines model for httpStatusCode.
-type HttpStatusCode = string
+// EventTypeParam defines model for eventTypeParam.
+type EventTypeParam struct {
+	union json.RawMessage
+}
 
 // IncludeReplicasParam defines model for includeReplicasParam.
 type IncludeReplicasParam = bool
 
-// InstanceQueryParam defines model for instanceQueryParam.
-type InstanceQueryParam = string
-
-// JobIdParam defines model for jobIdParam.
-type JobIdParam = string
-
 // LimitParam Defaults to 20
-type LimitParam = float32
+type LimitParam = int
 
 // NameParam defines model for nameParam.
 type NameParam = []string
@@ -1801,20 +1692,11 @@ type OwnerIdParam = []string
 // OwnerIdPathParam defines model for ownerIdPathParam.
 type OwnerIdPathParam = string
 
-// PathQueryParam defines model for pathQueryParam.
-type PathQueryParam = string
-
 // ProjectIdParam defines model for projectIdParam.
 type ProjectIdParam = []string
 
-// Quantile defines model for quantile.
-type Quantile = float32
-
 // RegionParam defines model for regionParam.
 type RegionParam = []Region
-
-// ResolutionParam defines model for resolutionParam.
-type ResolutionParam = float32
 
 // SecretFileNameParam defines model for secretFileNameParam.
 type SecretFileNameParam = string
@@ -1824,9 +1706,6 @@ type ServiceIdParam = string
 
 // ServiceIdsParam defines model for serviceIdsParam.
 type ServiceIdsParam = []string
-
-// ServiceQueryParam defines model for serviceQueryParam.
-type ServiceQueryParam = string
 
 // ServiceTypeParam defines model for serviceTypeParam.
 type ServiceTypeParam = []ServiceType
@@ -1876,21 +1755,52 @@ type N500InternalServerError = Error
 // N503ServiceUnavailable defines model for 503ServiceUnavailable.
 type N503ServiceUnavailable = Error
 
-// Metrics200Response A collection of time series
-type Metrics200Response = TimeSeriesCollection
+// Logs200Response A run of a cron job
+type Logs200Response struct {
+	// HasMore Ture if there are more logs to fetch
+	HasMore bool               `json:"hasMore"`
+	Logs    []externalRef5.Log `json:"logs"`
 
-// MetricsFiltersApplication200Response A collection of filter values for application metrics
-type MetricsFiltersApplication200Response = FilterApplicationValuesCollection
+	// NextEndTime The end time to use in the next query to fetch the next set of logs
+	NextEndTime time.Time `json:"nextEndTime"`
 
-// MetricsFiltersHTTP200Response A collection of filter values for HTTP metrics
-type MetricsFiltersHTTP200Response = FilterHTTPValuesCollection
+	// NextStartTime The start time to use in the next query to fetch the next set of logs
+	NextStartTime time.Time `json:"nextStartTime"`
+}
 
-// MetricsFiltersPath200Response A collection of suggested paths to filter by
-type MetricsFiltersPath200Response = FilterPathValuesCollection
+// LogsValues200Response defines model for LogsValues200Response.
+type LogsValues200Response = []string
 
-// GetDisksParams defines parameters for GetDisks.
-type GetDisksParams struct {
-	// Name Filter by resource name
+// ListBlueprintsParams defines parameters for ListBlueprints.
+type ListBlueprintsParams struct {
+	// OwnerId The ID of the owner (team or personal user) whose resources should be returned
+	OwnerId *OwnerIdParam `form:"ownerId,omitempty" json:"ownerId,omitempty"`
+
+	// Cursor The position in the result list to start from when fetching paginated results. For details, see [Pagination](https://api-docs.render.com/reference/pagination).
+	Cursor *CursorParam `form:"cursor,omitempty" json:"cursor,omitempty"`
+
+	// Limit The maximum number of items to return. For details, see [Pagination](https://api-docs.render.com/reference/pagination).
+	Limit *LimitParam `form:"limit,omitempty" json:"limit,omitempty"`
+}
+
+// ListBlueprintSyncsParams defines parameters for ListBlueprintSyncs.
+type ListBlueprintSyncsParams struct {
+	// Cursor The position in the result list to start from when fetching paginated results. For details, see [Pagination](https://api-docs.render.com/reference/pagination).
+	Cursor *CursorParam `form:"cursor,omitempty" json:"cursor,omitempty"`
+
+	// Limit The maximum number of items to return. For details, see [Pagination](https://api-docs.render.com/reference/pagination).
+	Limit *LimitParam `form:"limit,omitempty" json:"limit,omitempty"`
+}
+
+// ListDisksParams defines parameters for ListDisks.
+type ListDisksParams struct {
+	// OwnerId The ID of the owner (team or personal user) whose resources should be returned
+	OwnerId *OwnerIdParam `form:"ownerId,omitempty" json:"ownerId,omitempty"`
+
+	// DiskId Filter by disk IDs
+	DiskId *externalRef2.DiskIdQuery `form:"diskId,omitempty" json:"diskId,omitempty"`
+
+	// Name Filter by name
 	Name *NameParam `form:"name,omitempty" json:"name,omitempty"`
 
 	// CreatedBefore Filter for resources created before a certain time (specified as an ISO 8601 timestamp)
@@ -1905,19 +1815,19 @@ type GetDisksParams struct {
 	// UpdatedAfter Filter for resources updated after a certain time (specified as an ISO 8601 timestamp)
 	UpdatedAfter *UpdatedAfterParam `form:"updatedAfter,omitempty" json:"updatedAfter,omitempty"`
 
-	// ServiceIds Filter for resources by service ID
-	ServiceIds *ServiceIdsParam `form:"serviceIds,omitempty" json:"serviceIds,omitempty"`
+	// ServiceId Filter for resources by service ID
+	ServiceId *ServiceIdsParam `form:"serviceId,omitempty" json:"serviceId,omitempty"`
 
-	// Cursor Cursor to begin retrieving entries for this query
+	// Cursor The position in the result list to start from when fetching paginated results. For details, see [Pagination](https://api-docs.render.com/reference/pagination).
 	Cursor *CursorParam `form:"cursor,omitempty" json:"cursor,omitempty"`
 
-	// Limit Max number of items that can be returned
+	// Limit The maximum number of items to return. For details, see [Pagination](https://api-docs.render.com/reference/pagination).
 	Limit *LimitParam `form:"limit,omitempty" json:"limit,omitempty"`
 }
 
 // ListEnvGroupsParams defines parameters for ListEnvGroups.
 type ListEnvGroupsParams struct {
-	// Name Filter by resource name
+	// Name Filter by name
 	Name *NameParam `form:"name,omitempty" json:"name,omitempty"`
 
 	// CreatedBefore Filter for resources created before a certain time (specified as an ISO 8601 timestamp)
@@ -1938,10 +1848,10 @@ type ListEnvGroupsParams struct {
 	// EnvironmentId Filter for resources that belong to an environment
 	EnvironmentId *EnvironmentIdParam `form:"environmentId,omitempty" json:"environmentId,omitempty"`
 
-	// Cursor Cursor to begin retrieving entries for this query
+	// Cursor The position in the result list to start from when fetching paginated results. For details, see [Pagination](https://api-docs.render.com/reference/pagination).
 	Cursor *CursorParam `form:"cursor,omitempty" json:"cursor,omitempty"`
 
-	// Limit Max number of items that can be returned
+	// Limit The maximum number of items to return. For details, see [Pagination](https://api-docs.render.com/reference/pagination).
 	Limit *LimitParam `form:"limit,omitempty" json:"limit,omitempty"`
 }
 
@@ -1952,7 +1862,7 @@ type UpdateEnvGroupSecretFileJSONBody struct {
 
 // ListEnvironmentsParams defines parameters for ListEnvironments.
 type ListEnvironmentsParams struct {
-	// Name Filter by resource name
+	// Name Filter by name
 	Name *NameParam `form:"name,omitempty" json:"name,omitempty"`
 
 	// ProjectId Filter for resources that belong to a project
@@ -1976,16 +1886,184 @@ type ListEnvironmentsParams struct {
 	// EnvironmentId Filter for resources that belong to an environment
 	EnvironmentId *EnvironmentIdParam `form:"environmentId,omitempty" json:"environmentId,omitempty"`
 
-	// Cursor Cursor to begin retrieving entries for this query
+	// Cursor The position in the result list to start from when fetching paginated results. For details, see [Pagination](https://api-docs.render.com/reference/pagination).
 	Cursor *CursorParam `form:"cursor,omitempty" json:"cursor,omitempty"`
 
-	// Limit Max number of items that can be returned
+	// Limit The maximum number of items to return. For details, see [Pagination](https://api-docs.render.com/reference/pagination).
 	Limit *LimitParam `form:"limit,omitempty" json:"limit,omitempty"`
 }
 
 // RemoveResourcesFromEnvironmentParams defines parameters for RemoveResourcesFromEnvironment.
 type RemoveResourcesFromEnvironmentParams struct {
 	ResourceIds []string `form:"resourceIds" json:"resourceIds"`
+}
+
+// ListLogsParams defines parameters for ListLogs.
+type ListLogsParams struct {
+	// OwnerId The ID of the owner (team or personal user) whose resources should be returned
+	OwnerId string `form:"ownerId" json:"ownerId"`
+
+	// StartTime Epoch/Unix timestamp of end of time range to return. Defaults to `now() - 1 hour`.
+	StartTime *StartTimeParam `form:"startTime,omitempty" json:"startTime,omitempty"`
+
+	// EndTime Epoch/Unix timestamp of end of time range to return. Defaults to `now()`.
+	EndTime *EndTimeParam `form:"endTime,omitempty" json:"endTime,omitempty"`
+
+	// Direction The direction to query logs for. Backward will return most recent logs first.
+	// Forward will start with the oldest logs in the time range.
+	Direction *externalRef5.LogDirectionParam `form:"direction,omitempty" json:"direction,omitempty"`
+
+	// Resource Filter logs by their resource. A resource is the id of a server, cronjob, job, postgres, or redis.
+	Resource externalRef5.LogFilterResource `form:"resource" json:"resource"`
+
+	// Instance Filter logs by the instance they were emitted from. An instance is the id of a specific running server.
+	Instance *externalRef5.LogFilterInstance `form:"instance,omitempty" json:"instance,omitempty"`
+
+	// Host Filter request logs by their host. [Wildcards and regex](https://docs.render.com/logging#wildcards-and-regular-expressions) are supported.
+	Host *externalRef5.LogFilterHost `form:"host,omitempty" json:"host,omitempty"`
+
+	// StatusCode Filter request logs by their status code. [Wildcards and regex](https://docs.render.com/logging#wildcards-and-regular-expressions) are supported.
+	StatusCode *externalRef5.LogFilterStatusCode `form:"statusCode,omitempty" json:"statusCode,omitempty"`
+
+	// Method Filter request logs by their requests method. [Wildcards and regex](https://docs.render.com/logging#wildcards-and-regular-expressions) are supported.
+	Method *externalRef5.LogFilterMethod `form:"method,omitempty" json:"method,omitempty"`
+
+	// Level Filter logs by their severity level. [Wildcards and regex](https://docs.render.com/logging#wildcards-and-regular-expressions) are supported.
+	Level *externalRef5.LogFilterLevel `form:"level,omitempty" json:"level,omitempty"`
+
+	// Type Filter logs by their type. Types include `app` for application logs and `request` for request logs. You can find the full set of types available for a query by using the `GET /logs/values` endpoint.
+	Type *externalRef5.LogFilterType `form:"type,omitempty" json:"type,omitempty"`
+
+	// Text Filter by the text of the logs. [Wildcards and regex](https://docs.render.com/logging#wildcards-and-regular-expressions) are supported.
+	Text *externalRef5.LogFilterText `form:"text,omitempty" json:"text,omitempty"`
+
+	// Path Filter request logs by their path. [Wildcards and regex](https://docs.render.com/logging#wildcards-and-regular-expressions) are supported.
+	Path *externalRef5.LogFilterPath `form:"path,omitempty" json:"path,omitempty"`
+
+	// Limit The maximum number of items to return. For details, see [Pagination](https://api-docs.render.com/reference/pagination).
+	Limit *LimitParam `form:"limit,omitempty" json:"limit,omitempty"`
+}
+
+// SubscribeLogsParams defines parameters for SubscribeLogs.
+type SubscribeLogsParams struct {
+	// OwnerId The ID of the owner (team or personal user) whose resources should be returned
+	OwnerId string `form:"ownerId" json:"ownerId"`
+
+	// StartTime Epoch/Unix timestamp of end of time range to return. Defaults to `now() - 1 hour`.
+	StartTime *StartTimeParam `form:"startTime,omitempty" json:"startTime,omitempty"`
+
+	// EndTime Epoch/Unix timestamp of end of time range to return. Defaults to `now()`.
+	EndTime *EndTimeParam `form:"endTime,omitempty" json:"endTime,omitempty"`
+
+	// Direction The direction to query logs for. Backward will return most recent logs first.
+	// Forward will start with the oldest logs in the time range.
+	Direction *externalRef5.LogDirectionParam `form:"direction,omitempty" json:"direction,omitempty"`
+
+	// Resource Filter logs by their resource. A resource is the id of a server, cronjob, job, postgres, or redis.
+	Resource externalRef5.LogFilterResource `form:"resource" json:"resource"`
+
+	// Instance Filter logs by the instance they were emitted from. An instance is the id of a specific running server.
+	Instance *externalRef5.LogFilterInstance `form:"instance,omitempty" json:"instance,omitempty"`
+
+	// Host Filter request logs by their host. [Wildcards and regex](https://docs.render.com/logging#wildcards-and-regular-expressions) are supported.
+	Host *externalRef5.LogFilterHost `form:"host,omitempty" json:"host,omitempty"`
+
+	// StatusCode Filter request logs by their status code. [Wildcards and regex](https://docs.render.com/logging#wildcards-and-regular-expressions) are supported.
+	StatusCode *externalRef5.LogFilterStatusCode `form:"statusCode,omitempty" json:"statusCode,omitempty"`
+
+	// Method Filter request logs by their requests method. [Wildcards and regex](https://docs.render.com/logging#wildcards-and-regular-expressions) are supported.
+	Method *externalRef5.LogFilterMethod `form:"method,omitempty" json:"method,omitempty"`
+
+	// Level Filter logs by their severity level. [Wildcards and regex](https://docs.render.com/logging#wildcards-and-regular-expressions) are supported.
+	Level *externalRef5.LogFilterLevel `form:"level,omitempty" json:"level,omitempty"`
+
+	// Type Filter logs by their type. Types include `app` for application logs and `request` for request logs. You can find the full set of types available for a query by using the `GET /logs/values` endpoint.
+	Type *externalRef5.LogFilterType `form:"type,omitempty" json:"type,omitempty"`
+
+	// Text Filter by the text of the logs. [Wildcards and regex](https://docs.render.com/logging#wildcards-and-regular-expressions) are supported.
+	Text *externalRef5.LogFilterText `form:"text,omitempty" json:"text,omitempty"`
+
+	// Path Filter request logs by their path. [Wildcards and regex](https://docs.render.com/logging#wildcards-and-regular-expressions) are supported.
+	Path *externalRef5.LogFilterPath `form:"path,omitempty" json:"path,omitempty"`
+
+	// Limit The maximum number of items to return. For details, see [Pagination](https://api-docs.render.com/reference/pagination).
+	Limit *LimitParam `form:"limit,omitempty" json:"limit,omitempty"`
+}
+
+// ListLogsValuesParams defines parameters for ListLogsValues.
+type ListLogsValuesParams struct {
+	// OwnerId The ID of the owner (team or personal user) whose resources should be returned
+	OwnerId string `form:"ownerId" json:"ownerId"`
+
+	// Label The label to query logs for
+	Label ListLogsValuesParamsLabel `form:"label" json:"label"`
+
+	// StartTime Epoch/Unix timestamp of end of time range to return. Defaults to `now() - 1 hour`.
+	StartTime *StartTimeParam `form:"startTime,omitempty" json:"startTime,omitempty"`
+
+	// EndTime Epoch/Unix timestamp of end of time range to return. Defaults to `now()`.
+	EndTime *EndTimeParam `form:"endTime,omitempty" json:"endTime,omitempty"`
+
+	// Direction The direction to query logs for. Backward will return most recent logs first.
+	// Forward will start with the oldest logs in the time range.
+	Direction *externalRef5.LogDirectionParam `form:"direction,omitempty" json:"direction,omitempty"`
+
+	// Resource Filter logs by their resource. A resource is the id of a server, cronjob, job, postgres, or redis.
+	Resource externalRef5.LogFilterResource `form:"resource" json:"resource"`
+
+	// Instance Filter logs by the instance they were emitted from. An instance is the id of a specific running server.
+	Instance *externalRef5.LogFilterInstance `form:"instance,omitempty" json:"instance,omitempty"`
+
+	// Host Filter request logs by their host. [Wildcards and regex](https://docs.render.com/logging#wildcards-and-regular-expressions) are supported.
+	Host *externalRef5.LogFilterHost `form:"host,omitempty" json:"host,omitempty"`
+
+	// StatusCode Filter request logs by their status code. [Wildcards and regex](https://docs.render.com/logging#wildcards-and-regular-expressions) are supported.
+	StatusCode *externalRef5.LogFilterStatusCode `form:"statusCode,omitempty" json:"statusCode,omitempty"`
+
+	// Method Filter request logs by their requests method. [Wildcards and regex](https://docs.render.com/logging#wildcards-and-regular-expressions) are supported.
+	Method *externalRef5.LogFilterMethod `form:"method,omitempty" json:"method,omitempty"`
+
+	// Level Filter logs by their severity level. [Wildcards and regex](https://docs.render.com/logging#wildcards-and-regular-expressions) are supported.
+	Level *externalRef5.LogFilterLevel `form:"level,omitempty" json:"level,omitempty"`
+
+	// Type Filter logs by their type. Types include `app` for application logs and `request` for request logs. You can find the full set of types available for a query by using the `GET /logs/values` endpoint.
+	Type *externalRef5.LogFilterType `form:"type,omitempty" json:"type,omitempty"`
+
+	// Text Filter by the text of the logs. [Wildcards and regex](https://docs.render.com/logging#wildcards-and-regular-expressions) are supported.
+	Text *externalRef5.LogFilterText `form:"text,omitempty" json:"text,omitempty"`
+
+	// Path Filter request logs by their path. [Wildcards and regex](https://docs.render.com/logging#wildcards-and-regular-expressions) are supported.
+	Path *externalRef5.LogFilterPath `form:"path,omitempty" json:"path,omitempty"`
+
+	// Limit The maximum number of items to return. For details, see [Pagination](https://api-docs.render.com/reference/pagination).
+	Limit *LimitParam `form:"limit,omitempty" json:"limit,omitempty"`
+}
+
+// ListLogsValuesParamsLabel defines parameters for ListLogsValues.
+type ListLogsValuesParamsLabel string
+
+// ListMaintenanceParams defines parameters for ListMaintenance.
+type ListMaintenanceParams struct {
+	ResourceId *externalRef6.MaintenanceResourcesParam `form:"resourceId,omitempty" json:"resourceId,omitempty"`
+
+	// OwnerId The ID of the owner (team or personal user) whose resources should be returned
+	OwnerId *OwnerIdParam                       `form:"ownerId,omitempty" json:"ownerId,omitempty"`
+	State   *externalRef6.MaintenanceStateParam `form:"state,omitempty" json:"state,omitempty"`
+}
+
+// GetActiveConnectionsParams defines parameters for GetActiveConnections.
+type GetActiveConnectionsParams struct {
+	// StartTime Epoch/Unix timestamp of end of time range to return. Defaults to `now() - 1 hour`.
+	StartTime *StartTimeParam `form:"startTime,omitempty" json:"startTime,omitempty"`
+
+	// EndTime Epoch/Unix timestamp of end of time range to return. Defaults to `now()`.
+	EndTime *EndTimeParam `form:"endTime,omitempty" json:"endTime,omitempty"`
+
+	// ResolutionSeconds The resolution of the returned data
+	ResolutionSeconds *externalRef7.ResolutionParam `form:"resolutionSeconds,omitempty" json:"resolutionSeconds,omitempty"`
+
+	// Resource Resource ID to query. When multiple resource query params are provided, they are ORed together. Resources Postgres ids or Redis ids
+	Resource *externalRef7.DatastoreResourceQueryParam `form:"resource,omitempty" json:"resource,omitempty"`
 }
 
 // GetBandwidthParams defines parameters for GetBandwidth.
@@ -1996,8 +2074,11 @@ type GetBandwidthParams struct {
 	// EndTime Epoch/Unix timestamp of end of time range to return. Defaults to `now()`.
 	EndTime *EndTimeParam `form:"endTime,omitempty" json:"endTime,omitempty"`
 
-	// Service Service ID to query. When multiple service query params are provided, they are ORed together
-	Service ServiceQueryParam `form:"service" json:"service"`
+	// Resource Service ID to query. When multiple service ids are provided, they are ORed together
+	Resource *externalRef7.ServiceResourceQueryParam `form:"resource,omitempty" json:"resource,omitempty"`
+
+	// Service This parameter is deprecated. Please use `resource` instead
+	Service *externalRef7.ServiceQueryParam `form:"service,omitempty" json:"service,omitempty"`
 }
 
 // GetCpuParams defines parameters for GetCpu.
@@ -2009,16 +2090,19 @@ type GetCpuParams struct {
 	EndTime *EndTimeParam `form:"endTime,omitempty" json:"endTime,omitempty"`
 
 	// ResolutionSeconds The resolution of the returned data
-	ResolutionSeconds *ResolutionParam `form:"resolutionSeconds,omitempty" json:"resolutionSeconds,omitempty"`
+	ResolutionSeconds *externalRef7.ResolutionParam `form:"resolutionSeconds,omitempty" json:"resolutionSeconds,omitempty"`
 
-	// Service Service ID to query. When multiple service query params are provided, they are ORed together
-	Service ServiceQueryParam `form:"service" json:"service"`
+	// Resource Resource ID to query. When multiple resource query params are provided, they are ORed together. Resources can be service ids, Postgres ids, or Redis ids
+	Resource *externalRef7.ResourceQueryParam `form:"resource,omitempty" json:"resource,omitempty"`
+
+	// Service This parameter is deprecated. Please use `resource` instead
+	Service *externalRef7.ServiceQueryParam `form:"service,omitempty" json:"service,omitempty"`
 
 	// Instance Instance ID to query. When multiple instance ID query params are provided, they are ORed together
-	Instance *InstanceQueryParam `form:"instance,omitempty" json:"instance,omitempty"`
+	Instance *externalRef7.InstanceQueryParam `form:"instance,omitempty" json:"instance,omitempty"`
 
 	// AggregationMethod The aggregation method to apply to multiple time series
-	AggregationMethod *ApplicationMetricAggregationMethod `form:"aggregationMethod,omitempty" json:"aggregationMethod,omitempty"`
+	AggregationMethod *externalRef7.ApplicationMetricAggregationMethod `form:"aggregationMethod,omitempty" json:"aggregationMethod,omitempty"`
 }
 
 // GetCpuLimitParams defines parameters for GetCpuLimit.
@@ -2030,13 +2114,16 @@ type GetCpuLimitParams struct {
 	EndTime *EndTimeParam `form:"endTime,omitempty" json:"endTime,omitempty"`
 
 	// ResolutionSeconds The resolution of the returned data
-	ResolutionSeconds *ResolutionParam `form:"resolutionSeconds,omitempty" json:"resolutionSeconds,omitempty"`
+	ResolutionSeconds *externalRef7.ResolutionParam `form:"resolutionSeconds,omitempty" json:"resolutionSeconds,omitempty"`
 
-	// Service Service ID to query. When multiple service query params are provided, they are ORed together
-	Service ServiceQueryParam `form:"service" json:"service"`
+	// Resource Resource ID to query. When multiple resource query params are provided, they are ORed together. Resources can be service ids, Postgres ids, or Redis ids
+	Resource *externalRef7.ResourceQueryParam `form:"resource,omitempty" json:"resource,omitempty"`
+
+	// Service This parameter is deprecated. Please use `resource` instead
+	Service *externalRef7.ServiceQueryParam `form:"service,omitempty" json:"service,omitempty"`
 
 	// Instance Instance ID to query. When multiple instance ID query params are provided, they are ORed together
-	Instance *InstanceQueryParam `form:"instance,omitempty" json:"instance,omitempty"`
+	Instance *externalRef7.InstanceQueryParam `form:"instance,omitempty" json:"instance,omitempty"`
 }
 
 // GetCpuTargetParams defines parameters for GetCpuTarget.
@@ -2048,13 +2135,16 @@ type GetCpuTargetParams struct {
 	EndTime *EndTimeParam `form:"endTime,omitempty" json:"endTime,omitempty"`
 
 	// ResolutionSeconds The resolution of the returned data
-	ResolutionSeconds *ResolutionParam `form:"resolutionSeconds,omitempty" json:"resolutionSeconds,omitempty"`
+	ResolutionSeconds *externalRef7.ResolutionParam `form:"resolutionSeconds,omitempty" json:"resolutionSeconds,omitempty"`
 
-	// Service Service ID to query. When multiple service query params are provided, they are ORed together
-	Service ServiceQueryParam `form:"service" json:"service"`
+	// Resource Resource ID to query. When multiple resource query params are provided, they are ORed together. Resources can be service ids, Postgres ids, or Redis ids
+	Resource *externalRef7.ResourceQueryParam `form:"resource,omitempty" json:"resource,omitempty"`
+
+	// Service This parameter is deprecated. Please use `resource` instead
+	Service *externalRef7.ServiceQueryParam `form:"service,omitempty" json:"service,omitempty"`
 
 	// Instance Instance ID to query. When multiple instance ID query params are provided, they are ORed together
-	Instance *InstanceQueryParam `form:"instance,omitempty" json:"instance,omitempty"`
+	Instance *externalRef7.InstanceQueryParam `form:"instance,omitempty" json:"instance,omitempty"`
 }
 
 // GetDiskCapacityParams defines parameters for GetDiskCapacity.
@@ -2066,10 +2156,13 @@ type GetDiskCapacityParams struct {
 	EndTime *EndTimeParam `form:"endTime,omitempty" json:"endTime,omitempty"`
 
 	// ResolutionSeconds The resolution of the returned data
-	ResolutionSeconds *ResolutionParam `form:"resolutionSeconds,omitempty" json:"resolutionSeconds,omitempty"`
+	ResolutionSeconds *externalRef7.ResolutionParam `form:"resolutionSeconds,omitempty" json:"resolutionSeconds,omitempty"`
 
-	// Service Service ID to query. When multiple service query params are provided, they are ORed together
-	Service ServiceQueryParam `form:"service" json:"service"`
+	// Resource Resource ID to query. When multiple resource query params are provided, they are ORed together. Resources can be service ids, Postgres ids, or Redis ids
+	Resource *externalRef7.ResourceQueryParam `form:"resource,omitempty" json:"resource,omitempty"`
+
+	// Service This parameter is deprecated. Please use `resource` instead
+	Service *externalRef7.ServiceQueryParam `form:"service,omitempty" json:"service,omitempty"`
 }
 
 // GetDiskUsageParams defines parameters for GetDiskUsage.
@@ -2081,14 +2174,17 @@ type GetDiskUsageParams struct {
 	EndTime *EndTimeParam `form:"endTime,omitempty" json:"endTime,omitempty"`
 
 	// ResolutionSeconds The resolution of the returned data
-	ResolutionSeconds *ResolutionParam `form:"resolutionSeconds,omitempty" json:"resolutionSeconds,omitempty"`
+	ResolutionSeconds *externalRef7.ResolutionParam `form:"resolutionSeconds,omitempty" json:"resolutionSeconds,omitempty"`
 
-	// Service Service ID to query. When multiple service query params are provided, they are ORed together
-	Service ServiceQueryParam `form:"service" json:"service"`
+	// Resource Resource ID to query. When multiple resource query params are provided, they are ORed together. Resources can be service ids, Postgres ids, or Redis ids
+	Resource *externalRef7.ResourceQueryParam `form:"resource,omitempty" json:"resource,omitempty"`
+
+	// Service This parameter is deprecated. Please use `resource` instead
+	Service *externalRef7.ServiceQueryParam `form:"service,omitempty" json:"service,omitempty"`
 }
 
-// GetApplicationFilterValuesParams defines parameters for GetApplicationFilterValues.
-type GetApplicationFilterValuesParams struct {
+// ListApplicationFilterValuesParams defines parameters for ListApplicationFilterValues.
+type ListApplicationFilterValuesParams struct {
 	// StartTime Epoch/Unix timestamp of end of time range to return. Defaults to `now() - 1 hour`.
 	StartTime *StartTimeParam `form:"startTime,omitempty" json:"startTime,omitempty"`
 
@@ -2096,14 +2192,17 @@ type GetApplicationFilterValuesParams struct {
 	EndTime *EndTimeParam `form:"endTime,omitempty" json:"endTime,omitempty"`
 
 	// ResolutionSeconds The resolution of the returned data
-	ResolutionSeconds *ResolutionParam `form:"resolutionSeconds,omitempty" json:"resolutionSeconds,omitempty"`
+	ResolutionSeconds *externalRef7.ResolutionParam `form:"resolutionSeconds,omitempty" json:"resolutionSeconds,omitempty"`
 
-	// Service Service ID to query. When multiple service query params are provided, they are ORed together
-	Service ServiceQueryParam `form:"service" json:"service"`
+	// Resource Service ID to query. When multiple service ids are provided, they are ORed together
+	Resource *externalRef7.ServiceResourceQueryParam `form:"resource,omitempty" json:"resource,omitempty"`
+
+	// Service This parameter is deprecated. Please use `resource` instead
+	Service *externalRef7.ServiceQueryParam `form:"service,omitempty" json:"service,omitempty"`
 }
 
-// GetHttpFilterValuesParams defines parameters for GetHttpFilterValues.
-type GetHttpFilterValuesParams struct {
+// ListHttpFilterValuesParams defines parameters for ListHttpFilterValues.
+type ListHttpFilterValuesParams struct {
 	// StartTime Epoch/Unix timestamp of end of time range to return. Defaults to `now() - 1 hour`.
 	StartTime *StartTimeParam `form:"startTime,omitempty" json:"startTime,omitempty"`
 
@@ -2111,20 +2210,23 @@ type GetHttpFilterValuesParams struct {
 	EndTime *EndTimeParam `form:"endTime,omitempty" json:"endTime,omitempty"`
 
 	// ResolutionSeconds The resolution of the returned data
-	ResolutionSeconds *ResolutionParam `form:"resolutionSeconds,omitempty" json:"resolutionSeconds,omitempty"`
+	ResolutionSeconds *externalRef7.ResolutionParam `form:"resolutionSeconds,omitempty" json:"resolutionSeconds,omitempty"`
 
-	// Service Service ID to query. When multiple service query params are provided, they are ORed together
-	Service ServiceQueryParam `form:"service" json:"service"`
+	// Resource Service ID to query. When multiple service ids are provided, they are ORed together
+	Resource *externalRef7.ServiceResourceQueryParam `form:"resource,omitempty" json:"resource,omitempty"`
+
+	// Service This parameter is deprecated. Please use `resource` instead
+	Service *externalRef7.ServiceQueryParam `form:"service,omitempty" json:"service,omitempty"`
 
 	// Host The hosts of HTTP requests to filter to. When multiple host query params are provided, they are ORed together
-	Host *HostQueryParam `form:"host,omitempty" json:"host,omitempty"`
+	Host *externalRef7.HostQueryParam `form:"host,omitempty" json:"host,omitempty"`
 
 	// StatusCode The status codes of HTTP requests to filter to. When multiple status code query params are provided, they are ORed together
-	StatusCode *HttpStatusCode `form:"statusCode,omitempty" json:"statusCode,omitempty"`
+	StatusCode *externalRef7.HttpStatusCode `form:"statusCode,omitempty" json:"statusCode,omitempty"`
 }
 
-// GetPathFilterValuesParams defines parameters for GetPathFilterValues.
-type GetPathFilterValuesParams struct {
+// ListPathFilterValuesParams defines parameters for ListPathFilterValues.
+type ListPathFilterValuesParams struct {
 	// StartTime Epoch/Unix timestamp of end of time range to return. Defaults to `now() - 1 hour`.
 	StartTime *StartTimeParam `form:"startTime,omitempty" json:"startTime,omitempty"`
 
@@ -2132,19 +2234,22 @@ type GetPathFilterValuesParams struct {
 	EndTime *EndTimeParam `form:"endTime,omitempty" json:"endTime,omitempty"`
 
 	// ResolutionSeconds The resolution of the returned data
-	ResolutionSeconds *ResolutionParam `form:"resolutionSeconds,omitempty" json:"resolutionSeconds,omitempty"`
+	ResolutionSeconds *externalRef7.ResolutionParam `form:"resolutionSeconds,omitempty" json:"resolutionSeconds,omitempty"`
 
-	// Service Service ID to query. When multiple service query params are provided, they are ORed together
-	Service ServiceQueryParam `form:"service" json:"service"`
+	// Resource Service ID to query. When multiple service ids are provided, they are ORed together
+	Resource *externalRef7.ServiceResourceQueryParam `form:"resource,omitempty" json:"resource,omitempty"`
+
+	// Service This parameter is deprecated. Please use `resource` instead
+	Service *externalRef7.ServiceQueryParam `form:"service,omitempty" json:"service,omitempty"`
 
 	// Host The hosts of HTTP requests to filter to. When multiple host query params are provided, they are ORed together
-	Host *HostQueryParam `form:"host,omitempty" json:"host,omitempty"`
+	Host *externalRef7.HostQueryParam `form:"host,omitempty" json:"host,omitempty"`
 
 	// StatusCode The status codes of HTTP requests to filter to. When multiple status code query params are provided, they are ORed together
-	StatusCode *HttpStatusCode `form:"statusCode,omitempty" json:"statusCode,omitempty"`
+	StatusCode *externalRef7.HttpStatusCode `form:"statusCode,omitempty" json:"statusCode,omitempty"`
 
 	// Path The paths of HTTP requests to filter to. When multiple path query params are provided, they are ORed together
-	Path *PathQueryParam `form:"path,omitempty" json:"path,omitempty"`
+	Path *externalRef7.PathQueryParam `form:"path,omitempty" json:"path,omitempty"`
 }
 
 // GetHttpLatencyParams defines parameters for GetHttpLatency.
@@ -2156,19 +2261,22 @@ type GetHttpLatencyParams struct {
 	EndTime *EndTimeParam `form:"endTime,omitempty" json:"endTime,omitempty"`
 
 	// ResolutionSeconds The resolution of the returned data
-	ResolutionSeconds *ResolutionParam `form:"resolutionSeconds,omitempty" json:"resolutionSeconds,omitempty"`
+	ResolutionSeconds *externalRef7.ResolutionParam `form:"resolutionSeconds,omitempty" json:"resolutionSeconds,omitempty"`
 
-	// Service Service ID to query. When multiple service query params are provided, they are ORed together
-	Service ServiceQueryParam `form:"service" json:"service"`
+	// Resource Service ID to query. When multiple service ids are provided, they are ORed together
+	Resource *externalRef7.ServiceResourceQueryParam `form:"resource,omitempty" json:"resource,omitempty"`
+
+	// Service This parameter is deprecated. Please use `resource` instead
+	Service *externalRef7.ServiceQueryParam `form:"service,omitempty" json:"service,omitempty"`
 
 	// Host The hosts of HTTP requests to filter to. When multiple host query params are provided, they are ORed together
-	Host *HostQueryParam `form:"host,omitempty" json:"host,omitempty"`
+	Host *externalRef7.HostQueryParam `form:"host,omitempty" json:"host,omitempty"`
 
 	// Path The paths of HTTP requests to filter to. When multiple path query params are provided, they are ORed together
-	Path *PathQueryParam `form:"path,omitempty" json:"path,omitempty"`
+	Path *externalRef7.PathQueryParam `form:"path,omitempty" json:"path,omitempty"`
 
 	// Quantile The quantile of latencies to fetch. When multiple quantile query params are provided, they are ORed together
-	Quantile *Quantile `form:"quantile,omitempty" json:"quantile,omitempty"`
+	Quantile *externalRef7.Quantile `form:"quantile,omitempty" json:"quantile,omitempty"`
 }
 
 // GetHttpRequestsParams defines parameters for GetHttpRequests.
@@ -2180,19 +2288,22 @@ type GetHttpRequestsParams struct {
 	EndTime *EndTimeParam `form:"endTime,omitempty" json:"endTime,omitempty"`
 
 	// ResolutionSeconds The resolution of the returned data
-	ResolutionSeconds *ResolutionParam `form:"resolutionSeconds,omitempty" json:"resolutionSeconds,omitempty"`
+	ResolutionSeconds *externalRef7.ResolutionParam `form:"resolutionSeconds,omitempty" json:"resolutionSeconds,omitempty"`
 
-	// Service Service ID to query. When multiple service query params are provided, they are ORed together
-	Service ServiceQueryParam `form:"service" json:"service"`
+	// Resource Service ID to query. When multiple service ids are provided, they are ORed together
+	Resource *externalRef7.ServiceResourceQueryParam `form:"resource,omitempty" json:"resource,omitempty"`
+
+	// Service This parameter is deprecated. Please use `resource` instead
+	Service *externalRef7.ServiceQueryParam `form:"service,omitempty" json:"service,omitempty"`
 
 	// Host The hosts of HTTP requests to filter to. When multiple host query params are provided, they are ORed together
-	Host *HostQueryParam `form:"host,omitempty" json:"host,omitempty"`
+	Host *externalRef7.HostQueryParam `form:"host,omitempty" json:"host,omitempty"`
 
 	// Path The paths of HTTP requests to filter to. When multiple path query params are provided, they are ORed together
-	Path *PathQueryParam `form:"path,omitempty" json:"path,omitempty"`
+	Path *externalRef7.PathQueryParam `form:"path,omitempty" json:"path,omitempty"`
 
 	// AggregateBy The field to aggregate by
-	AggregateBy *HttpAggregateBy `form:"aggregateBy,omitempty" json:"aggregateBy,omitempty"`
+	AggregateBy *externalRef7.HttpAggregateBy `form:"aggregateBy,omitempty" json:"aggregateBy,omitempty"`
 }
 
 // GetInstanceCountParams defines parameters for GetInstanceCount.
@@ -2204,10 +2315,13 @@ type GetInstanceCountParams struct {
 	EndTime *EndTimeParam `form:"endTime,omitempty" json:"endTime,omitempty"`
 
 	// ResolutionSeconds The resolution of the returned data
-	ResolutionSeconds *ResolutionParam `form:"resolutionSeconds,omitempty" json:"resolutionSeconds,omitempty"`
+	ResolutionSeconds *externalRef7.ResolutionParam `form:"resolutionSeconds,omitempty" json:"resolutionSeconds,omitempty"`
 
-	// Service Service ID to query. When multiple service query params are provided, they are ORed together
-	Service ServiceQueryParam `form:"service" json:"service"`
+	// Resource Resource ID to query. When multiple resource query params are provided, they are ORed together. Resources can be service ids, Postgres ids, or Redis ids
+	Resource *externalRef7.ResourceQueryParam `form:"resource,omitempty" json:"resource,omitempty"`
+
+	// Service This parameter is deprecated. Please use `resource` instead
+	Service *externalRef7.ServiceQueryParam `form:"service,omitempty" json:"service,omitempty"`
 }
 
 // GetMemoryParams defines parameters for GetMemory.
@@ -2219,13 +2333,16 @@ type GetMemoryParams struct {
 	EndTime *EndTimeParam `form:"endTime,omitempty" json:"endTime,omitempty"`
 
 	// ResolutionSeconds The resolution of the returned data
-	ResolutionSeconds *ResolutionParam `form:"resolutionSeconds,omitempty" json:"resolutionSeconds,omitempty"`
+	ResolutionSeconds *externalRef7.ResolutionParam `form:"resolutionSeconds,omitempty" json:"resolutionSeconds,omitempty"`
 
-	// Service Service ID to query. When multiple service query params are provided, they are ORed together
-	Service ServiceQueryParam `form:"service" json:"service"`
+	// Resource Resource ID to query. When multiple resource query params are provided, they are ORed together. Resources can be service ids, Postgres ids, or Redis ids
+	Resource *externalRef7.ResourceQueryParam `form:"resource,omitempty" json:"resource,omitempty"`
+
+	// Service This parameter is deprecated. Please use `resource` instead
+	Service *externalRef7.ServiceQueryParam `form:"service,omitempty" json:"service,omitempty"`
 
 	// Instance Instance ID to query. When multiple instance ID query params are provided, they are ORed together
-	Instance *InstanceQueryParam `form:"instance,omitempty" json:"instance,omitempty"`
+	Instance *externalRef7.InstanceQueryParam `form:"instance,omitempty" json:"instance,omitempty"`
 }
 
 // GetMemoryLimitParams defines parameters for GetMemoryLimit.
@@ -2237,13 +2354,16 @@ type GetMemoryLimitParams struct {
 	EndTime *EndTimeParam `form:"endTime,omitempty" json:"endTime,omitempty"`
 
 	// ResolutionSeconds The resolution of the returned data
-	ResolutionSeconds *ResolutionParam `form:"resolutionSeconds,omitempty" json:"resolutionSeconds,omitempty"`
+	ResolutionSeconds *externalRef7.ResolutionParam `form:"resolutionSeconds,omitempty" json:"resolutionSeconds,omitempty"`
 
-	// Service Service ID to query. When multiple service query params are provided, they are ORed together
-	Service ServiceQueryParam `form:"service" json:"service"`
+	// Resource Resource ID to query. When multiple resource query params are provided, they are ORed together. Resources can be service ids, Postgres ids, or Redis ids
+	Resource *externalRef7.ResourceQueryParam `form:"resource,omitempty" json:"resource,omitempty"`
+
+	// Service This parameter is deprecated. Please use `resource` instead
+	Service *externalRef7.ServiceQueryParam `form:"service,omitempty" json:"service,omitempty"`
 
 	// Instance Instance ID to query. When multiple instance ID query params are provided, they are ORed together
-	Instance *InstanceQueryParam `form:"instance,omitempty" json:"instance,omitempty"`
+	Instance *externalRef7.InstanceQueryParam `form:"instance,omitempty" json:"instance,omitempty"`
 }
 
 // GetMemoryTargetParams defines parameters for GetMemoryTarget.
@@ -2255,45 +2375,63 @@ type GetMemoryTargetParams struct {
 	EndTime *EndTimeParam `form:"endTime,omitempty" json:"endTime,omitempty"`
 
 	// ResolutionSeconds The resolution of the returned data
-	ResolutionSeconds *ResolutionParam `form:"resolutionSeconds,omitempty" json:"resolutionSeconds,omitempty"`
+	ResolutionSeconds *externalRef7.ResolutionParam `form:"resolutionSeconds,omitempty" json:"resolutionSeconds,omitempty"`
 
-	// Service Service ID to query. When multiple service query params are provided, they are ORed together
-	Service ServiceQueryParam `form:"service" json:"service"`
+	// Resource Resource ID to query. When multiple resource query params are provided, they are ORed together. Resources can be service ids, Postgres ids, or Redis ids
+	Resource *externalRef7.ResourceQueryParam `form:"resource,omitempty" json:"resource,omitempty"`
+
+	// Service This parameter is deprecated. Please use `resource` instead
+	Service *externalRef7.ServiceQueryParam `form:"service,omitempty" json:"service,omitempty"`
 
 	// Instance Instance ID to query. When multiple instance ID query params are provided, they are ORed together
-	Instance *InstanceQueryParam `form:"instance,omitempty" json:"instance,omitempty"`
+	Instance *externalRef7.InstanceQueryParam `form:"instance,omitempty" json:"instance,omitempty"`
 }
 
-// GetNotificationOverridesParams defines parameters for GetNotificationOverrides.
-type GetNotificationOverridesParams struct {
+// GetReplicationLagParams defines parameters for GetReplicationLag.
+type GetReplicationLagParams struct {
+	// StartTime Epoch/Unix timestamp of end of time range to return. Defaults to `now() - 1 hour`.
+	StartTime *StartTimeParam `form:"startTime,omitempty" json:"startTime,omitempty"`
+
+	// EndTime Epoch/Unix timestamp of end of time range to return. Defaults to `now()`.
+	EndTime *EndTimeParam `form:"endTime,omitempty" json:"endTime,omitempty"`
+
+	// ResolutionSeconds The resolution of the returned data
+	ResolutionSeconds *externalRef7.ResolutionParam `form:"resolutionSeconds,omitempty" json:"resolutionSeconds,omitempty"`
+
+	// Resource Postgres ID to query. When multiple resource query params are provided, they are ORed together
+	Resource *externalRef7.PostgresResourceQueryParam `form:"resource,omitempty" json:"resource,omitempty"`
+}
+
+// ListNotificationOverridesParams defines parameters for ListNotificationOverrides.
+type ListNotificationOverridesParams struct {
 	// OwnerId The ID of the owner (team or personal user) whose resources should be returned
 	OwnerId *OwnerIdParam `form:"ownerId,omitempty" json:"ownerId,omitempty"`
 
-	// ServiceIds Filter for resources by service ID
-	ServiceIds *ServiceIdsParam `form:"serviceIds,omitempty" json:"serviceIds,omitempty"`
+	// ServiceId Filter for resources by service ID
+	ServiceId *ServiceIdsParam `form:"serviceId,omitempty" json:"serviceId,omitempty"`
 
-	// Cursor Cursor to begin retrieving entries for this query
+	// Cursor The position in the result list to start from when fetching paginated results. For details, see [Pagination](https://api-docs.render.com/reference/pagination).
 	Cursor *CursorParam `form:"cursor,omitempty" json:"cursor,omitempty"`
 
-	// Limit Max number of items that can be returned
+	// Limit The maximum number of items to return. For details, see [Pagination](https://api-docs.render.com/reference/pagination).
 	Limit *LimitParam `form:"limit,omitempty" json:"limit,omitempty"`
 }
 
-// GetOwnersParams defines parameters for GetOwners.
-type GetOwnersParams struct {
+// ListOwnersParams defines parameters for ListOwners.
+type ListOwnersParams struct {
 	Name  *[]string `form:"name,omitempty" json:"name,omitempty"`
 	Email *[]string `form:"email,omitempty" json:"email,omitempty"`
 
-	// Cursor Cursor to begin retrieving entries for this query
+	// Cursor The position in the result list to start from when fetching paginated results. For details, see [Pagination](https://api-docs.render.com/reference/pagination).
 	Cursor *CursorParam `form:"cursor,omitempty" json:"cursor,omitempty"`
 
-	// Limit Max number of items that can be returned
+	// Limit The maximum number of items to return. For details, see [Pagination](https://api-docs.render.com/reference/pagination).
 	Limit *LimitParam `form:"limit,omitempty" json:"limit,omitempty"`
 }
 
 // ListPostgresParams defines parameters for ListPostgres.
 type ListPostgresParams struct {
-	// Name Filter by resource name
+	// Name Filter by name
 	Name *NameParam `form:"name,omitempty" json:"name,omitempty"`
 
 	// Region Filter by resource region
@@ -2323,19 +2461,19 @@ type ListPostgresParams struct {
 	// IncludeReplicas Include replicas in the response
 	IncludeReplicas *IncludeReplicasParam `form:"includeReplicas,omitempty" json:"includeReplicas,omitempty"`
 
-	// Cursor Cursor to begin retrieving entries for this query
+	// Cursor The position in the result list to start from when fetching paginated results. For details, see [Pagination](https://api-docs.render.com/reference/pagination).
 	Cursor *CursorParam `form:"cursor,omitempty" json:"cursor,omitempty"`
 
-	// Limit Max number of items that can be returned
+	// Limit The maximum number of items to return. For details, see [Pagination](https://api-docs.render.com/reference/pagination).
 	Limit *LimitParam `form:"limit,omitempty" json:"limit,omitempty"`
 }
 
 // ListPostgresParamsSuspended defines parameters for ListPostgres.
 type ListPostgresParamsSuspended string
 
-// GetProjectsParams defines parameters for GetProjects.
-type GetProjectsParams struct {
-	// Name Filter by resource name
+// ListProjectsParams defines parameters for ListProjects.
+type ListProjectsParams struct {
+	// Name Filter by name
 	Name *NameParam `form:"name,omitempty" json:"name,omitempty"`
 
 	// CreatedBefore Filter for resources created before a certain time (specified as an ISO 8601 timestamp)
@@ -2353,16 +2491,16 @@ type GetProjectsParams struct {
 	// OwnerId The ID of the owner (team or personal user) whose resources should be returned
 	OwnerId *OwnerIdParam `form:"ownerId,omitempty" json:"ownerId,omitempty"`
 
-	// Cursor Cursor to begin retrieving entries for this query
+	// Cursor The position in the result list to start from when fetching paginated results. For details, see [Pagination](https://api-docs.render.com/reference/pagination).
 	Cursor *CursorParam `form:"cursor,omitempty" json:"cursor,omitempty"`
 
-	// Limit Max number of items that can be returned
+	// Limit The maximum number of items to return. For details, see [Pagination](https://api-docs.render.com/reference/pagination).
 	Limit *LimitParam `form:"limit,omitempty" json:"limit,omitempty"`
 }
 
 // ListRedisParams defines parameters for ListRedis.
 type ListRedisParams struct {
-	// Name Filter by resource name
+	// Name Filter by name
 	Name *NameParam `form:"name,omitempty" json:"name,omitempty"`
 
 	// Region Filter by resource region
@@ -2386,15 +2524,15 @@ type ListRedisParams struct {
 	// EnvironmentId Filter for resources that belong to an environment
 	EnvironmentId *EnvironmentIdParam `form:"environmentId,omitempty" json:"environmentId,omitempty"`
 
-	// Cursor Cursor to begin retrieving entries for this query
+	// Cursor The position in the result list to start from when fetching paginated results. For details, see [Pagination](https://api-docs.render.com/reference/pagination).
 	Cursor *CursorParam `form:"cursor,omitempty" json:"cursor,omitempty"`
 
-	// Limit Max number of items that can be returned
+	// Limit The maximum number of items to return. For details, see [Pagination](https://api-docs.render.com/reference/pagination).
 	Limit *LimitParam `form:"limit,omitempty" json:"limit,omitempty"`
 }
 
-// GetRegistryCredentialsParams defines parameters for GetRegistryCredentials.
-type GetRegistryCredentialsParams struct {
+// ListRegistryCredentialsParams defines parameters for ListRegistryCredentials.
+type ListRegistryCredentialsParams struct {
 	// Name Filter for the name of a credential
 	Name *[]string `form:"name,omitempty" json:"name,omitempty"`
 
@@ -2402,7 +2540,7 @@ type GetRegistryCredentialsParams struct {
 	Username *[]string `form:"username,omitempty" json:"username,omitempty"`
 
 	// Type Filter for the registry type for the credential
-	Type *[]GetRegistryCredentialsParamsType `form:"type,omitempty" json:"type,omitempty"`
+	Type *[]RegistryCredentialRegistry `form:"type,omitempty" json:"type,omitempty"`
 
 	// CreatedBefore Filter for services created before a certain time (specified as an ISO 8601 timestamp)
 	CreatedBefore *time.Time `form:"createdBefore,omitempty" json:"createdBefore,omitempty"`
@@ -2419,42 +2557,37 @@ type GetRegistryCredentialsParams struct {
 	// OwnerId The ID of the owner (team or personal user) whose resources should be returned
 	OwnerId *OwnerIdParam `form:"ownerId,omitempty" json:"ownerId,omitempty"`
 
-	// Cursor Cursor to begin retrieving entries for this query
+	// Cursor The position in the result list to start from when fetching paginated results. For details, see [Pagination](https://api-docs.render.com/reference/pagination).
 	Cursor *CursorParam `form:"cursor,omitempty" json:"cursor,omitempty"`
 
-	// Limit Max number of items that can be returned
+	// Limit The maximum number of items to return. For details, see [Pagination](https://api-docs.render.com/reference/pagination).
 	Limit *LimitParam `form:"limit,omitempty" json:"limit,omitempty"`
 }
 
-// GetRegistryCredentialsParamsType defines parameters for GetRegistryCredentials.
-type GetRegistryCredentialsParamsType string
-
 // CreateRegistryCredentialJSONBody defines parameters for CreateRegistryCredential.
 type CreateRegistryCredentialJSONBody struct {
-	AuthToken string                                   `json:"authToken"`
-	Name      string                                   `json:"name"`
-	OwnerId   string                                   `json:"ownerId"`
-	Registry  CreateRegistryCredentialJSONBodyRegistry `json:"registry"`
-	Username  string                                   `json:"username"`
-}
+	AuthToken string `json:"authToken"`
+	Name      string `json:"name"`
+	OwnerId   string `json:"ownerId"`
 
-// CreateRegistryCredentialJSONBodyRegistry defines parameters for CreateRegistryCredential.
-type CreateRegistryCredentialJSONBodyRegistry string
+	// Registry The registry to use this credential with
+	Registry RegistryCredentialRegistry `json:"registry"`
+	Username string                     `json:"username"`
+}
 
 // UpdateRegistryCredentialJSONBody defines parameters for UpdateRegistryCredential.
 type UpdateRegistryCredentialJSONBody struct {
-	AuthToken string                                   `json:"authToken"`
-	Name      string                                   `json:"name"`
-	Registry  UpdateRegistryCredentialJSONBodyRegistry `json:"registry"`
-	Username  string                                   `json:"username"`
+	AuthToken string `json:"authToken"`
+	Name      string `json:"name"`
+
+	// Registry The registry to use this credential with
+	Registry RegistryCredentialRegistry `json:"registry"`
+	Username string                     `json:"username"`
 }
 
-// UpdateRegistryCredentialJSONBodyRegistry defines parameters for UpdateRegistryCredential.
-type UpdateRegistryCredentialJSONBodyRegistry string
-
-// GetServicesParams defines parameters for GetServices.
-type GetServicesParams struct {
-	// Name Filter by resource name
+// ListServicesParams defines parameters for ListServices.
+type ListServicesParams struct {
+	// Name Filter by name
 	Name *NameParam `form:"name,omitempty" json:"name,omitempty"`
 
 	// Type Filter for types of services
@@ -2484,32 +2617,32 @@ type GetServicesParams struct {
 	// OwnerId The ID of the owner (team or personal user) whose resources should be returned
 	OwnerId *OwnerIdParam `form:"ownerId,omitempty" json:"ownerId,omitempty"`
 
-	// Cursor Cursor to begin retrieving entries for this query
+	// Cursor The position in the result list to start from when fetching paginated results. For details, see [Pagination](https://api-docs.render.com/reference/pagination).
 	Cursor *CursorParam `form:"cursor,omitempty" json:"cursor,omitempty"`
 
-	// Limit Max number of items that can be returned
+	// Limit The maximum number of items to return. For details, see [Pagination](https://api-docs.render.com/reference/pagination).
 	Limit *LimitParam `form:"limit,omitempty" json:"limit,omitempty"`
 }
 
-// GetServicesParamsSuspended defines parameters for GetServices.
-type GetServicesParamsSuspended string
+// ListServicesParamsSuspended defines parameters for ListServices.
+type ListServicesParamsSuspended string
 
-// GetCustomDomainsParams defines parameters for GetCustomDomains.
-type GetCustomDomainsParams struct {
-	// Cursor Cursor to begin retrieving entries for this query
+// ListCustomDomainsParams defines parameters for ListCustomDomains.
+type ListCustomDomainsParams struct {
+	// Cursor The position in the result list to start from when fetching paginated results. For details, see [Pagination](https://api-docs.render.com/reference/pagination).
 	Cursor *CursorParam `form:"cursor,omitempty" json:"cursor,omitempty"`
 
-	// Limit Max number of items that can be returned
+	// Limit The maximum number of items to return. For details, see [Pagination](https://api-docs.render.com/reference/pagination).
 	Limit *LimitParam `form:"limit,omitempty" json:"limit,omitempty"`
 
 	// Name Filter for the names of custom domain
 	Name *[]string `form:"name,omitempty" json:"name,omitempty"`
 
-	// DomainType Filter for apex or subdomains
-	DomainType *GetCustomDomainsParamsDomainType `form:"domainType,omitempty" json:"domainType,omitempty"`
+	// DomainType Filter for domain type
+	DomainType *ListCustomDomainsParamsDomainType `form:"domainType,omitempty" json:"domainType,omitempty"`
 
-	// VerificationStatus Filter for verified or unverified custom domains
-	VerificationStatus *GetCustomDomainsParamsVerificationStatus `form:"verificationStatus,omitempty" json:"verificationStatus,omitempty"`
+	// VerificationStatus Filter for domain verification status (`verified` or `unverified`)
+	VerificationStatus *ListCustomDomainsParamsVerificationStatus `form:"verificationStatus,omitempty" json:"verificationStatus,omitempty"`
 
 	// CreatedBefore Filter for custom domains created before a certain time (specified as an ISO 8601 timestamp)
 	CreatedBefore *time.Time `form:"createdBefore,omitempty" json:"createdBefore,omitempty"`
@@ -2518,19 +2651,19 @@ type GetCustomDomainsParams struct {
 	CreatedAfter *time.Time `form:"createdAfter,omitempty" json:"createdAfter,omitempty"`
 }
 
-// GetCustomDomainsParamsDomainType defines parameters for GetCustomDomains.
-type GetCustomDomainsParamsDomainType string
+// ListCustomDomainsParamsDomainType defines parameters for ListCustomDomains.
+type ListCustomDomainsParamsDomainType string
 
-// GetCustomDomainsParamsVerificationStatus defines parameters for GetCustomDomains.
-type GetCustomDomainsParamsVerificationStatus string
+// ListCustomDomainsParamsVerificationStatus defines parameters for ListCustomDomains.
+type ListCustomDomainsParamsVerificationStatus string
 
 // CreateCustomDomainJSONBody defines parameters for CreateCustomDomain.
 type CreateCustomDomainJSONBody struct {
 	Name string `json:"name"`
 }
 
-// GetDeploysParams defines parameters for GetDeploys.
-type GetDeploysParams struct {
+// ListDeploysParams defines parameters for ListDeploys.
+type ListDeploysParams struct {
 	// CreatedBefore Filter for deploys created before a certain time (specified as an ISO 8601 timestamp)
 	CreatedBefore *time.Time `form:"createdBefore,omitempty" json:"createdBefore,omitempty"`
 
@@ -2549,22 +2682,30 @@ type GetDeploysParams struct {
 	// FinishedAfter Filter for deploys finished after a certain time (specified as an ISO 8601 timestamp)
 	FinishedAfter *time.Time `form:"finishedAfter,omitempty" json:"finishedAfter,omitempty"`
 
-	// Cursor Cursor to begin retrieving entries for this query
+	// Cursor The position in the result list to start from when fetching paginated results. For details, see [Pagination](https://api-docs.render.com/reference/pagination).
 	Cursor *CursorParam `form:"cursor,omitempty" json:"cursor,omitempty"`
 
-	// Limit Max number of items that can be returned
+	// Limit The maximum number of items to return. For details, see [Pagination](https://api-docs.render.com/reference/pagination).
 	Limit *LimitParam `form:"limit,omitempty" json:"limit,omitempty"`
 }
 
 // CreateDeployJSONBody defines parameters for CreateDeploy.
 type CreateDeployJSONBody struct {
-	// ClearCache Defaults to "do_not_clear"
+	// ClearCache If `clear`, Render clears the service's build cache before deploying. This can be useful if you're experiencing issues with your build.
 	ClearCache *CreateDeployJSONBodyClearCache `json:"clearCache,omitempty"`
 
-	// CommitId Specific ID of commit to deploy for a web service, defaults to latest commit. Not supported for Cron Job deploys.
+	// CommitId The SHA of a specific Git commit to deploy for a service. Defaults to the latest commit on the service's connected branch.
+	//
+	// Note that deploying a specific commit with this endpoint does not disable autodeploys for the service.
+	//
+	// You can toggle autodeploys for your service with the [Update service](https://api-docs.render.com/reference/update-service) endpoint or in the Render Dashboard.
+	//
+	// Not supported for cron jobs.
 	CommitId *string `json:"commitId,omitempty"`
 
-	// ImageUrl URL of the image to deploy for an image-backed service. The host, repository, and image name must match the currently configured image for the service.
+	// ImageUrl The URL of the image to deploy for an image-backed service.
+	//
+	// The host, repository, and image name all must match the currently configured image for the service.
 	ImageUrl *string `json:"imageUrl,omitempty"`
 }
 
@@ -2573,15 +2714,33 @@ type CreateDeployJSONBodyClearCache string
 
 // GetEnvVarsForServiceParams defines parameters for GetEnvVarsForService.
 type GetEnvVarsForServiceParams struct {
-	// Cursor Cursor to begin retrieving entries for this query
+	// Cursor The position in the result list to start from when fetching paginated results. For details, see [Pagination](https://api-docs.render.com/reference/pagination).
 	Cursor *CursorParam `form:"cursor,omitempty" json:"cursor,omitempty"`
 
-	// Limit Max number of items that can be returned
+	// Limit The maximum number of items to return. For details, see [Pagination](https://api-docs.render.com/reference/pagination).
 	Limit *LimitParam `form:"limit,omitempty" json:"limit,omitempty"`
 }
 
-// RetrieveHeadersParams defines parameters for RetrieveHeaders.
-type RetrieveHeadersParams struct {
+// ListEventsParams defines parameters for ListEvents.
+type ListEventsParams struct {
+	// EventType The type of event to filter to
+	EventType *EventTypeParam `form:"eventType,omitempty" json:"eventType,omitempty"`
+
+	// StartTime Epoch/Unix timestamp of end of time range to return. Defaults to `now() - 1 hour`.
+	StartTime *StartTimeParam `form:"startTime,omitempty" json:"startTime,omitempty"`
+
+	// EndTime Epoch/Unix timestamp of end of time range to return. Defaults to `now()`.
+	EndTime *EndTimeParam `form:"endTime,omitempty" json:"endTime,omitempty"`
+
+	// Cursor The position in the result list to start from when fetching paginated results. For details, see [Pagination](https://api-docs.render.com/reference/pagination).
+	Cursor *CursorParam `form:"cursor,omitempty" json:"cursor,omitempty"`
+
+	// Limit The maximum number of items to return. For details, see [Pagination](https://api-docs.render.com/reference/pagination).
+	Limit *LimitParam `form:"limit,omitempty" json:"limit,omitempty"`
+}
+
+// ListHeadersParams defines parameters for ListHeaders.
+type ListHeadersParams struct {
 	// Path Filter for specific paths that headers apply to
 	Path *[]string `form:"path,omitempty" json:"path,omitempty"`
 
@@ -2591,10 +2750,10 @@ type RetrieveHeadersParams struct {
 	// Value Filter for header values
 	Value *[]string `form:"value,omitempty" json:"value,omitempty"`
 
-	// Cursor Cursor to begin retrieving entries for this query
+	// Cursor The position in the result list to start from when fetching paginated results. For details, see [Pagination](https://api-docs.render.com/reference/pagination).
 	Cursor *CursorParam `form:"cursor,omitempty" json:"cursor,omitempty"`
 
-	// Limit Max number of items that can be returned
+	// Limit The maximum number of items to return. For details, see [Pagination](https://api-docs.render.com/reference/pagination).
 	Limit *LimitParam `form:"limit,omitempty" json:"limit,omitempty"`
 }
 
@@ -2603,10 +2762,10 @@ type UpdateHeadersJSONBody = []HeaderInput
 
 // ListJobParams defines parameters for ListJob.
 type ListJobParams struct {
-	// Cursor Cursor to begin retrieving entries for this query
+	// Cursor The position in the result list to start from when fetching paginated results. For details, see [Pagination](https://api-docs.render.com/reference/pagination).
 	Cursor *CursorParam `form:"cursor,omitempty" json:"cursor,omitempty"`
 
-	// Limit Max number of items that can be returned
+	// Limit The maximum number of items to return. For details, see [Pagination](https://api-docs.render.com/reference/pagination).
 	Limit *LimitParam `form:"limit,omitempty" json:"limit,omitempty"`
 
 	// Status Filter for the status of the job (`pending`, `running`, `succeeded`, or `failed`)
@@ -2642,14 +2801,14 @@ type PostJobJSONBody struct {
 
 // RollbackDeployJSONBody defines parameters for RollbackDeploy.
 type RollbackDeployJSONBody struct {
-	// DeployId The ID of the deploy to rollback to
+	// DeployId The ID of the deploy to roll back to
 	DeployId string `json:"deployId"`
 }
 
-// RetrieveRoutesParams defines parameters for RetrieveRoutes.
-type RetrieveRoutesParams struct {
+// ListRoutesParams defines parameters for ListRoutes.
+type ListRoutesParams struct {
 	// Type Filter for the type of route rule
-	Type *[]RetrieveRoutesParamsType `form:"type,omitempty" json:"type,omitempty"`
+	Type *[]ListRoutesParamsType `form:"type,omitempty" json:"type,omitempty"`
 
 	// Source Filter for the source path of the route
 	Source *[]string `form:"source,omitempty" json:"source,omitempty"`
@@ -2657,15 +2816,15 @@ type RetrieveRoutesParams struct {
 	// Destination Filter for the destination path of the route
 	Destination *[]string `form:"destination,omitempty" json:"destination,omitempty"`
 
-	// Cursor Cursor to begin retrieving entries for this query
+	// Cursor The position in the result list to start from when fetching paginated results. For details, see [Pagination](https://api-docs.render.com/reference/pagination).
 	Cursor *CursorParam `form:"cursor,omitempty" json:"cursor,omitempty"`
 
-	// Limit Max number of items that can be returned
+	// Limit The maximum number of items to return. For details, see [Pagination](https://api-docs.render.com/reference/pagination).
 	Limit *LimitParam `form:"limit,omitempty" json:"limit,omitempty"`
 }
 
-// RetrieveRoutesParamsType defines parameters for RetrieveRoutes.
-type RetrieveRoutesParamsType string
+// ListRoutesParamsType defines parameters for ListRoutes.
+type ListRoutesParamsType string
 
 // PutRoutesJSONBody defines parameters for PutRoutes.
 type PutRoutesJSONBody = []RoutePut
@@ -2675,12 +2834,12 @@ type ScaleServiceJSONBody struct {
 	NumInstances int `json:"numInstances"`
 }
 
-// GetSecretFilesForServiceParams defines parameters for GetSecretFilesForService.
-type GetSecretFilesForServiceParams struct {
-	// Cursor Cursor to begin retrieving entries for this query
+// ListSecretFilesForServiceParams defines parameters for ListSecretFilesForService.
+type ListSecretFilesForServiceParams struct {
+	// Cursor The position in the result list to start from when fetching paginated results. For details, see [Pagination](https://api-docs.render.com/reference/pagination).
 	Cursor *CursorParam `form:"cursor,omitempty" json:"cursor,omitempty"`
 
-	// Limit Max number of items that can be returned
+	// Limit The maximum number of items to return. For details, see [Pagination](https://api-docs.render.com/reference/pagination).
 	Limit *LimitParam `form:"limit,omitempty" json:"limit,omitempty"`
 }
 
@@ -2692,11 +2851,14 @@ type AddOrUpdateSecretFileJSONBody struct {
 	Content *string `json:"content,omitempty"`
 }
 
+// UpdateBlueprintJSONRequestBody defines body for UpdateBlueprint for application/json ContentType.
+type UpdateBlueprintJSONRequestBody = externalRef1.BlueprintPATCH
+
 // AddDiskJSONRequestBody defines body for AddDisk for application/json ContentType.
-type AddDiskJSONRequestBody = DiskPOST
+type AddDiskJSONRequestBody = externalRef2.DiskPOST
 
 // UpdateDiskJSONRequestBody defines body for UpdateDisk for application/json ContentType.
-type UpdateDiskJSONRequestBody = DiskPATCH
+type UpdateDiskJSONRequestBody = externalRef2.DiskPATCH
 
 // RestoreSnapshotJSONRequestBody defines body for RestoreSnapshot for application/json ContentType.
 type RestoreSnapshotJSONRequestBody = SnapshotRestorePOST
@@ -2708,7 +2870,7 @@ type CreateEnvGroupJSONRequestBody = EnvGroupPOSTInput
 type UpdateEnvGroupJSONRequestBody = EnvGroupPATCHInput
 
 // UpdateEnvGroupEnvVarJSONRequestBody defines body for UpdateEnvGroupEnvVar for application/json ContentType.
-type UpdateEnvGroupEnvVarJSONRequestBody = EnvVarInput
+type UpdateEnvGroupEnvVarJSONRequestBody = AddUpdateEnvVarInput
 
 // UpdateEnvGroupSecretFileJSONRequestBody defines body for UpdateEnvGroupSecretFile for application/json ContentType.
 type UpdateEnvGroupSecretFileJSONRequestBody UpdateEnvGroupSecretFileJSONBody
@@ -2722,17 +2884,23 @@ type UpdateEnvironmentJSONRequestBody = EnvironmentPATCHInput
 // AddResourcesToEnvironmentJSONRequestBody defines body for AddResourcesToEnvironment for application/json ContentType.
 type AddResourcesToEnvironmentJSONRequestBody = EnvironmentResourcesPOSTInput
 
+// UpdateMaintenanceJSONRequestBody defines body for UpdateMaintenance for application/json ContentType.
+type UpdateMaintenanceJSONRequestBody = externalRef6.MaintenanceRunPATCH
+
 // PatchServiceNotificationOverridesJSONRequestBody defines body for PatchServiceNotificationOverrides for application/json ContentType.
-type PatchServiceNotificationOverridesJSONRequestBody = NotificationServiceOverridePATCH
+type PatchServiceNotificationOverridesJSONRequestBody = externalRef8.NotificationServiceOverridePATCH
 
 // PatchOwnerNotificationSettingsJSONRequestBody defines body for PatchOwnerNotificationSettings for application/json ContentType.
-type PatchOwnerNotificationSettingsJSONRequestBody = NotificationSettingPATCH
+type PatchOwnerNotificationSettingsJSONRequestBody = externalRef8.NotificationSettingPATCH
 
 // CreatePostgresJSONRequestBody defines body for CreatePostgres for application/json ContentType.
 type CreatePostgresJSONRequestBody = PostgresPOSTInput
 
 // UpdatePostgresJSONRequestBody defines body for UpdatePostgres for application/json ContentType.
 type UpdatePostgresJSONRequestBody = PostgresPATCHInput
+
+// RecoverPostgresJSONRequestBody defines body for RecoverPostgres for application/json ContentType.
+type RecoverPostgresJSONRequestBody = externalRef9.RecoveryInput
 
 // CreateProjectJSONRequestBody defines body for CreateProject for application/json ContentType.
 type CreateProjectJSONRequestBody = ProjectPOSTInput
@@ -2759,7 +2927,7 @@ type CreateServiceJSONRequestBody = ServicePOST
 type UpdateServiceJSONRequestBody = ServicePATCH
 
 // AutoscaleServiceJSONRequestBody defines body for AutoscaleService for application/json ContentType.
-type AutoscaleServiceJSONRequestBody = AutoscalingConfig
+type AutoscaleServiceJSONRequestBody = externalRef0.AutoscalingConfig
 
 // CreateCustomDomainJSONRequestBody defines body for CreateCustomDomain for application/json ContentType.
 type CreateCustomDomainJSONRequestBody CreateCustomDomainJSONBody
@@ -3532,6 +3700,42 @@ func (t ServicePOST_ServiceDetails) MarshalJSON() ([]byte, error) {
 }
 
 func (t *ServicePOST_ServiceDetails) UnmarshalJSON(b []byte) error {
+	err := t.union.UnmarshalJSON(b)
+	return err
+}
+
+// AsExternalRef3EventType returns the union data inside the EventTypeParam as a externalRef3.EventType
+func (t EventTypeParam) AsExternalRef3EventType() (externalRef3.EventType, error) {
+	var body externalRef3.EventType
+	err := json.Unmarshal(t.union, &body)
+	return body, err
+}
+
+// FromExternalRef3EventType overwrites any union data inside the EventTypeParam as the provided externalRef3.EventType
+func (t *EventTypeParam) FromExternalRef3EventType(v externalRef3.EventType) error {
+	b, err := json.Marshal(v)
+	t.union = b
+	return err
+}
+
+// MergeExternalRef3EventType performs a merge with any union data inside the EventTypeParam, using the provided externalRef3.EventType
+func (t *EventTypeParam) MergeExternalRef3EventType(v externalRef3.EventType) error {
+	b, err := json.Marshal(v)
+	if err != nil {
+		return err
+	}
+
+	merged, err := runtime.JSONMerge(t.union, b)
+	t.union = merged
+	return err
+}
+
+func (t EventTypeParam) MarshalJSON() ([]byte, error) {
+	b, err := t.union.MarshalJSON()
+	return b, err
+}
+
+func (t *EventTypeParam) UnmarshalJSON(b []byte) error {
 	err := t.union.UnmarshalJSON(b)
 	return err
 }

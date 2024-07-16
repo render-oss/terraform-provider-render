@@ -6,6 +6,7 @@ import (
 
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 
+	clientnotifications "terraform-provider-render/internal/client/notifications"
 	"terraform-provider-render/internal/provider/common"
 	"terraform-provider-render/internal/provider/notifications"
 
@@ -60,9 +61,9 @@ func (d *notificationSettingDataSource) Read(ctx context.Context, req datasource
 		return
 	}
 
-	var notifs client.NotificationSetting
+	var notifs clientnotifications.NotificationSetting
 	err := common.Get(func() (*http.Response, error) {
-		return d.client.GetOwnerNotificationSettings(ctx, d.ownerID)
+		return d.client.RetrieveOwnerNotificationSettings(ctx, d.ownerID)
 	}, &notifs)
 	if err != nil {
 		resp.Diagnostics.AddError("unable to get notificationSetting", err.Error())

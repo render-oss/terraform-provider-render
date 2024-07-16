@@ -2,19 +2,21 @@ package common
 
 import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
+
 	"terraform-provider-render/internal/client"
+	"terraform-provider-render/internal/client/disks"
 )
 
-func DiskToClientPatch(disk DiskModel) client.DiskPATCH {
-	return client.DiskPATCH{
+func DiskToClientPatch(disk DiskModel) disks.DiskPATCH {
+	return disks.DiskPATCH{
 		SizeGB:    CastPointerToInt(disk.SizeGB.ValueInt64Pointer()),
 		MountPath: disk.MountPath.ValueStringPointer(),
 		Name:      disk.Name.ValueStringPointer(),
 	}
 }
 
-func DiskToClientPOST(serviceID string, disk DiskModel) client.DiskPOST {
-	return client.DiskPOST{
+func DiskToClientPOST(serviceID string, disk DiskModel) disks.DiskPOST {
+	return disks.DiskPOST{
 		ServiceId: serviceID,
 		SizeGB:    int(disk.SizeGB.ValueInt64()),
 		MountPath: disk.MountPath.ValueString(),
@@ -34,7 +36,7 @@ func DiskToClientCreate(disk *DiskModel) *client.ServiceDisk {
 	}
 }
 
-func DiskDetailsToDiskModel(disk *client.DiskDetails) *DiskModel {
+func DiskDetailsToDiskModel(disk *disks.DiskDetails) *DiskModel {
 	if disk == nil {
 		return nil
 	}
@@ -47,7 +49,7 @@ func DiskDetailsToDiskModel(disk *client.DiskDetails) *DiskModel {
 	}
 }
 
-func DiskToDiskModel(disk *client.Disk) *DiskModel {
+func DiskToDiskModel(disk *disks.Disk) *DiskModel {
 	if disk == nil {
 		return nil
 	}
@@ -60,12 +62,12 @@ func DiskToDiskModel(disk *client.Disk) *DiskModel {
 	}
 }
 
-func DiskDetailsToDisk(disk *client.DiskDetails) *client.Disk {
+func DiskDetailsToDisk(disk *disks.DiskDetails) *disks.Disk {
 	if disk == nil {
 		return nil
 	}
 
-	return &client.Disk{
+	return &disks.Disk{
 		Id:        disk.Id,
 		Name:      disk.Name,
 		SizeGB:    disk.SizeGB,
