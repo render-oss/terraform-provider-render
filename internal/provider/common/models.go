@@ -6,6 +6,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/attr"
 	"github.com/hashicorp/terraform-plugin-framework/diag"
 	"github.com/hashicorp/terraform-plugin-framework/types"
+	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
 
 	"terraform-provider-render/internal/client/autoscaling"
 	commontypes "terraform-provider-render/internal/provider/common/types"
@@ -193,4 +194,22 @@ func ImageRuntimeSource(service *client.Service, envDetails client.EnvSpecificDe
 	}
 
 	return image, nil
+}
+
+func IntPointerAsValue(v *int) basetypes.Int64Value {
+	if v == nil {
+		return types.Int64PointerValue(nil)
+	}
+
+	v64 := int64(*v)
+	return types.Int64Value(v64)
+}
+
+func IntPointerToRequest(v types.Int64) *int {
+	if v.IsNull() || v.IsUnknown() {
+		return nil
+	}
+
+	vInt := int(v.ValueInt64())
+	return &vInt
 }

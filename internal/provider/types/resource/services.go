@@ -159,6 +159,16 @@ var StartCommand = schema.StringAttribute{
 	MarkdownDescription: "Command to run the service. When using native runtimes, this will be used as the start command and is required. For [Docker](https://docs.render.com/docker) and [image-backed](https://docs.render.com/deploy-an-image) services, this will override the default Docker command for the image.",
 }
 
+var MaxShutdownDelaySeconds = schema.Int64Attribute{
+	Optional:            true,
+	Computed:            true,
+	Description:         "The maximum amount of time (in seconds) that Render waits for your application process to exit gracefully after sending it a SIGTERM signal.",
+	MarkdownDescription: "The maximum amount of time (in seconds) that Render waits for your application process to exit gracefully after sending it a SIGTERM signal.",
+	Validators: []validator.Int64{
+		int64validator.Between(1, 300),
+	},
+}
+
 var Branch = schema.StringAttribute{
 	Required:    true,
 	Description: "Branch of the git repository to build.",

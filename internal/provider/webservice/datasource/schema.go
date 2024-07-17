@@ -19,6 +19,7 @@ func Schema(ctx context.Context) schema.Schema {
 			"disk":                          datasource.Disk,
 			"environment_id":                datasource.ResourceEnvironmentID,
 			"health_check_path":             datasource.HealthCheckPath,
+			"max_shutdown_delay_seconds":    datasource.MaxShutdownDelaySeconds,
 			"name":                          datasource.ServiceName,
 			"slug":                          datasource.Slug,
 			"num_instances":                 datasource.NumInstances,

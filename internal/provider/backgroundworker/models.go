@@ -23,6 +23,7 @@ type BackgroundWorkerModel struct {
 	Region                     types.String               `tfsdk:"region"`
 	RootDirectory              types.String               `tfsdk:"root_directory"`
 	StartCommand               types.String               `tfsdk:"start_command"`
+	MaxShutdownDelaySeconds    types.Int64                `tfsdk:"max_shutdown_delay_seconds"`
 
 	EnvVars     map[string]common.EnvVarModel     `tfsdk:"env_vars"`
 	SecretFiles map[string]common.SecretFileModel `tfsdk:"secret_files"`
@@ -57,6 +58,7 @@ func ModelForServiceResult(service *common.WrappedService, plan BackgroundWorker
 		PullRequestPreviewsEnabled: types.BoolValue(details.PullRequestPreviewsEnabled == client.PullRequestPreviewsEnabledYes),
 		Region:                     types.StringValue(string(details.Region)),
 		RootDirectory:              types.StringValue(service.RootDir),
+		MaxShutdownDelaySeconds:    common.IntPointerAsValue(details.MaxShutdownDelaySeconds),
 
 		Autoscaling:          common.AutoscalingFromClient(details.Autoscaling, diags),
 		Disk:                 common.DiskToDiskModel(details.Disk),
