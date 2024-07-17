@@ -30,6 +30,7 @@ Provides information about a Render Web Service.
 - `env_vars` (Attributes Map) Map of environment variable names to their values. (see [below for nested schema](#nestedatt--env_vars))
 - `environment_id` (String) Unique identifier for the environment that the resource belongs to
 - `health_check_path` (String) If you're running a server, enter the path where your server will always return a 200 OK response. We use it to monitor your app and for [zero downtime deploys](https://docs.render.com/deploys#zero-downtime-deploys).
+- `max_shutdown_delay_seconds` (Number) The maximum amount of time (in seconds) that Render waits for your application process to exit gracefully after sending it a SIGTERM signal before sending a SIGKILL signal.
 - `name` (String) Name of the service
 - `notification_override` (Attributes) Set the notification settings for this service. These will override the notification settings of the owner. (see [below for nested schema](#nestedatt--notification_override))
 - `num_instances` (Number)
