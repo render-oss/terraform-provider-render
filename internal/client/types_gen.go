@@ -404,6 +404,9 @@ type BackgroundWorkerDetails struct {
 	Env                ServiceRuntime     `json:"env"`
 	EnvSpecificDetails EnvSpecificDetails `json:"envSpecificDetails"`
 
+	// MaxShutdownDelaySeconds The maximum amount of time (in seconds) that Render waits for your application process to exit gracefully after sending it a SIGTERM signal.
+	MaxShutdownDelaySeconds *MaxShutdownDelaySeconds `json:"maxShutdownDelaySeconds,omitempty"`
+
 	// NumInstances For a *manually* scaled service, this is the number of instances the service is scaled to. DOES NOT indicate the number of running instances for an *autoscaled* service.
 	NumInstances int       `json:"numInstances"`
 	ParentServer *Resource `json:"parentServer,omitempty"`
@@ -419,6 +422,9 @@ type BackgroundWorkerDetails struct {
 // BackgroundWorkerDetailsPATCH defines model for backgroundWorkerDetailsPATCH.
 type BackgroundWorkerDetailsPATCH struct {
 	EnvSpecificDetails *EnvSpecificDetailsPATCH `json:"envSpecificDetails,omitempty"`
+
+	// MaxShutdownDelaySeconds The maximum amount of time (in seconds) that Render waits for your application process to exit gracefully after sending it a SIGTERM signal.
+	MaxShutdownDelaySeconds *MaxShutdownDelaySeconds `json:"maxShutdownDelaySeconds,omitempty"`
 
 	// Plan Defaults to "starter"
 	Plan                       *PaidPlan                                               `json:"plan,omitempty"`
@@ -441,6 +447,9 @@ type BackgroundWorkerDetailsPOST struct {
 	// Deprecated:
 	Env                *ServiceEnv             `json:"env,omitempty"`
 	EnvSpecificDetails *EnvSpecificDetailsPOST `json:"envSpecificDetails,omitempty"`
+
+	// MaxShutdownDelaySeconds The maximum amount of time (in seconds) that Render waits for your application process to exit gracefully after sending it a SIGTERM signal.
+	MaxShutdownDelaySeconds *MaxShutdownDelaySeconds `json:"maxShutdownDelaySeconds,omitempty"`
 
 	// NumInstances Defaults to 1
 	NumInstances *int `json:"numInstances,omitempty"`
@@ -850,6 +859,9 @@ type Image struct {
 // InstanceId When a service with a disk is scaled, the instanceId is used to identify the instance that the disk is attached to. Each instance's disks get their own snapshots, and can be restored separately.
 type InstanceId = string
 
+// MaxShutdownDelaySeconds The maximum amount of time (in seconds) that Render waits for your application process to exit gracefully after sending it a SIGTERM signal.
+type MaxShutdownDelaySeconds = int
+
 // MaxmemoryPolicy The eviction policy for the Redis instance
 type MaxmemoryPolicy string
 
@@ -1039,6 +1051,9 @@ type PrivateServiceDetails struct {
 	Env                ServiceRuntime     `json:"env"`
 	EnvSpecificDetails EnvSpecificDetails `json:"envSpecificDetails"`
 
+	// MaxShutdownDelaySeconds The maximum amount of time (in seconds) that Render waits for your application process to exit gracefully after sending it a SIGTERM signal.
+	MaxShutdownDelaySeconds *MaxShutdownDelaySeconds `json:"maxShutdownDelaySeconds,omitempty"`
+
 	// NumInstances For a *manually* scaled service, this is the number of instances the service is scaled to. DOES NOT indicate the number of running instances for an *autoscaled* service.
 	NumInstances int          `json:"numInstances"`
 	OpenPorts    []ServerPort `json:"openPorts"`
@@ -1056,6 +1071,9 @@ type PrivateServiceDetails struct {
 // PrivateServiceDetailsPATCH defines model for privateServiceDetailsPATCH.
 type PrivateServiceDetailsPATCH struct {
 	EnvSpecificDetails *EnvSpecificDetailsPATCH `json:"envSpecificDetails,omitempty"`
+
+	// MaxShutdownDelaySeconds The maximum amount of time (in seconds) that Render waits for your application process to exit gracefully after sending it a SIGTERM signal.
+	MaxShutdownDelaySeconds *MaxShutdownDelaySeconds `json:"maxShutdownDelaySeconds,omitempty"`
 
 	// Plan Defaults to "starter"
 	Plan                       *PaidPlan                                             `json:"plan,omitempty"`
@@ -1078,6 +1096,9 @@ type PrivateServiceDetailsPOST struct {
 	// Deprecated:
 	Env                *ServiceEnv             `json:"env,omitempty"`
 	EnvSpecificDetails *EnvSpecificDetailsPOST `json:"envSpecificDetails,omitempty"`
+
+	// MaxShutdownDelaySeconds The maximum amount of time (in seconds) that Render waits for your application process to exit gracefully after sending it a SIGTERM signal.
+	MaxShutdownDelaySeconds *MaxShutdownDelaySeconds `json:"maxShutdownDelaySeconds,omitempty"`
 
 	// NumInstances Defaults to 1
 	NumInstances *int `json:"numInstances,omitempty"`
@@ -1577,6 +1598,9 @@ type WebServiceDetails struct {
 	EnvSpecificDetails EnvSpecificDetails `json:"envSpecificDetails"`
 	HealthCheckPath    string             `json:"healthCheckPath"`
 
+	// MaxShutdownDelaySeconds The maximum amount of time (in seconds) that Render waits for your application process to exit gracefully after sending it a SIGTERM signal.
+	MaxShutdownDelaySeconds *MaxShutdownDelaySeconds `json:"maxShutdownDelaySeconds,omitempty"`
+
 	// NumInstances For a *manually* scaled service, this is the number of instances the service is scaled to. DOES NOT indicate the number of running instances for an *autoscaled* service.
 	NumInstances int          `json:"numInstances"`
 	OpenPorts    []ServerPort `json:"openPorts"`
@@ -1595,6 +1619,9 @@ type WebServiceDetails struct {
 type WebServiceDetailsPATCH struct {
 	EnvSpecificDetails *EnvSpecificDetailsPATCH `json:"envSpecificDetails,omitempty"`
 	HealthCheckPath    *string                  `json:"healthCheckPath,omitempty"`
+
+	// MaxShutdownDelaySeconds The maximum amount of time (in seconds) that Render waits for your application process to exit gracefully after sending it a SIGTERM signal.
+	MaxShutdownDelaySeconds *MaxShutdownDelaySeconds `json:"maxShutdownDelaySeconds,omitempty"`
 
 	// Plan Defaults to "starter"
 	Plan                       *PaidPlan                                         `json:"plan,omitempty"`
@@ -1618,6 +1645,9 @@ type WebServiceDetailsPOST struct {
 	Env                *ServiceEnv             `json:"env,omitempty"`
 	EnvSpecificDetails *EnvSpecificDetailsPOST `json:"envSpecificDetails,omitempty"`
 	HealthCheckPath    *string                 `json:"healthCheckPath,omitempty"`
+
+	// MaxShutdownDelaySeconds The maximum amount of time (in seconds) that Render waits for your application process to exit gracefully after sending it a SIGTERM signal.
+	MaxShutdownDelaySeconds *MaxShutdownDelaySeconds `json:"maxShutdownDelaySeconds,omitempty"`
 
 	// NumInstances Defaults to 1
 	NumInstances *int `json:"numInstances,omitempty"`

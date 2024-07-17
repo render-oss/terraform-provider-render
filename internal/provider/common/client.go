@@ -139,7 +139,7 @@ func do(f func() (*http.Response, error)) (*http.Response, error) {
 	if resp.StatusCode >= 400 && resp.StatusCode < 500 {
 		var clientError client.Error
 		err := json.NewDecoder(resp.Body).Decode(&clientError)
-		if err != nil {
+		if err != nil || clientError.Message == nil {
 			return nil, fmt.Errorf("received %d", resp.StatusCode)
 		}
 
