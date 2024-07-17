@@ -45,6 +45,7 @@ func CreateServiceRequestFromModel(ownerID string, plan webservice.WebServiceMod
 		PreDeployCommand:           plan.PreDeployCommand.ValueStringPointer(),
 		PullRequestPreviewsEnabled: &pullRequestPreviewsEnabled,
 		Region:                     &region,
+		MaxShutdownDelaySeconds:    common.IntPointerToRequest(plan.MaxShutdownDelaySeconds),
 		Autoscaling:                autoscaling,
 	}
 

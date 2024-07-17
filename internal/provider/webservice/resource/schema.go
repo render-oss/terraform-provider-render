@@ -29,6 +29,7 @@ func Schema(ctx context.Context) schema.Schema {
 			"root_directory":                resource.RootDirectory,
 			"start_command":                 resource.StartCommand,
 			"url":                           resource.ServiceURL,
+			"max_shutdown_delay_seconds":    resource.MaxShutdownDelaySeconds,
 			"env_vars":                      resource.EnvVars,
 			"secret_files":                  resource.SecretFiles,
 			"notification_override":         resource.NotificationOverride,

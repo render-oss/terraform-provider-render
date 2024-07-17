@@ -29,6 +29,7 @@ func UpdateServiceRequestFromModel(plan privateservice.PrivateServiceModel, owne
 		EnvSpecificDetails:         envSpecificDetails,
 		PreDeployCommand:           &preDeployCommand,
 		PullRequestPreviewsEnabled: &pullRequestPreviewsEnabled,
+		MaxShutdownDelaySeconds:    common.IntPointerToRequest(plan.MaxShutdownDelaySeconds),
 	}
 
 	serviceDetails := &client.ServicePATCH_ServiceDetails{}

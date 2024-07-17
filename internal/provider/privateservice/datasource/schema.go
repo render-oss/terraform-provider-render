@@ -27,6 +27,7 @@ func Schema(ctx context.Context) schema.Schema {
 			"root_directory":                datasource.RootDirectory,
 			"start_command":                 datasource.StartCommand,
 			"url":                           datasource.ServiceURL,
+			"max_shutdown_delay_seconds":    datasource.MaxShutdownDelaySeconds,
 			"env_vars":                      datasource.EnvVars,
 			"secret_files":                  datasource.SecretFiles,
 			"notification_override":         datasource.NotificationOverride,
