@@ -45,7 +45,7 @@ func CreateServiceRequestFromModel(ownerID string, plan privateservice.PrivateSe
 		PreDeployCommand:           plan.PreDeployCommand.ValueStringPointer(),
 		PullRequestPreviewsEnabled: &pullRequestPreviewsEnabled,
 		Region:                     &region,
-		MaxShutdownDelaySeconds:    common.IntPointerToRequest(plan.MaxShutdownDelaySeconds),
+		MaxShutdownDelaySeconds:    common.ValueAsIntPointer(plan.MaxShutdownDelaySeconds),
 	}
 
 	serviceDetails := &client.ServicePOST_ServiceDetails{}

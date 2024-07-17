@@ -99,9 +99,8 @@ var HealthCheckPath = schema.StringAttribute{
 }
 
 var MaxShutdownDelaySeconds = schema.Int64Attribute{
-	Computed:            true,
-	Description:         "The maximum amount of time (in seconds) that Render waits for your application process to exit gracefully after sending it a SIGTERM signal.",
-	MarkdownDescription: "The maximum amount of time (in seconds) that Render waits for your application process to exit gracefully after sending it a SIGTERM signal.",
+	Computed:    true,
+	Description: "The maximum amount of time (in seconds) that Render waits for your application process to exit gracefully after sending it a SIGTERM signal before sending a SIGKILL signal.",
 }
 
 var NumInstances = schema.Int64Attribute{

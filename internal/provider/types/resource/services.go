@@ -160,10 +160,9 @@ var StartCommand = schema.StringAttribute{
 }
 
 var MaxShutdownDelaySeconds = schema.Int64Attribute{
-	Optional:            true,
-	Computed:            true,
-	Description:         "The maximum amount of time (in seconds) that Render waits for your application process to exit gracefully after sending it a SIGTERM signal.",
-	MarkdownDescription: "The maximum amount of time (in seconds) that Render waits for your application process to exit gracefully after sending it a SIGTERM signal.",
+	Optional:    true,
+	Computed:    true,
+	Description: "The maximum amount of time (in seconds) that Render waits for your application process to exit gracefully after sending it a SIGTERM signal before sending a SIGKILL signal.",
 	Validators: []validator.Int64{
 		int64validator.Between(1, 300),
 	},

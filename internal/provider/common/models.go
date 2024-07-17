@@ -205,7 +205,7 @@ func IntPointerAsValue(v *int) basetypes.Int64Value {
 	return types.Int64Value(v64)
 }
 
-func IntPointerToRequest(v types.Int64) *int {
+func ValueAsIntPointer(v types.Int64) *int {
 	if v.IsNull() || v.IsUnknown() {
 		return nil
 	}

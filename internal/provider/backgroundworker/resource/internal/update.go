@@ -29,7 +29,7 @@ func UpdateServiceRequestFromModel(plan backgroundWorker.BackgroundWorkerModel, 
 		EnvSpecificDetails:         envSpecificDetails,
 		PreDeployCommand:           &preDeployCommand,
 		PullRequestPreviewsEnabled: &pullRequestPreviewsEnabled,
-		MaxShutdownDelaySeconds:    common.IntPointerToRequest(plan.MaxShutdownDelaySeconds),
+		MaxShutdownDelaySeconds:    common.ValueAsIntPointer(plan.MaxShutdownDelaySeconds),
 	}
 
 	serviceDetails := &client.ServicePATCH_ServiceDetails{}

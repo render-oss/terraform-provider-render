@@ -30,7 +30,7 @@ func UpdateServiceRequestFromModel(plan webservice.WebServiceModel, ownerID stri
 		HealthCheckPath:            plan.HealthCheckPath.ValueStringPointer(),
 		PreDeployCommand:           &preDeployCommand,
 		PullRequestPreviewsEnabled: &pullRequestPreviewsEnabled,
-		MaxShutdownDelaySeconds:    common.IntPointerToRequest(plan.MaxShutdownDelaySeconds),
+		MaxShutdownDelaySeconds:    common.ValueAsIntPointer(plan.MaxShutdownDelaySeconds),
 		Runtime:                    common.From(client.ServiceRuntime(plan.RuntimeSource.Runtime())),
 	}
 
