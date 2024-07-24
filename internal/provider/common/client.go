@@ -732,7 +732,7 @@ func UpdateEnvironmentID(ctx context.Context, apiClient *client.ClientWithRespon
 
 	state := envIDStateAndPlan.State
 	plan := envIDStateAndPlan.Plan
-	if state == plan {
+	if ValueOrDefault(state, "") == ValueOrDefault(plan, "") {
 		// doesn't matter which one we return
 		return state, nil
 	}

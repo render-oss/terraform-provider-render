@@ -18,3 +18,10 @@ func EmptyStringIfNil(s *string) *string {
 	}
 	return s
 }
+
+func ValueOrDefault[T any](v *T, def T) T {
+	if v == nil {
+		return def
+	}
+	return *v
+}
