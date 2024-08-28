@@ -5,7 +5,8 @@ resource "render_web_service" "web" {
 
   runtime_source = {
     image = {
-      image_url        = "docker.io/library/nginx:latest",
+      image_url        = "docker.io/library/nginx",
+      tag              = "latest",
     }
   }
 }

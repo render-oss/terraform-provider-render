@@ -29,6 +29,8 @@ type DockerRuntimeSourceModel struct {
 
 type ImageRuntimeSourceModel struct {
 	ImageURL             commontypes.ImageURLStringValue `tfsdk:"image_url"`
+	Tag                  types.String                    `tfsdk:"tag"`
+	Digest               types.String                    `tfsdk:"digest"`
 	RegistryCredentialID types.String                    `tfsdk:"registry_credential_id"`
 }
 
@@ -168,6 +170,18 @@ func EnvSpecificDetailsForPATCH(runtimeSource *RuntimeSourceModel, startCommand 
 	return envSpecificDetails, nil
 }
 
+func ImageURLForURLAndReference(url, tag, digest string) string {
+	if tag != "" {
+		return fmt.Sprintf("%s:%s", url, tag)
+	}
+
+	if digest != "" {
+		return fmt.Sprintf("%s@%s", url, digest)
+	}
+
+	return url
+}
+
 func applyNativeRuntimeSourceFieldsForCreate(runtime *NativeRuntimeModel, body *client.CreateServiceJSONRequestBody) {
 	body.Repo = runtime.RepoURL.ValueStringPointer()
 	body.Branch = runtime.Branch.ValueStringPointer()
@@ -183,8 +197,13 @@ func applyDockerRuntimeSourceFieldsForCreate(runtime *DockerRuntimeSourceModel, 
 }
 
 func applyImageRuntimeSourceFieldsForCreate(runtime *ImageRuntimeSourceModel, body *client.CreateServiceJSONRequestBody) {
+	imagePath := ImageURLForURLAndReference(
+		runtime.ImageURL.ValueString(),
+		runtime.Tag.ValueString(),
+		runtime.Digest.ValueString(),
+	)
 	body.Image = &client.Image{
-		ImagePath:            runtime.ImageURL.ValueString(),
+		ImagePath:            imagePath,
 		RegistryCredentialId: runtime.RegistryCredentialID.ValueStringPointer(),
 	}
 }
@@ -205,9 +224,15 @@ func applyDockerRuntimeSourceFieldsForUpdate(runtimeSource *DockerRuntimeSourceM
 }
 
 func applyImageRuntimeSourceFieldsForUpdate(runtimeSource *ImageRuntimeSourceModel, updateServiceBody *client.UpdateServiceJSONRequestBody, ownerID string) {
+	imagePath := ImageURLForURLAndReference(
+		runtimeSource.ImageURL.ValueString(),
+		runtimeSource.Tag.ValueString(),
+		runtimeSource.Digest.ValueString(),
+	)
+
 	updateServiceBody.Image = &client.Image{
 		OwnerId:              ownerID,
-		ImagePath:            runtimeSource.ImageURL.ValueString(),
+		ImagePath:            imagePath,
 		RegistryCredentialId: runtimeSource.RegistryCredentialID.ValueStringPointer(),
 	}
 }

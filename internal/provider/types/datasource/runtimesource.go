@@ -94,10 +94,24 @@ var PreDeployCommand = schema.StringAttribute{
 	Computed:    true,
 }
 
+var ImageTag = schema.StringAttribute{
+	Description: "Tag of the Docker image to deploy. Mutually exclusive with digest.",
+	Optional:    true,
+	Computed:    true,
+}
+
+var ImageDigest = schema.StringAttribute{
+	Description: "Digest of the Docker image to deploy. Mutually exclusive with tag.",
+	Optional:    true,
+	Computed:    true,
+}
+
 var RuntimeSourceImage = schema.SingleNestedAttribute{
 	Computed: true,
 	Attributes: map[string]schema.Attribute{
 		"image_url":              ImageURL,
+		"tag":                    ImageTag,
+		"digest":                 ImageDigest,
 		"registry_credential_id": RegistryCredentialID,
 	},
 }
