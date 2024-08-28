@@ -145,6 +145,11 @@ Read-Only:
 <a id="nestedatt--runtime_source--image"></a>
 ### Nested Schema for `runtime_source.image`
 
+Optional:
+
+- `digest` (String) Digest of the Docker image to deploy. Mutually exclusive with tag.
+- `tag` (String) Tag of the Docker image to deploy. Mutually exclusive with digest.
+
 Read-Only:
 
 - `image_url` (String) URL of the Docker image to deploy.

@@ -19,7 +19,10 @@ resource "render_web_service" "web" {
   region  = "ohio"
   runtime = "image"
   deploy_configuration = {
-    image = { image_url = "docker.io/library/nginx:latest" }
+    image = {
+      image_url = "docker.io/library/nginx",
+      tag       = "latest",
+    }
   }
 }
 

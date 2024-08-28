@@ -150,7 +150,9 @@ Required:
 
 Optional:
 
+- `digest` (String) Digest of the Docker image to deploy. Mutually exclusive with tag.
 - `registry_credential_id` (String) ID of the registry credential to use when pulling the image.
+- `tag` (String) Tag of the Docker image to deploy. Mutually exclusive with digest.
 
 
 <a id="nestedatt--runtime_source--native_runtime"></a>
