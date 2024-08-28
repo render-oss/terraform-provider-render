@@ -281,5 +281,6 @@ func (r *webServiceResource) ImportState(ctx context.Context, req resource.Impor
 func (r *webServiceResource) ConfigValidators(ctx context.Context) []resource.ConfigValidator {
 	return []resource.ConfigValidator{
 		resourcecommon.RuntimeSourceValidator,
+		resourcecommon.ImageTagOrDigestValidator,
 	}
 }

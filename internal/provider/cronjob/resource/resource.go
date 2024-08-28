@@ -232,5 +232,6 @@ func (r *cronJobResource) ImportState(ctx context.Context, req resource.ImportSt
 func (r *cronJobResource) ConfigValidators(ctx context.Context) []resource.ConfigValidator {
 	return []resource.ConfigValidator{
 		resourcecommon.RuntimeSourceValidator,
+		resourcecommon.ImageTagOrDigestValidator,
 	}
 }

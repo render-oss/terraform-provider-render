@@ -272,5 +272,6 @@ func (r *backgroundWorkerResource) ImportState(ctx context.Context, req resource
 func (r *backgroundWorkerResource) ConfigValidators(ctx context.Context) []resource.ConfigValidator {
 	return []resource.ConfigValidator{
 		resourcecommon.RuntimeSourceValidator,
+		resourcecommon.ImageTagOrDigestValidator,
 	}
 }

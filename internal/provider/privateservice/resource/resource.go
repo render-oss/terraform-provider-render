@@ -276,5 +276,6 @@ func (r *privateServiceResource) ImportState(ctx context.Context, req resource.I
 func (r *privateServiceResource) ConfigValidators(ctx context.Context) []resource.ConfigValidator {
 	return []resource.ConfigValidator{
 		resourcecommon.RuntimeSourceValidator,
+		resourcecommon.ImageTagOrDigestValidator,
 	}
 }
