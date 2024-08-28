@@ -1,8 +1,11 @@
 package resource
 
 import (
+	"regexp"
+
 	"github.com/hashicorp/terraform-plugin-framework-validators/objectvalidator"
 	"github.com/hashicorp/terraform-plugin-framework-validators/resourcevalidator"
+	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringdefault"
@@ -65,7 +68,13 @@ var ImageURL = schema.StringAttribute{
 	CustomType:  commontypes.ImageURLStringType{},
 	Required:    true,
 	Description: "URL of the Docker image to deploy.",
-	Validators:  []validator.String{validators.StringNotEmpty},
+	Validators: []validator.String{
+		validators.StringNotEmpty,
+		stringvalidator.RegexMatches(
+			regexp.MustCompile(`^(([^/:@]+)|(.+\/[^/:@]+))$`),
+			"must not contain the tag or digest. Use the tag or digest fields instead",
+		),
+	},
 }
 
 var ImageTag = schema.StringAttribute{

@@ -7,6 +7,10 @@ variable "image_url" {
   type = string
 }
 
+variable "tag" {
+  type = string
+}
+
 resource "render_web_service" "image" {
   name    = "web-service-image-tf"
   plan    = "starter"
@@ -16,6 +20,7 @@ resource "render_web_service" "image" {
   runtime_source = {
     image = {
       image_url = var.image_url
+      tag       = var.tag
     }
   }
 }
