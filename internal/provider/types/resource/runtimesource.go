@@ -118,3 +118,8 @@ var RuntimeSourceValidator = resourcevalidator.ExactlyOneOf(
 	path.MatchRoot("runtime_source").AtName("image"),
 	path.MatchRoot("runtime_source").AtName("docker"),
 )
+
+var ImageTagOrDigestValidator = resourcevalidator.Conflicting(
+	path.MatchRoot("runtime_source").AtName("image").AtName("tag"),
+	path.MatchRoot("runtime_source").AtName("image").AtName("digest"),
+)
