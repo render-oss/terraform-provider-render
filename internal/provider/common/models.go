@@ -2,6 +2,7 @@ package common
 
 import (
 	"fmt"
+	"strings"
 
 	"github.com/hashicorp/terraform-plugin-framework/attr"
 	"github.com/hashicorp/terraform-plugin-framework/diag"
@@ -185,8 +186,26 @@ func DockerRuntimeSource(service *client.Service, envDetails client.EnvSpecificD
 }
 
 func ImageRuntimeSource(service *client.Service, envDetails client.EnvSpecificDetails) (*ImageRuntimeSourceModel, error) {
+	var imageURL *string
+	var imageTag *string
+	var imageDigest *string
+
+	if service.ImagePath != nil && strings.Contains(*service.ImagePath, "@") {
+		imageParts := strings.Split(*service.ImagePath, "@")
+		imageURL = &imageParts[0]
+		imageDigest = &imageParts[1]
+	}
+
+	if service.ImagePath != nil && strings.Contains(*service.ImagePath, ":") {
+		imageParts := strings.Split(*service.ImagePath, ":")
+		imageURL = &imageParts[0]
+		imageTag = &imageParts[1]
+	}
+
 	image := &ImageRuntimeSourceModel{
-		ImageURL: commontypes.ImageURLStringValue{StringValue: types.StringPointerValue(service.ImagePath)},
+		ImageURL: commontypes.ImageURLStringValue{StringValue: types.StringPointerValue(imageURL)},
+		Tag:      types.StringPointerValue(imageTag),
+		Digest:   types.StringPointerValue(imageDigest),
 	}
 
 	if service.RegistryCredential != nil {

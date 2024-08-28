@@ -68,6 +68,18 @@ var ImageURL = schema.StringAttribute{
 	Validators:  []validator.String{validators.StringNotEmpty},
 }
 
+var ImageTag = schema.StringAttribute{
+	Description: "Tag of the Docker image to deploy. Mutually exclusive with digest.",
+	Optional:    true,
+	Computed:    true,
+}
+
+var ImageDigest = schema.StringAttribute{
+	Description: "Digest of the Docker image to deploy. Mutually exclusive with tag.",
+	Optional:    true,
+	Computed:    true,
+}
+
 var RegistryCredentialID = schema.StringAttribute{
 	Description: "ID of the registry credential to use when pulling the image.",
 	Optional:    true,
@@ -95,6 +107,8 @@ var RuntimeSourceImage = schema.SingleNestedAttribute{
 	Optional:            true,
 	Attributes: map[string]schema.Attribute{
 		"image_url":              ImageURL,
+		"tag":                    ImageTag,
+		"digest":                 ImageDigest,
 		"registry_credential_id": RegistryCredentialID,
 	},
 }

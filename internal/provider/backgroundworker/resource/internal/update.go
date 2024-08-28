@@ -39,9 +39,15 @@ func UpdateServiceRequestFromModel(plan backgroundWorker.BackgroundWorkerModel, 
 
 	var image *client.Image
 	if plan.RuntimeSource.Runtime() == string(client.ServiceEnvImage) {
+		imagePath := common.ImageURLForURLAndReference(
+			plan.RuntimeSource.Image.ImageURL.ValueString(),
+			plan.RuntimeSource.Image.Tag.ValueString(),
+			plan.RuntimeSource.Image.Digest.ValueString(),
+		)
+
 		image = &client.Image{
 			OwnerId:              ownerID,
-			ImagePath:            plan.RuntimeSource.Image.ImageURL.ValueString(),
+			ImagePath:            imagePath,
 			RegistryCredentialId: plan.RuntimeSource.Image.RegistryCredentialID.ValueStringPointer(),
 		}
 	}
