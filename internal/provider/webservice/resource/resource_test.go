@@ -224,11 +224,13 @@ func TestWebServiceResource_Image(t *testing.T) {
 				ResourceName: resourceName,
 				ConfigFile:   config.StaticFile("./testdata/image.tf"),
 				ConfigVariables: config.Variables{
-					"image_url":     config.StringVariable("docker.io/library/nginx:stable-perl"),
+					"image_url":     config.StringVariable("docker.io/library/nginx"),
+					"tag":           config.StringVariable("stable-perl"),
 					"start_command": config.StringVariable("echo hello"),
 				},
 				Check: resource.ComposeAggregateTestCheckFunc(
-					resource.TestCheckResourceAttr(resourceName, "runtime_source.image.image_url", "docker.io/library/nginx:stable-perl"), // updated
+					resource.TestCheckResourceAttr(resourceName, "runtime_source.image.image_url", "docker.io/library/nginx"),
+					resource.TestCheckResourceAttr(resourceName, "runtime_source.image.tag", "stable-perl"), // updated
 					resource.TestCheckResourceAttr(resourceName, "start_command", "echo hello"),
 				),
 			},
@@ -236,11 +238,13 @@ func TestWebServiceResource_Image(t *testing.T) {
 				ResourceName: resourceName,
 				ConfigFile:   config.StaticFile("./testdata/image.tf"),
 				ConfigVariables: config.Variables{
-					"image_url": config.StringVariable("docker.io/library/nginx:stable-perl"),
+					"image_url": config.StringVariable("docker.io/library/nginx"),
+					"tag":       config.StringVariable("stable-perl"),
 					// removed start_command
 				},
 				Check: resource.ComposeAggregateTestCheckFunc(
-					resource.TestCheckResourceAttr(resourceName, "runtime_source.image.image_url", "docker.io/library/nginx:stable-perl"),
+					resource.TestCheckResourceAttr(resourceName, "runtime_source.image.image_url", "docker.io/library/nginx"),
+					resource.TestCheckResourceAttr(resourceName, "runtime_source.image.tag", "stable-perl"),
 					resource.TestCheckNoResourceAttr(resourceName, "start_command"),
 				),
 			},
