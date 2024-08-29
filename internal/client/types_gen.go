@@ -176,11 +176,11 @@ const (
 	N16 PostgresVersion = "16"
 )
 
-// Defines values for PreviewGeneration.
+// Defines values for PreviewsGeneration.
 const (
-	PreviewGenerationAutomatic PreviewGeneration = "automatic"
-	PreviewGenerationManual    PreviewGeneration = "manual"
-	PreviewGenerationOff       PreviewGeneration = "off"
+	PreviewsGenerationAutomatic PreviewsGeneration = "automatic"
+	PreviewsGenerationManual    PreviewsGeneration = "manual"
+	PreviewsGenerationOff       PreviewsGeneration = "off"
 )
 
 // Defines values for ProtectedStatus.
@@ -372,10 +372,8 @@ type BackgroundWorkerDetails struct {
 	ParentServer *Resource `json:"parentServer,omitempty"`
 
 	// Plan The instance type to use for the preview instance. Note that base services with any paid instance type can't create preview instances with the `free` instance type.
-	Plan Plan `json:"plan"`
-
-	// PreviewGeneration Defaults to "off"
-	PreviewGeneration *PreviewGeneration `json:"previewGeneration,omitempty"`
+	Plan     Plan      `json:"plan"`
+	Previews *Previews `json:"previews,omitempty"`
 
 	// PullRequestPreviewsEnabled Defaults to "no"
 	PullRequestPreviewsEnabled *PullRequestPreviewsEnabled `json:"pullRequestPreviewsEnabled,omitempty"`
@@ -394,9 +392,7 @@ type BackgroundWorkerDetailsPATCH struct {
 	// Plan Defaults to "starter"
 	Plan             *PaidPlan `json:"plan,omitempty"`
 	PreDeployCommand *string   `json:"preDeployCommand,omitempty"`
-
-	// PreviewGeneration Defaults to "off"
-	PreviewGeneration *PreviewGeneration `json:"previewGeneration,omitempty"`
+	Previews         *Previews `json:"previews,omitempty"`
 
 	// PullRequestPreviewsEnabled Defaults to "no"
 	PullRequestPreviewsEnabled *PullRequestPreviewsEnabled `json:"pullRequestPreviewsEnabled,omitempty"`
@@ -424,9 +420,7 @@ type BackgroundWorkerDetailsPOST struct {
 	// Plan Defaults to "starter"
 	Plan             *PaidPlan `json:"plan,omitempty"`
 	PreDeployCommand *string   `json:"preDeployCommand,omitempty"`
-
-	// PreviewGeneration Defaults to "off"
-	PreviewGeneration *PreviewGeneration `json:"previewGeneration,omitempty"`
+	Previews         *Previews `json:"previews,omitempty"`
 
 	// PullRequestPreviewsEnabled Defaults to "no"
 	PullRequestPreviewsEnabled *PullRequestPreviewsEnabled `json:"pullRequestPreviewsEnabled,omitempty"`
@@ -1004,9 +998,6 @@ type PostgresPOSTInput struct {
 // PostgresVersion The PostgreSQL version
 type PostgresVersion string
 
-// PreviewGeneration Defaults to "off"
-type PreviewGeneration string
-
 // PreviewInput defines model for previewInput.
 type PreviewInput struct {
 	// ImagePath Must be either a full URL or the relative path to an image. If a relative path, Render uses the base service's image URL as its root. For example, if the base service's image URL is `docker.io/library/nginx:latest`, then valid values are: `docker.io/library/nginx:<any tag or SHA>`, `library/nginx:<any tag or SHA>`, or `nginx:<any tag or SHA>`. Note that the path must match (only the tag or SHA can vary).
@@ -1018,6 +1009,15 @@ type PreviewInput struct {
 	// Plan The instance type to use for the preview instance. Note that base services with any paid instance type can't create preview instances with the `free` instance type.
 	Plan *Plan `json:"plan,omitempty"`
 }
+
+// Previews defines model for previews.
+type Previews struct {
+	// Generation Defaults to "off"
+	Generation *PreviewsGeneration `json:"generation,omitempty"`
+}
+
+// PreviewsGeneration Defaults to "off"
+type PreviewsGeneration string
 
 // PrivateServiceDetails defines model for privateServiceDetails.
 type PrivateServiceDetails struct {
@@ -1038,10 +1038,8 @@ type PrivateServiceDetails struct {
 	ParentServer *Resource    `json:"parentServer,omitempty"`
 
 	// Plan The instance type to use for the preview instance. Note that base services with any paid instance type can't create preview instances with the `free` instance type.
-	Plan Plan `json:"plan"`
-
-	// PreviewGeneration Defaults to "off"
-	PreviewGeneration *PreviewGeneration `json:"previewGeneration,omitempty"`
+	Plan     Plan      `json:"plan"`
+	Previews *Previews `json:"previews,omitempty"`
 
 	// PullRequestPreviewsEnabled Defaults to "no"
 	PullRequestPreviewsEnabled *PullRequestPreviewsEnabled `json:"pullRequestPreviewsEnabled,omitempty"`
@@ -1061,9 +1059,7 @@ type PrivateServiceDetailsPATCH struct {
 	// Plan Defaults to "starter"
 	Plan             *PaidPlan `json:"plan,omitempty"`
 	PreDeployCommand *string   `json:"preDeployCommand,omitempty"`
-
-	// PreviewGeneration Defaults to "off"
-	PreviewGeneration *PreviewGeneration `json:"previewGeneration,omitempty"`
+	Previews         *Previews `json:"previews,omitempty"`
 
 	// PullRequestPreviewsEnabled Defaults to "no"
 	PullRequestPreviewsEnabled *PullRequestPreviewsEnabled `json:"pullRequestPreviewsEnabled,omitempty"`
@@ -1091,9 +1087,7 @@ type PrivateServiceDetailsPOST struct {
 	// Plan Defaults to "starter"
 	Plan             *PaidPlan `json:"plan,omitempty"`
 	PreDeployCommand *string   `json:"preDeployCommand,omitempty"`
-
-	// PreviewGeneration Defaults to "off"
-	PreviewGeneration *PreviewGeneration `json:"previewGeneration,omitempty"`
+	Previews         *Previews `json:"previews,omitempty"`
 
 	// PullRequestPreviewsEnabled Defaults to "no"
 	PullRequestPreviewsEnabled *PullRequestPreviewsEnabled `json:"pullRequestPreviewsEnabled,omitempty"`
@@ -1535,10 +1529,8 @@ type StaticSiteDetails struct {
 	BuildCommand string    `json:"buildCommand"`
 	BuildPlan    BuildPlan `json:"buildPlan"`
 	ParentServer *Resource `json:"parentServer,omitempty"`
-
-	// PreviewGeneration Defaults to "off"
-	PreviewGeneration *PreviewGeneration `json:"previewGeneration,omitempty"`
-	PublishPath       string             `json:"publishPath"`
+	Previews     *Previews `json:"previews,omitempty"`
+	PublishPath  string    `json:"publishPath"`
 
 	// PullRequestPreviewsEnabled Defaults to "no"
 	PullRequestPreviewsEnabled *PullRequestPreviewsEnabled `json:"pullRequestPreviewsEnabled,omitempty"`
@@ -1547,11 +1539,9 @@ type StaticSiteDetails struct {
 
 // StaticSiteDetailsPATCH defines model for staticSiteDetailsPATCH.
 type StaticSiteDetailsPATCH struct {
-	BuildCommand *string `json:"buildCommand,omitempty"`
-
-	// PreviewGeneration Defaults to "off"
-	PreviewGeneration *PreviewGeneration `json:"previewGeneration,omitempty"`
-	PublishPath       *string            `json:"publishPath,omitempty"`
+	BuildCommand *string   `json:"buildCommand,omitempty"`
+	Previews     *Previews `json:"previews,omitempty"`
+	PublishPath  *string   `json:"publishPath,omitempty"`
 
 	// PullRequestPreviewsEnabled Defaults to "no"
 	PullRequestPreviewsEnabled *PullRequestPreviewsEnabled `json:"pullRequestPreviewsEnabled,omitempty"`
@@ -1561,9 +1551,7 @@ type StaticSiteDetailsPATCH struct {
 type StaticSiteDetailsPOST struct {
 	BuildCommand *string        `json:"buildCommand,omitempty"`
 	Headers      *[]HeaderInput `json:"headers,omitempty"`
-
-	// PreviewGeneration Defaults to "off"
-	PreviewGeneration *PreviewGeneration `json:"previewGeneration,omitempty"`
+	Previews     *Previews      `json:"previews,omitempty"`
 
 	// PublishPath Defaults to "public"
 	PublishPath *string `json:"publishPath,omitempty"`
@@ -1602,10 +1590,8 @@ type WebServiceDetails struct {
 	ParentServer *Resource    `json:"parentServer,omitempty"`
 
 	// Plan The instance type to use for the preview instance. Note that base services with any paid instance type can't create preview instances with the `free` instance type.
-	Plan Plan `json:"plan"`
-
-	// PreviewGeneration Defaults to "off"
-	PreviewGeneration *PreviewGeneration `json:"previewGeneration,omitempty"`
+	Plan     Plan      `json:"plan"`
+	Previews *Previews `json:"previews,omitempty"`
 
 	// PullRequestPreviewsEnabled Defaults to "no"
 	PullRequestPreviewsEnabled *PullRequestPreviewsEnabled `json:"pullRequestPreviewsEnabled,omitempty"`
@@ -1626,9 +1612,7 @@ type WebServiceDetailsPATCH struct {
 	// Plan Defaults to "starter"
 	Plan             *PaidPlan `json:"plan,omitempty"`
 	PreDeployCommand *string   `json:"preDeployCommand,omitempty"`
-
-	// PreviewGeneration Defaults to "off"
-	PreviewGeneration *PreviewGeneration `json:"previewGeneration,omitempty"`
+	Previews         *Previews `json:"previews,omitempty"`
 
 	// PullRequestPreviewsEnabled Defaults to "no"
 	PullRequestPreviewsEnabled *PullRequestPreviewsEnabled `json:"pullRequestPreviewsEnabled,omitempty"`
@@ -1657,9 +1641,7 @@ type WebServiceDetailsPOST struct {
 	// Plan Defaults to "starter"
 	Plan             *PaidPlan `json:"plan,omitempty"`
 	PreDeployCommand *string   `json:"preDeployCommand,omitempty"`
-
-	// PreviewGeneration Defaults to "off"
-	PreviewGeneration *PreviewGeneration `json:"previewGeneration,omitempty"`
+	Previews         *Previews `json:"previews,omitempty"`
 
 	// PullRequestPreviewsEnabled Defaults to "no"
 	PullRequestPreviewsEnabled *PullRequestPreviewsEnabled `json:"pullRequestPreviewsEnabled,omitempty"`
