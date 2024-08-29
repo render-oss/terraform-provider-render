@@ -25,6 +25,7 @@ func Schema(ctx context.Context) schema.Schema {
 			"slug":                          resource.Slug,
 			"notification_override":         resource.NotificationOverride,
 			"publish_path":                  resource.PublishPath,
+			"previews":                      resource.Previews,
 			"pull_request_previews_enabled": resource.PRPreviewsEnabled,
 			"repo_url":                      resource.RepoURL,
 			"root_directory":                resource.RootDirectory,

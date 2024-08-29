@@ -22,6 +22,7 @@ type StaticSiteModel struct {
 	Slug                       types.String                  `tfsdk:"slug"`
 	NotificationOverride       types.Object                  `tfsdk:"notification_override"`
 	PublishPath                types.String                  `tfsdk:"publish_path"`
+	Previews                   types.Object                  `tfsdk:"previews"`
 	PullRequestPreviewsEnabled types.Bool                    `tfsdk:"pull_request_previews_enabled"`
 	RepoURL                    types.String                  `tfsdk:"repo_url"`
 	RootDirectory              types.String                  `tfsdk:"root_directory"`
@@ -69,6 +70,7 @@ func ModelForServiceResult(service *common.WrappedStaticSite, state StaticSiteMo
 
 func applyGitBackedFields(service *client.Service, model *StaticSiteModel, details *client.StaticSiteDetails) {
 	model.BuildCommand = types.StringValue(details.BuildCommand)
+	model.Previews = common.PreviewsToPreviewsObject(details.Previews)
 	model.PullRequestPreviewsEnabled = types.BoolValue(details.PullRequestPreviewsEnabled != nil && *details.PullRequestPreviewsEnabled == client.PullRequestPreviewsEnabledYes)
 	model.PublishPath = types.StringValue(details.PublishPath)
 	model.Url = types.StringValue(details.Url)

@@ -29,6 +29,7 @@ func CreateServiceRequestFromModel(ctx context.Context, ownerID string, plan sta
 		BuildCommand:               plan.BuildCommand.ValueStringPointer(),
 		Headers:                    common.From(common.ModelToClientHeaderInput(plan.Headers)),
 		PublishPath:                plan.PublishPath.ValueStringPointer(),
+		Previews:                   common.PreviewsObjectToPreviews(ctx, plan.Previews),
 		PullRequestPreviewsEnabled: &prPreviews,
 		Routes:                     &routeModels,
 	}

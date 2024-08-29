@@ -3,8 +3,9 @@ package datasource
 import (
 	"context"
 
-	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
 	"terraform-provider-render/internal/provider/types/datasource"
+
+	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
 )
 
 func Schema(ctx context.Context) schema.Schema {
@@ -24,6 +25,7 @@ func Schema(ctx context.Context) schema.Schema {
 			"slug":                          datasource.Slug,
 			"notification_override":         datasource.NotificationOverride,
 			"publish_path":                  datasource.PublishPath,
+			"previews":                      datasource.Previews,
 			"pull_request_previews_enabled": datasource.PRPreviewsEnabled,
 			"repo_url":                      datasource.RepoURL,
 			"root_directory":                datasource.RootDirectory,

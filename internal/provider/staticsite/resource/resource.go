@@ -166,7 +166,7 @@ func (r *staticSiteResource) Update(ctx context.Context, req resource.UpdateRequ
 		return
 	}
 
-	serviceDetails, err := internal.UpdateServiceRequestFromModel(plan)
+	serviceDetails, err := internal.UpdateServiceRequestFromModel(ctx, plan)
 	if err != nil {
 		resp.Diagnostics.AddError(
 			"Error updating service", "Could not update service, unexpected error: "+err.Error(),

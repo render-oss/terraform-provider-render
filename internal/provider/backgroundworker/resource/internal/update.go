@@ -1,12 +1,14 @@
 package internal
 
 import (
+	"context"
+
 	"terraform-provider-render/internal/client"
 	"terraform-provider-render/internal/provider/backgroundworker"
 	"terraform-provider-render/internal/provider/common"
 )
 
-func UpdateServiceRequestFromModel(plan backgroundWorker.BackgroundWorkerModel, ownerID string) (client.UpdateServiceJSONRequestBody, error) {
+func UpdateServiceRequestFromModel(ctx context.Context, plan backgroundWorker.BackgroundWorkerModel, ownerID string) (client.UpdateServiceJSONRequestBody, error) {
 	envSpecificDetails, err := common.EnvSpecificDetailsForPATCH(plan.RuntimeSource, plan.StartCommand.ValueStringPointer())
 	if err != nil {
 		return client.UpdateServiceJSONRequestBody{}, err
@@ -28,6 +30,7 @@ func UpdateServiceRequestFromModel(plan backgroundWorker.BackgroundWorkerModel, 
 		Plan:                       &servicePlan,
 		EnvSpecificDetails:         envSpecificDetails,
 		PreDeployCommand:           &preDeployCommand,
+		Previews:                   common.PreviewsObjectToPreviews(ctx, plan.Previews),
 		PullRequestPreviewsEnabled: &pullRequestPreviewsEnabled,
 		MaxShutdownDelaySeconds:    common.ValueAsIntPointer(plan.MaxShutdownDelaySeconds),
 	}

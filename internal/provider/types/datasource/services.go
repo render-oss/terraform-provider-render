@@ -108,7 +108,8 @@ var NumInstances = schema.Int64Attribute{
 }
 
 var PRPreviewsEnabled = schema.BoolAttribute{
-	Computed: true,
+	Computed:           true,
+	DeprecationMessage: "Use previews.generation instead",
 }
 
 var ServiceURL = schema.StringAttribute{
@@ -166,4 +167,17 @@ var CronJobSchedule = schema.StringAttribute{
 var RootDirectory = schema.StringAttribute{
 	Computed:    true,
 	Description: "Defaults to repository root. When you specify a root directory that is different from your repository root, Render runs all your commands in the specified directory and ignores changes outside the directory.",
+}
+
+var Previews = schema.SingleNestedAttribute{
+	Computed:            true,
+	Description:         "Pull request previews settings",
+	MarkdownDescription: "[Pull request previews](https://docs.render.com/pull-request-previews#pull-request-previews-git-backed) settings",
+	Attributes: map[string]schema.Attribute{
+		"generation": schema.StringAttribute{
+			Computed:            true,
+			Description:         "Generation mode for pull request previews. One of `off`, `manual`, or `automatic`. Defaults to `off`.",
+			MarkdownDescription: "Generation mode for [pull request previews](https://docs.render.com/pull-request-previews#pull-request-previews-git-backed). One of `off`, `manual`, or `automatic`. Defaults to `off`.",
+		},
+	},
 }

@@ -1,12 +1,14 @@
 package internal
 
 import (
+	"context"
+
 	"terraform-provider-render/internal/client"
 	"terraform-provider-render/internal/provider/common"
 	"terraform-provider-render/internal/provider/webservice"
 )
 
-func CreateServiceRequestFromModel(ownerID string, plan webservice.WebServiceModel) (client.CreateServiceJSONRequestBody, error) {
+func CreateServiceRequestFromModel(ctx context.Context, ownerID string, plan webservice.WebServiceModel) (client.CreateServiceJSONRequestBody, error) {
 	envSpecificDetails, err := common.EnvSpecificDetailsForRuntimeSource(
 		plan.RuntimeSource.Runtime(),
 		plan.RuntimeSource,
@@ -43,6 +45,7 @@ func CreateServiceRequestFromModel(ownerID string, plan webservice.WebServiceMod
 		NumInstances:               &numInstances,
 		Plan:                       &servicePlan,
 		PreDeployCommand:           plan.PreDeployCommand.ValueStringPointer(),
+		Previews:                   common.PreviewsObjectToPreviews(ctx, plan.Previews),
 		PullRequestPreviewsEnabled: &pullRequestPreviewsEnabled,
 		Region:                     &region,
 		MaxShutdownDelaySeconds:    common.ValueAsIntPointer(plan.MaxShutdownDelaySeconds),

@@ -36,7 +36,8 @@ Provides information about a Render Web Service.
 - `num_instances` (Number)
 - `plan` (String) Plan to use for the service
 - `pre_deploy_command` (String) This command runs before starting your service. It is typically used for tasks like running a database migration or uploading assets to a CDN.
-- `pull_request_previews_enabled` (Boolean)
+- `previews` (Attributes) [Pull request previews](https://docs.render.com/pull-request-previews#pull-request-previews-git-backed) settings (see [below for nested schema](#nestedatt--previews))
+- `pull_request_previews_enabled` (Boolean, Deprecated)
 - `region` (String) Region to deploy the service
 - `root_directory` (String) Defaults to repository root. When you specify a root directory that is different from your repository root, Render runs all your commands in the specified directory and ignores changes outside the directory.
 - `runtime_source` (Attributes) Source of the build artifacts or image that run your service. (see [below for nested schema](#nestedatt--runtime_source))
@@ -128,6 +129,14 @@ Read-Only:
 
 - `notifications_to_send` (String) The types of notifications to send.
 - `preview_notifications_enabled` (String) Whether notifications for previews of this service are sent.
+
+
+<a id="nestedatt--previews"></a>
+### Nested Schema for `previews`
+
+Read-Only:
+
+- `generation` (String) Generation mode for [pull request previews](https://docs.render.com/pull-request-previews#pull-request-previews-git-backed). One of `off`, `manual`, or `automatic`. Defaults to `off`.
 
 
 <a id="nestedatt--runtime_source"></a>

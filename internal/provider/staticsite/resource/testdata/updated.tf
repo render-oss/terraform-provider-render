@@ -65,7 +65,9 @@ resource "render_static_site" "example" {
     { name : "static-site-2.example.com" },
   ]
 
-  pull_request_previews_enabled = false
+  previews = {
+    generation = "off"
+  }
 
   notification_override = {
     preview_notifications_enabled = "true"

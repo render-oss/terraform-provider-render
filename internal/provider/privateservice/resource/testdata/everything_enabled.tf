@@ -14,7 +14,7 @@ variable "runtime" {
   type     = string
 }
 
-variable "pull_request_previews_enabled" {
+variable "previews_generation" {
   type     = string
 }
 
@@ -64,7 +64,9 @@ resource "render_private_service" "private" {
     size_gb    = 1
     mount_path = "/data"
   }
-  pull_request_previews_enabled = var.pull_request_previews_enabled
+  previews = {
+    generation = var.previews_generation
+  }
   env_vars = {
     "key1" = { value = "val1" },
     "key2" = { value = "val2" },

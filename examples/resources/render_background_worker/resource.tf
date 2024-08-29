@@ -56,6 +56,8 @@ resource "render_background_worker" "git_example" {
     }
 
     num_instances                 = 1
-    pull_request_previews_enabled = false
+    previews = {
+      generation = "off"
+    }
   }
 }
