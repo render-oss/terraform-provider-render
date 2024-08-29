@@ -14,9 +14,9 @@ func UpdateServiceRequestFromModel(plan privateservice.PrivateServiceModel, owne
 
 	servicePlan := client.PaidPlan(plan.Plan.ValueString())
 
-	pullRequestPreviewsEnabled := client.PrivateServiceDetailsPATCHPullRequestPreviewsEnabledNo
+	pullRequestPreviewsEnabled := client.PullRequestPreviewsEnabledNo
 	if plan.PullRequestPreviewsEnabled.ValueBool() {
-		pullRequestPreviewsEnabled = client.PrivateServiceDetailsPATCHPullRequestPreviewsEnabledYes
+		pullRequestPreviewsEnabled = client.PullRequestPreviewsEnabledYes
 	}
 
 	preDeployCommand := ""

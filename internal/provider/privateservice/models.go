@@ -56,7 +56,7 @@ func ModelForServiceResult(service *common.WrappedService, plan PrivateServiceMo
 		NumInstances:               numInstances,
 		Plan:                       types.StringValue(string(details.Plan)),
 		PreDeployCommand:           types.StringPointerValue(preDeployCommand),
-		PullRequestPreviewsEnabled: types.BoolValue(details.PullRequestPreviewsEnabled == client.PullRequestPreviewsEnabledYes),
+		PullRequestPreviewsEnabled: types.BoolValue(details.PullRequestPreviewsEnabled != nil && *details.PullRequestPreviewsEnabled == client.PullRequestPreviewsEnabledYes),
 		Region:                     types.StringValue(string(details.Region)),
 		RootDirectory:              types.StringValue(service.RootDir),
 		Url:                        types.StringValue(details.Url),

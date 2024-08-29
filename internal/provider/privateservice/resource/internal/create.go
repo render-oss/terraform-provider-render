@@ -23,9 +23,9 @@ func CreateServiceRequestFromModel(ownerID string, plan privateservice.PrivateSe
 
 	servicePlan := client.PaidPlan(plan.Plan.ValueString())
 
-	pullRequestPreviewsEnabled := client.PrivateServiceDetailsPOSTPullRequestPreviewsEnabledNo
+	pullRequestPreviewsEnabled := client.PullRequestPreviewsEnabledNo
 	if plan.PullRequestPreviewsEnabled.ValueBool() {
-		pullRequestPreviewsEnabled = client.PrivateServiceDetailsPOSTPullRequestPreviewsEnabledYes
+		pullRequestPreviewsEnabled = client.PullRequestPreviewsEnabledYes
 	}
 
 	region := client.Region(plan.Region.ValueString())

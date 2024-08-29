@@ -14,9 +14,9 @@ func UpdateServiceRequestFromModel(plan backgroundWorker.BackgroundWorkerModel, 
 
 	servicePlan := client.PaidPlan(plan.Plan.ValueString())
 
-	pullRequestPreviewsEnabled := client.BackgroundWorkerDetailsPATCHPullRequestPreviewsEnabledNo
+	pullRequestPreviewsEnabled := client.PullRequestPreviewsEnabledNo
 	if plan.PullRequestPreviewsEnabled.ValueBool() {
-		pullRequestPreviewsEnabled = client.BackgroundWorkerDetailsPATCHPullRequestPreviewsEnabledYes
+		pullRequestPreviewsEnabled = client.PullRequestPreviewsEnabledYes
 	}
 
 	preDeployCommand := ""

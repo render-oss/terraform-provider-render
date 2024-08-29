@@ -7,9 +7,9 @@ import (
 )
 
 func UpdateServiceRequestFromModel(plan staticsite.StaticSiteModel) (client.UpdateServiceJSONRequestBody, error) {
-	prPreviewEnabled := client.StaticSiteDetailsPATCHPullRequestPreviewsEnabledNo
+	prPreviewEnabled := client.PullRequestPreviewsEnabledNo
 	if plan.PullRequestPreviewsEnabled.ValueBool() {
-		prPreviewEnabled = client.StaticSiteDetailsPATCHPullRequestPreviewsEnabledYes
+		prPreviewEnabled = client.PullRequestPreviewsEnabledYes
 	}
 
 	var staticSiteDetails = client.StaticSiteDetailsPATCH{
