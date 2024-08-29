@@ -53,5 +53,7 @@ resource "render_private_service" "example" {
   }
 
   num_instances                 = 2
-  pull_request_previews_enabled = true
+  previews = {
+    generation = "automatic"
+  }
 }

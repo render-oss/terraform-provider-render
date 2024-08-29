@@ -1,12 +1,14 @@
 package internal
 
 import (
+	"context"
+
 	"terraform-provider-render/internal/client"
 	"terraform-provider-render/internal/provider/backgroundworker"
 	"terraform-provider-render/internal/provider/common"
 )
 
-func CreateServiceRequestFromModel(ownerID string, plan backgroundWorker.BackgroundWorkerModel) (client.CreateServiceJSONRequestBody, error) {
+func CreateServiceRequestFromModel(ctx context.Context, ownerID string, plan backgroundWorker.BackgroundWorkerModel) (client.CreateServiceJSONRequestBody, error) {
 	envSpecificDetails, err := common.EnvSpecificDetailsForRuntimeSource(
 		plan.RuntimeSource.Runtime(),
 		plan.RuntimeSource,
@@ -43,6 +45,7 @@ func CreateServiceRequestFromModel(ownerID string, plan backgroundWorker.Backgro
 		NumInstances:               &numInstances,
 		Plan:                       &servicePlan,
 		PreDeployCommand:           plan.PreDeployCommand.ValueStringPointer(),
+		Previews:                   common.PreviewsObjectToPreviews(ctx, plan.Previews),
 		PullRequestPreviewsEnabled: &pullRequestPreviewsEnabled,
 		Region:                     &region,
 		MaxShutdownDelaySeconds:    common.ValueAsIntPointer(plan.MaxShutdownDelaySeconds),

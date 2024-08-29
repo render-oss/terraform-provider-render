@@ -21,6 +21,7 @@ type WebServiceModel struct {
 	NumInstances               types.Int64                `tfsdk:"num_instances"`
 	Plan                       types.String               `tfsdk:"plan"`
 	PreDeployCommand           types.String               `tfsdk:"pre_deploy_command"`
+	Previews                   types.Object               `tfsdk:"previews"`
 	PullRequestPreviewsEnabled types.Bool                 `tfsdk:"pull_request_previews_enabled"`
 	Region                     types.String               `tfsdk:"region"`
 	RootDirectory              types.String               `tfsdk:"root_directory"`
@@ -60,6 +61,7 @@ func ModelForServiceResult(service *common.WrappedService, plan WebServiceModel,
 		NumInstances:               numInstances,
 		Plan:                       types.StringValue(string(details.Plan)),
 		PreDeployCommand:           types.StringPointerValue(preDeployCommand),
+		Previews:                   common.PreviewsToPreviewsObject(details.Previews),
 		PullRequestPreviewsEnabled: types.BoolValue(details.PullRequestPreviewsEnabled != nil && *details.PullRequestPreviewsEnabled == client.PullRequestPreviewsEnabledYes),
 		Region:                     types.StringValue(string(details.Region)),
 		RootDirectory:              types.StringValue(service.RootDir),

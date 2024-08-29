@@ -1,12 +1,14 @@
 package internal
 
 import (
+	"context"
+
 	"terraform-provider-render/internal/client"
 	"terraform-provider-render/internal/provider/common"
 	"terraform-provider-render/internal/provider/staticsite"
 )
 
-func UpdateServiceRequestFromModel(plan staticsite.StaticSiteModel) (client.UpdateServiceJSONRequestBody, error) {
+func UpdateServiceRequestFromModel(ctx context.Context, plan staticsite.StaticSiteModel) (client.UpdateServiceJSONRequestBody, error) {
 	prPreviewEnabled := client.PullRequestPreviewsEnabledNo
 	if plan.PullRequestPreviewsEnabled.ValueBool() {
 		prPreviewEnabled = client.PullRequestPreviewsEnabledYes
@@ -15,6 +17,7 @@ func UpdateServiceRequestFromModel(plan staticsite.StaticSiteModel) (client.Upda
 	var staticSiteDetails = client.StaticSiteDetailsPATCH{
 		BuildCommand:               plan.BuildCommand.ValueStringPointer(),
 		PublishPath:                plan.PublishPath.ValueStringPointer(),
+		Previews:                   common.PreviewsObjectToPreviews(ctx, plan.Previews),
 		PullRequestPreviewsEnabled: &prPreviewEnabled,
 	}
 

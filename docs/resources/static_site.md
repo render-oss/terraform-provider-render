@@ -111,8 +111,9 @@ resource "render_static_site" "example" {
 - `environment_id` (String) ID of the [project environment](https://docs.render.com/projects) that the resource belongs to
 - `headers` (Attributes Set) List of [headers](https://docs.render.com/static-site-headers) to apply to requests for static sites (see [below for nested schema](#nestedatt--headers))
 - `notification_override` (Attributes) Configure the [notification settings](https://docs.render.com/notifications) for this service. These will override the global notification settings of the user or team. (see [below for nested schema](#nestedatt--notification_override))
+- `previews` (Attributes) [Pull request previews](https://docs.render.com/pull-request-previews#pull-request-previews-git-backed) settings (see [below for nested schema](#nestedatt--previews))
 - `publish_path` (String) Path to the directory that contains the build artifacts to publish for a static site. Defaults to public/.
-- `pull_request_previews_enabled` (Boolean) Enable [pull request previews](https://docs.render.com/pull-request-previews#pull-request-previews-git-backed) for the service.
+- `pull_request_previews_enabled` (Boolean, Deprecated) Enable [pull request previews](https://docs.render.com/pull-request-previews#pull-request-previews-git-backed) for the service.
 - `root_directory` (String) When you specify a [root directory](https://docs.render.com/monorepo-support#root-directory), Render runs all your commands in the specified directory and ignores changes outside the directory. Defaults to the repository root.
 - `routes` (Attributes List) List of [redirect and rewrite rules](https://docs.render.com/redirects-rewrites) to apply to a static site. (see [below for nested schema](#nestedatt--routes))
 
@@ -172,6 +173,14 @@ Optional:
 
 - `notifications_to_send` (String) The types of notifications to send. Must be one of `default`, `all`, `failure`, or `none`.
 - `preview_notifications_enabled` (String) Whether notifications for previews of this service are sent. Must be one of `all`, `failure`, or `none`.
+
+
+<a id="nestedatt--previews"></a>
+### Nested Schema for `previews`
+
+Optional:
+
+- `generation` (String) Generation mode for [pull request previews](https://docs.render.com/pull-request-previews#pull-request-previews-git-backed). One of `off`, `manual`, or `automatic`. Defaults to `off`.
 
 
 <a id="nestedatt--routes"></a>

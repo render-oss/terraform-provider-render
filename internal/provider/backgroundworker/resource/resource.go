@@ -69,7 +69,7 @@ func (r *backgroundWorkerResource) Create(ctx context.Context, req resource.Crea
 		return
 	}
 
-	serviceDetails, err := internal.CreateServiceRequestFromModel(r.ownerID, plan)
+	serviceDetails, err := internal.CreateServiceRequestFromModel(ctx, r.ownerID, plan)
 	if err != nil {
 		resp.Diagnostics.AddError(
 			"Error creating service", "Could not create service, unexpected error: "+err.Error(),
@@ -176,7 +176,7 @@ func (r *backgroundWorkerResource) Update(ctx context.Context, req resource.Upda
 		return
 	}
 
-	serviceDetails, err := internal.UpdateServiceRequestFromModel(plan, r.ownerID)
+	serviceDetails, err := internal.UpdateServiceRequestFromModel(ctx, plan, r.ownerID)
 	if err != nil {
 		resp.Diagnostics.AddError(
 			"Error updating service", "Could not update service, unexpected error: "+err.Error(),
@@ -273,5 +273,6 @@ func (r *backgroundWorkerResource) ConfigValidators(ctx context.Context) []resou
 	return []resource.ConfigValidator{
 		resourcecommon.RuntimeSourceValidator,
 		resourcecommon.ImageTagOrDigestValidator,
+		resourcecommon.PreviewGenerationValidator,
 	}
 }

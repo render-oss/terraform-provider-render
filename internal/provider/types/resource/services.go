@@ -4,6 +4,7 @@ import (
 	"regexp"
 
 	"github.com/hashicorp/terraform-plugin-framework-validators/int64validator"
+	"github.com/hashicorp/terraform-plugin-framework-validators/resourcevalidator"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
@@ -128,8 +129,8 @@ var NumInstances = schema.Int64Attribute{
 var PRPreviewsEnabled = schema.BoolAttribute{
 	Optional:            true,
 	Computed:            true,
-	Default:             booldefault.StaticBool(false),
 	Description:         "Enable pull request previews for the service.",
+	DeprecationMessage:  "Configure previews.generation instead",
 	MarkdownDescription: "Enable [pull request previews](https://docs.render.com/pull-request-previews#pull-request-previews-git-backed) for the service.",
 }
 
@@ -283,3 +284,24 @@ var BuildFilter = schema.SingleNestedAttribute{
 		),
 	},
 }
+
+var Previews = schema.SingleNestedAttribute{
+	Optional:            true,
+	Computed:            true,
+	Description:         "Pull request previews settings",
+	MarkdownDescription: "[Pull request previews](https://docs.render.com/pull-request-previews#pull-request-previews-git-backed) settings",
+	Attributes: map[string]schema.Attribute{
+		"generation": schema.StringAttribute{
+			Optional:            true,
+			Computed:            true,
+			Description:         "Generation mode for pull request previews. One of `off`, `manual`, or `automatic`. Defaults to `off`.",
+			MarkdownDescription: "Generation mode for [pull request previews](https://docs.render.com/pull-request-previews#pull-request-previews-git-backed). One of `off`, `manual`, or `automatic`. Defaults to `off`.",
+			Validators:          []validator.String{stringvalidator.OneOf("off", "manual", "automatic")},
+		},
+	},
+}
+
+var PreviewGenerationValidator = resourcevalidator.Conflicting(
+	path.MatchRoot("pull_request_previews_enabled"),
+	path.MatchRoot("previews").AtName("generation"),
+)

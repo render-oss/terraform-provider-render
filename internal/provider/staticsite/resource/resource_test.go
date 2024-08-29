@@ -8,6 +8,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-testing/config"
 	"github.com/hashicorp/terraform-plugin-testing/helper/resource"
 	"github.com/hashicorp/terraform-plugin-testing/plancheck"
+
 	"terraform-provider-render/internal/provider/common/checks"
 	th "terraform-provider-render/internal/provider/testhelpers"
 )
@@ -32,7 +33,7 @@ func TestStaticSiteResource(t *testing.T) {
 					resource.TestCheckResourceAttr(resourceName, "repo_url", "https://github.com/render-examples/create-react-app"),
 					resource.TestCheckResourceAttr(resourceName, "branch", "master"),
 					resource.TestCheckResourceAttr(resourceName, "auto_deploy", "true"),
-					resource.TestCheckResourceAttr(resourceName, "pull_request_previews_enabled", "true"),
+					resource.TestCheckResourceAttr(resourceName, "previews.generation", "automatic"),
 					resource.TestCheckResourceAttr(resourceName, "build_command", "npm run build"),
 					resource.TestCheckResourceAttr(resourceName, "publish_path", "dist"),
 
@@ -104,7 +105,7 @@ func TestStaticSiteResource(t *testing.T) {
 					resource.TestCheckResourceAttr(resourceName, "repo_url", "https://github.com/render-examples/sveltekit-static"),
 					resource.TestCheckResourceAttr(resourceName, "branch", "main"),
 					resource.TestCheckResourceAttr(resourceName, "auto_deploy", "false"),
-					resource.TestCheckResourceAttr(resourceName, "pull_request_previews_enabled", "false"),
+					resource.TestCheckResourceAttr(resourceName, "previews.generation", "off"),
 					resource.TestCheckResourceAttr(resourceName, "build_command", "npm install && npm run build"),
 					resource.TestCheckResourceAttr(resourceName, "publish_path", "build"),
 					resource.TestCheckResourceAttrWith(resourceName, "environment_id", th.CheckIDPrefix("evm-")),
@@ -156,7 +157,7 @@ func TestStaticSiteResource(t *testing.T) {
 					resource.TestCheckResourceAttr(resourceName, "repo_url", "https://github.com/render-examples/sveltekit-static"),
 					resource.TestCheckResourceAttr(resourceName, "branch", "main"),
 					resource.TestCheckResourceAttr(resourceName, "auto_deploy", "false"),
-					resource.TestCheckResourceAttr(resourceName, "pull_request_previews_enabled", "false"),
+					resource.TestCheckResourceAttr(resourceName, "previews.generation", "off"),
 					resource.TestCheckResourceAttr(resourceName, "build_command", "npm install && npm run build"),
 					resource.TestCheckResourceAttr(resourceName, "publish_path", "public"),
 					resource.TestCheckNoResourceAttr(resourceName, "environment_id"),
@@ -187,7 +188,7 @@ func TestStaticSiteResource(t *testing.T) {
 					resource.TestCheckResourceAttr(resourceName, "repo_url", "https://github.com/render-examples/sveltekit-static"),
 					resource.TestCheckResourceAttr(resourceName, "branch", "main"),
 					resource.TestCheckResourceAttr(resourceName, "auto_deploy", "false"),
-					resource.TestCheckResourceAttr(resourceName, "pull_request_previews_enabled", "false"),
+					resource.TestCheckResourceAttr(resourceName, "previews.generation", "off"),
 					resource.TestCheckResourceAttr(resourceName, "build_command", "npm install && npm run build"),
 					resource.TestCheckResourceAttr(resourceName, "publish_path", "public"),
 				),

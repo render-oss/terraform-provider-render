@@ -1,8 +1,9 @@
 package common
 
 import (
-	"github.com/hashicorp/terraform-plugin-framework/types"
 	"terraform-provider-render/internal/client"
+
+	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
 type AutoscalingModel struct {
@@ -27,6 +28,10 @@ type DiskModel struct {
 	MountPath types.String `tfsdk:"mount_path"`
 	Name      types.String `tfsdk:"name"`
 	ID        types.String `tfsdk:"id"`
+}
+
+type PreviewsModel struct {
+	Generation types.String `tfsdk:"generation"`
 }
 
 func StartCommandForEnvSpecificDetails(serviceDetails client.EnvSpecificDetails, runtime string) (*string, error) {

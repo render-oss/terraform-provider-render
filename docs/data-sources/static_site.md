@@ -34,8 +34,9 @@ Provides information about a Render Static Site.
 - `headers` (Attributes List) (see [below for nested schema](#nestedatt--headers))
 - `name` (String) Name of the service
 - `notification_override` (Attributes) Set the notification settings for this service. These will override the notification settings of the owner. (see [below for nested schema](#nestedatt--notification_override))
+- `previews` (Attributes) [Pull request previews](https://docs.render.com/pull-request-previews#pull-request-previews-git-backed) settings (see [below for nested schema](#nestedatt--previews))
 - `publish_path` (String) Path to the directory to publish
-- `pull_request_previews_enabled` (Boolean)
+- `pull_request_previews_enabled` (Boolean, Deprecated)
 - `repo_url` (String) URL of the repository to build
 - `root_directory` (String) Defaults to repository root. When you specify a root directory that is different from your repository root, Render runs all your commands in the specified directory and ignores changes outside the directory.
 - `routes` (Attributes List) (see [below for nested schema](#nestedatt--routes))
@@ -92,6 +93,14 @@ Read-Only:
 
 - `notifications_to_send` (String) The types of notifications to send.
 - `preview_notifications_enabled` (String) Whether notifications for previews of this service are sent.
+
+
+<a id="nestedatt--previews"></a>
+### Nested Schema for `previews`
+
+Read-Only:
+
+- `generation` (String) Generation mode for [pull request previews](https://docs.render.com/pull-request-previews#pull-request-previews-git-backed). One of `off`, `manual`, or `automatic`. Defaults to `off`.
 
 
 <a id="nestedatt--routes"></a>

@@ -96,7 +96,8 @@ resource "render_background_worker" "git_example" {
 - `notification_override` (Attributes) Configure the [notification settings](https://docs.render.com/notifications) for this service. These will override the global notification settings of the user or team. (see [below for nested schema](#nestedatt--notification_override))
 - `num_instances` (Number) Number of replicas of the service to run. Defaults to 1 on service creation and current instance count on update. If you want to manage the service's instance count outside Terraform, leave num_instances unset.
 - `pre_deploy_command` (String) This command runs before starting your service. It is typically used for tasks like running a database migration or uploading assets to a CDN.
-- `pull_request_previews_enabled` (Boolean) Enable [pull request previews](https://docs.render.com/pull-request-previews#pull-request-previews-git-backed) for the service.
+- `previews` (Attributes) [Pull request previews](https://docs.render.com/pull-request-previews#pull-request-previews-git-backed) settings (see [below for nested schema](#nestedatt--previews))
+- `pull_request_previews_enabled` (Boolean, Deprecated) Enable [pull request previews](https://docs.render.com/pull-request-previews#pull-request-previews-git-backed) for the service.
 - `root_directory` (String) When you specify a [root directory](https://docs.render.com/monorepo-support#root-directory), Render runs all your commands in the specified directory and ignores changes outside the directory. Defaults to the repository root.
 - `secret_files` (Attributes Map) A map of secret file paths to their contents. (see [below for nested schema](#nestedatt--secret_files))
 - `start_command` (String) Command to run the service. When using native runtimes, this will be used as the start command and is required. For [Docker](https://docs.render.com/docker) and [image-backed](https://docs.render.com/deploy-an-image) services, this will override the default Docker command for the image.
@@ -249,6 +250,14 @@ Optional:
 
 - `notifications_to_send` (String) The types of notifications to send. Must be one of `default`, `all`, `failure`, or `none`.
 - `preview_notifications_enabled` (String) Whether notifications for previews of this service are sent. Must be one of `all`, `failure`, or `none`.
+
+
+<a id="nestedatt--previews"></a>
+### Nested Schema for `previews`
+
+Optional:
+
+- `generation` (String) Generation mode for [pull request previews](https://docs.render.com/pull-request-previews#pull-request-previews-git-backed). One of `off`, `manual`, or `automatic`. Defaults to `off`.
 
 
 <a id="nestedatt--secret_files"></a>

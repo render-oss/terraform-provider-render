@@ -24,6 +24,7 @@ func Schema(ctx context.Context) schema.Schema {
 			"num_instances":                 datasource.NumInstances,
 			"plan":                          datasource.Plan,
 			"pre_deploy_command":            datasource.PreDeployCommand,
+			"previews":                      datasource.Previews,
 			"pull_request_previews_enabled": datasource.PRPreviewsEnabled,
 			"root_directory":                datasource.RootDirectory,
 			"start_command":                 datasource.StartCommand,

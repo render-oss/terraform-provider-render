@@ -24,6 +24,7 @@ func Schema(ctx context.Context) schema.Schema {
 			"num_instances":                 resource.NumInstances,
 			"plan":                          resource.Plan,
 			"pre_deploy_command":            resource.PreDeployCommand,
+			"previews":                      resource.Previews,
 			"pull_request_previews_enabled": resource.PRPreviewsEnabled,
 			"region":                        resource.Region,
 			"root_directory":                resource.RootDirectory,

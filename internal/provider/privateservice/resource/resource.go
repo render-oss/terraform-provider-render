@@ -69,7 +69,7 @@ func (r *privateServiceResource) Create(ctx context.Context, req resource.Create
 		return
 	}
 
-	serviceDetails, err := internal.CreateServiceRequestFromModel(r.ownerID, plan)
+	serviceDetails, err := internal.CreateServiceRequestFromModel(ctx, r.ownerID, plan)
 	if err != nil {
 		resp.Diagnostics.AddError(
 			"Error creating service", "Could not create service, unexpected error: "+err.Error(),
@@ -179,7 +179,7 @@ func (r *privateServiceResource) Update(ctx context.Context, req resource.Update
 		return
 	}
 
-	serviceDetails, err := internal.UpdateServiceRequestFromModel(plan, r.ownerID)
+	serviceDetails, err := internal.UpdateServiceRequestFromModel(ctx, plan, r.ownerID)
 	if err != nil {
 		resp.Diagnostics.AddError(
 			"Error updating service",
@@ -277,5 +277,6 @@ func (r *privateServiceResource) ConfigValidators(ctx context.Context) []resourc
 	return []resource.ConfigValidator{
 		resourcecommon.RuntimeSourceValidator,
 		resourcecommon.ImageTagOrDigestValidator,
+		resourcecommon.PreviewGenerationValidator,
 	}
 }

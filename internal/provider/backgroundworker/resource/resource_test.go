@@ -8,8 +8,8 @@ import (
 	"github.com/hashicorp/terraform-plugin-testing/config"
 	"github.com/hashicorp/terraform-plugin-testing/helper/resource"
 	"github.com/hashicorp/terraform-plugin-testing/plancheck"
-	"terraform-provider-render/internal/provider/common/checks"
 
+	"terraform-provider-render/internal/provider/common/checks"
 	th "terraform-provider-render/internal/provider/testhelpers"
 )
 
@@ -25,13 +25,13 @@ func TestBackgroundWorkerResource(t *testing.T) {
 				ResourceName: resourceName,
 				ConfigFile:   config.StaticFile("./testdata/everything_enabled.tf"),
 				ConfigVariables: config.Variables{
-					"name":                          config.StringVariable("background-worker"),
-					"plan":                          config.StringVariable("starter"),
-					"region":                        config.StringVariable("oregon"),
-					"runtime":                       config.StringVariable("image"),
-					"pull_request_previews_enabled": config.BoolVariable(true),
-					"environment_name":              config.StringVariable("first"),
-					"pre_deploy_command":            config.StringVariable("echo 'hello world'"),
+					"name":                config.StringVariable("background-worker"),
+					"plan":                config.StringVariable("starter"),
+					"region":              config.StringVariable("oregon"),
+					"runtime":             config.StringVariable("image"),
+					"previews_generation": config.StringVariable("automatic"),
+					"environment_name":    config.StringVariable("first"),
+					"pre_deploy_command":  config.StringVariable("echo 'hello world'"),
 				},
 				ConfigPlanChecks: resource.ConfigPlanChecks{
 					PreApply: []plancheck.PlanCheck{
@@ -77,7 +77,7 @@ func TestBackgroundWorkerResource(t *testing.T) {
 
 						return nil
 					}),
-					resource.TestCheckResourceAttr(resourceName, "pull_request_previews_enabled", "true"),
+					resource.TestCheckResourceAttr(resourceName, "previews.generation", "automatic"),
 					resource.TestCheckResourceAttrWith(resourceName, "slug", func(value string) error {
 						if !strings.HasPrefix(value, "background-worker") {
 							return fmt.Errorf("slug should start with the service name")
@@ -94,11 +94,11 @@ func TestBackgroundWorkerResource(t *testing.T) {
 					"runtime_source.image.image_url", // This can be expanded by the rest API
 				},
 				ConfigVariables: config.Variables{
-					"name":                          config.StringVariable("background-worker"),
-					"plan":                          config.StringVariable("starter"),
-					"region":                        config.StringVariable("oregon"),
-					"runtime":                       config.StringVariable("image"),
-					"pull_request_previews_enabled": config.BoolVariable(true),
+					"name":                config.StringVariable("background-worker"),
+					"plan":                config.StringVariable("starter"),
+					"region":              config.StringVariable("oregon"),
+					"runtime":             config.StringVariable("image"),
+					"previews_generation": config.StringVariable("automatic"),
 				},
 			},
 			// Change properties that don't require a replacement
@@ -106,13 +106,13 @@ func TestBackgroundWorkerResource(t *testing.T) {
 				ResourceName: resourceName,
 				ConfigFile:   config.StaticFile("./testdata/everything_enabled.tf"),
 				ConfigVariables: config.Variables{
-					"name":                          config.StringVariable("new-name"), // updated
-					"plan":                          config.StringVariable("standard"), // updated
-					"region":                        config.StringVariable("oregon"),
-					"runtime":                       config.StringVariable("image"),
-					"pull_request_previews_enabled": config.BoolVariable(false),              // updated
-					"environment_name":              config.StringVariable("second"),         // updated
-					"pre_deploy_command":            config.StringVariable("echo 'goodbye'"), // updated
+					"name":                config.StringVariable("new-name"), // updated
+					"plan":                config.StringVariable("standard"), // updated
+					"region":              config.StringVariable("oregon"),
+					"runtime":             config.StringVariable("image"),
+					"previews_generation": config.StringVariable("manual"),         // updated
+					"environment_name":    config.StringVariable("second"),         // updated
+					"pre_deploy_command":  config.StringVariable("echo 'goodbye'"), // updated
 				},
 				ConfigPlanChecks: resource.ConfigPlanChecks{
 					PreApply: []plancheck.PlanCheck{
@@ -124,7 +124,7 @@ func TestBackgroundWorkerResource(t *testing.T) {
 					resource.TestCheckResourceAttr(resourceName, "name", "new-name"),
 					resource.TestCheckResourceAttr(resourceName, "plan", "standard"),
 					resource.TestCheckResourceAttr(resourceName, "region", "oregon"),
-					resource.TestCheckResourceAttr(resourceName, "pull_request_previews_enabled", "false"),
+					resource.TestCheckResourceAttr(resourceName, "previews.generation", "manual"),
 					resource.TestCheckResourceAttrWith(resourceName, "environment_id", func(value string) error {
 						if !strings.HasPrefix(value, "evm-") {
 							return fmt.Errorf("expected environment_id to be set")
@@ -144,12 +144,12 @@ func TestBackgroundWorkerResource(t *testing.T) {
 				ResourceName: resourceName,
 				ConfigFile:   config.StaticFile("./testdata/everything_enabled.tf"),
 				ConfigVariables: config.Variables{
-					"name":                          config.StringVariable("new-name"), // updated
-					"plan":                          config.StringVariable("standard"), // updated
-					"region":                        config.StringVariable("oregon"),
-					"runtime":                       config.StringVariable("image"),
-					"pull_request_previews_enabled": config.BoolVariable(false),              // updated
-					"pre_deploy_command":            config.StringVariable("echo 'goodbye'"), // updated
+					"name":                config.StringVariable("new-name"), // updated
+					"plan":                config.StringVariable("standard"), // updated
+					"region":              config.StringVariable("oregon"),
+					"runtime":             config.StringVariable("image"),
+					"previews_generation": config.StringVariable("manual"),         // updated
+					"pre_deploy_command":  config.StringVariable("echo 'goodbye'"), // updated
 				},
 				ConfigPlanChecks: resource.ConfigPlanChecks{
 					PreApply: []plancheck.PlanCheck{

@@ -1,12 +1,14 @@
 package internal
 
 import (
+	"context"
+
 	"terraform-provider-render/internal/client"
 	"terraform-provider-render/internal/provider/common"
 	"terraform-provider-render/internal/provider/webservice"
 )
 
-func UpdateServiceRequestFromModel(plan webservice.WebServiceModel, ownerID string) (client.UpdateServiceJSONRequestBody, error) {
+func UpdateServiceRequestFromModel(ctx context.Context, plan webservice.WebServiceModel, ownerID string) (client.UpdateServiceJSONRequestBody, error) {
 	envSpecificDetails, err := common.EnvSpecificDetailsForPATCH(plan.RuntimeSource, plan.StartCommand.ValueStringPointer())
 	if err != nil {
 		return client.UpdateServiceJSONRequestBody{}, err
@@ -29,6 +31,7 @@ func UpdateServiceRequestFromModel(plan webservice.WebServiceModel, ownerID stri
 		EnvSpecificDetails:         envSpecificDetails,
 		HealthCheckPath:            plan.HealthCheckPath.ValueStringPointer(),
 		PreDeployCommand:           &preDeployCommand,
+		Previews:                   common.PreviewsObjectToPreviews(ctx, plan.Previews),
 		PullRequestPreviewsEnabled: &pullRequestPreviewsEnabled,
 		MaxShutdownDelaySeconds:    common.ValueAsIntPointer(plan.MaxShutdownDelaySeconds),
 		Runtime:                    common.From(client.ServiceRuntime(plan.RuntimeSource.Runtime())),
