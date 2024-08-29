@@ -23,9 +23,9 @@ func CreateServiceRequestFromModel(ownerID string, plan webservice.WebServiceMod
 
 	servicePlan := client.PaidPlan(plan.Plan.ValueString())
 
-	pullRequestPreviewsEnabled := client.WebServiceDetailsPOSTPullRequestPreviewsEnabledNo
+	pullRequestPreviewsEnabled := client.PullRequestPreviewsEnabledNo
 	if plan.PullRequestPreviewsEnabled.ValueBool() {
-		pullRequestPreviewsEnabled = client.WebServiceDetailsPOSTPullRequestPreviewsEnabledYes
+		pullRequestPreviewsEnabled = client.PullRequestPreviewsEnabledYes
 	}
 
 	region := client.Region(plan.Region.ValueString())

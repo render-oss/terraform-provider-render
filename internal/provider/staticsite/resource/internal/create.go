@@ -20,9 +20,9 @@ func CreateServiceRequestFromModel(ctx context.Context, ownerID string, plan sta
 		})
 	}
 
-	prPreviews := client.StaticSiteDetailsPOSTPullRequestPreviewsEnabledNo
+	prPreviews := client.PullRequestPreviewsEnabledNo
 	if plan.PullRequestPreviewsEnabled.ValueBool() {
-		prPreviews = client.StaticSiteDetailsPOSTPullRequestPreviewsEnabledYes
+		prPreviews = client.PullRequestPreviewsEnabledYes
 	}
 
 	staticSiteDetails := client.StaticSiteDetailsPOST{

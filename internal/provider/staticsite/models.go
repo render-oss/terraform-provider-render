@@ -69,7 +69,7 @@ func ModelForServiceResult(service *common.WrappedStaticSite, state StaticSiteMo
 
 func applyGitBackedFields(service *client.Service, model *StaticSiteModel, details *client.StaticSiteDetails) {
 	model.BuildCommand = types.StringValue(details.BuildCommand)
-	model.PullRequestPreviewsEnabled = types.BoolValue(details.PullRequestPreviewsEnabled == client.PullRequestPreviewsEnabledYes)
+	model.PullRequestPreviewsEnabled = types.BoolValue(details.PullRequestPreviewsEnabled != nil && *details.PullRequestPreviewsEnabled == client.PullRequestPreviewsEnabledYes)
 	model.PublishPath = types.StringValue(details.PublishPath)
 	model.Url = types.StringValue(details.Url)
 	model.RepoURL = types.StringPointerValue(service.Repo)
