@@ -6,6 +6,7 @@ import (
 	"net/http"
 
 	"terraform-provider-render/internal/client"
+	"terraform-provider-render/internal/client/logs"
 	"terraform-provider-render/internal/client/notifications"
 )
 
@@ -15,6 +16,7 @@ type WrappedStaticSite struct {
 	EnvVars              *[]client.EnvVarWithCursor
 	Headers              *[]client.Header
 	NotificationOverride *notifications.NotificationOverride
+	LogStreamOverride    *logs.ResourceLogStreamSetting
 	Routes               *[]client.Route
 }
 
@@ -51,6 +53,7 @@ func WrapStaticSite(ctx context.Context, apiClient *client.ClientWithResponses, 
 		EnvVars:              wrappedService.EnvVars,
 		Headers:              headers,
 		NotificationOverride: wrappedService.NotificationOverride,
+		LogStreamOverride:    wrappedService.LogStreamOverride,
 		Routes:               routes,
 	}, nil
 
@@ -91,6 +94,7 @@ func UpdateStaticSite(ctx context.Context, apiClient *client.ClientWithResponses
 		EnvVars:              wrappedService.EnvVars,
 		Headers:              &headers,
 		NotificationOverride: wrappedService.NotificationOverride,
+		LogStreamOverride:    wrappedService.LogStreamOverride,
 		Routes:               &routes,
 	}, nil
 }

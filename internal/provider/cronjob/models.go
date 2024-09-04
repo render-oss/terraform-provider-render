@@ -22,6 +22,7 @@ type CronJobModel struct {
 	SecretFiles   map[string]common.SecretFileModel `tfsdk:"secret_files"`
 
 	NotificationOverride types.Object `tfsdk:"notification_override"`
+	LogStreamOverride    types.Object `tfsdk:"log_stream_override"`
 }
 
 func ModelForServiceResult(service *common.WrappedService, planEVs map[string]common.EnvVarModel, diags diag.Diagnostics) (*CronJobModel, error) {
@@ -42,6 +43,7 @@ func ModelForServiceResult(service *common.WrappedService, planEVs map[string]co
 		EnvVars:              common.EnvVarsFromClientCursors(service.EnvVars, planEVs),
 		SecretFiles:          common.SecretFilesFromClientCursors(service.SecretFiles),
 		NotificationOverride: common.NotificationOverrideFromClient(service.NotificationOverride, diags),
+		LogStreamOverride:    common.LogStreamOverrideFromClient(service.LogStreamOverride, diags),
 	}
 
 	runtimeSource, err := common.RuntimeSourceFromClient(service.Service, details.Env, details.EnvSpecificDetails)

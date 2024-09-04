@@ -12,9 +12,9 @@ import (
 
 	"github.com/hashicorp/terraform-plugin-framework/diag"
 	"github.com/hashicorp/terraform-plugin-framework/types"
-
 	"terraform-provider-render/internal/client"
 	"terraform-provider-render/internal/client/disks"
+	"terraform-provider-render/internal/client/logs"
 	"terraform-provider-render/internal/client/notifications"
 )
 
@@ -158,6 +158,7 @@ type WrappedService struct {
 	EnvVars              *[]client.EnvVarWithCursor
 	SecretFiles          *[]client.SecretFileWithCursor
 	NotificationOverride *notifications.NotificationOverride
+	LogStreamOverride    *logs.ResourceLogStreamSetting
 }
 
 func WrapService(ctx context.Context, apiClient *client.ClientWithResponses, service *client.Service) (*WrappedService, error) {
@@ -181,12 +182,18 @@ func WrapService(ctx context.Context, apiClient *client.ClientWithResponses, ser
 		return nil, fmt.Errorf("error getting notification overrides: %w", err)
 	}
 
+	logStreamOverrides, err := getLogStreamOverrides(ctx, apiClient, service.Id)
+	if err != nil {
+		return nil, fmt.Errorf("error getting log stream overrides: %w", err)
+	}
+
 	return &WrappedService{
 		Service:              service,
 		CustomDomains:        customDomains,
 		EnvVars:              envVars,
 		SecretFiles:          secretFiles,
 		NotificationOverride: notificationOverrides,
+		LogStreamOverride:    logStreamOverrides,
 	}, nil
 }
 
@@ -307,6 +314,17 @@ func getNotificationOverrides(ctx context.Context, apiClient *client.ClientWithR
 	}, &res)
 	if err != nil {
 		return nil, fmt.Errorf("could not get notification override for service: %w", err)
+	}
+	return &res, nil
+}
+
+func getLogStreamOverrides(ctx context.Context, apiClient *client.ClientWithResponses, serviceID string) (*logs.ResourceLogStreamSetting, error) {
+	var res logs.ResourceLogStreamSetting
+	err := Get(func() (*http.Response, error) {
+		return apiClient.GetResourceLogStream(ctx, serviceID)
+	}, &res)
+	if err != nil {
+		return nil, fmt.Errorf("could not get log stream override for service: %w", err)
 	}
 	return &res, nil
 }
@@ -469,6 +487,7 @@ type UpdateServiceReq struct {
 	InstanceCount        *int64
 	Autoscaling          *AutoscalingStateAndPlan
 	NotificationOverride *notifications.NotificationServiceOverridePATCH
+	LogStreamOverride    *logs.LogStreamResourceUpdate
 }
 
 type AutoscalingStateAndPlan struct {
@@ -544,6 +563,11 @@ func UpdateService(ctx context.Context, apiClient *client.ClientWithResponses, r
 		return nil, err
 	}
 
+	logStreamOverride, err := updateLogStreamOverride(ctx, apiClient, req)
+	if err != nil {
+		return nil, err
+	}
+
 	envID, err := UpdateEnvironmentID(ctx, apiClient, req.ServiceID, req.EnvironmentID)
 	if err != nil {
 		return nil, err
@@ -598,6 +622,7 @@ func UpdateService(ctx context.Context, apiClient *client.ClientWithResponses, r
 		CustomDomains: cds, EnvVars: envVars,
 		SecretFiles:          secretFiles,
 		NotificationOverride: notificationOverride,
+		LogStreamOverride:    logStreamOverride,
 	}, nil
 }
 
@@ -690,6 +715,22 @@ func updateNotificationOverride(ctx context.Context, apiClient *client.ClientWit
 	}
 
 	return &notificationOverrideResp, nil
+}
+
+func updateLogStreamOverride(ctx context.Context, apiClient *client.ClientWithResponses, req UpdateServiceReq) (*logs.ResourceLogStreamSetting, error) {
+	if req.LogStreamOverride == nil {
+		return nil, nil
+	}
+
+	var logStreamOverrideResp logs.ResourceLogStreamSetting
+	err := Update(func() (*http.Response, error) {
+		return apiClient.UpdateResourceLogStream(ctx, req.ServiceID, *req.LogStreamOverride)
+	}, &logStreamOverrideResp)
+	if err != nil {
+		return nil, fmt.Errorf("could not update log stream override: %w", err)
+	}
+
+	return &logStreamOverrideResp, nil
 }
 
 func updateInstanceCount(ctx context.Context, apiClient *client.ClientWithResponses, serviceID string, instanceCount int) error {
