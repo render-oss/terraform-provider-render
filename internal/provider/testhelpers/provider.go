@@ -13,6 +13,7 @@ import (
 	"github.com/stretchr/testify/require"
 	"gopkg.in/dnaeon/go-vcr.v3/cassette"
 	"gopkg.in/dnaeon/go-vcr.v3/recorder"
+
 	"terraform-provider-render/internal/provider"
 	"terraform-provider-render/internal/provider/common"
 )
@@ -93,6 +94,17 @@ func SetupRecordingProviderConfigureWait(t *testing.T, casetteName string, waitF
 		return nil
 	}
 	r.AddHook(replacePostgresConnectionInfo, recorder.AfterCaptureHook)
+
+	removeHeaders := func(i *cassette.Interaction) error {
+		i.Response.Headers.Del("Alt-Svc")
+		i.Response.Headers.Del("Cf-Cache-Status")
+		i.Response.Headers.Del("Cf-Ray")
+		i.Response.Headers.Del("Server")
+		i.Response.Headers.Del("Set-Cookie")
+		i.Response.Headers.Del("Strict-Transport-Security")
+		return nil
+	}
+	r.AddHook(removeHeaders, recorder.AfterCaptureHook)
 
 	providerOpts := []provider.ConfigFunc{
 		provider.WithHTTPClient(r.GetDefaultClient()),
