@@ -380,7 +380,7 @@ func TestBackgroundWorkerDiskResource(t *testing.T) {
 					resource.TestCheckNoResourceAttr(resourceName, "disk"),
 				),
 			},
-			// Readd disk
+			// Re-add disk
 			{
 				ResourceName: resourceName,
 				ConfigFile:   config.StaticFile("./testdata/disk.tf"),
