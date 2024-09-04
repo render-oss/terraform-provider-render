@@ -6,13 +6,13 @@ interactions:
         proto: HTTP/1.1
         proto_major: 1
         proto_minor: 1
-        content_length: 395
+        content_length: 434
         transfer_encoding: []
         trailer: {}
         host: https://api.testing.render.com/v1
         remote_addr: ""
         request_uri: ""
-        body: '{"envVars":null,"image":{"imagePath":"nginx","ownerId":""},"name":"my-cron-job","ownerId":"some-owner-id","secretFiles":null,"serviceDetails":{"env":"image","envSpecificDetails":{"dockerCommand":"","dockerContext":"","dockerfilePath":"","registryCredential":{"id":"","name":"","registry":"","username":""}},"plan":"starter","region":"oregon","schedule":"0 0 * * *"},"type":"cron_job"}'
+        body: '{"envVars":null,"image":{"imagePath":"nginx","ownerId":""},"name":"my-cron-job","ownerId":"some-owner-id","secretFiles":null,"serviceDetails":{"envSpecificDetails":{"dockerCommand":"","dockerContext":"","dockerfilePath":"","registryCredential":{"id":"","name":"","registry":"","updatedAt":"0001-01-01T00:00:00Z","username":""}},"plan":"starter","region":"oregon","runtime":"image","schedule":"0 0 * * *"},"type":"cron_job"}'
         form: {}
         headers:
             Authorization:
@@ -29,27 +29,27 @@ interactions:
         proto_minor: 0
         transfer_encoding: []
         trailer: {}
-        content_length: 610
+        content_length: 686
         uncompressed: false
         body: |
-            {"deployId":"dep-cpbo27colt5qq8i64rvg","service":{"autoDeploy":"yes","createdAt":"2024-05-29T19:25:16.927419Z","id":"crn-cpbo274olt5qq8i64ru0","imagePath":"docker.io/library/nginx:latest","name":"my-cron-job","notifyOnFail":"default","ownerId":"some-owner-id","rootDir":"","serviceDetails":{"buildPlan":"starter","env":"image","envSpecificDetails":{"dockerCommand":"","dockerContext":"","dockerfilePath":""},"plan":"starter","region":"oregon","schedule":"0 0 * * *"},"slug":"my-cron-job-xe9n","suspended":"not_suspended","suspenders":[],"type":"cron_job","updatedAt":"2024-05-29T19:25:16.927419Z"}}
+            {"deployId":"dep-crbr6jaj1k6c738ej6hg","service":{"autoDeploy":"yes","createdAt":"2024-09-04T01:09:32.868507Z","dashboardUrl":"https://dashboard.render.com/cron/crn-crbr6j2j1k6c738ej6f0","id":"crn-crbr6j2j1k6c738ej6f0","imagePath":"docker.io/library/nginx:latest","name":"my-cron-job","notifyOnFail":"default","ownerId":"some-owner-id","rootDir":"","serviceDetails":{"buildPlan":"starter","env":"image","envSpecificDetails":{"dockerCommand":"","dockerContext":"","dockerfilePath":""},"plan":"starter","region":"oregon","schedule":"0 0 * * *"},"slug":"my-cron-job-2qx7","suspended":"not_suspended","suspenders":[],"type":"cron_job","updatedAt":"2024-09-04T01:09:32.868507Z"}}
         headers:
             Content-Length:
-                - "610"
+                - "686"
             Content-Type:
                 - application/json; charset=utf-8
             Date:
-                - Wed, 29 May 2024 19:25:17 GMT
+                - Wed, 04 Sep 2024 01:09:33 GMT
             Ratelimit-Limit:
-                - "200"
+                - "20"
             Ratelimit-Remaining:
-                - "166"
+                - "18"
             Ratelimit-Reset:
-                - "2083"
+                - "3028"
             Referrer-Policy:
                 - same-origin
             Render-Request-Id:
-                - api-79b88fd555-kb4hz/Xeo48y3RKV-000374
+                - api-5dfb588d7c-tjj9c/Cvjs9XM2VF-1168771
             Vary:
                 - Origin
             X-Content-Type-Options:
@@ -60,7 +60,7 @@ interactions:
                 - 1; mode=block
         status: 201 Created
         code: 201
-        duration: 744.19025ms
+        duration: 1.968997583s
     - id: 1
       request:
         proto: HTTP/1.1
@@ -81,7 +81,7 @@ interactions:
                 - application/json
             User-Agent:
                 - terraform-provider-render/test
-        url: https://api.testing.render.com/v1/notification-settings/overrides/services/crn-cpbo274olt5qq8i64ru0
+        url: https://api.testing.render.com/v1/notification-settings/overrides/services/crn-crbr6j2j1k6c738ej6f0
         method: PATCH
       response:
         proto: HTTP/2.0
@@ -89,30 +89,28 @@ interactions:
         proto_minor: 0
         transfer_encoding: []
         trailer: {}
-        content_length: 109
-        uncompressed: false
+        content_length: -1
+        uncompressed: true
         body: |
-            {"id":"crn-cpbo274olt5qq8i64ru0","notificationsToSend":"all","previewNotificationsEnabled":"true","type":""}
+            {"notificationsToSend":"all","previewNotificationsEnabled":"true","serviceId":"crn-crbr6j2j1k6c738ej6f0"}
         headers:
-            Content-Length:
-                - "109"
             Content-Type:
                 - application/json; charset=utf-8
             Date:
-                - Wed, 29 May 2024 19:25:18 GMT
+                - Wed, 04 Sep 2024 01:09:33 GMT
             Ratelimit-Limit:
-                - "500"
-                - "500"
+                - "400"
+                - "100"
             Ratelimit-Remaining:
-                - "258"
-                - "463"
+                - "313"
+                - "87"
             Ratelimit-Reset:
-                - "41"
-                - "41"
+                - "26"
+                - "26"
             Referrer-Policy:
                 - same-origin
             Render-Request-Id:
-                - api-79b88fd555-kb4hz/Xeo48y3RKV-000387
+                - api-5dfb588d7c-js44c/vVKqdgsQoF-1348841
             Vary:
                 - Origin
             X-Content-Type-Options:
@@ -123,7 +121,7 @@ interactions:
                 - 1; mode=block
         status: 200 OK
         code: 200
-        duration: 58.643833ms
+        duration: 75.77575ms
     - id: 2
       request:
         proto: HTTP/1.1
@@ -142,7 +140,7 @@ interactions:
                 - some-api-key
             User-Agent:
                 - terraform-provider-render/test
-        url: https://api.testing.render.com/v1/services/crn-cpbo274olt5qq8i64ru0/env-vars
+        url: https://api.testing.render.com/v1/services/crn-crbr6j2j1k6c738ej6f0/env-vars
         method: GET
       response:
         proto: HTTP/2.0
@@ -160,17 +158,17 @@ interactions:
             Content-Type:
                 - application/json; charset=utf-8
             Date:
-                - Wed, 29 May 2024 19:25:18 GMT
+                - Wed, 04 Sep 2024 01:09:33 GMT
             Ratelimit-Limit:
-                - "500"
+                - "400"
             Ratelimit-Remaining:
-                - "257"
+                - "312"
             Ratelimit-Reset:
-                - "41"
+                - "26"
             Referrer-Policy:
                 - same-origin
             Render-Request-Id:
-                - api-79b88fd555-kb4hz/Xeo48y3RKV-000388
+                - api-5dfb588d7c-gvn66/5HbnvSs0QQ-2097301
             Vary:
                 - Origin
             X-Content-Type-Options:
@@ -181,7 +179,7 @@ interactions:
                 - 1; mode=block
         status: 200 OK
         code: 200
-        duration: 54.072459ms
+        duration: 65.659042ms
     - id: 3
       request:
         proto: HTTP/1.1
@@ -200,7 +198,7 @@ interactions:
                 - some-api-key
             User-Agent:
                 - terraform-provider-render/test
-        url: https://api.testing.render.com/v1/services/crn-cpbo274olt5qq8i64ru0/secret-files
+        url: https://api.testing.render.com/v1/services/crn-crbr6j2j1k6c738ej6f0/secret-files
         method: GET
       response:
         proto: HTTP/2.0
@@ -218,17 +216,17 @@ interactions:
             Content-Type:
                 - application/json; charset=utf-8
             Date:
-                - Wed, 29 May 2024 19:25:18 GMT
+                - Wed, 04 Sep 2024 01:09:33 GMT
             Ratelimit-Limit:
-                - "500"
+                - "400"
             Ratelimit-Remaining:
-                - "256"
+                - "311"
             Ratelimit-Reset:
-                - "41"
+                - "26"
             Referrer-Policy:
                 - same-origin
             Render-Request-Id:
-                - api-79b88fd555-kb4hz/Xeo48y3RKV-000389
+                - api-5dfb588d7c-zk4z5/ZlQgAGJQgW-3960872
             Vary:
                 - Origin
             X-Content-Type-Options:
@@ -239,7 +237,7 @@ interactions:
                 - 1; mode=block
         status: 200 OK
         code: 200
-        duration: 45.973959ms
+        duration: 71.655959ms
     - id: 4
       request:
         proto: HTTP/1.1
@@ -258,7 +256,7 @@ interactions:
                 - some-api-key
             User-Agent:
                 - terraform-provider-render/test
-        url: https://api.testing.render.com/v1/notification-settings/overrides/services/crn-cpbo274olt5qq8i64ru0
+        url: https://api.testing.render.com/v1/notification-settings/overrides/services/crn-crbr6j2j1k6c738ej6f0
         method: GET
       response:
         proto: HTTP/2.0
@@ -266,27 +264,25 @@ interactions:
         proto_minor: 0
         transfer_encoding: []
         trailer: {}
-        content_length: 109
-        uncompressed: false
+        content_length: -1
+        uncompressed: true
         body: |
-            {"id":"crn-cpbo274olt5qq8i64ru0","notificationsToSend":"all","previewNotificationsEnabled":"true","type":""}
+            {"notificationsToSend":"all","previewNotificationsEnabled":"true","serviceId":"crn-crbr6j2j1k6c738ej6f0"}
         headers:
-            Content-Length:
-                - "109"
             Content-Type:
                 - application/json; charset=utf-8
             Date:
-                - Wed, 29 May 2024 19:25:18 GMT
+                - Wed, 04 Sep 2024 01:09:33 GMT
             Ratelimit-Limit:
-                - "500"
+                - "400"
             Ratelimit-Remaining:
-                - "255"
+                - "310"
             Ratelimit-Reset:
-                - "41"
+                - "26"
             Referrer-Policy:
                 - same-origin
             Render-Request-Id:
-                - api-79b88fd555-kb4hz/Xeo48y3RKV-000390
+                - api-5dfb588d7c-tjj9c/Cvjs9XM2VF-1168809
             Vary:
                 - Origin
             X-Content-Type-Options:
@@ -297,7 +293,7 @@ interactions:
                 - 1; mode=block
         status: 200 OK
         code: 200
-        duration: 44.56825ms
+        duration: 61.158833ms
     - id: 5
       request:
         proto: HTTP/1.1
@@ -316,7 +312,7 @@ interactions:
                 - some-api-key
             User-Agent:
                 - terraform-provider-render/test
-        url: https://api.testing.render.com/v1/services/crn-cpbo274olt5qq8i64ru0
+        url: https://api.testing.render.com/v1/services/crn-crbr6j2j1k6c738ej6f0
         method: GET
       response:
         proto: HTTP/2.0
@@ -324,27 +320,25 @@ interactions:
         proto_minor: 0
         transfer_encoding: []
         trailer: {}
-        content_length: 559
-        uncompressed: false
+        content_length: -1
+        uncompressed: true
         body: |
-            {"autoDeploy":"yes","createdAt":"2024-05-29T19:25:16.927419Z","id":"crn-cpbo274olt5qq8i64ru0","imagePath":"docker.io/library/nginx:latest","name":"my-cron-job","notifyOnFail":"notify","ownerId":"some-owner-id","rootDir":"","serviceDetails":{"buildPlan":"starter","env":"image","envSpecificDetails":{"dockerCommand":"","dockerContext":"","dockerfilePath":""},"plan":"starter","region":"oregon","schedule":"0 0 * * *"},"slug":"my-cron-job-xe9n","suspended":"not_suspended","suspenders":[],"type":"cron_job","updatedAt":"2024-05-29T19:25:16.927419Z"}
+            {"autoDeploy":"yes","createdAt":"2024-09-04T01:09:32.868507Z","dashboardUrl":"https://dashboard.render.com/cron/crn-crbr6j2j1k6c738ej6f0","id":"crn-crbr6j2j1k6c738ej6f0","imagePath":"docker.io/library/nginx:latest","name":"my-cron-job","notifyOnFail":"notify","ownerId":"some-owner-id","rootDir":"","serviceDetails":{"buildPlan":"starter","env":"image","envSpecificDetails":{"dockerCommand":"","dockerContext":"","dockerfilePath":""},"plan":"starter","region":"oregon","schedule":"0 0 * * *"},"slug":"my-cron-job-2qx7","suspended":"not_suspended","suspenders":[],"type":"cron_job","updatedAt":"2024-09-04T01:09:32.868507Z"}
         headers:
-            Content-Length:
-                - "559"
             Content-Type:
                 - application/json; charset=utf-8
             Date:
-                - Wed, 29 May 2024 19:25:18 GMT
+                - Wed, 04 Sep 2024 01:09:33 GMT
             Ratelimit-Limit:
-                - "500"
+                - "400"
             Ratelimit-Remaining:
-                - "254"
+                - "309"
             Ratelimit-Reset:
-                - "41"
+                - "26"
             Referrer-Policy:
                 - same-origin
             Render-Request-Id:
-                - api-79b88fd555-kb4hz/Xeo48y3RKV-000392
+                - api-5dfb588d7c-js44c/vVKqdgsQoF-1348846
             Vary:
                 - Origin
             X-Content-Type-Options:
@@ -355,7 +349,7 @@ interactions:
                 - 1; mode=block
         status: 200 OK
         code: 200
-        duration: 60.957166ms
+        duration: 95.551333ms
     - id: 6
       request:
         proto: HTTP/1.1
@@ -374,7 +368,7 @@ interactions:
                 - some-api-key
             User-Agent:
                 - terraform-provider-render/test
-        url: https://api.testing.render.com/v1/services/crn-cpbo274olt5qq8i64ru0/env-vars
+        url: https://api.testing.render.com/v1/services/crn-crbr6j2j1k6c738ej6f0/env-vars
         method: GET
       response:
         proto: HTTP/2.0
@@ -392,17 +386,17 @@ interactions:
             Content-Type:
                 - application/json; charset=utf-8
             Date:
-                - Wed, 29 May 2024 19:25:18 GMT
+                - Wed, 04 Sep 2024 01:09:33 GMT
             Ratelimit-Limit:
-                - "500"
+                - "400"
             Ratelimit-Remaining:
-                - "253"
+                - "308"
             Ratelimit-Reset:
-                - "41"
+                - "26"
             Referrer-Policy:
                 - same-origin
             Render-Request-Id:
-                - api-79b88fd555-kb4hz/Xeo48y3RKV-000394
+                - api-5dfb588d7c-gvn66/5HbnvSs0QQ-2097305
             Vary:
                 - Origin
             X-Content-Type-Options:
@@ -413,7 +407,7 @@ interactions:
                 - 1; mode=block
         status: 200 OK
         code: 200
-        duration: 43.340291ms
+        duration: 62.680875ms
     - id: 7
       request:
         proto: HTTP/1.1
@@ -432,7 +426,7 @@ interactions:
                 - some-api-key
             User-Agent:
                 - terraform-provider-render/test
-        url: https://api.testing.render.com/v1/services/crn-cpbo274olt5qq8i64ru0/secret-files
+        url: https://api.testing.render.com/v1/services/crn-crbr6j2j1k6c738ej6f0/secret-files
         method: GET
       response:
         proto: HTTP/2.0
@@ -450,17 +444,17 @@ interactions:
             Content-Type:
                 - application/json; charset=utf-8
             Date:
-                - Wed, 29 May 2024 19:25:18 GMT
+                - Wed, 04 Sep 2024 01:09:34 GMT
             Ratelimit-Limit:
-                - "500"
+                - "400"
             Ratelimit-Remaining:
-                - "251"
+                - "307"
             Ratelimit-Reset:
-                - "41"
+                - "25"
             Referrer-Policy:
                 - same-origin
             Render-Request-Id:
-                - api-79b88fd555-kb4hz/Xeo48y3RKV-000396
+                - api-5dfb588d7c-zk4z5/ZlQgAGJQgW-3960878
             Vary:
                 - Origin
             X-Content-Type-Options:
@@ -471,7 +465,7 @@ interactions:
                 - 1; mode=block
         status: 200 OK
         code: 200
-        duration: 50.73275ms
+        duration: 83.821542ms
     - id: 8
       request:
         proto: HTTP/1.1
@@ -490,7 +484,7 @@ interactions:
                 - some-api-key
             User-Agent:
                 - terraform-provider-render/test
-        url: https://api.testing.render.com/v1/notification-settings/overrides/services/crn-cpbo274olt5qq8i64ru0
+        url: https://api.testing.render.com/v1/notification-settings/overrides/services/crn-crbr6j2j1k6c738ej6f0
         method: GET
       response:
         proto: HTTP/2.0
@@ -498,27 +492,25 @@ interactions:
         proto_minor: 0
         transfer_encoding: []
         trailer: {}
-        content_length: 109
-        uncompressed: false
+        content_length: -1
+        uncompressed: true
         body: |
-            {"id":"crn-cpbo274olt5qq8i64ru0","notificationsToSend":"all","previewNotificationsEnabled":"true","type":""}
+            {"notificationsToSend":"all","previewNotificationsEnabled":"true","serviceId":"crn-crbr6j2j1k6c738ej6f0"}
         headers:
-            Content-Length:
-                - "109"
             Content-Type:
                 - application/json; charset=utf-8
             Date:
-                - Wed, 29 May 2024 19:25:18 GMT
+                - Wed, 04 Sep 2024 01:09:34 GMT
             Ratelimit-Limit:
-                - "500"
+                - "400"
             Ratelimit-Remaining:
-                - "249"
+                - "306"
             Ratelimit-Reset:
-                - "41"
+                - "25"
             Referrer-Policy:
                 - same-origin
             Render-Request-Id:
-                - api-79b88fd555-kb4hz/Xeo48y3RKV-000398
+                - api-5dfb588d7c-tjj9c/Cvjs9XM2VF-1168817
             Vary:
                 - Origin
             X-Content-Type-Options:
@@ -529,7 +521,7 @@ interactions:
                 - 1; mode=block
         status: 200 OK
         code: 200
-        duration: 53.899625ms
+        duration: 79.198458ms
     - id: 9
       request:
         proto: HTTP/1.1
@@ -548,7 +540,7 @@ interactions:
                 - some-api-key
             User-Agent:
                 - terraform-provider-render/test
-        url: https://api.testing.render.com/v1/services/crn-cpbo274olt5qq8i64ru0
+        url: https://api.testing.render.com/v1/services/crn-crbr6j2j1k6c738ej6f0
         method: GET
       response:
         proto: HTTP/2.0
@@ -556,27 +548,25 @@ interactions:
         proto_minor: 0
         transfer_encoding: []
         trailer: {}
-        content_length: 559
-        uncompressed: false
+        content_length: -1
+        uncompressed: true
         body: |
-            {"autoDeploy":"yes","createdAt":"2024-05-29T19:25:16.927419Z","id":"crn-cpbo274olt5qq8i64ru0","imagePath":"docker.io/library/nginx:latest","name":"my-cron-job","notifyOnFail":"notify","ownerId":"some-owner-id","rootDir":"","serviceDetails":{"buildPlan":"starter","env":"image","envSpecificDetails":{"dockerCommand":"","dockerContext":"","dockerfilePath":""},"plan":"starter","region":"oregon","schedule":"0 0 * * *"},"slug":"my-cron-job-xe9n","suspended":"not_suspended","suspenders":[],"type":"cron_job","updatedAt":"2024-05-29T19:25:16.927419Z"}
+            {"autoDeploy":"yes","createdAt":"2024-09-04T01:09:32.868507Z","dashboardUrl":"https://dashboard.render.com/cron/crn-crbr6j2j1k6c738ej6f0","id":"crn-crbr6j2j1k6c738ej6f0","imagePath":"docker.io/library/nginx:latest","name":"my-cron-job","notifyOnFail":"notify","ownerId":"some-owner-id","rootDir":"","serviceDetails":{"buildPlan":"starter","env":"image","envSpecificDetails":{"dockerCommand":"","dockerContext":"","dockerfilePath":""},"plan":"starter","region":"oregon","schedule":"0 0 * * *"},"slug":"my-cron-job-2qx7","suspended":"not_suspended","suspenders":[],"type":"cron_job","updatedAt":"2024-09-04T01:09:32.868507Z"}
         headers:
-            Content-Length:
-                - "559"
             Content-Type:
                 - application/json; charset=utf-8
             Date:
-                - Wed, 29 May 2024 19:25:19 GMT
+                - Wed, 04 Sep 2024 01:09:34 GMT
             Ratelimit-Limit:
-                - "500"
+                - "400"
             Ratelimit-Remaining:
-                - "248"
+                - "305"
             Ratelimit-Reset:
-                - "40"
+                - "25"
             Referrer-Policy:
                 - same-origin
             Render-Request-Id:
-                - api-79b88fd555-kb4hz/Xeo48y3RKV-000400
+                - api-5dfb588d7c-js44c/vVKqdgsQoF-1348857
             Vary:
                 - Origin
             X-Content-Type-Options:
@@ -587,7 +577,7 @@ interactions:
                 - 1; mode=block
         status: 200 OK
         code: 200
-        duration: 71.487375ms
+        duration: 91.307292ms
     - id: 10
       request:
         proto: HTTP/1.1
@@ -606,7 +596,7 @@ interactions:
                 - some-api-key
             User-Agent:
                 - terraform-provider-render/test
-        url: https://api.testing.render.com/v1/services/crn-cpbo274olt5qq8i64ru0/env-vars
+        url: https://api.testing.render.com/v1/services/crn-crbr6j2j1k6c738ej6f0/env-vars
         method: GET
       response:
         proto: HTTP/2.0
@@ -624,17 +614,17 @@ interactions:
             Content-Type:
                 - application/json; charset=utf-8
             Date:
-                - Wed, 29 May 2024 19:25:19 GMT
+                - Wed, 04 Sep 2024 01:09:34 GMT
             Ratelimit-Limit:
-                - "500"
+                - "400"
             Ratelimit-Remaining:
-                - "247"
+                - "304"
             Ratelimit-Reset:
-                - "40"
+                - "25"
             Referrer-Policy:
                 - same-origin
             Render-Request-Id:
-                - api-79b88fd555-kb4hz/Xeo48y3RKV-000401
+                - api-5dfb588d7c-gvn66/5HbnvSs0QQ-2097312
             Vary:
                 - Origin
             X-Content-Type-Options:
@@ -645,7 +635,7 @@ interactions:
                 - 1; mode=block
         status: 200 OK
         code: 200
-        duration: 52.544625ms
+        duration: 63.668875ms
     - id: 11
       request:
         proto: HTTP/1.1
@@ -664,7 +654,7 @@ interactions:
                 - some-api-key
             User-Agent:
                 - terraform-provider-render/test
-        url: https://api.testing.render.com/v1/services/crn-cpbo274olt5qq8i64ru0/secret-files
+        url: https://api.testing.render.com/v1/services/crn-crbr6j2j1k6c738ej6f0/secret-files
         method: GET
       response:
         proto: HTTP/2.0
@@ -682,17 +672,17 @@ interactions:
             Content-Type:
                 - application/json; charset=utf-8
             Date:
-                - Wed, 29 May 2024 19:25:19 GMT
+                - Wed, 04 Sep 2024 01:09:34 GMT
             Ratelimit-Limit:
-                - "500"
+                - "400"
             Ratelimit-Remaining:
-                - "246"
+                - "303"
             Ratelimit-Reset:
-                - "40"
+                - "25"
             Referrer-Policy:
                 - same-origin
             Render-Request-Id:
-                - api-79b88fd555-kb4hz/Xeo48y3RKV-000402
+                - api-5dfb588d7c-zk4z5/ZlQgAGJQgW-3960882
             Vary:
                 - Origin
             X-Content-Type-Options:
@@ -703,7 +693,7 @@ interactions:
                 - 1; mode=block
         status: 200 OK
         code: 200
-        duration: 49.85575ms
+        duration: 63.847959ms
     - id: 12
       request:
         proto: HTTP/1.1
@@ -722,7 +712,7 @@ interactions:
                 - some-api-key
             User-Agent:
                 - terraform-provider-render/test
-        url: https://api.testing.render.com/v1/notification-settings/overrides/services/crn-cpbo274olt5qq8i64ru0
+        url: https://api.testing.render.com/v1/notification-settings/overrides/services/crn-crbr6j2j1k6c738ej6f0
         method: GET
       response:
         proto: HTTP/2.0
@@ -730,27 +720,25 @@ interactions:
         proto_minor: 0
         transfer_encoding: []
         trailer: {}
-        content_length: 109
-        uncompressed: false
+        content_length: -1
+        uncompressed: true
         body: |
-            {"id":"crn-cpbo274olt5qq8i64ru0","notificationsToSend":"all","previewNotificationsEnabled":"true","type":""}
+            {"notificationsToSend":"all","previewNotificationsEnabled":"true","serviceId":"crn-crbr6j2j1k6c738ej6f0"}
         headers:
-            Content-Length:
-                - "109"
             Content-Type:
                 - application/json; charset=utf-8
             Date:
-                - Wed, 29 May 2024 19:25:19 GMT
+                - Wed, 04 Sep 2024 01:09:34 GMT
             Ratelimit-Limit:
-                - "500"
+                - "400"
             Ratelimit-Remaining:
-                - "245"
+                - "302"
             Ratelimit-Reset:
-                - "40"
+                - "25"
             Referrer-Policy:
                 - same-origin
             Render-Request-Id:
-                - api-79b88fd555-kb4hz/Xeo48y3RKV-000403
+                - api-5dfb588d7c-tjj9c/Cvjs9XM2VF-1168821
             Vary:
                 - Origin
             X-Content-Type-Options:
@@ -761,7 +749,7 @@ interactions:
                 - 1; mode=block
         status: 200 OK
         code: 200
-        duration: 46.795416ms
+        duration: 66.447208ms
     - id: 13
       request:
         proto: HTTP/1.1
@@ -780,7 +768,7 @@ interactions:
                 - some-api-key
             User-Agent:
                 - terraform-provider-render/test
-        url: https://api.testing.render.com/v1/services/crn-cpbo274olt5qq8i64ru0
+        url: https://api.testing.render.com/v1/services/crn-crbr6j2j1k6c738ej6f0
         method: GET
       response:
         proto: HTTP/2.0
@@ -788,27 +776,25 @@ interactions:
         proto_minor: 0
         transfer_encoding: []
         trailer: {}
-        content_length: 559
-        uncompressed: false
+        content_length: -1
+        uncompressed: true
         body: |
-            {"autoDeploy":"yes","createdAt":"2024-05-29T19:25:16.927419Z","id":"crn-cpbo274olt5qq8i64ru0","imagePath":"docker.io/library/nginx:latest","name":"my-cron-job","notifyOnFail":"notify","ownerId":"some-owner-id","rootDir":"","serviceDetails":{"buildPlan":"starter","env":"image","envSpecificDetails":{"dockerCommand":"","dockerContext":"","dockerfilePath":""},"plan":"starter","region":"oregon","schedule":"0 0 * * *"},"slug":"my-cron-job-xe9n","suspended":"not_suspended","suspenders":[],"type":"cron_job","updatedAt":"2024-05-29T19:25:16.927419Z"}
+            {"autoDeploy":"yes","createdAt":"2024-09-04T01:09:32.868507Z","dashboardUrl":"https://dashboard.render.com/cron/crn-crbr6j2j1k6c738ej6f0","id":"crn-crbr6j2j1k6c738ej6f0","imagePath":"docker.io/library/nginx:latest","name":"my-cron-job","notifyOnFail":"notify","ownerId":"some-owner-id","rootDir":"","serviceDetails":{"buildPlan":"starter","env":"image","envSpecificDetails":{"dockerCommand":"","dockerContext":"","dockerfilePath":""},"plan":"starter","region":"oregon","schedule":"0 0 * * *"},"slug":"my-cron-job-2qx7","suspended":"not_suspended","suspenders":[],"type":"cron_job","updatedAt":"2024-09-04T01:09:32.868507Z"}
         headers:
-            Content-Length:
-                - "559"
             Content-Type:
                 - application/json; charset=utf-8
             Date:
-                - Wed, 29 May 2024 19:25:19 GMT
+                - Wed, 04 Sep 2024 01:09:34 GMT
             Ratelimit-Limit:
-                - "500"
+                - "400"
             Ratelimit-Remaining:
-                - "244"
+                - "301"
             Ratelimit-Reset:
-                - "40"
+                - "25"
             Referrer-Policy:
                 - same-origin
             Render-Request-Id:
-                - api-79b88fd555-kb4hz/Xeo48y3RKV-000404
+                - api-5dfb588d7c-js44c/vVKqdgsQoF-1348862
             Vary:
                 - Origin
             X-Content-Type-Options:
@@ -819,7 +805,7 @@ interactions:
                 - 1; mode=block
         status: 200 OK
         code: 200
-        duration: 58.269084ms
+        duration: 97.449083ms
     - id: 14
       request:
         proto: HTTP/1.1
@@ -838,7 +824,7 @@ interactions:
                 - some-api-key
             User-Agent:
                 - terraform-provider-render/test
-        url: https://api.testing.render.com/v1/services/crn-cpbo274olt5qq8i64ru0/env-vars
+        url: https://api.testing.render.com/v1/services/crn-crbr6j2j1k6c738ej6f0/env-vars
         method: GET
       response:
         proto: HTTP/2.0
@@ -856,17 +842,17 @@ interactions:
             Content-Type:
                 - application/json; charset=utf-8
             Date:
-                - Wed, 29 May 2024 19:25:19 GMT
+                - Wed, 04 Sep 2024 01:09:34 GMT
             Ratelimit-Limit:
-                - "500"
+                - "400"
             Ratelimit-Remaining:
-                - "243"
+                - "300"
             Ratelimit-Reset:
-                - "40"
+                - "25"
             Referrer-Policy:
                 - same-origin
             Render-Request-Id:
-                - api-79b88fd555-kb4hz/Xeo48y3RKV-000405
+                - api-5dfb588d7c-gvn66/5HbnvSs0QQ-2097317
             Vary:
                 - Origin
             X-Content-Type-Options:
@@ -877,7 +863,7 @@ interactions:
                 - 1; mode=block
         status: 200 OK
         code: 200
-        duration: 54.608833ms
+        duration: 65.633917ms
     - id: 15
       request:
         proto: HTTP/1.1
@@ -896,7 +882,7 @@ interactions:
                 - some-api-key
             User-Agent:
                 - terraform-provider-render/test
-        url: https://api.testing.render.com/v1/services/crn-cpbo274olt5qq8i64ru0/secret-files
+        url: https://api.testing.render.com/v1/services/crn-crbr6j2j1k6c738ej6f0/secret-files
         method: GET
       response:
         proto: HTTP/2.0
@@ -914,17 +900,17 @@ interactions:
             Content-Type:
                 - application/json; charset=utf-8
             Date:
-                - Wed, 29 May 2024 19:25:19 GMT
+                - Wed, 04 Sep 2024 01:09:34 GMT
             Ratelimit-Limit:
-                - "500"
+                - "400"
             Ratelimit-Remaining:
-                - "242"
+                - "299"
             Ratelimit-Reset:
-                - "40"
+                - "25"
             Referrer-Policy:
                 - same-origin
             Render-Request-Id:
-                - api-79b88fd555-kb4hz/Xeo48y3RKV-000406
+                - api-5dfb588d7c-zk4z5/ZlQgAGJQgW-3960889
             Vary:
                 - Origin
             X-Content-Type-Options:
@@ -935,7 +921,7 @@ interactions:
                 - 1; mode=block
         status: 200 OK
         code: 200
-        duration: 90.40525ms
+        duration: 63.683417ms
     - id: 16
       request:
         proto: HTTP/1.1
@@ -954,7 +940,7 @@ interactions:
                 - some-api-key
             User-Agent:
                 - terraform-provider-render/test
-        url: https://api.testing.render.com/v1/notification-settings/overrides/services/crn-cpbo274olt5qq8i64ru0
+        url: https://api.testing.render.com/v1/notification-settings/overrides/services/crn-crbr6j2j1k6c738ej6f0
         method: GET
       response:
         proto: HTTP/2.0
@@ -962,27 +948,25 @@ interactions:
         proto_minor: 0
         transfer_encoding: []
         trailer: {}
-        content_length: 109
-        uncompressed: false
+        content_length: -1
+        uncompressed: true
         body: |
-            {"id":"crn-cpbo274olt5qq8i64ru0","notificationsToSend":"all","previewNotificationsEnabled":"true","type":""}
+            {"notificationsToSend":"all","previewNotificationsEnabled":"true","serviceId":"crn-crbr6j2j1k6c738ej6f0"}
         headers:
-            Content-Length:
-                - "109"
             Content-Type:
                 - application/json; charset=utf-8
             Date:
-                - Wed, 29 May 2024 19:25:20 GMT
+                - Wed, 04 Sep 2024 01:09:34 GMT
             Ratelimit-Limit:
-                - "500"
+                - "400"
             Ratelimit-Remaining:
-                - "239"
+                - "298"
             Ratelimit-Reset:
-                - "39"
+                - "25"
             Referrer-Policy:
                 - same-origin
             Render-Request-Id:
-                - api-79b88fd555-kb4hz/Xeo48y3RKV-000409
+                - api-5dfb588d7c-tjj9c/Cvjs9XM2VF-1168829
             Vary:
                 - Origin
             X-Content-Type-Options:
@@ -993,7 +977,7 @@ interactions:
                 - 1; mode=block
         status: 200 OK
         code: 200
-        duration: 59.914708ms
+        duration: 69.333833ms
     - id: 17
       request:
         proto: HTTP/1.1
@@ -1012,7 +996,7 @@ interactions:
                 - some-api-key
             User-Agent:
                 - terraform-provider-render/test
-        url: https://api.testing.render.com/v1/services/crn-cpbo274olt5qq8i64ru0
+        url: https://api.testing.render.com/v1/services/crn-crbr6j2j1k6c738ej6f0
         method: GET
       response:
         proto: HTTP/2.0
@@ -1020,27 +1004,25 @@ interactions:
         proto_minor: 0
         transfer_encoding: []
         trailer: {}
-        content_length: 559
-        uncompressed: false
+        content_length: -1
+        uncompressed: true
         body: |
-            {"autoDeploy":"yes","createdAt":"2024-05-29T19:25:16.927419Z","id":"crn-cpbo274olt5qq8i64ru0","imagePath":"docker.io/library/nginx:latest","name":"my-cron-job","notifyOnFail":"notify","ownerId":"some-owner-id","rootDir":"","serviceDetails":{"buildPlan":"starter","env":"image","envSpecificDetails":{"dockerCommand":"","dockerContext":"","dockerfilePath":""},"plan":"starter","region":"oregon","schedule":"0 0 * * *"},"slug":"my-cron-job-xe9n","suspended":"not_suspended","suspenders":[],"type":"cron_job","updatedAt":"2024-05-29T19:25:16.927419Z"}
+            {"autoDeploy":"yes","createdAt":"2024-09-04T01:09:32.868507Z","dashboardUrl":"https://dashboard.render.com/cron/crn-crbr6j2j1k6c738ej6f0","id":"crn-crbr6j2j1k6c738ej6f0","imagePath":"docker.io/library/nginx:latest","name":"my-cron-job","notifyOnFail":"notify","ownerId":"some-owner-id","rootDir":"","serviceDetails":{"buildPlan":"starter","env":"image","envSpecificDetails":{"dockerCommand":"","dockerContext":"","dockerfilePath":""},"plan":"starter","region":"oregon","schedule":"0 0 * * *"},"slug":"my-cron-job-2qx7","suspended":"not_suspended","suspenders":[],"type":"cron_job","updatedAt":"2024-09-04T01:09:32.868507Z"}
         headers:
-            Content-Length:
-                - "559"
             Content-Type:
                 - application/json; charset=utf-8
             Date:
-                - Wed, 29 May 2024 19:25:20 GMT
+                - Wed, 04 Sep 2024 01:09:35 GMT
             Ratelimit-Limit:
-                - "500"
+                - "400"
             Ratelimit-Remaining:
-                - "237"
+                - "297"
             Ratelimit-Reset:
-                - "39"
+                - "25"
             Referrer-Policy:
                 - same-origin
             Render-Request-Id:
-                - api-79b88fd555-kb4hz/Xeo48y3RKV-000411
+                - api-5dfb588d7c-js44c/vVKqdgsQoF-1348871
             Vary:
                 - Origin
             X-Content-Type-Options:
@@ -1051,7 +1033,7 @@ interactions:
                 - 1; mode=block
         status: 200 OK
         code: 200
-        duration: 65.309791ms
+        duration: 85.740291ms
     - id: 18
       request:
         proto: HTTP/1.1
@@ -1070,7 +1052,7 @@ interactions:
                 - some-api-key
             User-Agent:
                 - terraform-provider-render/test
-        url: https://api.testing.render.com/v1/services/crn-cpbo274olt5qq8i64ru0/env-vars
+        url: https://api.testing.render.com/v1/services/crn-crbr6j2j1k6c738ej6f0/env-vars
         method: GET
       response:
         proto: HTTP/2.0
@@ -1088,17 +1070,17 @@ interactions:
             Content-Type:
                 - application/json; charset=utf-8
             Date:
-                - Wed, 29 May 2024 19:25:20 GMT
+                - Wed, 04 Sep 2024 01:09:35 GMT
             Ratelimit-Limit:
-                - "500"
+                - "400"
             Ratelimit-Remaining:
-                - "235"
+                - "296"
             Ratelimit-Reset:
-                - "39"
+                - "24"
             Referrer-Policy:
                 - same-origin
             Render-Request-Id:
-                - api-79b88fd555-kb4hz/Xeo48y3RKV-000413
+                - api-5dfb588d7c-gvn66/5HbnvSs0QQ-2097326
             Vary:
                 - Origin
             X-Content-Type-Options:
@@ -1109,7 +1091,7 @@ interactions:
                 - 1; mode=block
         status: 200 OK
         code: 200
-        duration: 45.429ms
+        duration: 64.9115ms
     - id: 19
       request:
         proto: HTTP/1.1
@@ -1128,7 +1110,7 @@ interactions:
                 - some-api-key
             User-Agent:
                 - terraform-provider-render/test
-        url: https://api.testing.render.com/v1/services/crn-cpbo274olt5qq8i64ru0/secret-files
+        url: https://api.testing.render.com/v1/services/crn-crbr6j2j1k6c738ej6f0/secret-files
         method: GET
       response:
         proto: HTTP/2.0
@@ -1146,17 +1128,17 @@ interactions:
             Content-Type:
                 - application/json; charset=utf-8
             Date:
-                - Wed, 29 May 2024 19:25:20 GMT
+                - Wed, 04 Sep 2024 01:09:35 GMT
             Ratelimit-Limit:
-                - "500"
+                - "400"
             Ratelimit-Remaining:
-                - "233"
+                - "295"
             Ratelimit-Reset:
-                - "39"
+                - "24"
             Referrer-Policy:
                 - same-origin
             Render-Request-Id:
-                - api-79b88fd555-kb4hz/Xeo48y3RKV-000415
+                - api-5dfb588d7c-zk4z5/ZlQgAGJQgW-3960892
             Vary:
                 - Origin
             X-Content-Type-Options:
@@ -1167,7 +1149,7 @@ interactions:
                 - 1; mode=block
         status: 200 OK
         code: 200
-        duration: 47.290083ms
+        duration: 61.029083ms
     - id: 20
       request:
         proto: HTTP/1.1
@@ -1186,7 +1168,7 @@ interactions:
                 - some-api-key
             User-Agent:
                 - terraform-provider-render/test
-        url: https://api.testing.render.com/v1/notification-settings/overrides/services/crn-cpbo274olt5qq8i64ru0
+        url: https://api.testing.render.com/v1/notification-settings/overrides/services/crn-crbr6j2j1k6c738ej6f0
         method: GET
       response:
         proto: HTTP/2.0
@@ -1194,27 +1176,25 @@ interactions:
         proto_minor: 0
         transfer_encoding: []
         trailer: {}
-        content_length: 109
-        uncompressed: false
+        content_length: -1
+        uncompressed: true
         body: |
-            {"id":"crn-cpbo274olt5qq8i64ru0","notificationsToSend":"all","previewNotificationsEnabled":"true","type":""}
+            {"notificationsToSend":"all","previewNotificationsEnabled":"true","serviceId":"crn-crbr6j2j1k6c738ej6f0"}
         headers:
-            Content-Length:
-                - "109"
             Content-Type:
                 - application/json; charset=utf-8
             Date:
-                - Wed, 29 May 2024 19:25:20 GMT
+                - Wed, 04 Sep 2024 01:09:35 GMT
             Ratelimit-Limit:
-                - "500"
+                - "400"
             Ratelimit-Remaining:
-                - "232"
+                - "294"
             Ratelimit-Reset:
-                - "39"
+                - "24"
             Referrer-Policy:
                 - same-origin
             Render-Request-Id:
-                - api-79b88fd555-kb4hz/Xeo48y3RKV-000416
+                - api-5dfb588d7c-tjj9c/Cvjs9XM2VF-1168835
             Vary:
                 - Origin
             X-Content-Type-Options:
@@ -1225,7 +1205,7 @@ interactions:
                 - 1; mode=block
         status: 200 OK
         code: 200
-        duration: 45.102417ms
+        duration: 89.459958ms
     - id: 21
       request:
         proto: HTTP/1.1
@@ -1244,7 +1224,7 @@ interactions:
                 - some-api-key
             User-Agent:
                 - terraform-provider-render/test
-        url: https://api.testing.render.com/v1/services/crn-cpbo274olt5qq8i64ru0
+        url: https://api.testing.render.com/v1/services/crn-crbr6j2j1k6c738ej6f0
         method: GET
       response:
         proto: HTTP/2.0
@@ -1252,27 +1232,25 @@ interactions:
         proto_minor: 0
         transfer_encoding: []
         trailer: {}
-        content_length: 559
-        uncompressed: false
+        content_length: -1
+        uncompressed: true
         body: |
-            {"autoDeploy":"yes","createdAt":"2024-05-29T19:25:16.927419Z","id":"crn-cpbo274olt5qq8i64ru0","imagePath":"docker.io/library/nginx:latest","name":"my-cron-job","notifyOnFail":"notify","ownerId":"some-owner-id","rootDir":"","serviceDetails":{"buildPlan":"starter","env":"image","envSpecificDetails":{"dockerCommand":"","dockerContext":"","dockerfilePath":""},"plan":"starter","region":"oregon","schedule":"0 0 * * *"},"slug":"my-cron-job-xe9n","suspended":"not_suspended","suspenders":[],"type":"cron_job","updatedAt":"2024-05-29T19:25:16.927419Z"}
+            {"autoDeploy":"yes","createdAt":"2024-09-04T01:09:32.868507Z","dashboardUrl":"https://dashboard.render.com/cron/crn-crbr6j2j1k6c738ej6f0","id":"crn-crbr6j2j1k6c738ej6f0","imagePath":"docker.io/library/nginx:latest","name":"my-cron-job","notifyOnFail":"notify","ownerId":"some-owner-id","rootDir":"","serviceDetails":{"buildPlan":"starter","env":"image","envSpecificDetails":{"dockerCommand":"","dockerContext":"","dockerfilePath":""},"plan":"starter","region":"oregon","schedule":"0 0 * * *"},"slug":"my-cron-job-2qx7","suspended":"not_suspended","suspenders":[],"type":"cron_job","updatedAt":"2024-09-04T01:09:32.868507Z"}
         headers:
-            Content-Length:
-                - "559"
             Content-Type:
                 - application/json; charset=utf-8
             Date:
-                - Wed, 29 May 2024 19:25:20 GMT
+                - Wed, 04 Sep 2024 01:09:35 GMT
             Ratelimit-Limit:
-                - "500"
+                - "400"
             Ratelimit-Remaining:
-                - "229"
+                - "293"
             Ratelimit-Reset:
-                - "39"
+                - "24"
             Referrer-Policy:
                 - same-origin
             Render-Request-Id:
-                - api-79b88fd555-kb4hz/Xeo48y3RKV-000419
+                - api-5dfb588d7c-js44c/vVKqdgsQoF-1348881
             Vary:
                 - Origin
             X-Content-Type-Options:
@@ -1283,7 +1261,7 @@ interactions:
                 - 1; mode=block
         status: 200 OK
         code: 200
-        duration: 58.080875ms
+        duration: 89.986375ms
     - id: 22
       request:
         proto: HTTP/1.1
@@ -1302,7 +1280,7 @@ interactions:
                 - some-api-key
             User-Agent:
                 - terraform-provider-render/test
-        url: https://api.testing.render.com/v1/services/crn-cpbo274olt5qq8i64ru0/env-vars
+        url: https://api.testing.render.com/v1/services/crn-crbr6j2j1k6c738ej6f0/env-vars
         method: GET
       response:
         proto: HTTP/2.0
@@ -1320,17 +1298,17 @@ interactions:
             Content-Type:
                 - application/json; charset=utf-8
             Date:
-                - Wed, 29 May 2024 19:25:20 GMT
+                - Wed, 04 Sep 2024 01:09:35 GMT
             Ratelimit-Limit:
-                - "500"
+                - "400"
             Ratelimit-Remaining:
-                - "226"
+                - "292"
             Ratelimit-Reset:
-                - "39"
+                - "24"
             Referrer-Policy:
                 - same-origin
             Render-Request-Id:
-                - api-79b88fd555-kb4hz/Xeo48y3RKV-000422
+                - api-5dfb588d7c-gvn66/5HbnvSs0QQ-2097332
             Vary:
                 - Origin
             X-Content-Type-Options:
@@ -1341,7 +1319,7 @@ interactions:
                 - 1; mode=block
         status: 200 OK
         code: 200
-        duration: 44.712125ms
+        duration: 93.338333ms
     - id: 23
       request:
         proto: HTTP/1.1
@@ -1360,7 +1338,7 @@ interactions:
                 - some-api-key
             User-Agent:
                 - terraform-provider-render/test
-        url: https://api.testing.render.com/v1/services/crn-cpbo274olt5qq8i64ru0/secret-files
+        url: https://api.testing.render.com/v1/services/crn-crbr6j2j1k6c738ej6f0/secret-files
         method: GET
       response:
         proto: HTTP/2.0
@@ -1378,17 +1356,17 @@ interactions:
             Content-Type:
                 - application/json; charset=utf-8
             Date:
-                - Wed, 29 May 2024 19:25:20 GMT
+                - Wed, 04 Sep 2024 01:09:35 GMT
             Ratelimit-Limit:
-                - "500"
+                - "400"
             Ratelimit-Remaining:
-                - "225"
+                - "291"
             Ratelimit-Reset:
-                - "39"
+                - "24"
             Referrer-Policy:
                 - same-origin
             Render-Request-Id:
-                - api-79b88fd555-kb4hz/Xeo48y3RKV-000423
+                - api-5dfb588d7c-zk4z5/ZlQgAGJQgW-3960896
             Vary:
                 - Origin
             X-Content-Type-Options:
@@ -1399,7 +1377,7 @@ interactions:
                 - 1; mode=block
         status: 200 OK
         code: 200
-        duration: 49.030166ms
+        duration: 66.867583ms
     - id: 24
       request:
         proto: HTTP/1.1
@@ -1418,7 +1396,7 @@ interactions:
                 - some-api-key
             User-Agent:
                 - terraform-provider-render/test
-        url: https://api.testing.render.com/v1/notification-settings/overrides/services/crn-cpbo274olt5qq8i64ru0
+        url: https://api.testing.render.com/v1/notification-settings/overrides/services/crn-crbr6j2j1k6c738ej6f0
         method: GET
       response:
         proto: HTTP/2.0
@@ -1426,27 +1404,25 @@ interactions:
         proto_minor: 0
         transfer_encoding: []
         trailer: {}
-        content_length: 109
-        uncompressed: false
+        content_length: -1
+        uncompressed: true
         body: |
-            {"id":"crn-cpbo274olt5qq8i64ru0","notificationsToSend":"all","previewNotificationsEnabled":"true","type":""}
+            {"notificationsToSend":"all","previewNotificationsEnabled":"true","serviceId":"crn-crbr6j2j1k6c738ej6f0"}
         headers:
-            Content-Length:
-                - "109"
             Content-Type:
                 - application/json; charset=utf-8
             Date:
-                - Wed, 29 May 2024 19:25:21 GMT
+                - Wed, 04 Sep 2024 01:09:35 GMT
             Ratelimit-Limit:
-                - "500"
+                - "400"
             Ratelimit-Remaining:
-                - "222"
+                - "290"
             Ratelimit-Reset:
-                - "38"
+                - "24"
             Referrer-Policy:
                 - same-origin
             Render-Request-Id:
-                - api-79b88fd555-kb4hz/Xeo48y3RKV-000426
+                - api-5dfb588d7c-tjj9c/Cvjs9XM2VF-1168842
             Vary:
                 - Origin
             X-Content-Type-Options:
@@ -1457,19 +1433,19 @@ interactions:
                 - 1; mode=block
         status: 200 OK
         code: 200
-        duration: 44.365833ms
+        duration: 71.869083ms
     - id: 25
       request:
         proto: HTTP/1.1
         proto_major: 1
         proto_minor: 1
-        content_length: 179
+        content_length: 203
         transfer_encoding: []
         trailer: {}
         host: https://api.testing.render.com/v1
         remote_addr: ""
         request_uri: ""
-        body: '{"image":{"imagePath":"nginx","ownerId":""},"name":"my-cron-job","rootDir":"","serviceDetails":{"envSpecificDetails":{"dockerCommand":""},"plan":"starter","schedule":"0 0 * * *"}}'
+        body: '{"image":{"imagePath":"nginx","ownerId":"some-owner-id"},"name":"my-cron-job","rootDir":"","serviceDetails":{"envSpecificDetails":{"dockerCommand":""},"plan":"starter","schedule":"0 0 * * *"}}'
         form: {}
         headers:
             Authorization:
@@ -1478,7 +1454,7 @@ interactions:
                 - application/json
             User-Agent:
                 - terraform-provider-render/test
-        url: https://api.testing.render.com/v1/services/crn-cpbo274olt5qq8i64ru0
+        url: https://api.testing.render.com/v1/services/crn-crbr6j2j1k6c738ej6f0
         method: PATCH
       response:
         proto: HTTP/2.0
@@ -1486,27 +1462,25 @@ interactions:
         proto_minor: 0
         transfer_encoding: []
         trailer: {}
-        content_length: 559
-        uncompressed: false
+        content_length: -1
+        uncompressed: true
         body: |
-            {"autoDeploy":"yes","createdAt":"2024-05-29T19:25:16.927419Z","id":"crn-cpbo274olt5qq8i64ru0","imagePath":"docker.io/library/nginx:latest","name":"my-cron-job","notifyOnFail":"notify","ownerId":"some-owner-id","rootDir":"","serviceDetails":{"buildPlan":"starter","env":"image","envSpecificDetails":{"dockerCommand":"","dockerContext":"","dockerfilePath":""},"plan":"starter","region":"oregon","schedule":"0 0 * * *"},"slug":"my-cron-job-xe9n","suspended":"not_suspended","suspenders":[],"type":"cron_job","updatedAt":"2024-05-29T19:25:16.927419Z"}
+            {"autoDeploy":"yes","createdAt":"2024-09-04T01:09:32.868507Z","dashboardUrl":"https://dashboard.render.com/cron/crn-crbr6j2j1k6c738ej6f0","id":"crn-crbr6j2j1k6c738ej6f0","imagePath":"docker.io/library/nginx:latest","name":"my-cron-job","notifyOnFail":"notify","ownerId":"some-owner-id","rootDir":"","serviceDetails":{"buildPlan":"starter","env":"image","envSpecificDetails":{"dockerCommand":"","dockerContext":"","dockerfilePath":""},"plan":"starter","region":"oregon","schedule":"0 0 * * *"},"slug":"my-cron-job-2qx7","suspended":"not_suspended","suspenders":[],"type":"cron_job","updatedAt":"2024-09-04T01:09:32.868507Z"}
         headers:
-            Content-Length:
-                - "559"
             Content-Type:
                 - application/json; charset=utf-8
             Date:
-                - Wed, 29 May 2024 19:25:21 GMT
+                - Wed, 04 Sep 2024 01:09:37 GMT
             Ratelimit-Limit:
                 - "10"
             Ratelimit-Remaining:
                 - "5"
             Ratelimit-Reset:
-                - "38"
+                - "24"
             Referrer-Policy:
                 - same-origin
             Render-Request-Id:
-                - api-79b88fd555-kb4hz/Xeo48y3RKV-000430
+                - api-5dfb588d7c-js44c/vVKqdgsQoF-1348893
             Vary:
                 - Origin
             X-Content-Type-Options:
@@ -1517,7 +1491,7 @@ interactions:
                 - 1; mode=block
         status: 200 OK
         code: 200
-        duration: 406.713042ms
+        duration: 1.331273917s
     - id: 26
       request:
         proto: HTTP/1.1
@@ -1538,7 +1512,7 @@ interactions:
                 - application/json
             User-Agent:
                 - terraform-provider-render/test
-        url: https://api.testing.render.com/v1/services/crn-cpbo274olt5qq8i64ru0/env-vars
+        url: https://api.testing.render.com/v1/services/crn-crbr6j2j1k6c738ej6f0/env-vars
         method: PUT
       response:
         proto: HTTP/2.0
@@ -1556,17 +1530,17 @@ interactions:
             Content-Type:
                 - application/json; charset=utf-8
             Date:
-                - Wed, 29 May 2024 19:25:22 GMT
+                - Wed, 04 Sep 2024 01:09:37 GMT
             Ratelimit-Limit:
-                - "500"
+                - "100"
             Ratelimit-Remaining:
-                - "458"
+                - "86"
             Ratelimit-Reset:
-                - "37"
+                - "22"
             Referrer-Policy:
                 - same-origin
             Render-Request-Id:
-                - api-79b88fd555-kb4hz/Xeo48y3RKV-000445
+                - api-5dfb588d7c-gvn66/5HbnvSs0QQ-2097366
             Vary:
                 - Origin
             X-Content-Type-Options:
@@ -1577,7 +1551,7 @@ interactions:
                 - 1; mode=block
         status: 200 OK
         code: 200
-        duration: 46.008ms
+        duration: 64.055125ms
     - id: 27
       request:
         proto: HTTP/1.1
@@ -1598,7 +1572,7 @@ interactions:
                 - application/json
             User-Agent:
                 - terraform-provider-render/test
-        url: https://api.testing.render.com/v1/services/crn-cpbo274olt5qq8i64ru0/secret-files
+        url: https://api.testing.render.com/v1/services/crn-crbr6j2j1k6c738ej6f0/secret-files
         method: PUT
       response:
         proto: HTTP/2.0
@@ -1616,17 +1590,17 @@ interactions:
             Content-Type:
                 - application/json; charset=utf-8
             Date:
-                - Wed, 29 May 2024 19:25:22 GMT
+                - Wed, 04 Sep 2024 01:09:37 GMT
             Ratelimit-Limit:
-                - "500"
+                - "100"
             Ratelimit-Remaining:
-                - "457"
+                - "85"
             Ratelimit-Reset:
-                - "37"
+                - "22"
             Referrer-Policy:
                 - same-origin
             Render-Request-Id:
-                - api-79b88fd555-kb4hz/Xeo48y3RKV-000448
+                - api-5dfb588d7c-zk4z5/ZlQgAGJQgW-3960930
             Vary:
                 - Origin
             X-Content-Type-Options:
@@ -1637,7 +1611,7 @@ interactions:
                 - 1; mode=block
         status: 200 OK
         code: 200
-        duration: 47.55925ms
+        duration: 137.944792ms
     - id: 28
       request:
         proto: HTTP/1.1
@@ -1658,7 +1632,7 @@ interactions:
                 - application/json
             User-Agent:
                 - terraform-provider-render/test
-        url: https://api.testing.render.com/v1/notification-settings/overrides/services/crn-cpbo274olt5qq8i64ru0
+        url: https://api.testing.render.com/v1/notification-settings/overrides/services/crn-crbr6j2j1k6c738ej6f0
         method: PATCH
       response:
         proto: HTTP/2.0
@@ -1666,30 +1640,28 @@ interactions:
         proto_minor: 0
         transfer_encoding: []
         trailer: {}
-        content_length: 114
-        uncompressed: false
+        content_length: -1
+        uncompressed: true
         body: |
-            {"id":"crn-cpbo274olt5qq8i64ru0","notificationsToSend":"failure","previewNotificationsEnabled":"false","type":""}
+            {"notificationsToSend":"failure","previewNotificationsEnabled":"false","serviceId":"crn-crbr6j2j1k6c738ej6f0"}
         headers:
-            Content-Length:
-                - "114"
             Content-Type:
                 - application/json; charset=utf-8
             Date:
-                - Wed, 29 May 2024 19:25:22 GMT
+                - Wed, 04 Sep 2024 01:09:37 GMT
             Ratelimit-Limit:
-                - "500"
-                - "500"
+                - "400"
+                - "100"
             Ratelimit-Remaining:
-                - "201"
-                - "456"
+                - "289"
+                - "84"
             Ratelimit-Reset:
-                - "37"
-                - "37"
+                - "22"
+                - "22"
             Referrer-Policy:
                 - same-origin
             Render-Request-Id:
-                - api-79b88fd555-kb4hz/Xeo48y3RKV-000450
+                - api-5dfb588d7c-tjj9c/Cvjs9XM2VF-1168864
             Vary:
                 - Origin
             X-Content-Type-Options:
@@ -1700,7 +1672,7 @@ interactions:
                 - 1; mode=block
         status: 200 OK
         code: 200
-        duration: 50.371459ms
+        duration: 146.956208ms
     - id: 29
       request:
         proto: HTTP/1.1
@@ -1721,7 +1693,7 @@ interactions:
                 - application/json
             User-Agent:
                 - terraform-provider-render/test
-        url: https://api.testing.render.com/v1/services/crn-cpbo274olt5qq8i64ru0/deploys
+        url: https://api.testing.render.com/v1/services/crn-crbr6j2j1k6c738ej6f0/deploys
         method: POST
       response:
         proto: HTTP/2.0
@@ -1729,27 +1701,27 @@ interactions:
         proto_minor: 0
         transfer_encoding: []
         trailer: {}
-        content_length: 339
+        content_length: 336
         uncompressed: false
         body: |
-            {"id":"dep-cpbo27colt5qq8i64rvg","commit":null,"image":{"ref":"docker.io/library/nginx:latest","sha":"sha256:e688fed0b0c7513a63364959e7d389c37ac8ecac7a6c6a31455eca2f5a71ab8b"},"status":"live","trigger":"manual","createdAt":"2024-05-29T19:25:17.179642Z","updatedAt":"2024-05-29T19:25:17.208183Z","finishedAt":"2024-05-29T19:25:17.207241Z"}
+            {"id":"dep-crbr6kjqf0us73dfpsh0","commit":null,"image":{"ref":"docker.io/library/nginx:latest","sha":"sha256:5f0574409b3add89581b96c68afe9e9c7b284651c3a974b6e8bac46bf95e6b7f"},"status":"live","trigger":"api","createdAt":"2024-09-04T01:09:38.050021Z","updatedAt":"2024-09-04T01:09:38.067322Z","finishedAt":"2024-09-04T01:09:38.067006Z"}
         headers:
             Content-Length:
-                - "339"
+                - "336"
             Content-Type:
                 - application/json; charset=utf-8
             Date:
-                - Wed, 29 May 2024 19:25:22 GMT
+                - Wed, 04 Sep 2024 01:09:38 GMT
             Ratelimit-Limit:
                 - "10"
             Ratelimit-Remaining:
                 - "4"
             Ratelimit-Reset:
-                - "37"
+                - "22"
             Referrer-Policy:
                 - same-origin
             Render-Request-Id:
-                - api-79b88fd555-kb4hz/Xeo48y3RKV-000453
+                - api-5dfb588d7c-js44c/vVKqdgsQoF-1348914
             Vary:
                 - Origin
             X-Content-Type-Options:
@@ -1760,7 +1732,7 @@ interactions:
                 - 1; mode=block
         status: 201 Created
         code: 201
-        duration: 609.415959ms
+        duration: 672.606792ms
     - id: 30
       request:
         proto: HTTP/1.1
@@ -1779,7 +1751,7 @@ interactions:
                 - some-api-key
             User-Agent:
                 - terraform-provider-render/test
-        url: https://api.testing.render.com/v1/services/crn-cpbo274olt5qq8i64ru0
+        url: https://api.testing.render.com/v1/services/crn-crbr6j2j1k6c738ej6f0
         method: GET
       response:
         proto: HTTP/2.0
@@ -1787,27 +1759,25 @@ interactions:
         proto_minor: 0
         transfer_encoding: []
         trailer: {}
-        content_length: 559
-        uncompressed: false
+        content_length: -1
+        uncompressed: true
         body: |
-            {"autoDeploy":"yes","createdAt":"2024-05-29T19:25:16.927419Z","id":"crn-cpbo274olt5qq8i64ru0","imagePath":"docker.io/library/nginx:latest","name":"my-cron-job","notifyOnFail":"notify","ownerId":"some-owner-id","rootDir":"","serviceDetails":{"buildPlan":"starter","env":"image","envSpecificDetails":{"dockerCommand":"","dockerContext":"","dockerfilePath":""},"plan":"starter","region":"oregon","schedule":"0 0 * * *"},"slug":"my-cron-job-xe9n","suspended":"not_suspended","suspenders":[],"type":"cron_job","updatedAt":"2024-05-29T19:25:16.927419Z"}
+            {"autoDeploy":"yes","createdAt":"2024-09-04T01:09:32.868507Z","dashboardUrl":"https://dashboard.render.com/cron/crn-crbr6j2j1k6c738ej6f0","id":"crn-crbr6j2j1k6c738ej6f0","imagePath":"docker.io/library/nginx:latest","name":"my-cron-job","notifyOnFail":"notify","ownerId":"some-owner-id","rootDir":"","serviceDetails":{"buildPlan":"starter","env":"image","envSpecificDetails":{"dockerCommand":"","dockerContext":"","dockerfilePath":""},"plan":"starter","region":"oregon","schedule":"0 0 * * *"},"slug":"my-cron-job-2qx7","suspended":"not_suspended","suspenders":[],"type":"cron_job","updatedAt":"2024-09-04T01:09:32.868507Z"}
         headers:
-            Content-Length:
-                - "559"
             Content-Type:
                 - application/json; charset=utf-8
             Date:
-                - Wed, 29 May 2024 19:25:23 GMT
+                - Wed, 04 Sep 2024 01:09:38 GMT
             Ratelimit-Limit:
-                - "500"
+                - "400"
             Ratelimit-Remaining:
-                - "191"
+                - "288"
             Ratelimit-Reset:
-                - "36"
+                - "21"
             Referrer-Policy:
                 - same-origin
             Render-Request-Id:
-                - api-79b88fd555-kb4hz/Xeo48y3RKV-000465
+                - api-5dfb588d7c-gvn66/5HbnvSs0QQ-2097382
             Vary:
                 - Origin
             X-Content-Type-Options:
@@ -1818,7 +1788,7 @@ interactions:
                 - 1; mode=block
         status: 200 OK
         code: 200
-        duration: 67.045375ms
+        duration: 95.006625ms
     - id: 31
       request:
         proto: HTTP/1.1
@@ -1837,7 +1807,7 @@ interactions:
                 - some-api-key
             User-Agent:
                 - terraform-provider-render/test
-        url: https://api.testing.render.com/v1/services/crn-cpbo274olt5qq8i64ru0/env-vars
+        url: https://api.testing.render.com/v1/services/crn-crbr6j2j1k6c738ej6f0/env-vars
         method: GET
       response:
         proto: HTTP/2.0
@@ -1855,17 +1825,17 @@ interactions:
             Content-Type:
                 - application/json; charset=utf-8
             Date:
-                - Wed, 29 May 2024 19:25:23 GMT
+                - Wed, 04 Sep 2024 01:09:38 GMT
             Ratelimit-Limit:
-                - "500"
+                - "400"
             Ratelimit-Remaining:
-                - "190"
+                - "287"
             Ratelimit-Reset:
-                - "36"
+                - "21"
             Referrer-Policy:
                 - same-origin
             Render-Request-Id:
-                - api-79b88fd555-kb4hz/Xeo48y3RKV-000467
+                - api-5dfb588d7c-zk4z5/ZlQgAGJQgW-3960948
             Vary:
                 - Origin
             X-Content-Type-Options:
@@ -1876,7 +1846,7 @@ interactions:
                 - 1; mode=block
         status: 200 OK
         code: 200
-        duration: 62.449375ms
+        duration: 66.014583ms
     - id: 32
       request:
         proto: HTTP/1.1
@@ -1895,7 +1865,7 @@ interactions:
                 - some-api-key
             User-Agent:
                 - terraform-provider-render/test
-        url: https://api.testing.render.com/v1/services/crn-cpbo274olt5qq8i64ru0/secret-files
+        url: https://api.testing.render.com/v1/services/crn-crbr6j2j1k6c738ej6f0/secret-files
         method: GET
       response:
         proto: HTTP/2.0
@@ -1913,17 +1883,17 @@ interactions:
             Content-Type:
                 - application/json; charset=utf-8
             Date:
-                - Wed, 29 May 2024 19:25:23 GMT
+                - Wed, 04 Sep 2024 01:09:38 GMT
             Ratelimit-Limit:
-                - "500"
+                - "400"
             Ratelimit-Remaining:
-                - "189"
+                - "286"
             Ratelimit-Reset:
-                - "36"
+                - "21"
             Referrer-Policy:
                 - same-origin
             Render-Request-Id:
-                - api-79b88fd555-kb4hz/Xeo48y3RKV-000468
+                - api-5dfb588d7c-tjj9c/Cvjs9XM2VF-1168887
             Vary:
                 - Origin
             X-Content-Type-Options:
@@ -1934,7 +1904,7 @@ interactions:
                 - 1; mode=block
         status: 200 OK
         code: 200
-        duration: 50.955125ms
+        duration: 57.929666ms
     - id: 33
       request:
         proto: HTTP/1.1
@@ -1953,7 +1923,7 @@ interactions:
                 - some-api-key
             User-Agent:
                 - terraform-provider-render/test
-        url: https://api.testing.render.com/v1/notification-settings/overrides/services/crn-cpbo274olt5qq8i64ru0
+        url: https://api.testing.render.com/v1/notification-settings/overrides/services/crn-crbr6j2j1k6c738ej6f0
         method: GET
       response:
         proto: HTTP/2.0
@@ -1961,27 +1931,25 @@ interactions:
         proto_minor: 0
         transfer_encoding: []
         trailer: {}
-        content_length: 114
-        uncompressed: false
+        content_length: -1
+        uncompressed: true
         body: |
-            {"id":"crn-cpbo274olt5qq8i64ru0","notificationsToSend":"failure","previewNotificationsEnabled":"false","type":""}
+            {"notificationsToSend":"failure","previewNotificationsEnabled":"false","serviceId":"crn-crbr6j2j1k6c738ej6f0"}
         headers:
-            Content-Length:
-                - "114"
             Content-Type:
                 - application/json; charset=utf-8
             Date:
-                - Wed, 29 May 2024 19:25:23 GMT
+                - Wed, 04 Sep 2024 01:09:38 GMT
             Ratelimit-Limit:
-                - "500"
+                - "400"
             Ratelimit-Remaining:
-                - "188"
+                - "285"
             Ratelimit-Reset:
-                - "36"
+                - "21"
             Referrer-Policy:
                 - same-origin
             Render-Request-Id:
-                - api-79b88fd555-kb4hz/Xeo48y3RKV-000469
+                - api-5dfb588d7c-js44c/vVKqdgsQoF-1348936
             Vary:
                 - Origin
             X-Content-Type-Options:
@@ -1992,7 +1960,7 @@ interactions:
                 - 1; mode=block
         status: 200 OK
         code: 200
-        duration: 57.471125ms
+        duration: 158.97625ms
     - id: 34
       request:
         proto: HTTP/1.1
@@ -2011,7 +1979,7 @@ interactions:
                 - some-api-key
             User-Agent:
                 - terraform-provider-render/test
-        url: https://api.testing.render.com/v1/services/crn-cpbo274olt5qq8i64ru0
+        url: https://api.testing.render.com/v1/services/crn-crbr6j2j1k6c738ej6f0
         method: GET
       response:
         proto: HTTP/2.0
@@ -2019,27 +1987,25 @@ interactions:
         proto_minor: 0
         transfer_encoding: []
         trailer: {}
-        content_length: 559
-        uncompressed: false
+        content_length: -1
+        uncompressed: true
         body: |
-            {"autoDeploy":"yes","createdAt":"2024-05-29T19:25:16.927419Z","id":"crn-cpbo274olt5qq8i64ru0","imagePath":"docker.io/library/nginx:latest","name":"my-cron-job","notifyOnFail":"notify","ownerId":"some-owner-id","rootDir":"","serviceDetails":{"buildPlan":"starter","env":"image","envSpecificDetails":{"dockerCommand":"","dockerContext":"","dockerfilePath":""},"plan":"starter","region":"oregon","schedule":"0 0 * * *"},"slug":"my-cron-job-xe9n","suspended":"not_suspended","suspenders":[],"type":"cron_job","updatedAt":"2024-05-29T19:25:16.927419Z"}
+            {"autoDeploy":"yes","createdAt":"2024-09-04T01:09:32.868507Z","dashboardUrl":"https://dashboard.render.com/cron/crn-crbr6j2j1k6c738ej6f0","id":"crn-crbr6j2j1k6c738ej6f0","imagePath":"docker.io/library/nginx:latest","name":"my-cron-job","notifyOnFail":"notify","ownerId":"some-owner-id","rootDir":"","serviceDetails":{"buildPlan":"starter","env":"image","envSpecificDetails":{"dockerCommand":"","dockerContext":"","dockerfilePath":""},"plan":"starter","region":"oregon","schedule":"0 0 * * *"},"slug":"my-cron-job-2qx7","suspended":"not_suspended","suspenders":[],"type":"cron_job","updatedAt":"2024-09-04T01:09:32.868507Z"}
         headers:
-            Content-Length:
-                - "559"
             Content-Type:
                 - application/json; charset=utf-8
             Date:
-                - Wed, 29 May 2024 19:25:24 GMT
+                - Wed, 04 Sep 2024 01:09:38 GMT
             Ratelimit-Limit:
-                - "500"
+                - "400"
             Ratelimit-Remaining:
-                - "187"
+                - "284"
             Ratelimit-Reset:
-                - "35"
+                - "21"
             Referrer-Policy:
                 - same-origin
             Render-Request-Id:
-                - api-79b88fd555-kb4hz/Xeo48y3RKV-000470
+                - api-5dfb588d7c-gvn66/5HbnvSs0QQ-2097391
             Vary:
                 - Origin
             X-Content-Type-Options:
@@ -2050,7 +2016,7 @@ interactions:
                 - 1; mode=block
         status: 200 OK
         code: 200
-        duration: 54.022083ms
+        duration: 86.574792ms
     - id: 35
       request:
         proto: HTTP/1.1
@@ -2069,7 +2035,7 @@ interactions:
                 - some-api-key
             User-Agent:
                 - terraform-provider-render/test
-        url: https://api.testing.render.com/v1/services/crn-cpbo274olt5qq8i64ru0/env-vars
+        url: https://api.testing.render.com/v1/services/crn-crbr6j2j1k6c738ej6f0/env-vars
         method: GET
       response:
         proto: HTTP/2.0
@@ -2087,17 +2053,17 @@ interactions:
             Content-Type:
                 - application/json; charset=utf-8
             Date:
-                - Wed, 29 May 2024 19:25:24 GMT
+                - Wed, 04 Sep 2024 01:09:38 GMT
             Ratelimit-Limit:
-                - "500"
+                - "400"
             Ratelimit-Remaining:
-                - "186"
+                - "283"
             Ratelimit-Reset:
-                - "35"
+                - "21"
             Referrer-Policy:
                 - same-origin
             Render-Request-Id:
-                - api-79b88fd555-kb4hz/Xeo48y3RKV-000472
+                - api-5dfb588d7c-zk4z5/ZlQgAGJQgW-3960958
             Vary:
                 - Origin
             X-Content-Type-Options:
@@ -2108,7 +2074,7 @@ interactions:
                 - 1; mode=block
         status: 200 OK
         code: 200
-        duration: 45.5215ms
+        duration: 67.974375ms
     - id: 36
       request:
         proto: HTTP/1.1
@@ -2127,7 +2093,7 @@ interactions:
                 - some-api-key
             User-Agent:
                 - terraform-provider-render/test
-        url: https://api.testing.render.com/v1/services/crn-cpbo274olt5qq8i64ru0/secret-files
+        url: https://api.testing.render.com/v1/services/crn-crbr6j2j1k6c738ej6f0/secret-files
         method: GET
       response:
         proto: HTTP/2.0
@@ -2145,17 +2111,17 @@ interactions:
             Content-Type:
                 - application/json; charset=utf-8
             Date:
-                - Wed, 29 May 2024 19:25:24 GMT
+                - Wed, 04 Sep 2024 01:09:38 GMT
             Ratelimit-Limit:
-                - "500"
+                - "400"
             Ratelimit-Remaining:
-                - "185"
+                - "282"
             Ratelimit-Reset:
-                - "35"
+                - "21"
             Referrer-Policy:
                 - same-origin
             Render-Request-Id:
-                - api-79b88fd555-kb4hz/Xeo48y3RKV-000474
+                - api-5dfb588d7c-tjj9c/Cvjs9XM2VF-1168892
             Vary:
                 - Origin
             X-Content-Type-Options:
@@ -2166,7 +2132,7 @@ interactions:
                 - 1; mode=block
         status: 200 OK
         code: 200
-        duration: 51.211334ms
+        duration: 62.535ms
     - id: 37
       request:
         proto: HTTP/1.1
@@ -2185,7 +2151,7 @@ interactions:
                 - some-api-key
             User-Agent:
                 - terraform-provider-render/test
-        url: https://api.testing.render.com/v1/notification-settings/overrides/services/crn-cpbo274olt5qq8i64ru0
+        url: https://api.testing.render.com/v1/notification-settings/overrides/services/crn-crbr6j2j1k6c738ej6f0
         method: GET
       response:
         proto: HTTP/2.0
@@ -2193,27 +2159,25 @@ interactions:
         proto_minor: 0
         transfer_encoding: []
         trailer: {}
-        content_length: 114
-        uncompressed: false
+        content_length: -1
+        uncompressed: true
         body: |
-            {"id":"crn-cpbo274olt5qq8i64ru0","notificationsToSend":"failure","previewNotificationsEnabled":"false","type":""}
+            {"notificationsToSend":"failure","previewNotificationsEnabled":"false","serviceId":"crn-crbr6j2j1k6c738ej6f0"}
         headers:
-            Content-Length:
-                - "114"
             Content-Type:
                 - application/json; charset=utf-8
             Date:
-                - Wed, 29 May 2024 19:25:24 GMT
+                - Wed, 04 Sep 2024 01:09:39 GMT
             Ratelimit-Limit:
-                - "500"
+                - "400"
             Ratelimit-Remaining:
-                - "183"
+                - "281"
             Ratelimit-Reset:
-                - "35"
+                - "21"
             Referrer-Policy:
                 - same-origin
             Render-Request-Id:
-                - api-79b88fd555-kb4hz/Xeo48y3RKV-000476
+                - api-5dfb588d7c-js44c/vVKqdgsQoF-1348941
             Vary:
                 - Origin
             X-Content-Type-Options:
@@ -2224,7 +2188,7 @@ interactions:
                 - 1; mode=block
         status: 200 OK
         code: 200
-        duration: 54.678792ms
+        duration: 173.800875ms
     - id: 38
       request:
         proto: HTTP/1.1
@@ -2243,7 +2207,7 @@ interactions:
                 - some-api-key
             User-Agent:
                 - terraform-provider-render/test
-        url: https://api.testing.render.com/v1/services/crn-cpbo274olt5qq8i64ru0
+        url: https://api.testing.render.com/v1/services/crn-crbr6j2j1k6c738ej6f0
         method: GET
       response:
         proto: HTTP/2.0
@@ -2251,27 +2215,25 @@ interactions:
         proto_minor: 0
         transfer_encoding: []
         trailer: {}
-        content_length: 559
-        uncompressed: false
+        content_length: -1
+        uncompressed: true
         body: |
-            {"autoDeploy":"yes","createdAt":"2024-05-29T19:25:16.927419Z","id":"crn-cpbo274olt5qq8i64ru0","imagePath":"docker.io/library/nginx:latest","name":"my-cron-job","notifyOnFail":"notify","ownerId":"some-owner-id","rootDir":"","serviceDetails":{"buildPlan":"starter","env":"image","envSpecificDetails":{"dockerCommand":"","dockerContext":"","dockerfilePath":""},"plan":"starter","region":"oregon","schedule":"0 0 * * *"},"slug":"my-cron-job-xe9n","suspended":"not_suspended","suspenders":[],"type":"cron_job","updatedAt":"2024-05-29T19:25:16.927419Z"}
+            {"autoDeploy":"yes","createdAt":"2024-09-04T01:09:32.868507Z","dashboardUrl":"https://dashboard.render.com/cron/crn-crbr6j2j1k6c738ej6f0","id":"crn-crbr6j2j1k6c738ej6f0","imagePath":"docker.io/library/nginx:latest","name":"my-cron-job","notifyOnFail":"notify","ownerId":"some-owner-id","rootDir":"","serviceDetails":{"buildPlan":"starter","env":"image","envSpecificDetails":{"dockerCommand":"","dockerContext":"","dockerfilePath":""},"plan":"starter","region":"oregon","schedule":"0 0 * * *"},"slug":"my-cron-job-2qx7","suspended":"not_suspended","suspenders":[],"type":"cron_job","updatedAt":"2024-09-04T01:09:32.868507Z"}
         headers:
-            Content-Length:
-                - "559"
             Content-Type:
                 - application/json; charset=utf-8
             Date:
-                - Wed, 29 May 2024 19:25:24 GMT
+                - Wed, 04 Sep 2024 01:09:39 GMT
             Ratelimit-Limit:
-                - "500"
+                - "400"
             Ratelimit-Remaining:
-                - "182"
+                - "280"
             Ratelimit-Reset:
-                - "35"
+                - "20"
             Referrer-Policy:
                 - same-origin
             Render-Request-Id:
-                - api-79b88fd555-kb4hz/Xeo48y3RKV-000478
+                - api-5dfb588d7c-gvn66/5HbnvSs0QQ-2097398
             Vary:
                 - Origin
             X-Content-Type-Options:
@@ -2282,7 +2244,7 @@ interactions:
                 - 1; mode=block
         status: 200 OK
         code: 200
-        duration: 56.308166ms
+        duration: 91.029417ms
     - id: 39
       request:
         proto: HTTP/1.1
@@ -2301,7 +2263,7 @@ interactions:
                 - some-api-key
             User-Agent:
                 - terraform-provider-render/test
-        url: https://api.testing.render.com/v1/services/crn-cpbo274olt5qq8i64ru0/env-vars
+        url: https://api.testing.render.com/v1/services/crn-crbr6j2j1k6c738ej6f0/env-vars
         method: GET
       response:
         proto: HTTP/2.0
@@ -2319,17 +2281,17 @@ interactions:
             Content-Type:
                 - application/json; charset=utf-8
             Date:
-                - Wed, 29 May 2024 19:25:24 GMT
+                - Wed, 04 Sep 2024 01:09:39 GMT
             Ratelimit-Limit:
-                - "500"
+                - "400"
             Ratelimit-Remaining:
-                - "181"
+                - "279"
             Ratelimit-Reset:
-                - "35"
+                - "20"
             Referrer-Policy:
                 - same-origin
             Render-Request-Id:
-                - api-79b88fd555-kb4hz/Xeo48y3RKV-000479
+                - api-5dfb588d7c-zk4z5/ZlQgAGJQgW-3960966
             Vary:
                 - Origin
             X-Content-Type-Options:
@@ -2340,7 +2302,7 @@ interactions:
                 - 1; mode=block
         status: 200 OK
         code: 200
-        duration: 43.505583ms
+        duration: 63.013375ms
     - id: 40
       request:
         proto: HTTP/1.1
@@ -2359,7 +2321,7 @@ interactions:
                 - some-api-key
             User-Agent:
                 - terraform-provider-render/test
-        url: https://api.testing.render.com/v1/services/crn-cpbo274olt5qq8i64ru0/secret-files
+        url: https://api.testing.render.com/v1/services/crn-crbr6j2j1k6c738ej6f0/secret-files
         method: GET
       response:
         proto: HTTP/2.0
@@ -2377,17 +2339,17 @@ interactions:
             Content-Type:
                 - application/json; charset=utf-8
             Date:
-                - Wed, 29 May 2024 19:25:24 GMT
+                - Wed, 04 Sep 2024 01:09:39 GMT
             Ratelimit-Limit:
-                - "500"
+                - "400"
             Ratelimit-Remaining:
-                - "180"
+                - "278"
             Ratelimit-Reset:
-                - "35"
+                - "20"
             Referrer-Policy:
                 - same-origin
             Render-Request-Id:
-                - api-79b88fd555-kb4hz/Xeo48y3RKV-000480
+                - api-5dfb588d7c-tjj9c/Cvjs9XM2VF-1168899
             Vary:
                 - Origin
             X-Content-Type-Options:
@@ -2398,7 +2360,7 @@ interactions:
                 - 1; mode=block
         status: 200 OK
         code: 200
-        duration: 47.052792ms
+        duration: 61.533583ms
     - id: 41
       request:
         proto: HTTP/1.1
@@ -2417,7 +2379,7 @@ interactions:
                 - some-api-key
             User-Agent:
                 - terraform-provider-render/test
-        url: https://api.testing.render.com/v1/notification-settings/overrides/services/crn-cpbo274olt5qq8i64ru0
+        url: https://api.testing.render.com/v1/notification-settings/overrides/services/crn-crbr6j2j1k6c738ej6f0
         method: GET
       response:
         proto: HTTP/2.0
@@ -2425,27 +2387,25 @@ interactions:
         proto_minor: 0
         transfer_encoding: []
         trailer: {}
-        content_length: 114
-        uncompressed: false
+        content_length: -1
+        uncompressed: true
         body: |
-            {"id":"crn-cpbo274olt5qq8i64ru0","notificationsToSend":"failure","previewNotificationsEnabled":"false","type":""}
+            {"notificationsToSend":"failure","previewNotificationsEnabled":"false","serviceId":"crn-crbr6j2j1k6c738ej6f0"}
         headers:
-            Content-Length:
-                - "114"
             Content-Type:
                 - application/json; charset=utf-8
             Date:
-                - Wed, 29 May 2024 19:25:25 GMT
+                - Wed, 04 Sep 2024 01:09:39 GMT
             Ratelimit-Limit:
-                - "500"
+                - "400"
             Ratelimit-Remaining:
-                - "178"
+                - "277"
             Ratelimit-Reset:
-                - "34"
+                - "20"
             Referrer-Policy:
                 - same-origin
             Render-Request-Id:
-                - api-79b88fd555-kb4hz/Xeo48y3RKV-000482
+                - api-5dfb588d7c-js44c/vVKqdgsQoF-1348948
             Vary:
                 - Origin
             X-Content-Type-Options:
@@ -2456,7 +2416,7 @@ interactions:
                 - 1; mode=block
         status: 200 OK
         code: 200
-        duration: 66.501ms
+        duration: 66.985333ms
     - id: 42
       request:
         proto: HTTP/1.1
@@ -2475,7 +2435,7 @@ interactions:
                 - some-api-key
             User-Agent:
                 - terraform-provider-render/test
-        url: https://api.testing.render.com/v1/services/crn-cpbo274olt5qq8i64ru0
+        url: https://api.testing.render.com/v1/services/crn-crbr6j2j1k6c738ej6f0
         method: GET
       response:
         proto: HTTP/2.0
@@ -2483,27 +2443,25 @@ interactions:
         proto_minor: 0
         transfer_encoding: []
         trailer: {}
-        content_length: 559
-        uncompressed: false
+        content_length: -1
+        uncompressed: true
         body: |
-            {"autoDeploy":"yes","createdAt":"2024-05-29T19:25:16.927419Z","id":"crn-cpbo274olt5qq8i64ru0","imagePath":"docker.io/library/nginx:latest","name":"my-cron-job","notifyOnFail":"notify","ownerId":"some-owner-id","rootDir":"","serviceDetails":{"buildPlan":"starter","env":"image","envSpecificDetails":{"dockerCommand":"","dockerContext":"","dockerfilePath":""},"plan":"starter","region":"oregon","schedule":"0 0 * * *"},"slug":"my-cron-job-xe9n","suspended":"not_suspended","suspenders":[],"type":"cron_job","updatedAt":"2024-05-29T19:25:16.927419Z"}
+            {"autoDeploy":"yes","createdAt":"2024-09-04T01:09:32.868507Z","dashboardUrl":"https://dashboard.render.com/cron/crn-crbr6j2j1k6c738ej6f0","id":"crn-crbr6j2j1k6c738ej6f0","imagePath":"docker.io/library/nginx:latest","name":"my-cron-job","notifyOnFail":"notify","ownerId":"some-owner-id","rootDir":"","serviceDetails":{"buildPlan":"starter","env":"image","envSpecificDetails":{"dockerCommand":"","dockerContext":"","dockerfilePath":""},"plan":"starter","region":"oregon","schedule":"0 0 * * *"},"slug":"my-cron-job-2qx7","suspended":"not_suspended","suspenders":[],"type":"cron_job","updatedAt":"2024-09-04T01:09:32.868507Z"}
         headers:
-            Content-Length:
-                - "559"
             Content-Type:
                 - application/json; charset=utf-8
             Date:
-                - Wed, 29 May 2024 19:25:25 GMT
+                - Wed, 04 Sep 2024 01:09:39 GMT
             Ratelimit-Limit:
-                - "500"
+                - "400"
             Ratelimit-Remaining:
-                - "176"
+                - "276"
             Ratelimit-Reset:
-                - "34"
+                - "20"
             Referrer-Policy:
                 - same-origin
             Render-Request-Id:
-                - api-79b88fd555-kb4hz/Xeo48y3RKV-000484
+                - api-5dfb588d7c-gvn66/5HbnvSs0QQ-2097409
             Vary:
                 - Origin
             X-Content-Type-Options:
@@ -2514,7 +2472,7 @@ interactions:
                 - 1; mode=block
         status: 200 OK
         code: 200
-        duration: 68.382833ms
+        duration: 80.792042ms
     - id: 43
       request:
         proto: HTTP/1.1
@@ -2533,7 +2491,7 @@ interactions:
                 - some-api-key
             User-Agent:
                 - terraform-provider-render/test
-        url: https://api.testing.render.com/v1/services/crn-cpbo274olt5qq8i64ru0/env-vars
+        url: https://api.testing.render.com/v1/services/crn-crbr6j2j1k6c738ej6f0/env-vars
         method: GET
       response:
         proto: HTTP/2.0
@@ -2551,17 +2509,17 @@ interactions:
             Content-Type:
                 - application/json; charset=utf-8
             Date:
-                - Wed, 29 May 2024 19:25:25 GMT
+                - Wed, 04 Sep 2024 01:09:39 GMT
             Ratelimit-Limit:
-                - "500"
+                - "400"
             Ratelimit-Remaining:
-                - "174"
+                - "275"
             Ratelimit-Reset:
-                - "34"
+                - "20"
             Referrer-Policy:
                 - same-origin
             Render-Request-Id:
-                - api-79b88fd555-kb4hz/Xeo48y3RKV-000486
+                - api-5dfb588d7c-zk4z5/ZlQgAGJQgW-3960973
             Vary:
                 - Origin
             X-Content-Type-Options:
@@ -2572,7 +2530,7 @@ interactions:
                 - 1; mode=block
         status: 200 OK
         code: 200
-        duration: 54.243125ms
+        duration: 61.481334ms
     - id: 44
       request:
         proto: HTTP/1.1
@@ -2591,7 +2549,7 @@ interactions:
                 - some-api-key
             User-Agent:
                 - terraform-provider-render/test
-        url: https://api.testing.render.com/v1/services/crn-cpbo274olt5qq8i64ru0/secret-files
+        url: https://api.testing.render.com/v1/services/crn-crbr6j2j1k6c738ej6f0/secret-files
         method: GET
       response:
         proto: HTTP/2.0
@@ -2609,17 +2567,17 @@ interactions:
             Content-Type:
                 - application/json; charset=utf-8
             Date:
-                - Wed, 29 May 2024 19:25:25 GMT
+                - Wed, 04 Sep 2024 01:09:39 GMT
             Ratelimit-Limit:
-                - "500"
+                - "400"
             Ratelimit-Remaining:
-                - "171"
+                - "274"
             Ratelimit-Reset:
-                - "34"
+                - "20"
             Referrer-Policy:
                 - same-origin
             Render-Request-Id:
-                - api-79b88fd555-kb4hz/Xeo48y3RKV-000489
+                - api-5dfb588d7c-tjj9c/Cvjs9XM2VF-1168903
             Vary:
                 - Origin
             X-Content-Type-Options:
@@ -2630,7 +2588,7 @@ interactions:
                 - 1; mode=block
         status: 200 OK
         code: 200
-        duration: 47.576667ms
+        duration: 57.61325ms
     - id: 45
       request:
         proto: HTTP/1.1
@@ -2649,7 +2607,7 @@ interactions:
                 - some-api-key
             User-Agent:
                 - terraform-provider-render/test
-        url: https://api.testing.render.com/v1/notification-settings/overrides/services/crn-cpbo274olt5qq8i64ru0
+        url: https://api.testing.render.com/v1/notification-settings/overrides/services/crn-crbr6j2j1k6c738ej6f0
         method: GET
       response:
         proto: HTTP/2.0
@@ -2657,27 +2615,25 @@ interactions:
         proto_minor: 0
         transfer_encoding: []
         trailer: {}
-        content_length: 114
-        uncompressed: false
+        content_length: -1
+        uncompressed: true
         body: |
-            {"id":"crn-cpbo274olt5qq8i64ru0","notificationsToSend":"failure","previewNotificationsEnabled":"false","type":""}
+            {"notificationsToSend":"failure","previewNotificationsEnabled":"false","serviceId":"crn-crbr6j2j1k6c738ej6f0"}
         headers:
-            Content-Length:
-                - "114"
             Content-Type:
                 - application/json; charset=utf-8
             Date:
-                - Wed, 29 May 2024 19:25:25 GMT
+                - Wed, 04 Sep 2024 01:09:39 GMT
             Ratelimit-Limit:
-                - "500"
+                - "400"
             Ratelimit-Remaining:
-                - "170"
+                - "273"
             Ratelimit-Reset:
-                - "34"
+                - "20"
             Referrer-Policy:
                 - same-origin
             Render-Request-Id:
-                - api-79b88fd555-kb4hz/Xeo48y3RKV-000490
+                - api-5dfb588d7c-js44c/vVKqdgsQoF-1348952
             Vary:
                 - Origin
             X-Content-Type-Options:
@@ -2688,7 +2644,7 @@ interactions:
                 - 1; mode=block
         status: 200 OK
         code: 200
-        duration: 42.959958ms
+        duration: 62.202875ms
     - id: 46
       request:
         proto: HTTP/1.1
@@ -2707,7 +2663,7 @@ interactions:
                 - some-api-key
             User-Agent:
                 - terraform-provider-render/test
-        url: https://api.testing.render.com/v1/services/crn-cpbo274olt5qq8i64ru0
+        url: https://api.testing.render.com/v1/services/crn-crbr6j2j1k6c738ej6f0
         method: GET
       response:
         proto: HTTP/2.0
@@ -2715,27 +2671,25 @@ interactions:
         proto_minor: 0
         transfer_encoding: []
         trailer: {}
-        content_length: 559
-        uncompressed: false
+        content_length: -1
+        uncompressed: true
         body: |
-            {"autoDeploy":"yes","createdAt":"2024-05-29T19:25:16.927419Z","id":"crn-cpbo274olt5qq8i64ru0","imagePath":"docker.io/library/nginx:latest","name":"my-cron-job","notifyOnFail":"notify","ownerId":"some-owner-id","rootDir":"","serviceDetails":{"buildPlan":"starter","env":"image","envSpecificDetails":{"dockerCommand":"","dockerContext":"","dockerfilePath":""},"plan":"starter","region":"oregon","schedule":"0 0 * * *"},"slug":"my-cron-job-xe9n","suspended":"not_suspended","suspenders":[],"type":"cron_job","updatedAt":"2024-05-29T19:25:16.927419Z"}
+            {"autoDeploy":"yes","createdAt":"2024-09-04T01:09:32.868507Z","dashboardUrl":"https://dashboard.render.com/cron/crn-crbr6j2j1k6c738ej6f0","id":"crn-crbr6j2j1k6c738ej6f0","imagePath":"docker.io/library/nginx:latest","name":"my-cron-job","notifyOnFail":"notify","ownerId":"some-owner-id","rootDir":"","serviceDetails":{"buildPlan":"starter","env":"image","envSpecificDetails":{"dockerCommand":"","dockerContext":"","dockerfilePath":""},"plan":"starter","region":"oregon","schedule":"0 0 * * *"},"slug":"my-cron-job-2qx7","suspended":"not_suspended","suspenders":[],"type":"cron_job","updatedAt":"2024-09-04T01:09:32.868507Z"}
         headers:
-            Content-Length:
-                - "559"
             Content-Type:
                 - application/json; charset=utf-8
             Date:
-                - Wed, 29 May 2024 19:25:25 GMT
+                - Wed, 04 Sep 2024 01:09:39 GMT
             Ratelimit-Limit:
-                - "500"
+                - "400"
             Ratelimit-Remaining:
-                - "169"
+                - "272"
             Ratelimit-Reset:
-                - "34"
+                - "20"
             Referrer-Policy:
                 - same-origin
             Render-Request-Id:
-                - api-79b88fd555-kb4hz/Xeo48y3RKV-000492
+                - api-5dfb588d7c-gvn66/5HbnvSs0QQ-2097413
             Vary:
                 - Origin
             X-Content-Type-Options:
@@ -2746,7 +2700,7 @@ interactions:
                 - 1; mode=block
         status: 200 OK
         code: 200
-        duration: 55.374875ms
+        duration: 79.843083ms
     - id: 47
       request:
         proto: HTTP/1.1
@@ -2765,7 +2719,7 @@ interactions:
                 - some-api-key
             User-Agent:
                 - terraform-provider-render/test
-        url: https://api.testing.render.com/v1/services/crn-cpbo274olt5qq8i64ru0/env-vars
+        url: https://api.testing.render.com/v1/services/crn-crbr6j2j1k6c738ej6f0/env-vars
         method: GET
       response:
         proto: HTTP/2.0
@@ -2783,17 +2737,17 @@ interactions:
             Content-Type:
                 - application/json; charset=utf-8
             Date:
-                - Wed, 29 May 2024 19:25:25 GMT
+                - Wed, 04 Sep 2024 01:09:39 GMT
             Ratelimit-Limit:
-                - "500"
+                - "400"
             Ratelimit-Remaining:
-                - "168"
+                - "271"
             Ratelimit-Reset:
-                - "34"
+                - "20"
             Referrer-Policy:
                 - same-origin
             Render-Request-Id:
-                - api-79b88fd555-kb4hz/Xeo48y3RKV-000493
+                - api-5dfb588d7c-zk4z5/ZlQgAGJQgW-3960980
             Vary:
                 - Origin
             X-Content-Type-Options:
@@ -2804,7 +2758,7 @@ interactions:
                 - 1; mode=block
         status: 200 OK
         code: 200
-        duration: 43.876417ms
+        duration: 62.96225ms
     - id: 48
       request:
         proto: HTTP/1.1
@@ -2823,7 +2777,7 @@ interactions:
                 - some-api-key
             User-Agent:
                 - terraform-provider-render/test
-        url: https://api.testing.render.com/v1/services/crn-cpbo274olt5qq8i64ru0/secret-files
+        url: https://api.testing.render.com/v1/services/crn-crbr6j2j1k6c738ej6f0/secret-files
         method: GET
       response:
         proto: HTTP/2.0
@@ -2841,17 +2795,17 @@ interactions:
             Content-Type:
                 - application/json; charset=utf-8
             Date:
-                - Wed, 29 May 2024 19:25:25 GMT
+                - Wed, 04 Sep 2024 01:09:39 GMT
             Ratelimit-Limit:
-                - "500"
+                - "400"
             Ratelimit-Remaining:
-                - "166"
+                - "270"
             Ratelimit-Reset:
-                - "34"
+                - "20"
             Referrer-Policy:
                 - same-origin
             Render-Request-Id:
-                - api-79b88fd555-kb4hz/Xeo48y3RKV-000495
+                - api-5dfb588d7c-tjj9c/Cvjs9XM2VF-1168906
             Vary:
                 - Origin
             X-Content-Type-Options:
@@ -2862,7 +2816,7 @@ interactions:
                 - 1; mode=block
         status: 200 OK
         code: 200
-        duration: 50.122833ms
+        duration: 87.057666ms
     - id: 49
       request:
         proto: HTTP/1.1
@@ -2881,7 +2835,7 @@ interactions:
                 - some-api-key
             User-Agent:
                 - terraform-provider-render/test
-        url: https://api.testing.render.com/v1/notification-settings/overrides/services/crn-cpbo274olt5qq8i64ru0
+        url: https://api.testing.render.com/v1/notification-settings/overrides/services/crn-crbr6j2j1k6c738ej6f0
         method: GET
       response:
         proto: HTTP/2.0
@@ -2889,27 +2843,25 @@ interactions:
         proto_minor: 0
         transfer_encoding: []
         trailer: {}
-        content_length: 114
-        uncompressed: false
+        content_length: -1
+        uncompressed: true
         body: |
-            {"id":"crn-cpbo274olt5qq8i64ru0","notificationsToSend":"failure","previewNotificationsEnabled":"false","type":""}
+            {"notificationsToSend":"failure","previewNotificationsEnabled":"false","serviceId":"crn-crbr6j2j1k6c738ej6f0"}
         headers:
-            Content-Length:
-                - "114"
             Content-Type:
                 - application/json; charset=utf-8
             Date:
-                - Wed, 29 May 2024 19:25:26 GMT
+                - Wed, 04 Sep 2024 01:09:40 GMT
             Ratelimit-Limit:
-                - "500"
+                - "400"
             Ratelimit-Remaining:
-                - "164"
+                - "269"
             Ratelimit-Reset:
-                - "34"
+                - "19"
             Referrer-Policy:
                 - same-origin
             Render-Request-Id:
-                - api-79b88fd555-kb4hz/Xeo48y3RKV-000497
+                - api-5dfb588d7c-js44c/vVKqdgsQoF-1348958
             Vary:
                 - Origin
             X-Content-Type-Options:
@@ -2920,7 +2872,7 @@ interactions:
                 - 1; mode=block
         status: 200 OK
         code: 200
-        duration: 42.461208ms
+        duration: 67.763709ms
     - id: 50
       request:
         proto: HTTP/1.1
@@ -2939,7 +2891,7 @@ interactions:
                 - some-api-key
             User-Agent:
                 - terraform-provider-render/test
-        url: https://api.testing.render.com/v1/services/crn-cpbo274olt5qq8i64ru0
+        url: https://api.testing.render.com/v1/services/crn-crbr6j2j1k6c738ej6f0
         method: GET
       response:
         proto: HTTP/2.0
@@ -2947,27 +2899,25 @@ interactions:
         proto_minor: 0
         transfer_encoding: []
         trailer: {}
-        content_length: 559
-        uncompressed: false
+        content_length: -1
+        uncompressed: true
         body: |
-            {"autoDeploy":"yes","createdAt":"2024-05-29T19:25:16.927419Z","id":"crn-cpbo274olt5qq8i64ru0","imagePath":"docker.io/library/nginx:latest","name":"my-cron-job","notifyOnFail":"notify","ownerId":"some-owner-id","rootDir":"","serviceDetails":{"buildPlan":"starter","env":"image","envSpecificDetails":{"dockerCommand":"","dockerContext":"","dockerfilePath":""},"plan":"starter","region":"oregon","schedule":"0 0 * * *"},"slug":"my-cron-job-xe9n","suspended":"not_suspended","suspenders":[],"type":"cron_job","updatedAt":"2024-05-29T19:25:16.927419Z"}
+            {"autoDeploy":"yes","createdAt":"2024-09-04T01:09:32.868507Z","dashboardUrl":"https://dashboard.render.com/cron/crn-crbr6j2j1k6c738ej6f0","id":"crn-crbr6j2j1k6c738ej6f0","imagePath":"docker.io/library/nginx:latest","name":"my-cron-job","notifyOnFail":"notify","ownerId":"some-owner-id","rootDir":"","serviceDetails":{"buildPlan":"starter","env":"image","envSpecificDetails":{"dockerCommand":"","dockerContext":"","dockerfilePath":""},"plan":"starter","region":"oregon","schedule":"0 0 * * *"},"slug":"my-cron-job-2qx7","suspended":"not_suspended","suspenders":[],"type":"cron_job","updatedAt":"2024-09-04T01:09:32.868507Z"}
         headers:
-            Content-Length:
-                - "559"
             Content-Type:
                 - application/json; charset=utf-8
             Date:
-                - Wed, 29 May 2024 19:25:26 GMT
+                - Wed, 04 Sep 2024 01:09:40 GMT
             Ratelimit-Limit:
-                - "500"
+                - "400"
             Ratelimit-Remaining:
-                - "162"
+                - "268"
             Ratelimit-Reset:
-                - "33"
+                - "19"
             Referrer-Policy:
                 - same-origin
             Render-Request-Id:
-                - api-79b88fd555-kb4hz/Xeo48y3RKV-000499
+                - api-5dfb588d7c-gvn66/5HbnvSs0QQ-2097418
             Vary:
                 - Origin
             X-Content-Type-Options:
@@ -2978,7 +2928,7 @@ interactions:
                 - 1; mode=block
         status: 200 OK
         code: 200
-        duration: 53.371708ms
+        duration: 79.019041ms
     - id: 51
       request:
         proto: HTTP/1.1
@@ -2997,7 +2947,7 @@ interactions:
                 - some-api-key
             User-Agent:
                 - terraform-provider-render/test
-        url: https://api.testing.render.com/v1/services/crn-cpbo274olt5qq8i64ru0/env-vars
+        url: https://api.testing.render.com/v1/services/crn-crbr6j2j1k6c738ej6f0/env-vars
         method: GET
       response:
         proto: HTTP/2.0
@@ -3015,17 +2965,17 @@ interactions:
             Content-Type:
                 - application/json; charset=utf-8
             Date:
-                - Wed, 29 May 2024 19:25:26 GMT
+                - Wed, 04 Sep 2024 01:09:40 GMT
             Ratelimit-Limit:
-                - "500"
+                - "400"
             Ratelimit-Remaining:
-                - "160"
+                - "267"
             Ratelimit-Reset:
-                - "33"
+                - "19"
             Referrer-Policy:
                 - same-origin
             Render-Request-Id:
-                - api-79b88fd555-kb4hz/Xeo48y3RKV-000501
+                - api-5dfb588d7c-zk4z5/ZlQgAGJQgW-3960984
             Vary:
                 - Origin
             X-Content-Type-Options:
@@ -3036,7 +2986,7 @@ interactions:
                 - 1; mode=block
         status: 200 OK
         code: 200
-        duration: 43.756667ms
+        duration: 70.582625ms
     - id: 52
       request:
         proto: HTTP/1.1
@@ -3055,7 +3005,7 @@ interactions:
                 - some-api-key
             User-Agent:
                 - terraform-provider-render/test
-        url: https://api.testing.render.com/v1/services/crn-cpbo274olt5qq8i64ru0/secret-files
+        url: https://api.testing.render.com/v1/services/crn-crbr6j2j1k6c738ej6f0/secret-files
         method: GET
       response:
         proto: HTTP/2.0
@@ -3073,17 +3023,17 @@ interactions:
             Content-Type:
                 - application/json; charset=utf-8
             Date:
-                - Wed, 29 May 2024 19:25:26 GMT
+                - Wed, 04 Sep 2024 01:09:40 GMT
             Ratelimit-Limit:
-                - "500"
+                - "400"
             Ratelimit-Remaining:
-                - "159"
+                - "266"
             Ratelimit-Reset:
-                - "33"
+                - "19"
             Referrer-Policy:
                 - same-origin
             Render-Request-Id:
-                - api-79b88fd555-kb4hz/Xeo48y3RKV-000502
+                - api-5dfb588d7c-tjj9c/Cvjs9XM2VF-1168912
             Vary:
                 - Origin
             X-Content-Type-Options:
@@ -3094,7 +3044,7 @@ interactions:
                 - 1; mode=block
         status: 200 OK
         code: 200
-        duration: 44.34975ms
+        duration: 77.393ms
     - id: 53
       request:
         proto: HTTP/1.1
@@ -3113,7 +3063,7 @@ interactions:
                 - some-api-key
             User-Agent:
                 - terraform-provider-render/test
-        url: https://api.testing.render.com/v1/notification-settings/overrides/services/crn-cpbo274olt5qq8i64ru0
+        url: https://api.testing.render.com/v1/notification-settings/overrides/services/crn-crbr6j2j1k6c738ej6f0
         method: GET
       response:
         proto: HTTP/2.0
@@ -3121,27 +3071,25 @@ interactions:
         proto_minor: 0
         transfer_encoding: []
         trailer: {}
-        content_length: 114
-        uncompressed: false
+        content_length: -1
+        uncompressed: true
         body: |
-            {"id":"crn-cpbo274olt5qq8i64ru0","notificationsToSend":"failure","previewNotificationsEnabled":"false","type":""}
+            {"notificationsToSend":"failure","previewNotificationsEnabled":"false","serviceId":"crn-crbr6j2j1k6c738ej6f0"}
         headers:
-            Content-Length:
-                - "114"
             Content-Type:
                 - application/json; charset=utf-8
             Date:
-                - Wed, 29 May 2024 19:25:26 GMT
+                - Wed, 04 Sep 2024 01:09:40 GMT
             Ratelimit-Limit:
-                - "500"
+                - "400"
             Ratelimit-Remaining:
-                - "157"
+                - "265"
             Ratelimit-Reset:
-                - "33"
+                - "19"
             Referrer-Policy:
                 - same-origin
             Render-Request-Id:
-                - api-79b88fd555-kb4hz/Xeo48y3RKV-000505
+                - api-5dfb588d7c-js44c/vVKqdgsQoF-1348963
             Vary:
                 - Origin
             X-Content-Type-Options:
@@ -3152,7 +3100,7 @@ interactions:
                 - 1; mode=block
         status: 200 OK
         code: 200
-        duration: 44.849958ms
+        duration: 68.016ms
     - id: 54
       request:
         proto: HTTP/1.1
@@ -3171,7 +3119,7 @@ interactions:
                 - some-api-key
             User-Agent:
                 - terraform-provider-render/test
-        url: https://api.testing.render.com/v1/services/crn-cpbo274olt5qq8i64ru0
+        url: https://api.testing.render.com/v1/services/crn-crbr6j2j1k6c738ej6f0
         method: GET
       response:
         proto: HTTP/2.0
@@ -3179,27 +3127,25 @@ interactions:
         proto_minor: 0
         transfer_encoding: []
         trailer: {}
-        content_length: 559
-        uncompressed: false
+        content_length: -1
+        uncompressed: true
         body: |
-            {"autoDeploy":"yes","createdAt":"2024-05-29T19:25:16.927419Z","id":"crn-cpbo274olt5qq8i64ru0","imagePath":"docker.io/library/nginx:latest","name":"my-cron-job","notifyOnFail":"notify","ownerId":"some-owner-id","rootDir":"","serviceDetails":{"buildPlan":"starter","env":"image","envSpecificDetails":{"dockerCommand":"","dockerContext":"","dockerfilePath":""},"plan":"starter","region":"oregon","schedule":"0 0 * * *"},"slug":"my-cron-job-xe9n","suspended":"not_suspended","suspenders":[],"type":"cron_job","updatedAt":"2024-05-29T19:25:16.927419Z"}
+            {"autoDeploy":"yes","createdAt":"2024-09-04T01:09:32.868507Z","dashboardUrl":"https://dashboard.render.com/cron/crn-crbr6j2j1k6c738ej6f0","id":"crn-crbr6j2j1k6c738ej6f0","imagePath":"docker.io/library/nginx:latest","name":"my-cron-job","notifyOnFail":"notify","ownerId":"some-owner-id","rootDir":"","serviceDetails":{"buildPlan":"starter","env":"image","envSpecificDetails":{"dockerCommand":"","dockerContext":"","dockerfilePath":""},"plan":"starter","region":"oregon","schedule":"0 0 * * *"},"slug":"my-cron-job-2qx7","suspended":"not_suspended","suspenders":[],"type":"cron_job","updatedAt":"2024-09-04T01:09:32.868507Z"}
         headers:
-            Content-Length:
-                - "559"
             Content-Type:
                 - application/json; charset=utf-8
             Date:
-                - Wed, 29 May 2024 19:25:26 GMT
+                - Wed, 04 Sep 2024 01:09:40 GMT
             Ratelimit-Limit:
-                - "500"
+                - "400"
             Ratelimit-Remaining:
-                - "154"
+                - "264"
             Ratelimit-Reset:
-                - "33"
+                - "19"
             Referrer-Policy:
                 - same-origin
             Render-Request-Id:
-                - api-79b88fd555-kb4hz/Xeo48y3RKV-000508
+                - api-5dfb588d7c-gvn66/5HbnvSs0QQ-2097426
             Vary:
                 - Origin
             X-Content-Type-Options:
@@ -3210,7 +3156,7 @@ interactions:
                 - 1; mode=block
         status: 200 OK
         code: 200
-        duration: 62.132416ms
+        duration: 121.584583ms
     - id: 55
       request:
         proto: HTTP/1.1
@@ -3229,7 +3175,7 @@ interactions:
                 - some-api-key
             User-Agent:
                 - terraform-provider-render/test
-        url: https://api.testing.render.com/v1/services/crn-cpbo274olt5qq8i64ru0/env-vars
+        url: https://api.testing.render.com/v1/services/crn-crbr6j2j1k6c738ej6f0/env-vars
         method: GET
       response:
         proto: HTTP/2.0
@@ -3247,17 +3193,17 @@ interactions:
             Content-Type:
                 - application/json; charset=utf-8
             Date:
-                - Wed, 29 May 2024 19:25:26 GMT
+                - Wed, 04 Sep 2024 01:09:40 GMT
             Ratelimit-Limit:
-                - "500"
+                - "400"
             Ratelimit-Remaining:
-                - "152"
+                - "263"
             Ratelimit-Reset:
-                - "33"
+                - "19"
             Referrer-Policy:
                 - same-origin
             Render-Request-Id:
-                - api-79b88fd555-kb4hz/Xeo48y3RKV-000510
+                - api-5dfb588d7c-zk4z5/ZlQgAGJQgW-3960991
             Vary:
                 - Origin
             X-Content-Type-Options:
@@ -3268,7 +3214,7 @@ interactions:
                 - 1; mode=block
         status: 200 OK
         code: 200
-        duration: 42.974ms
+        duration: 70.800584ms
     - id: 56
       request:
         proto: HTTP/1.1
@@ -3287,7 +3233,7 @@ interactions:
                 - some-api-key
             User-Agent:
                 - terraform-provider-render/test
-        url: https://api.testing.render.com/v1/services/crn-cpbo274olt5qq8i64ru0/secret-files
+        url: https://api.testing.render.com/v1/services/crn-crbr6j2j1k6c738ej6f0/secret-files
         method: GET
       response:
         proto: HTTP/2.0
@@ -3305,17 +3251,17 @@ interactions:
             Content-Type:
                 - application/json; charset=utf-8
             Date:
-                - Wed, 29 May 2024 19:25:26 GMT
+                - Wed, 04 Sep 2024 01:09:40 GMT
             Ratelimit-Limit:
-                - "500"
+                - "400"
             Ratelimit-Remaining:
-                - "151"
+                - "262"
             Ratelimit-Reset:
-                - "33"
+                - "19"
             Referrer-Policy:
                 - same-origin
             Render-Request-Id:
-                - api-79b88fd555-kb4hz/Xeo48y3RKV-000511
+                - api-5dfb588d7c-tjj9c/Cvjs9XM2VF-1168920
             Vary:
                 - Origin
             X-Content-Type-Options:
@@ -3326,7 +3272,7 @@ interactions:
                 - 1; mode=block
         status: 200 OK
         code: 200
-        duration: 54.451708ms
+        duration: 138.206416ms
     - id: 57
       request:
         proto: HTTP/1.1
@@ -3345,7 +3291,7 @@ interactions:
                 - some-api-key
             User-Agent:
                 - terraform-provider-render/test
-        url: https://api.testing.render.com/v1/notification-settings/overrides/services/crn-cpbo274olt5qq8i64ru0
+        url: https://api.testing.render.com/v1/notification-settings/overrides/services/crn-crbr6j2j1k6c738ej6f0
         method: GET
       response:
         proto: HTTP/2.0
@@ -3353,27 +3299,25 @@ interactions:
         proto_minor: 0
         transfer_encoding: []
         trailer: {}
-        content_length: 114
-        uncompressed: false
+        content_length: -1
+        uncompressed: true
         body: |
-            {"id":"crn-cpbo274olt5qq8i64ru0","notificationsToSend":"failure","previewNotificationsEnabled":"false","type":""}
+            {"notificationsToSend":"failure","previewNotificationsEnabled":"false","serviceId":"crn-crbr6j2j1k6c738ej6f0"}
         headers:
-            Content-Length:
-                - "114"
             Content-Type:
                 - application/json; charset=utf-8
             Date:
-                - Wed, 29 May 2024 19:25:26 GMT
+                - Wed, 04 Sep 2024 01:09:40 GMT
             Ratelimit-Limit:
-                - "500"
+                - "400"
             Ratelimit-Remaining:
-                - "149"
+                - "261"
             Ratelimit-Reset:
-                - "33"
+                - "19"
             Referrer-Policy:
                 - same-origin
             Render-Request-Id:
-                - api-79b88fd555-kb4hz/Xeo48y3RKV-000513
+                - api-5dfb588d7c-js44c/vVKqdgsQoF-1348975
             Vary:
                 - Origin
             X-Content-Type-Options:
@@ -3384,7 +3328,7 @@ interactions:
                 - 1; mode=block
         status: 200 OK
         code: 200
-        duration: 51.702791ms
+        duration: 77.3355ms
     - id: 58
       request:
         proto: HTTP/1.1
@@ -3403,7 +3347,7 @@ interactions:
                 - some-api-key
             User-Agent:
                 - terraform-provider-render/test
-        url: https://api.testing.render.com/v1/services/crn-cpbo274olt5qq8i64ru0
+        url: https://api.testing.render.com/v1/services/crn-crbr6j2j1k6c738ej6f0
         method: GET
       response:
         proto: HTTP/2.0
@@ -3411,27 +3355,25 @@ interactions:
         proto_minor: 0
         transfer_encoding: []
         trailer: {}
-        content_length: 559
-        uncompressed: false
+        content_length: -1
+        uncompressed: true
         body: |
-            {"autoDeploy":"yes","createdAt":"2024-05-29T19:25:16.927419Z","id":"crn-cpbo274olt5qq8i64ru0","imagePath":"docker.io/library/nginx:latest","name":"my-cron-job","notifyOnFail":"notify","ownerId":"some-owner-id","rootDir":"","serviceDetails":{"buildPlan":"starter","env":"image","envSpecificDetails":{"dockerCommand":"","dockerContext":"","dockerfilePath":""},"plan":"starter","region":"oregon","schedule":"0 0 * * *"},"slug":"my-cron-job-xe9n","suspended":"not_suspended","suspenders":[],"type":"cron_job","updatedAt":"2024-05-29T19:25:16.927419Z"}
+            {"autoDeploy":"yes","createdAt":"2024-09-04T01:09:32.868507Z","dashboardUrl":"https://dashboard.render.com/cron/crn-crbr6j2j1k6c738ej6f0","id":"crn-crbr6j2j1k6c738ej6f0","imagePath":"docker.io/library/nginx:latest","name":"my-cron-job","notifyOnFail":"notify","ownerId":"some-owner-id","rootDir":"","serviceDetails":{"buildPlan":"starter","env":"image","envSpecificDetails":{"dockerCommand":"","dockerContext":"","dockerfilePath":""},"plan":"starter","region":"oregon","schedule":"0 0 * * *"},"slug":"my-cron-job-2qx7","suspended":"not_suspended","suspenders":[],"type":"cron_job","updatedAt":"2024-09-04T01:09:32.868507Z"}
         headers:
-            Content-Length:
-                - "559"
             Content-Type:
                 - application/json; charset=utf-8
             Date:
-                - Wed, 29 May 2024 19:25:27 GMT
+                - Wed, 04 Sep 2024 01:09:41 GMT
             Ratelimit-Limit:
-                - "500"
+                - "400"
             Ratelimit-Remaining:
-                - "146"
+                - "260"
             Ratelimit-Reset:
-                - "32"
+                - "18"
             Referrer-Policy:
                 - same-origin
             Render-Request-Id:
-                - api-79b88fd555-kb4hz/Xeo48y3RKV-000516
+                - api-5dfb588d7c-gvn66/5HbnvSs0QQ-2097434
             Vary:
                 - Origin
             X-Content-Type-Options:
@@ -3442,7 +3384,7 @@ interactions:
                 - 1; mode=block
         status: 200 OK
         code: 200
-        duration: 59.209625ms
+        duration: 79.982792ms
     - id: 59
       request:
         proto: HTTP/1.1
@@ -3461,7 +3403,7 @@ interactions:
                 - some-api-key
             User-Agent:
                 - terraform-provider-render/test
-        url: https://api.testing.render.com/v1/services/crn-cpbo274olt5qq8i64ru0/env-vars
+        url: https://api.testing.render.com/v1/services/crn-crbr6j2j1k6c738ej6f0/env-vars
         method: GET
       response:
         proto: HTTP/2.0
@@ -3479,17 +3421,17 @@ interactions:
             Content-Type:
                 - application/json; charset=utf-8
             Date:
-                - Wed, 29 May 2024 19:25:27 GMT
+                - Wed, 04 Sep 2024 01:09:41 GMT
             Ratelimit-Limit:
-                - "500"
+                - "400"
             Ratelimit-Remaining:
-                - "144"
+                - "259"
             Ratelimit-Reset:
-                - "32"
+                - "18"
             Referrer-Policy:
                 - same-origin
             Render-Request-Id:
-                - api-79b88fd555-kb4hz/Xeo48y3RKV-000518
+                - api-5dfb588d7c-zk4z5/ZlQgAGJQgW-3961002
             Vary:
                 - Origin
             X-Content-Type-Options:
@@ -3500,7 +3442,7 @@ interactions:
                 - 1; mode=block
         status: 200 OK
         code: 200
-        duration: 56.640583ms
+        duration: 68.972375ms
     - id: 60
       request:
         proto: HTTP/1.1
@@ -3519,7 +3461,7 @@ interactions:
                 - some-api-key
             User-Agent:
                 - terraform-provider-render/test
-        url: https://api.testing.render.com/v1/services/crn-cpbo274olt5qq8i64ru0/secret-files
+        url: https://api.testing.render.com/v1/services/crn-crbr6j2j1k6c738ej6f0/secret-files
         method: GET
       response:
         proto: HTTP/2.0
@@ -3537,17 +3479,17 @@ interactions:
             Content-Type:
                 - application/json; charset=utf-8
             Date:
-                - Wed, 29 May 2024 19:25:27 GMT
+                - Wed, 04 Sep 2024 01:09:41 GMT
             Ratelimit-Limit:
-                - "500"
+                - "400"
             Ratelimit-Remaining:
-                - "142"
+                - "258"
             Ratelimit-Reset:
-                - "32"
+                - "18"
             Referrer-Policy:
                 - same-origin
             Render-Request-Id:
-                - api-79b88fd555-kb4hz/Xeo48y3RKV-000520
+                - api-5dfb588d7c-tjj9c/Cvjs9XM2VF-1168926
             Vary:
                 - Origin
             X-Content-Type-Options:
@@ -3558,7 +3500,7 @@ interactions:
                 - 1; mode=block
         status: 200 OK
         code: 200
-        duration: 47.875708ms
+        duration: 57.946791ms
     - id: 61
       request:
         proto: HTTP/1.1
@@ -3577,7 +3519,7 @@ interactions:
                 - some-api-key
             User-Agent:
                 - terraform-provider-render/test
-        url: https://api.testing.render.com/v1/notification-settings/overrides/services/crn-cpbo274olt5qq8i64ru0
+        url: https://api.testing.render.com/v1/notification-settings/overrides/services/crn-crbr6j2j1k6c738ej6f0
         method: GET
       response:
         proto: HTTP/2.0
@@ -3585,27 +3527,25 @@ interactions:
         proto_minor: 0
         transfer_encoding: []
         trailer: {}
-        content_length: 114
-        uncompressed: false
+        content_length: -1
+        uncompressed: true
         body: |
-            {"id":"crn-cpbo274olt5qq8i64ru0","notificationsToSend":"failure","previewNotificationsEnabled":"false","type":""}
+            {"notificationsToSend":"failure","previewNotificationsEnabled":"false","serviceId":"crn-crbr6j2j1k6c738ej6f0"}
         headers:
-            Content-Length:
-                - "114"
             Content-Type:
                 - application/json; charset=utf-8
             Date:
-                - Wed, 29 May 2024 19:25:27 GMT
+                - Wed, 04 Sep 2024 01:09:41 GMT
             Ratelimit-Limit:
-                - "500"
+                - "400"
             Ratelimit-Remaining:
-                - "140"
+                - "257"
             Ratelimit-Reset:
-                - "32"
+                - "18"
             Referrer-Policy:
                 - same-origin
             Render-Request-Id:
-                - api-79b88fd555-kb4hz/Xeo48y3RKV-000522
+                - api-5dfb588d7c-js44c/vVKqdgsQoF-1348980
             Vary:
                 - Origin
             X-Content-Type-Options:
@@ -3616,7 +3556,7 @@ interactions:
                 - 1; mode=block
         status: 200 OK
         code: 200
-        duration: 47.170333ms
+        duration: 62.740834ms
     - id: 62
       request:
         proto: HTTP/1.1
@@ -3635,7 +3575,7 @@ interactions:
                 - some-api-key
             User-Agent:
                 - terraform-provider-render/test
-        url: https://api.testing.render.com/v1/services/crn-cpbo274olt5qq8i64ru0
+        url: https://api.testing.render.com/v1/services/crn-crbr6j2j1k6c738ej6f0
         method: GET
       response:
         proto: HTTP/2.0
@@ -3643,27 +3583,25 @@ interactions:
         proto_minor: 0
         transfer_encoding: []
         trailer: {}
-        content_length: 559
-        uncompressed: false
+        content_length: -1
+        uncompressed: true
         body: |
-            {"autoDeploy":"yes","createdAt":"2024-05-29T19:25:16.927419Z","id":"crn-cpbo274olt5qq8i64ru0","imagePath":"docker.io/library/nginx:latest","name":"my-cron-job","notifyOnFail":"notify","ownerId":"some-owner-id","rootDir":"","serviceDetails":{"buildPlan":"starter","env":"image","envSpecificDetails":{"dockerCommand":"","dockerContext":"","dockerfilePath":""},"plan":"starter","region":"oregon","schedule":"0 0 * * *"},"slug":"my-cron-job-xe9n","suspended":"not_suspended","suspenders":[],"type":"cron_job","updatedAt":"2024-05-29T19:25:16.927419Z"}
+            {"autoDeploy":"yes","createdAt":"2024-09-04T01:09:32.868507Z","dashboardUrl":"https://dashboard.render.com/cron/crn-crbr6j2j1k6c738ej6f0","id":"crn-crbr6j2j1k6c738ej6f0","imagePath":"docker.io/library/nginx:latest","name":"my-cron-job","notifyOnFail":"notify","ownerId":"some-owner-id","rootDir":"","serviceDetails":{"buildPlan":"starter","env":"image","envSpecificDetails":{"dockerCommand":"","dockerContext":"","dockerfilePath":""},"plan":"starter","region":"oregon","schedule":"0 0 * * *"},"slug":"my-cron-job-2qx7","suspended":"not_suspended","suspenders":[],"type":"cron_job","updatedAt":"2024-09-04T01:09:32.868507Z"}
         headers:
-            Content-Length:
-                - "559"
             Content-Type:
                 - application/json; charset=utf-8
             Date:
-                - Wed, 29 May 2024 19:25:27 GMT
+                - Wed, 04 Sep 2024 01:09:41 GMT
             Ratelimit-Limit:
-                - "500"
+                - "400"
             Ratelimit-Remaining:
-                - "138"
+                - "256"
             Ratelimit-Reset:
-                - "32"
+                - "18"
             Referrer-Policy:
                 - same-origin
             Render-Request-Id:
-                - api-79b88fd555-kb4hz/Xeo48y3RKV-000524
+                - api-5dfb588d7c-gvn66/5HbnvSs0QQ-2097437
             Vary:
                 - Origin
             X-Content-Type-Options:
@@ -3674,7 +3612,7 @@ interactions:
                 - 1; mode=block
         status: 200 OK
         code: 200
-        duration: 60.447584ms
+        duration: 83.657166ms
     - id: 63
       request:
         proto: HTTP/1.1
@@ -3693,7 +3631,7 @@ interactions:
                 - some-api-key
             User-Agent:
                 - terraform-provider-render/test
-        url: https://api.testing.render.com/v1/services/crn-cpbo274olt5qq8i64ru0/env-vars
+        url: https://api.testing.render.com/v1/services/crn-crbr6j2j1k6c738ej6f0/env-vars
         method: GET
       response:
         proto: HTTP/2.0
@@ -3711,17 +3649,17 @@ interactions:
             Content-Type:
                 - application/json; charset=utf-8
             Date:
-                - Wed, 29 May 2024 19:25:27 GMT
+                - Wed, 04 Sep 2024 01:09:41 GMT
             Ratelimit-Limit:
-                - "500"
+                - "400"
             Ratelimit-Remaining:
-                - "136"
+                - "255"
             Ratelimit-Reset:
-                - "32"
+                - "18"
             Referrer-Policy:
                 - same-origin
             Render-Request-Id:
-                - api-79b88fd555-kb4hz/Xeo48y3RKV-000526
+                - api-5dfb588d7c-zk4z5/ZlQgAGJQgW-3961006
             Vary:
                 - Origin
             X-Content-Type-Options:
@@ -3732,7 +3670,7 @@ interactions:
                 - 1; mode=block
         status: 200 OK
         code: 200
-        duration: 49.211834ms
+        duration: 58.085417ms
     - id: 64
       request:
         proto: HTTP/1.1
@@ -3751,7 +3689,7 @@ interactions:
                 - some-api-key
             User-Agent:
                 - terraform-provider-render/test
-        url: https://api.testing.render.com/v1/services/crn-cpbo274olt5qq8i64ru0/secret-files
+        url: https://api.testing.render.com/v1/services/crn-crbr6j2j1k6c738ej6f0/secret-files
         method: GET
       response:
         proto: HTTP/2.0
@@ -3769,17 +3707,17 @@ interactions:
             Content-Type:
                 - application/json; charset=utf-8
             Date:
-                - Wed, 29 May 2024 19:25:27 GMT
+                - Wed, 04 Sep 2024 01:09:41 GMT
             Ratelimit-Limit:
-                - "500"
+                - "400"
             Ratelimit-Remaining:
-                - "135"
+                - "254"
             Ratelimit-Reset:
-                - "32"
+                - "18"
             Referrer-Policy:
                 - same-origin
             Render-Request-Id:
-                - api-79b88fd555-kb4hz/Xeo48y3RKV-000527
+                - api-5dfb588d7c-tjj9c/Cvjs9XM2VF-1168929
             Vary:
                 - Origin
             X-Content-Type-Options:
@@ -3790,7 +3728,7 @@ interactions:
                 - 1; mode=block
         status: 200 OK
         code: 200
-        duration: 45.310875ms
+        duration: 59.774625ms
     - id: 65
       request:
         proto: HTTP/1.1
@@ -3809,7 +3747,7 @@ interactions:
                 - some-api-key
             User-Agent:
                 - terraform-provider-render/test
-        url: https://api.testing.render.com/v1/notification-settings/overrides/services/crn-cpbo274olt5qq8i64ru0
+        url: https://api.testing.render.com/v1/notification-settings/overrides/services/crn-crbr6j2j1k6c738ej6f0
         method: GET
       response:
         proto: HTTP/2.0
@@ -3817,27 +3755,25 @@ interactions:
         proto_minor: 0
         transfer_encoding: []
         trailer: {}
-        content_length: 114
-        uncompressed: false
+        content_length: -1
+        uncompressed: true
         body: |
-            {"id":"crn-cpbo274olt5qq8i64ru0","notificationsToSend":"failure","previewNotificationsEnabled":"false","type":""}
+            {"notificationsToSend":"failure","previewNotificationsEnabled":"false","serviceId":"crn-crbr6j2j1k6c738ej6f0"}
         headers:
-            Content-Length:
-                - "114"
             Content-Type:
                 - application/json; charset=utf-8
             Date:
-                - Wed, 29 May 2024 19:25:27 GMT
+                - Wed, 04 Sep 2024 01:09:41 GMT
             Ratelimit-Limit:
-                - "500"
+                - "400"
             Ratelimit-Remaining:
-                - "133"
+                - "253"
             Ratelimit-Reset:
-                - "32"
+                - "18"
             Referrer-Policy:
                 - same-origin
             Render-Request-Id:
-                - api-79b88fd555-kb4hz/Xeo48y3RKV-000529
+                - api-5dfb588d7c-js44c/vVKqdgsQoF-1348982
             Vary:
                 - Origin
             X-Content-Type-Options:
@@ -3848,7 +3784,7 @@ interactions:
                 - 1; mode=block
         status: 200 OK
         code: 200
-        duration: 44.516667ms
+        duration: 61.917791ms
     - id: 66
       request:
         proto: HTTP/1.1
@@ -3867,7 +3803,7 @@ interactions:
                 - some-api-key
             User-Agent:
                 - terraform-provider-render/test
-        url: https://api.testing.render.com/v1/services/crn-cpbo274olt5qq8i64ru0
+        url: https://api.testing.render.com/v1/services/crn-crbr6j2j1k6c738ej6f0
         method: DELETE
       response:
         proto: HTTP/2.0
@@ -3880,17 +3816,17 @@ interactions:
         body: ""
         headers:
             Date:
-                - Wed, 29 May 2024 19:25:28 GMT
+                - Wed, 04 Sep 2024 01:09:41 GMT
             Ratelimit-Limit:
-                - "500"
+                - "100"
             Ratelimit-Remaining:
-                - "448"
+                - "83"
             Ratelimit-Reset:
-                - "31"
+                - "18"
             Referrer-Policy:
                 - same-origin
             Render-Request-Id:
-                - api-79b88fd555-kb4hz/Xeo48y3RKV-000532
+                - api-5dfb588d7c-gvn66/5HbnvSs0QQ-2097444
             Vary:
                 - Origin
             X-Content-Type-Options:
@@ -3901,4 +3837,4 @@ interactions:
                 - 1; mode=block
         status: 204 No Content
         code: 204
-        duration: 79.91325ms
+        duration: 133.510584ms
