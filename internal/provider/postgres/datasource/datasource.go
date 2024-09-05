@@ -77,5 +77,11 @@ func (d *postgresDataSource) Read(ctx context.Context, req datasource.ReadReques
 		return
 	}
 
-	resp.State.Set(ctx, postgres.ModelFromClient(&pg, &secrets, plan, resp.Diagnostics))
+	logStreamOverrides, err := common.GetLogStreamOverrides(ctx, d.client, plan.ID.ValueString())
+	if err != nil {
+		resp.Diagnostics.AddError("unable to get log stream overrides", err.Error())
+		return
+	}
+
+	resp.State.Set(ctx, postgres.ModelFromClient(&pg, &secrets, logStreamOverrides, plan, resp.Diagnostics))
 }

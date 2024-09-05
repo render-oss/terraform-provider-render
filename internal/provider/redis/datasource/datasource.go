@@ -77,7 +77,13 @@ func (d *redisSource) Read(ctx context.Context, req datasource.ReadRequest, resp
 		return
 	}
 
-	redisModel := redis.ModelForRedisResult(&redisResponse, &connectionInfo, resp.Diagnostics)
+	logStreamOverrides, err := common.GetLogStreamOverrides(ctx, d.client, redisResponse.Id)
+	if err != nil {
+		resp.Diagnostics.AddError("unable to get log stream overrides", err.Error())
+		return
+	}
+
+	redisModel := redis.ModelForRedisResult(&redisResponse, &plan, &connectionInfo, logStreamOverrides, resp.Diagnostics)
 
 	resp.State.Set(ctx, redisModel)
 }

@@ -90,7 +90,19 @@ func (r *redisResource) Create(ctx context.Context, req resource.CreateRequest, 
 		return
 	}
 
-	redisModel := redis.ModelForRedisResult(&model, &connectionInfo, resp.Diagnostics)
+	logStreamOverrides, err := common.UpdateLogStreamOverride(
+		ctx,
+		r.client,
+		model.Id,
+		&common.LogStreamOverrideStateAndPlan{
+			Plan: plan.LogStreamOverride,
+		},
+	)
+	if err != nil {
+		resp.Diagnostics.AddError("unable to create log stream overrides", err.Error())
+		return
+	}
+	redisModel := redis.ModelForRedisResult(&model, &plan, &connectionInfo, logStreamOverrides, resp.Diagnostics)
 
 	// Set state to fully populated data
 	diags = resp.State.Set(ctx, redisModel)
@@ -130,7 +142,13 @@ func (r *redisResource) Read(ctx context.Context, req resource.ReadRequest, resp
 		return
 	}
 
-	redisModel := redis.ModelForRedisResult(&clientRedis, &connectionInfo, resp.Diagnostics)
+	logStreamOverrides, err := common.GetLogStreamOverrides(ctx, r.client, clientRedis.Id)
+	if err != nil {
+		resp.Diagnostics.AddError("unable to get log stream overrides", err.Error())
+		return
+	}
+
+	redisModel := redis.ModelForRedisResult(&clientRedis, &state, &connectionInfo, logStreamOverrides, resp.Diagnostics)
 
 	// Set state to fully populated data
 	diags = resp.State.Set(ctx, redisModel)
@@ -179,7 +197,21 @@ func (r *redisResource) Update(ctx context.Context, req resource.UpdateRequest, 
 		return
 	}
 
-	redisModel := redis.ModelForRedisResult(&redisResponse, &connectionInfo, resp.Diagnostics)
+	logStreamOverrides, err := common.UpdateLogStreamOverride(
+		ctx,
+		r.client,
+		redisResponse.Id,
+		&common.LogStreamOverrideStateAndPlan{
+			Plan:  plan.LogStreamOverride,
+			State: state.LogStreamOverride,
+		},
+	)
+	if err != nil {
+		resp.Diagnostics.AddError("unable to get log stream overrides", err.Error())
+		return
+	}
+
+	redisModel := redis.ModelForRedisResult(&redisResponse, &plan, &connectionInfo, logStreamOverrides, resp.Diagnostics)
 
 	envID, err := common.UpdateEnvironmentID(ctx, r.client, redisModel.Id.ValueString(), &common.EnvironmentIDStateAndPlan{
 		State: state.EnvironmentID.ValueStringPointer(),

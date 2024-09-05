@@ -182,7 +182,7 @@ func WrapService(ctx context.Context, apiClient *client.ClientWithResponses, ser
 		return nil, fmt.Errorf("error getting notification overrides: %w", err)
 	}
 
-	logStreamOverrides, err := getLogStreamOverrides(ctx, apiClient, service.Id)
+	logStreamOverrides, err := GetLogStreamOverrides(ctx, apiClient, service.Id)
 	if err != nil {
 		if errors.Is(err, errNotFound) {
 			logStreamOverrides = nil
@@ -322,7 +322,7 @@ func getNotificationOverrides(ctx context.Context, apiClient *client.ClientWithR
 	return &res, nil
 }
 
-func getLogStreamOverrides(ctx context.Context, apiClient *client.ClientWithResponses, serviceID string) (*logs.ResourceLogStreamSetting, error) {
+func GetLogStreamOverrides(ctx context.Context, apiClient *client.ClientWithResponses, serviceID string) (*logs.ResourceLogStreamSetting, error) {
 	var res logs.ResourceLogStreamSetting
 	err := Get(func() (*http.Response, error) {
 		return apiClient.GetResourceLogStream(ctx, serviceID)
@@ -590,7 +590,7 @@ func UpdateService(ctx context.Context, apiClient *client.ClientWithResponses, r
 		return nil, err
 	}
 
-	logStreamOverride, err := updateLogStreamOverride(ctx, apiClient, req)
+	logStreamOverride, err := UpdateLogStreamOverride(ctx, apiClient, req.ServiceID, req.LogStreamOverride)
 	if err != nil {
 		return nil, err
 	}
@@ -744,12 +744,12 @@ func updateNotificationOverride(ctx context.Context, apiClient *client.ClientWit
 	return &notificationOverrideResp, nil
 }
 
-func updateLogStreamOverride(ctx context.Context, apiClient *client.ClientWithResponses, req UpdateServiceReq) (*logs.ResourceLogStreamSetting, error) {
-	if req.LogStreamOverride == nil {
+func UpdateLogStreamOverride(ctx context.Context, apiClient *client.ClientWithResponses, resourceID string, logStream *LogStreamOverrideStateAndPlan) (*logs.ResourceLogStreamSetting, error) {
+	if logStream == nil {
 		return nil, nil
 	}
-	planIsMissing := req.LogStreamOverride.Plan.IsNull() || req.LogStreamOverride.Plan.IsUnknown()
-	stateIsMissing := req.LogStreamOverride.State.IsNull() || req.LogStreamOverride.State.IsUnknown()
+	planIsMissing := logStream.Plan.IsNull() || logStream.Plan.IsUnknown()
+	stateIsMissing := logStream.State.IsNull() || logStream.State.IsUnknown()
 
 	if planIsMissing && stateIsMissing {
 		return nil, nil
@@ -757,7 +757,7 @@ func updateLogStreamOverride(ctx context.Context, apiClient *client.ClientWithRe
 
 	if planIsMissing && !stateIsMissing {
 		err := Delete(func() (*http.Response, error) {
-			return apiClient.DeleteResourceLogStream(ctx, req.ServiceID)
+			return apiClient.DeleteResourceLogStream(ctx, resourceID)
 		})
 		if err != nil {
 			return nil, fmt.Errorf("could not delete log stream override: %w", err)
@@ -767,11 +767,11 @@ func updateLogStreamOverride(ctx context.Context, apiClient *client.ClientWithRe
 
 	var logStreamOverrideResp logs.ResourceLogStreamSetting
 	err := Update(func() (*http.Response, error) {
-		plan, err := LogStreamOverrideToClient(req.LogStreamOverride.Plan)
+		plan, err := LogStreamOverrideToClient(logStream.Plan)
 		if err != nil {
 			return nil, fmt.Errorf("could not create log stream override: %w", err)
 		}
-		return apiClient.UpdateResourceLogStream(ctx, req.ServiceID, *plan)
+		return apiClient.UpdateResourceLogStream(ctx, resourceID, *plan)
 	}, &logStreamOverrideResp)
 	if err != nil {
 		return nil, fmt.Errorf("could not update log stream override: %w", err)

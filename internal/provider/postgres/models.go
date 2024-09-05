@@ -4,6 +4,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/attr"
 	"github.com/hashicorp/terraform-plugin-framework/diag"
 	"github.com/hashicorp/terraform-plugin-framework/types"
+	"terraform-provider-render/internal/client/logs"
 	"terraform-provider-render/internal/provider/common"
 	commontypes "terraform-provider-render/internal/provider/common/types"
 
@@ -26,6 +27,7 @@ type PostgresModel struct {
 	Role                    types.String                  `tfsdk:"role"`
 	Version                 types.String                  `tfsdk:"version"`
 	ConnectionInfo          types.Object                  `tfsdk:"connection_info"`
+	LogStreamOverride       types.Object                  `tfsdk:"log_stream_override"`
 }
 
 type ReadReplica struct {
@@ -89,7 +91,7 @@ func connectionInfoFromClient(c *client.PostgresConnectionInfo, diags diag.Diagn
 	return objectValue
 }
 
-func ModelFromClient(postgres *client.Postgres, connectionInfo *client.PostgresConnectionInfo, existingModel PostgresModel, diags diag.Diagnostics) PostgresModel {
+func ModelFromClient(postgres *client.Postgres, connectionInfo *client.PostgresConnectionInfo, logStreamOverrides *logs.ResourceLogStreamSetting, existingModel PostgresModel, diags diag.Diagnostics) PostgresModel {
 	postgresModel := PostgresModel{
 		ID:                      types.StringValue(postgres.Id),
 		Name:                    types.StringValue(postgres.Name),
@@ -106,6 +108,7 @@ func ModelFromClient(postgres *client.Postgres, connectionInfo *client.PostgresC
 		ReadReplicas:            ReadReplicaFromClient(postgres.ReadReplicas),
 		Version:                 types.StringValue(string(postgres.Version)),
 		ConnectionInfo:          connectionInfoFromClient(connectionInfo, diags),
+		LogStreamOverride:       common.LogStreamOverrideFromClient(logStreamOverrides, existingModel.LogStreamOverride, diags),
 	}
 	return postgresModel
 }
