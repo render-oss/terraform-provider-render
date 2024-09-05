@@ -224,6 +224,10 @@ func (r *privateServiceResource) Update(ctx context.Context, req resource.Update
 			Plan:  plan.EnvironmentID.ValueStringPointer(),
 		},
 		NotificationOverride: notificationOverride,
+		LogStreamOverride: &common.LogStreamOverrideStateAndPlan{
+			State: state.LogStreamOverride,
+			Plan:  plan.LogStreamOverride,
+		},
 	}, common.ServiceTypePrivateService)
 	if err != nil {
 		resp.Diagnostics.AddError(

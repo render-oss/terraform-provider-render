@@ -82,6 +82,7 @@ func (r *webServiceResource) Create(ctx context.Context, req resource.CreateRequ
 		CustomDomains:        common.CustomDomainModelsToClientCustomDomains(plan.CustomDomains),
 		EnvironmentID:        plan.EnvironmentID.ValueStringPointer(),
 		NotificationOverride: plan.NotificationOverride,
+		LogStreamOverride:    plan.LogStreamOverride,
 	})
 	if err != nil {
 		resp.Diagnostics.AddError(
@@ -228,6 +229,10 @@ func (r *webServiceResource) Update(ctx context.Context, req resource.UpdateRequ
 			Plan:  plan.EnvironmentID.ValueStringPointer(),
 		},
 		NotificationOverride: notificationOverride,
+		LogStreamOverride: &common.LogStreamOverrideStateAndPlan{
+			State: state.LogStreamOverride,
+			Plan:  plan.LogStreamOverride,
+		},
 	}, common.ServiceTypeWebService)
 	if err != nil {
 		resp.Diagnostics.AddError(

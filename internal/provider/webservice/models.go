@@ -74,7 +74,7 @@ func ModelForServiceResult(service *common.WrappedService, plan WebServiceModel,
 		EnvVars:              common.EnvVarsFromClientCursors(service.EnvVars, plan.EnvVars),
 		SecretFiles:          common.SecretFilesFromClientCursors(service.SecretFiles),
 		NotificationOverride: common.NotificationOverrideFromClient(service.NotificationOverride, diags),
-		LogStreamOverride:    common.LogStreamOverrideFromClient(service.LogStreamOverride, diags),
+		LogStreamOverride:    common.LogStreamOverrideFromClient(service.LogStreamOverride, plan.LogStreamOverride, diags),
 	}
 
 	runtimeSource, err := common.RuntimeSourceFromClient(service.Service, details.Env, details.EnvSpecificDetails)

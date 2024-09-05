@@ -184,7 +184,11 @@ func WrapService(ctx context.Context, apiClient *client.ClientWithResponses, ser
 
 	logStreamOverrides, err := getLogStreamOverrides(ctx, apiClient, service.Id)
 	if err != nil {
-		return nil, fmt.Errorf("error getting log stream overrides: %w", err)
+		if errors.Is(err, errNotFound) {
+			logStreamOverrides = nil
+		} else {
+			return nil, fmt.Errorf("error getting log stream overrides: %w", err)
+		}
 	}
 
 	return &WrappedService{
@@ -324,6 +328,9 @@ func getLogStreamOverrides(ctx context.Context, apiClient *client.ClientWithResp
 		return apiClient.GetResourceLogStream(ctx, serviceID)
 	}, &res)
 	if err != nil {
+		if errors.Is(err, errNotFound) {
+			return nil, nil
+		}
 		return nil, fmt.Errorf("could not get log stream override for service: %w", err)
 	}
 	return &res, nil
@@ -334,6 +341,7 @@ type CreateServiceReq struct {
 	CustomDomains        []client.CustomDomain
 	EnvironmentID        *string
 	NotificationOverride types.Object
+	LogStreamOverride    types.Object
 }
 
 type serviceWithDeploy struct {
@@ -381,6 +389,20 @@ func CreateService(ctx context.Context, apiClient *client.ClientWithResponses, r
 		}, nil)
 		if err != nil {
 			return nil, fmt.Errorf("could not add notification overrides: %w", err)
+		}
+	}
+
+	logStreamOverride, err := LogStreamOverrideToClient(req.LogStreamOverride)
+	if err != nil {
+		return nil, fmt.Errorf("could not process log stream override: %w", err)
+	}
+
+	if logStreamOverride != nil {
+		err = Create(func() (*http.Response, error) {
+			return apiClient.UpdateResourceLogStream(ctx, serviceResponse.Service.Id, *logStreamOverride)
+		}, nil)
+		if err != nil {
+			return nil, fmt.Errorf("could not add log stream override: %w", err)
 		}
 	}
 
@@ -487,12 +509,17 @@ type UpdateServiceReq struct {
 	InstanceCount        *int64
 	Autoscaling          *AutoscalingStateAndPlan
 	NotificationOverride *notifications.NotificationServiceOverridePATCH
-	LogStreamOverride    *logs.LogStreamResourceUpdate
+	LogStreamOverride    *LogStreamOverrideStateAndPlan
 }
 
 type AutoscalingStateAndPlan struct {
 	State *AutoscalingModel
 	Plan  *AutoscalingModel
+}
+
+type LogStreamOverrideStateAndPlan struct {
+	State types.Object
+	Plan  types.Object
 }
 
 type DiskStateAndPlan struct {
@@ -721,10 +748,30 @@ func updateLogStreamOverride(ctx context.Context, apiClient *client.ClientWithRe
 	if req.LogStreamOverride == nil {
 		return nil, nil
 	}
+	planIsMissing := req.LogStreamOverride.Plan.IsNull() || req.LogStreamOverride.Plan.IsUnknown()
+	stateIsMissing := req.LogStreamOverride.State.IsNull() || req.LogStreamOverride.State.IsUnknown()
+
+	if planIsMissing && stateIsMissing {
+		return nil, nil
+	}
+
+	if planIsMissing && !stateIsMissing {
+		err := Delete(func() (*http.Response, error) {
+			return apiClient.DeleteResourceLogStream(ctx, req.ServiceID)
+		})
+		if err != nil {
+			return nil, fmt.Errorf("could not delete log stream override: %w", err)
+		}
+		return nil, nil
+	}
 
 	var logStreamOverrideResp logs.ResourceLogStreamSetting
 	err := Update(func() (*http.Response, error) {
-		return apiClient.UpdateResourceLogStream(ctx, req.ServiceID, *req.LogStreamOverride)
+		plan, err := LogStreamOverrideToClient(req.LogStreamOverride.Plan)
+		if err != nil {
+			return nil, fmt.Errorf("could not create log stream override: %w", err)
+		}
+		return apiClient.UpdateResourceLogStream(ctx, req.ServiceID, *plan)
 	}, &logStreamOverrideResp)
 	if err != nil {
 		return nil, fmt.Errorf("could not update log stream override: %w", err)

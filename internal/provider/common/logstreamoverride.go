@@ -10,14 +10,14 @@ import (
 )
 
 var logStreamTypes = map[string]attr.Type{
-	"send":     types.BoolType,
+	"setting":  types.StringType,
 	"token":    types.StringType,
 	"endpoint": types.StringType,
 }
 
-func LogStreamOverrideFromClient(client *logs.ResourceLogStreamSetting, diags diag.Diagnostics) types.Object {
+func LogStreamOverrideFromClient(client *logs.ResourceLogStreamSetting, plan types.Object, diags diag.Diagnostics) types.Object {
 	if client == nil {
-		return types.ObjectNull(notificationTypes)
+		return types.ObjectNull(logStreamTypes)
 	}
 
 	setting := logs.LogStreamSetting("send")
@@ -30,11 +30,18 @@ func LogStreamOverrideFromClient(client *logs.ResourceLogStreamSetting, diags di
 		endpoint = *client.Endpoint
 	}
 
+	planAttrs := plan.Attributes()
+	token := types.StringNull()
+	if tkn, present := planAttrs["token"]; present {
+		token = tkn.(types.String)
+	}
+
 	objectValue, objectDiags := types.ObjectValue(
-		notificationTypes,
+		logStreamTypes,
 		map[string]attr.Value{
-			"send":     types.BoolValue(setting == "send"),
+			"setting":  types.StringValue(string(setting)),
 			"endpoint": types.StringValue(endpoint),
+			"token":    token,
 		},
 	)
 
@@ -44,24 +51,20 @@ func LogStreamOverrideFromClient(client *logs.ResourceLogStreamSetting, diags di
 }
 
 func LogStreamOverrideToClient(model types.Object) (*logs.LogStreamResourceUpdate, error) {
-	if model.IsNull() {
+	if model.IsNull() || model.IsUnknown() {
 		return nil, nil
 	}
 
 	attrs := model.Attributes()
 
 	var logStreamSetting logs.LogStreamSetting
-	if attrs["send"] != nil && !attrs["send"].IsNull() && !attrs["send"].IsUnknown() {
-		send, ok := attrs["send"].(types.Bool)
+	if attrs["setting"] != nil && !attrs["setting"].IsNull() && !attrs["setting"].IsUnknown() {
+		str, ok := attrs["setting"].(types.String)
 		if !ok {
 			// This should never happen
-			return nil, fmt.Errorf("unexpected type for send: %T", attrs["send"])
+			return nil, fmt.Errorf("unexpected type for setting: %T", attrs["setting"])
 		}
-		if send.ValueBool() {
-			logStreamSetting = logs.LogStreamSettingSend
-		} else {
-			logStreamSetting = logs.LogStreamSettingDrop
-		}
+		logStreamSetting = logs.LogStreamSetting(str.ValueString())
 	}
 	var endpoint *logs.LogStreamEndpoint
 	if attrs["endpoint"] != nil && !attrs["endpoint"].IsNull() && !attrs["endpoint"].IsUnknown() {
@@ -83,8 +86,8 @@ func LogStreamOverrideToClient(model types.Object) (*logs.LogStreamResourceUpdat
 	}
 
 	return &logs.LogStreamResourceUpdate{
-		LogStreamSetting:  logStreamSetting,
-		LogStreamEndpoint: endpoint,
-		LogStreamToken:    token,
+		Setting:  &logStreamSetting,
+		Endpoint: endpoint,
+		Token:    token,
 	}, nil
 }

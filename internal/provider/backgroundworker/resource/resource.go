@@ -219,6 +219,10 @@ func (r *backgroundWorkerResource) Update(ctx context.Context, req resource.Upda
 			Plan:  plan.EnvironmentID.ValueStringPointer(),
 		},
 		NotificationOverride: notificationOverride,
+		LogStreamOverride: &common.LogStreamOverrideStateAndPlan{
+			State: state.LogStreamOverride,
+			Plan:  plan.LogStreamOverride,
+		},
 	}, common.ServiceTypeBackgroundWorker)
 	if err != nil {
 		resp.Diagnostics.AddError(

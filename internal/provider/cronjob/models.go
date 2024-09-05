@@ -25,7 +25,7 @@ type CronJobModel struct {
 	LogStreamOverride    types.Object `tfsdk:"log_stream_override"`
 }
 
-func ModelForServiceResult(service *common.WrappedService, planEVs map[string]common.EnvVarModel, diags diag.Diagnostics) (*CronJobModel, error) {
+func ModelForServiceResult(service *common.WrappedService, plan CronJobModel, diags diag.Diagnostics) (*CronJobModel, error) {
 	details, err := service.ServiceDetails.AsCronJobDetails()
 	if err != nil {
 		return nil, err
@@ -40,10 +40,10 @@ func ModelForServiceResult(service *common.WrappedService, planEVs map[string]co
 		Plan:                 types.StringValue(string(details.Plan)),
 		Region:               types.StringValue(string(details.Region)),
 		Schedule:             types.StringValue(details.Schedule),
-		EnvVars:              common.EnvVarsFromClientCursors(service.EnvVars, planEVs),
+		EnvVars:              common.EnvVarsFromClientCursors(service.EnvVars, plan.EnvVars),
 		SecretFiles:          common.SecretFilesFromClientCursors(service.SecretFiles),
 		NotificationOverride: common.NotificationOverrideFromClient(service.NotificationOverride, diags),
-		LogStreamOverride:    common.LogStreamOverrideFromClient(service.LogStreamOverride, diags),
+		LogStreamOverride:    common.LogStreamOverrideFromClient(service.LogStreamOverride, plan.LogStreamOverride, diags),
 	}
 
 	runtimeSource, err := common.RuntimeSourceFromClient(service.Service, details.Env, details.EnvSpecificDetails)
