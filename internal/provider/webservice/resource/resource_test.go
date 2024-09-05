@@ -56,6 +56,8 @@ func TestWebServiceResource(t *testing.T) {
 					resource.TestCheckResourceAttr(resourceName, "notification_override.preview_notifications_enabled", "false"),
 					resource.TestCheckResourceAttr(resourceName, "notification_override.notifications_to_send", "failure"),
 
+					resource.TestCheckResourceAttr(resourceName, "log_stream_override.setting", "drop"),
+
 					resource.TestCheckResourceAttrWith(resourceName, "slug", func(value string) error {
 						if !strings.HasPrefix(value, "terraform-web-service") {
 							return fmt.Errorf("slug should start with the service name")
@@ -98,6 +100,8 @@ func TestWebServiceResource(t *testing.T) {
 
 					resource.TestCheckResourceAttr(resourceName, "notification_override.preview_notifications_enabled", "true"),
 					resource.TestCheckResourceAttr(resourceName, "notification_override.notifications_to_send", "all"),
+
+					resource.TestCheckNoResourceAttr(resourceName, "log_stream_override.setting"),
 				),
 			},
 		},

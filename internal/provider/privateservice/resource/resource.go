@@ -81,6 +81,7 @@ func (r *privateServiceResource) Create(ctx context.Context, req resource.Create
 		Service:              serviceDetails,
 		EnvironmentID:        plan.EnvironmentID.ValueStringPointer(),
 		NotificationOverride: plan.NotificationOverride,
+		LogStreamOverride:    plan.LogStreamOverride,
 	})
 	if err != nil {
 		resp.Diagnostics.AddError(

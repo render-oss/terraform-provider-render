@@ -76,6 +76,7 @@ func (r *cronJobResource) Create(ctx context.Context, req resource.CreateRequest
 		Service:              serviceDetails,
 		EnvironmentID:        plan.EnvironmentID.ValueStringPointer(),
 		NotificationOverride: plan.NotificationOverride,
+		LogStreamOverride:    plan.LogStreamOverride,
 	})
 	if err != nil {
 		resp.Diagnostics.AddError(

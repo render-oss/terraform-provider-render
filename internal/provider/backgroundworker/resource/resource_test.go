@@ -25,13 +25,14 @@ func TestBackgroundWorkerResource(t *testing.T) {
 				ResourceName: resourceName,
 				ConfigFile:   config.StaticFile("./testdata/everything_enabled.tf"),
 				ConfigVariables: config.Variables{
-					"name":                config.StringVariable("background-worker"),
-					"plan":                config.StringVariable("starter"),
-					"region":              config.StringVariable("oregon"),
-					"runtime":             config.StringVariable("image"),
-					"previews_generation": config.StringVariable("automatic"),
-					"environment_name":    config.StringVariable("first"),
-					"pre_deploy_command":  config.StringVariable("echo 'hello world'"),
+					"name":                   config.StringVariable("background-worker"),
+					"plan":                   config.StringVariable("starter"),
+					"region":                 config.StringVariable("oregon"),
+					"runtime":                config.StringVariable("image"),
+					"previews_generation":    config.StringVariable("automatic"),
+					"environment_name":       config.StringVariable("first"),
+					"pre_deploy_command":     config.StringVariable("echo 'hello world'"),
+					"has_log_stream_setting": config.BoolVariable(true),
 				},
 				ConfigPlanChecks: resource.ConfigPlanChecks{
 					PreApply: []plancheck.PlanCheck{
@@ -65,6 +66,8 @@ func TestBackgroundWorkerResource(t *testing.T) {
 
 					resource.TestCheckResourceAttr(resourceName, "notification_override.preview_notifications_enabled", "true"),
 					resource.TestCheckResourceAttr(resourceName, "notification_override.notifications_to_send", "all"),
+
+					resource.TestCheckResourceAttr(resourceName, "log_stream_override.setting", "drop"),
 
 					resource.TestCheckResourceAttr(resourceName, "pre_deploy_command", "echo 'hello world'"),
 
@@ -137,6 +140,7 @@ func TestBackgroundWorkerResource(t *testing.T) {
 						return nil
 					}),
 					resource.TestCheckResourceAttr(resourceName, "pre_deploy_command", "echo 'goodbye'"),
+					resource.TestCheckNoResourceAttr(resourceName, "log_stream_override.setting"),
 				),
 			},
 			// Remove environment

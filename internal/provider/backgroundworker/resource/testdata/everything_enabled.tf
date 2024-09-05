@@ -28,6 +28,11 @@ variable "pre_deploy_command" {
   default  = null
 }
 
+variable "has_log_stream_setting" {
+  type     = bool
+  default  = false
+}
+
 locals {
   environment_map = {
     "first" = [for env in render_project.first.environments : env.id if env.name == "prod"][0],
@@ -85,6 +90,9 @@ resource "render_background_worker" "worker" {
     preview_notifications_enabled = "true"
     notifications_to_send = "all"
   }
+  log_stream_override = var.has_log_stream_setting ? {
+    setting = "drop"
+  } : null
   environment_id = var.environment_name != null ? local.environment_map[var.environment_name] : null
 }
 

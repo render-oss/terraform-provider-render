@@ -42,4 +42,8 @@ resource "render_web_service" "web" {
     preview_notifications_enabled = "false"
     notifications_to_send         = "failure"
   }
+
+  log_stream_override = {
+    setting = "drop"
+  }
 }
