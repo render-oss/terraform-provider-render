@@ -6,6 +6,8 @@ import (
 	"os"
 	"strings"
 
+	logstreamdatasource "terraform-provider-render/internal/provider/logstreams/datasource"
+	logstreamresource "terraform-provider-render/internal/provider/logstreams/resource"
 	projectdatasource "terraform-provider-render/internal/provider/project/datasource"
 	projectresource "terraform-provider-render/internal/provider/project/resource"
 
@@ -315,6 +317,7 @@ func (p *renderProvider) DataSources(_ context.Context) []func() datasource.Data
 		envgroupdatasource.NewEnvGroupDataSource,
 		envgroupdatasource.NewEnvGroupLinkDataSource,
 		notificationsdatasource.NewNotificationSettingDataSource,
+		logstreamdatasource.NewLogStreamSettingDataSource,
 		postgresdatasource.NewPostgresDataSource,
 		privateservicedatasource.NewPrivateServiceSource,
 		projectdatasource.NewProjectDataSource,
@@ -332,6 +335,7 @@ func (p *renderProvider) Resources(_ context.Context) []func() resource.Resource
 		cronjobresource.NewCronJobResource,
 		envgroupresource.NewEnvGroupResource,
 		envgroupresource.NewEnvGroupLinkResource,
+		logstreamresource.NewLogStreamSettingResource,
 		notificationsresource.NewNotificationSettingResource,
 		postgresresource.NewPostgresResource,
 		privateserviceresource.NewPrivateServiceResource,
