@@ -28,6 +28,11 @@ variable "pre_deploy_command" {
   default  = null
 }
 
+variable "has_log_stream_setting" {
+  type     = bool
+  default  = false
+}
+
 locals {
   environment_map = {
     "first" = render_project.first.environments,
@@ -79,6 +84,11 @@ resource "render_private_service" "private" {
     preview_notifications_enabled = "true"
     notifications_to_send = "all"
   }
+
+  log_stream_override = var.has_log_stream_setting ? {
+    setting = "drop"
+  } : null
+
   environment_id = var.environment_name != null ? local.environment_map[var.environment_name]["prod"].id : null
   depends_on = [render_project.first, render_project.second]
 }

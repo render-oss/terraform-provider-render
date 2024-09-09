@@ -6,6 +6,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
 	commontypes "terraform-provider-render/internal/provider/common/types"
 	"terraform-provider-render/internal/provider/types/datasource"
+	"terraform-provider-render/internal/provider/types/resource"
 )
 
 func PostgresDataSourceSchema(ctx context.Context) schema.Schema {
@@ -122,6 +123,7 @@ func PostgresDataSourceSchema(ctx context.Context) schema.Schema {
 				MarkdownDescription: "The Postgres version",
 				Computed:            true,
 			},
+			"log_stream_override": resource.LogStreamOverride,
 		},
 	}
 }

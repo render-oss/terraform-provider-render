@@ -25,6 +25,7 @@ func Schema(ctx context.Context) schema.Schema {
 			"env_vars":              datasource.EnvVars,
 			"secret_files":          datasource.SecretFiles,
 			"notification_override": datasource.NotificationOverride,
+			"log_stream_override":   datasource.LogStreamOverride,
 		},
 	}
 }

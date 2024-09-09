@@ -25,13 +25,14 @@ func TestCronJobResource(t *testing.T) {
 				ResourceName: resourceName,
 				ConfigFile:   config.StaticFile("./testdata/everything_enabled.tf"),
 				ConfigVariables: config.Variables{
-					"name":              config.StringVariable("cron-job-tf"),
-					"plan":              config.StringVariable("starter"),
-					"region":            config.StringVariable("oregon"),
-					"environment_name":  config.StringVariable("first"),
-					"schedule":          config.StringVariable("0 0 * * *"),
-					"env_var_value":     config.StringVariable("val1"),
-					"secret_file_value": config.StringVariable("content1"),
+					"name":                   config.StringVariable("cron-job-tf"),
+					"plan":                   config.StringVariable("starter"),
+					"region":                 config.StringVariable("oregon"),
+					"environment_name":       config.StringVariable("first"),
+					"schedule":               config.StringVariable("0 0 * * *"),
+					"env_var_value":          config.StringVariable("val1"),
+					"secret_file_value":      config.StringVariable("content1"),
+					"has_log_stream_setting": config.BoolVariable(true),
 				},
 				ConfigPlanChecks: resource.ConfigPlanChecks{
 					PreApply: []plancheck.PlanCheck{
@@ -61,6 +62,8 @@ func TestCronJobResource(t *testing.T) {
 
 					resource.TestCheckResourceAttr(resourceName, "notification_override.preview_notifications_enabled", "true"),
 					resource.TestCheckResourceAttr(resourceName, "notification_override.notifications_to_send", "all"),
+
+					resource.TestCheckResourceAttr(resourceName, "log_stream_override.setting", "drop"),
 
 					resource.TestCheckResourceAttrWith(resourceName, "environment_id", func(value string) error {
 						if !strings.HasPrefix(value, "evm-") {
@@ -104,6 +107,8 @@ func TestCronJobResource(t *testing.T) {
 					resource.TestCheckResourceAttr(resourceName, "region", "oregon"),
 					resource.TestCheckResourceAttr(resourceName, "env_vars.key1.value", "val2"),
 					resource.TestCheckResourceAttr(resourceName, "secret_files.file1.content", "content2"),
+					resource.TestCheckNoResourceAttr(resourceName, "log_stream_override.setting"),
+
 					resource.TestCheckResourceAttrWith(resourceName, "environment_id", func(value string) error {
 						if !strings.HasPrefix(value, "evm-") {
 							return fmt.Errorf("expected environment_id to be set")

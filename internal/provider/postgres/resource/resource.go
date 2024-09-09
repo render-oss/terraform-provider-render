@@ -7,7 +7,6 @@ import (
 
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
-
 	"terraform-provider-render/internal/provider/common"
 	"terraform-provider-render/internal/provider/postgres"
 
@@ -120,8 +119,21 @@ func (r *postgresResource) Create(ctx context.Context, req resource.CreateReques
 		return
 	}
 
+	logStreamOverrides, err := common.UpdateLogStreamOverride(
+		ctx,
+		r.client,
+		pg.Id,
+		&common.LogStreamOverrideStateAndPlan{
+			Plan: plan.LogStreamOverride,
+		},
+	)
+	if err != nil {
+		resp.Diagnostics.AddError("unable to create log stream overrides", err.Error())
+		return
+	}
+
 	// Set state to fully populated data
-	diags = resp.State.Set(ctx, postgres.ModelFromClient(&pg, &connectionInfo, plan, resp.Diagnostics))
+	diags = resp.State.Set(ctx, postgres.ModelFromClient(&pg, &connectionInfo, logStreamOverrides, plan, resp.Diagnostics))
 	resp.Diagnostics.Append(diags...)
 }
 
@@ -163,8 +175,14 @@ func (r *postgresResource) Read(ctx context.Context, req resource.ReadRequest, r
 		return
 	}
 
+	logStreamOverrides, err := common.GetLogStreamOverrides(ctx, r.client, id)
+	if err != nil {
+		resp.Diagnostics.AddError("unable to get log stream overrides", err.Error())
+		return
+	}
+
 	// Set refreshed state
-	diags = resp.State.Set(ctx, postgres.ModelFromClient(&pg, &connectionInfo, state, resp.Diagnostics))
+	diags = resp.State.Set(ctx, postgres.ModelFromClient(&pg, &connectionInfo, logStreamOverrides, state, resp.Diagnostics))
 	resp.Diagnostics.Append(diags...)
 }
 
@@ -224,8 +242,22 @@ func (r *postgresResource) Update(ctx context.Context, req resource.UpdateReques
 		return
 	}
 
+	logStreamOverrides, err := common.UpdateLogStreamOverride(
+		ctx,
+		r.client,
+		plan.ID.ValueString(),
+		&common.LogStreamOverrideStateAndPlan{
+			Plan:  plan.LogStreamOverride,
+			State: state.LogStreamOverride,
+		},
+	)
+	if err != nil {
+		resp.Diagnostics.AddError("unable to get log stream overrides", err.Error())
+		return
+	}
+
 	// Set state to fully populated data
-	diags = resp.State.Set(ctx, postgres.ModelFromClient(&pg, &connectionInfo, plan, resp.Diagnostics))
+	diags = resp.State.Set(ctx, postgres.ModelFromClient(&pg, &connectionInfo, logStreamOverrides, plan, resp.Diagnostics))
 	resp.Diagnostics.Append(diags...)
 }
 

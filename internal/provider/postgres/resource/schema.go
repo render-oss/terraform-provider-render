@@ -167,6 +167,7 @@ func PostgresResourceSchema(ctx context.Context) schema.Schema {
 					ValidatePostgresVersion(),
 				},
 			},
+			"log_stream_override": resource.LogStreamOverride,
 		},
 	}
 }

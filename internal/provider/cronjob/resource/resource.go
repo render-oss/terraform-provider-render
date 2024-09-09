@@ -76,6 +76,7 @@ func (r *cronJobResource) Create(ctx context.Context, req resource.CreateRequest
 		Service:              serviceDetails,
 		EnvironmentID:        plan.EnvironmentID.ValueStringPointer(),
 		NotificationOverride: plan.NotificationOverride,
+		LogStreamOverride:    plan.LogStreamOverride,
 	})
 	if err != nil {
 		resp.Diagnostics.AddError(
@@ -83,7 +84,7 @@ func (r *cronJobResource) Create(ctx context.Context, req resource.CreateRequest
 		return
 	}
 
-	model, err := cronJob.ModelForServiceResult(service, plan.EnvVars, resp.Diagnostics)
+	model, err := cronJob.ModelForServiceResult(service, plan, resp.Diagnostics)
 	if err != nil {
 		resp.Diagnostics.AddError(
 			"Error creating cron job", "Could not create cron job, unexpected error: "+err.Error(),
@@ -118,7 +119,7 @@ func (r *cronJobResource) Read(ctx context.Context, req resource.ReadRequest, re
 		return
 	}
 
-	cronJobModel, err := cronJob.ModelForServiceResult(service, state.EnvVars, resp.Diagnostics)
+	cronJobModel, err := cronJob.ModelForServiceResult(service, state, resp.Diagnostics)
 	if err != nil {
 		resp.Diagnostics.AddError(
 			"Error reading service", "Could not read service, unexpected error: "+err.Error(),
@@ -180,6 +181,10 @@ func (r *cronJobResource) Update(ctx context.Context, req resource.UpdateRequest
 			Plan:  plan.EnvironmentID.ValueStringPointer(),
 		},
 		NotificationOverride: notificationOverride,
+		LogStreamOverride: &common.LogStreamOverrideStateAndPlan{
+			State: state.LogStreamOverride,
+			Plan:  plan.LogStreamOverride,
+		},
 	}, common.ServiceTypeCronJob)
 	if err != nil {
 		resp.Diagnostics.AddError(
@@ -188,7 +193,7 @@ func (r *cronJobResource) Update(ctx context.Context, req resource.UpdateRequest
 		)
 		return
 	}
-	cronJobModel, err := cronJob.ModelForServiceResult(service, plan.EnvVars, resp.Diagnostics)
+	cronJobModel, err := cronJob.ModelForServiceResult(service, plan, resp.Diagnostics)
 	if err != nil {
 		resp.Diagnostics.AddError(
 			"Error reading service",

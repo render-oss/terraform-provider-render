@@ -81,6 +81,7 @@ func (r *privateServiceResource) Create(ctx context.Context, req resource.Create
 		Service:              serviceDetails,
 		EnvironmentID:        plan.EnvironmentID.ValueStringPointer(),
 		NotificationOverride: plan.NotificationOverride,
+		LogStreamOverride:    plan.LogStreamOverride,
 	})
 	if err != nil {
 		resp.Diagnostics.AddError(
@@ -224,6 +225,10 @@ func (r *privateServiceResource) Update(ctx context.Context, req resource.Update
 			Plan:  plan.EnvironmentID.ValueStringPointer(),
 		},
 		NotificationOverride: notificationOverride,
+		LogStreamOverride: &common.LogStreamOverrideStateAndPlan{
+			State: state.LogStreamOverride,
+			Plan:  plan.LogStreamOverride,
+		},
 	}, common.ServiceTypePrivateService)
 	if err != nil {
 		resp.Diagnostics.AddError(

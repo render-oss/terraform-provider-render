@@ -64,7 +64,7 @@ func (d *cronJobSource) Read(ctx context.Context, req datasource.ReadRequest, re
 		return
 	}
 
-	cronJobModel, err := cronJob.ModelForServiceResult(service, plan.EnvVars, resp.Diagnostics)
+	cronJobModel, err := cronJob.ModelForServiceResult(service, plan, resp.Diagnostics)
 	if err != nil {
 		resp.Diagnostics.AddError("Unable to apply service result to model", err.Error())
 		return

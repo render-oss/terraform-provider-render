@@ -13,6 +13,9 @@ variable "name" {
 variable "plan" {
   type = string
 }
+variable "has_log_stream_setting" {
+  type = string
+}
 
 locals {
   environment_map = {
@@ -53,5 +56,9 @@ resource "render_redis" "test-redis" {
       description = "test-2"
     }
   ] : null
+  log_stream_override = var.has_log_stream_setting ? {
+    setting = "drop"
+  } : null
+
   depends_on = [render_project.first, render_project.second]
 }

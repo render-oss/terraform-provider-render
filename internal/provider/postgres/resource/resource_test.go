@@ -33,6 +33,7 @@ func TestAccPostgresResource(t *testing.T) {
 					"ver":                       config.StringVariable("15"),
 					"read_replica":              config.BoolVariable(false),
 					"environment_name":          config.StringVariable("first"),
+					"has_log_stream_setting":    config.BoolVariable(true),
 				},
 				ConfigPlanChecks: resource.ConfigPlanChecks{
 					PreApply: []plancheck.PlanCheck{
@@ -61,6 +62,8 @@ func TestAccPostgresResource(t *testing.T) {
 					resource.TestCheckResourceAttr(resourceName, "version", "15"),
 					resource.TestCheckResourceAttr(resourceName, "high_availability_enabled", "false"),
 
+					resource.TestCheckResourceAttr(resourceName, "log_stream_override.setting", "drop"),
+
 					resource.TestCheckResourceAttrWith(resourceName, "connection_info.password", func(value string) error {
 						if len(value) != 32 {
 							return fmt.Errorf("expected password to be 32 characters, got: %d", len(value))
@@ -69,7 +72,7 @@ func TestAccPostgresResource(t *testing.T) {
 					}),
 
 					resource.TestCheckResourceAttrWith(resourceName, "connection_info.internal_connection_string", func(value string) error {
-						if !regexp.MustCompile(`^postgres://db_user.*:.{32}@dpg-.*/db_name.*$`).MatchString(value) {
+						if !regexp.MustCompile(`^postgresql://db_user.*:.{32}@dpg-.*/db_name.*$`).MatchString(value) {
 							return fmt.Errorf("expected internal_connection_string: %s to match regex", value)
 						}
 
@@ -77,7 +80,7 @@ func TestAccPostgresResource(t *testing.T) {
 					}),
 
 					resource.TestCheckResourceAttrWith(resourceName, "connection_info.external_connection_string", func(value string) error {
-						if !regexp.MustCompile(`^postgres://db_user.*:.{32}@dpg-.*:5434/db_name.*$`).MatchString(value) {
+						if !regexp.MustCompile(`^postgresql://db_user.*:.{32}@dpg-.*:5434/db_name.*$`).MatchString(value) {
 							return fmt.Errorf("expected external_connection_string: %s to match regex", value)
 						}
 
@@ -120,6 +123,7 @@ func TestAccPostgresResource(t *testing.T) {
 					"ver":                       config.StringVariable("15"),
 					"read_replica":              config.BoolVariable(false),
 					"environment_name":          config.StringVariable("first"),
+					"has_log_stream_setting":    config.BoolVariable(true),
 				},
 			},
 			{
@@ -134,6 +138,7 @@ func TestAccPostgresResource(t *testing.T) {
 					"ver":                       config.StringVariable("15"),
 					"read_replica":              config.BoolVariable(true),
 					"environment_name":          config.StringVariable("second"),
+					"has_log_stream_setting":    config.BoolVariable(false),
 				},
 				ConfigPlanChecks: resource.ConfigPlanChecks{
 					PreApply: []plancheck.PlanCheck{
@@ -147,6 +152,8 @@ func TestAccPostgresResource(t *testing.T) {
 					resource.TestCheckResourceAttr(resourceName, "region", "oregon"),
 					resource.TestCheckResourceAttr(resourceName, "high_availability_enabled", "true"),
 					resource.TestCheckResourceAttr(resourceName, "read_replicas.0.name", "read-replica"),
+
+					resource.TestCheckNoResourceAttr(resourceName, "log_stream_override.setting"),
 
 					resource.TestCheckResourceAttrWith(resourceName, "environment_id", func(value string) error {
 						if !strings.HasPrefix(value, "evm-") {
@@ -172,6 +179,7 @@ func TestAccPostgresResource(t *testing.T) {
 					"plan":                      config.StringVariable("standard"),
 					"ver":                       config.StringVariable("16"),
 					"read_replica":              config.BoolVariable(false),
+					"has_log_stream_setting":    config.BoolVariable(false),
 				},
 				Check: resource.ComposeAggregateTestCheckFunc(
 					resource.TestCheckResourceAttr(resourceName, "version", "16"),

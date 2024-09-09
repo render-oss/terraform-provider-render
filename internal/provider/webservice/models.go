@@ -33,6 +33,7 @@ type WebServiceModel struct {
 	SecretFiles map[string]common.SecretFileModel `tfsdk:"secret_files"`
 
 	NotificationOverride types.Object `tfsdk:"notification_override"`
+	LogStreamOverride    types.Object `tfsdk:"log_stream_override"`
 }
 
 func ModelForServiceResult(service *common.WrappedService, plan WebServiceModel, diags diag.Diagnostics) (*WebServiceModel, error) {
@@ -73,6 +74,7 @@ func ModelForServiceResult(service *common.WrappedService, plan WebServiceModel,
 		EnvVars:              common.EnvVarsFromClientCursors(service.EnvVars, plan.EnvVars),
 		SecretFiles:          common.SecretFilesFromClientCursors(service.SecretFiles),
 		NotificationOverride: common.NotificationOverrideFromClient(service.NotificationOverride, diags),
+		LogStreamOverride:    common.LogStreamOverrideFromClient(service.LogStreamOverride, plan.LogStreamOverride, diags),
 	}
 
 	runtimeSource, err := common.RuntimeSourceFromClient(service.Service, details.Env, details.EnvSpecificDetails)
