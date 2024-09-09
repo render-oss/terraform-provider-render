@@ -33,7 +33,11 @@ func LogStreamOverrideFromClient(client *logs.ResourceLogStreamSetting, plan typ
 	planAttrs := plan.Attributes()
 	token := types.StringNull()
 	if tkn, present := planAttrs["token"]; present {
-		token = tkn.(types.String)
+		var ok bool
+		token, ok = tkn.(types.String)
+		if !ok {
+			diags.AddError("unexpected type for token", fmt.Sprintf("expected string, got %T", tkn))
+		}
 	}
 
 	objectValue, objectDiags := types.ObjectValue(
