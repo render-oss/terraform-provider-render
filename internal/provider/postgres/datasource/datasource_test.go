@@ -49,7 +49,7 @@ func TestAccPostgresDataSource(t *testing.T) {
 					}),
 
 					resource.TestCheckResourceAttrWith(resourceName, "connection_info.internal_connection_string", func(value string) error {
-						if !regexp.MustCompile(`^postgres://test_user.*:.{32}@dpg-.*/test_name.*$`).MatchString(value) {
+						if !regexp.MustCompile(`^postgresql://test_user.*:.{32}@dpg-.*/test_name.*$`).MatchString(value) {
 							return fmt.Errorf("expected internal_connection_string: %s to match regex", value)
 						}
 
@@ -57,7 +57,7 @@ func TestAccPostgresDataSource(t *testing.T) {
 					}),
 
 					resource.TestCheckResourceAttrWith(resourceName, "connection_info.external_connection_string", func(value string) error {
-						if !regexp.MustCompile(`^postgres://test_user.*:.{32}@dpg-.*:5434/test_name.*$`).MatchString(value) {
+						if !regexp.MustCompile(`^postgresql://test_user.*:.{32}@dpg-.*:5434/test_name.*$`).MatchString(value) {
 							return fmt.Errorf("expected external_connection_string: %s to match regex", value)
 						}
 
