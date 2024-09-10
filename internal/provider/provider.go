@@ -133,9 +133,7 @@ func (p *renderProvider) Metadata(_ context.Context, _ provider.MetadataRequest,
 	resp.Version = p.version
 }
 
-var renderProviderDescription = ` The Render provider is used to interact with and manage resources on Render. The provider requires an API key and owner ID to be used.
-
-The provider is currently in beta and may have breaking changes in the future.`
+var renderProviderDescription = ` The Render provider is used to interact with and manage resources on Render. The provider requires an API key and owner ID to be used.`
 
 // Schema defines the provider-level schema for configuration data.
 func (p *renderProvider) Schema(_ context.Context, _ provider.SchemaRequest, resp *provider.SchemaResponse) {
