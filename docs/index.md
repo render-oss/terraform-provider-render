@@ -4,14 +4,11 @@ page_title: "render Provider"
 subcategory: ""
 description: |-
   The Render provider is used to interact with and manage resources on Render. The provider requires an API key and owner ID to be used.
-  The provider is currently in beta and may have breaking changes in the future.
 ---
 
 # render Provider
 
 The Render provider is used to interact with and manage resources on Render. The provider requires an API key and owner ID to be used.
-
-The provider is currently in beta and may have breaking changes in the future.
 
 
 

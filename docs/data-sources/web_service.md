@@ -22,6 +22,7 @@ Provides information about a Render Web Service.
 ### Optional
 
 - `custom_domains` (Attributes Set) Custom domains to associate with the service. (see [below for nested schema](#nestedatt--custom_domains))
+- `log_stream_override` (Attributes) Configure the [log stream override settings](https://docs.render.com/log-streams#overriding-defaults) for this service. These will override the global log stream settings of the user or team. (see [below for nested schema](#nestedatt--log_stream_override))
 
 ### Read-Only
 
@@ -59,6 +60,19 @@ Read-Only:
 - `name` (String) DNS record of the custom domain
 - `public_suffix` (String) Public suffix of the custom domain
 - `redirect_for_name` (String) DNS record of the custom domain to redirect to
+
+
+<a id="nestedatt--log_stream_override"></a>
+### Nested Schema for `log_stream_override`
+
+Required:
+
+- `setting` (String) Whether to send or drop logs for this service. Must be one of `send` or `drop`.
+
+Optional:
+
+- `endpoint` (String) The endpoint to send logs to.
+- `token` (String, Sensitive) The token to use when sending logs.
 
 
 <a id="nestedatt--autoscaling"></a>

@@ -19,6 +19,10 @@ Provides information about a Render Redis instance.
 
 - `id` (String) Unique identifier for the service
 
+### Optional
+
+- `log_stream_override` (Attributes) Configure the [log stream override settings](https://docs.render.com/log-streams#overriding-defaults) for this service. These will override the global log stream settings of the user or team. (see [below for nested schema](#nestedatt--log_stream_override))
+
 ### Read-Only
 
 - `connection_info` (Attributes, Sensitive) Database connection info. (see [below for nested schema](#nestedatt--connection_info))
@@ -28,6 +32,19 @@ Provides information about a Render Redis instance.
 - `name` (String) Name of the service
 - `plan` (String) Plan for the Redis instance
 - `region` (String) Region to deploy the service
+
+<a id="nestedatt--log_stream_override"></a>
+### Nested Schema for `log_stream_override`
+
+Required:
+
+- `setting` (String) Whether to send or drop logs for this service. Must be one of `send` or `drop`.
+
+Optional:
+
+- `endpoint` (String) The endpoint to send logs to.
+- `token` (String, Sensitive) The token to use when sending logs.
+
 
 <a id="nestedatt--connection_info"></a>
 ### Nested Schema for `connection_info`

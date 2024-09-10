@@ -44,6 +44,7 @@ resource "render_postgres" "example" {
 - `environment_id` (String) ID of the [project environment](https://docs.render.com/projects) that the resource belongs to
 - `high_availability_enabled` (Boolean) Whether high availability is enabled for this postgres
 - `ip_allow_list` (Attributes Set) List of IP addresses that are allowed to connect to the instance. If no IP addresses are provided, only connections via the private network will be allowed. (see [below for nested schema](#nestedatt--ip_allow_list))
+- `log_stream_override` (Attributes) Configure the [log stream override settings](https://docs.render.com/log-streams#overriding-defaults) for this service. These will override the global log stream settings of the user or team. (see [below for nested schema](#nestedatt--log_stream_override))
 - `read_replicas` (Attributes Set) List of read replicas. (see [below for nested schema](#nestedatt--read_replicas))
 
 ### Read-Only
@@ -60,6 +61,19 @@ Required:
 
 - `cidr_block` (String) CIDR block that is allowed to connect to the Redis instance. (0.0.0.0/0 to allow traffic from all IPs)
 - `description` (String) Description of the IP address or range. This is used to help identify the IP address or range in the list.
+
+
+<a id="nestedatt--log_stream_override"></a>
+### Nested Schema for `log_stream_override`
+
+Required:
+
+- `setting` (String) Whether to send or drop logs for this service. Must be one of `send` or `drop`.
+
+Optional:
+
+- `endpoint` (String) The endpoint to send logs to.
+- `token` (String, Sensitive) The token to use when sending logs.
 
 
 <a id="nestedatt--read_replicas"></a>
