@@ -52,7 +52,7 @@ resource "render_private_service" "example" {
     }
   }
 
-  num_instances                 = 2
+  num_instances = 2
   previews = {
     generation = "automatic"
   }

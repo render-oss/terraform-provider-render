@@ -22,6 +22,7 @@ description: |-
 ### Optional
 
 - `datadog_api_key` (String, Sensitive) Datadog API key to use when sending postgres metrics
+- `log_stream_override` (Attributes) Configure the [log stream override settings](https://docs.render.com/log-streams#overriding-defaults) for this service. These will override the global log stream settings of the user or team. (see [below for nested schema](#nestedatt--log_stream_override))
 - `primary_postgres_id` (String) If this is a replica, the ID of the primary postgres instance
 
 ### Read-Only
@@ -38,6 +39,19 @@ description: |-
 - `region` (String) Region the postgres instance in
 - `role` (String) Whether this postgres is a primary or replica
 - `version` (String) The Postgres version
+
+<a id="nestedatt--log_stream_override"></a>
+### Nested Schema for `log_stream_override`
+
+Required:
+
+- `setting` (String) Whether to send or drop logs for this service. Must be one of `send` or `drop`.
+
+Optional:
+
+- `endpoint` (String) The endpoint to send logs to.
+- `token` (String, Sensitive) The token to use when sending logs.
+
 
 <a id="nestedatt--connection_info"></a>
 ### Nested Schema for `connection_info`

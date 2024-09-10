@@ -70,8 +70,10 @@ resource "render_background_worker" "git_example" {
       }
     }
 
-    num_instances                 = 1
-    pull_request_previews_enabled = false
+    num_instances = 1
+    previews = {
+      generation = "off"
+    }
   }
 }
 ```
@@ -92,6 +94,7 @@ resource "render_background_worker" "git_example" {
 - `disk` (Attributes) [Persistent disk](https://docs.render.com/disks) to attach to the service. (see [below for nested schema](#nestedatt--disk))
 - `env_vars` (Attributes Map) Map of environment variable names to their values. (see [below for nested schema](#nestedatt--env_vars))
 - `environment_id` (String) ID of the [project environment](https://docs.render.com/projects) that the resource belongs to
+- `log_stream_override` (Attributes) Configure the [log stream override settings](https://docs.render.com/log-streams#overriding-defaults) for this service. These will override the global log stream settings of the user or team. (see [below for nested schema](#nestedatt--log_stream_override))
 - `max_shutdown_delay_seconds` (Number) The maximum amount of time (in seconds) that Render waits for your application process to exit gracefully after sending it a SIGTERM signal before sending a SIGKILL signal.
 - `notification_override` (Attributes) Configure the [notification settings](https://docs.render.com/notifications) for this service. These will override the global notification settings of the user or team. (see [below for nested schema](#nestedatt--notification_override))
 - `num_instances` (Number) Number of replicas of the service to run. Defaults to 1 on service creation and current instance count on update. If you want to manage the service's instance count outside Terraform, leave num_instances unset.
@@ -241,6 +244,19 @@ Optional:
 
 - `generate_value` (Boolean) If true, Render will generate the variable value.
 - `value` (String, Sensitive)
+
+
+<a id="nestedatt--log_stream_override"></a>
+### Nested Schema for `log_stream_override`
+
+Required:
+
+- `setting` (String) Whether to send or drop logs for this service. Must be one of `send` or `drop`.
+
+Optional:
+
+- `endpoint` (String) The endpoint to send logs to.
+- `token` (String, Sensitive) The token to use when sending logs.
 
 
 <a id="nestedatt--notification_override"></a>

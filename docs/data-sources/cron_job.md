@@ -19,6 +19,10 @@ Provides information about a Render Cron Job resource.
 
 - `id` (String) Unique identifier for the service
 
+### Optional
+
+- `log_stream_override` (Attributes) Configure the [log stream override settings](https://docs.render.com/log-streams#overriding-defaults) for this service. These will override the global log stream settings of the user or team. (see [below for nested schema](#nestedatt--log_stream_override))
+
 ### Read-Only
 
 - `env_vars` (Attributes Map) Map of environment variable names to their values. (see [below for nested schema](#nestedatt--env_vars))
@@ -33,6 +37,19 @@ Provides information about a Render Cron Job resource.
 - `secret_files` (Attributes Map) A map of secret file paths to their contents. (see [below for nested schema](#nestedatt--secret_files))
 - `slug` (String) Unique slug for the service
 - `start_command` (String) Command to run the service
+
+<a id="nestedatt--log_stream_override"></a>
+### Nested Schema for `log_stream_override`
+
+Required:
+
+- `setting` (String) Whether to send or drop logs for this service. Must be one of `send` or `drop`.
+
+Optional:
+
+- `endpoint` (String) The endpoint to send logs to.
+- `token` (String, Sensitive) The token to use when sending logs.
+
 
 <a id="nestedatt--env_vars"></a>
 ### Nested Schema for `env_vars`

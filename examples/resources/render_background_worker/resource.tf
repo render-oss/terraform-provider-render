@@ -55,7 +55,7 @@ resource "render_background_worker" "git_example" {
       }
     }
 
-    num_instances                 = 1
+    num_instances = 1
     previews = {
       generation = "off"
     }
