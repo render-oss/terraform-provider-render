@@ -2,10 +2,6 @@
 
 This is the repository of the officially supported Terraform provider for managing infrastructure on [Render](https://render.com).
 
-### This provider is currently in beta
-
-The provider is currently in beta and may have breaking changes in the future. If you encounter any issues, please open an issue in this repository.
-
 ## Requirements
 
 - [Terraform](https://developer.hashicorp.com/terraform/downloads) >= 1.0
