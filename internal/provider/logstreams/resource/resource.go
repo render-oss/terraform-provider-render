@@ -139,7 +139,7 @@ func (r *logStreamSettingResource) logStreamPut(plan logstreams.LogStreamSetting
 	}
 
 	return client.UpdateOwnerLogStreamJSONRequestBody{
-		Preview:  &preview,
+		Preview:  preview,
 		Endpoint: common.From(plan.Endpoint.ValueString()),
 		Token:    common.From(plan.Token.ValueString()),
 	}

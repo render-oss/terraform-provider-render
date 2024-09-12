@@ -90,7 +90,7 @@ func LogStreamOverrideToClient(model types.Object) (*logs.LogStreamResourceUpdat
 	}
 
 	return &logs.LogStreamResourceUpdate{
-		Setting:  &logStreamSetting,
+		Setting:  logStreamSetting,
 		Endpoint: endpoint,
 		Token:    token,
 	}, nil
