@@ -23,6 +23,7 @@ Provides information about a Render Web Service.
 
 - `custom_domains` (Attributes Set) Custom domains to associate with the service. (see [below for nested schema](#nestedatt--custom_domains))
 - `log_stream_override` (Attributes) Configure the [log stream override settings](https://docs.render.com/log-streams#overriding-defaults) for this service. These will override the global log stream settings of the user or team. (see [below for nested schema](#nestedatt--log_stream_override))
+- `maintenance_mode` (Attributes) Maintenance mode settings (see [below for nested schema](#nestedatt--maintenance_mode))
 
 ### Read-Only
 
@@ -73,6 +74,15 @@ Optional:
 
 - `endpoint` (String) The endpoint to send logs to.
 - `token` (String, Sensitive) The token to use when sending logs.
+
+
+<a id="nestedatt--maintenance_mode"></a>
+### Nested Schema for `maintenance_mode`
+
+Read-Only:
+
+- `enabled` (Boolean) Whether maintenance mode is enabled
+- `uri` (String) URI to redirect to when maintenance mode is enabled
 
 
 <a id="nestedatt--autoscaling"></a>

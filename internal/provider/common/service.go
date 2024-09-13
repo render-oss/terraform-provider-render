@@ -34,6 +34,11 @@ type PreviewsModel struct {
 	Generation types.String `tfsdk:"generation"`
 }
 
+type MaintenanceModeModel struct {
+	Enabled types.Bool   `tfsdk:"enabled"`
+	Uri     types.String `tfsdk:"uri"`
+}
+
 func StartCommandForEnvSpecificDetails(serviceDetails client.EnvSpecificDetails, runtime string) (*string, error) {
 	switch runtime {
 	case string(client.ServiceEnvDocker), string(client.ServiceEnvImage):
