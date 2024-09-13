@@ -2,7 +2,6 @@ package internal
 
 import (
 	"context"
-
 	"terraform-provider-render/internal/client"
 	"terraform-provider-render/internal/provider/common"
 	"terraform-provider-render/internal/provider/webservice"
@@ -48,6 +47,7 @@ func CreateServiceRequestFromModel(ctx context.Context, ownerID string, plan web
 		Previews:                   common.PreviewsObjectToPreviews(ctx, plan.Previews),
 		PullRequestPreviewsEnabled: &pullRequestPreviewsEnabled,
 		Region:                     &region,
+		MaintenanceMode:            common.ToClientMaintenanceMode(plan.MaintenanceMode),
 		MaxShutdownDelaySeconds:    common.ValueAsIntPointer(plan.MaxShutdownDelaySeconds),
 		Autoscaling:                autoscaling,
 	}

@@ -2,7 +2,6 @@ package resource
 
 import (
 	"context"
-
 	"terraform-provider-render/internal/provider/types/resource"
 
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
@@ -30,6 +29,7 @@ func Schema(ctx context.Context) schema.Schema {
 			"root_directory":                resource.RootDirectory,
 			"start_command":                 resource.StartCommand,
 			"url":                           resource.ServiceURL,
+			"maintenance_mode":              resource.MaintenanceMode,
 			"max_shutdown_delay_seconds":    resource.MaxShutdownDelaySeconds,
 			"env_vars":                      resource.EnvVars,
 			"secret_files":                  resource.SecretFiles,

@@ -2,6 +2,7 @@ package resource
 
 import (
 	"regexp"
+	"terraform-provider-render/internal/provider/common/validators"
 
 	"github.com/hashicorp/terraform-plugin-framework-validators/int64validator"
 	"github.com/hashicorp/terraform-plugin-framework-validators/resourcevalidator"
@@ -14,8 +15,6 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringplanmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
-
-	"terraform-provider-render/internal/provider/common/validators"
 )
 
 var ServiceID = schema.StringAttribute{
@@ -158,6 +157,22 @@ var StartCommand = schema.StringAttribute{
 	Optional:            true,
 	Description:         "Command to run the service. When using native runtimes, this will be used as the start command. For Docker and image-backed services, this will override the default Docker command for the image.",
 	MarkdownDescription: "Command to run the service. When using native runtimes, this will be used as the start command and is required. For [Docker](https://docs.render.com/docker) and [image-backed](https://docs.render.com/deploy-an-image) services, this will override the default Docker command for the image.",
+}
+
+var MaintenanceMode = schema.SingleNestedAttribute{
+	Optional:            true,
+	Description:         "Maintenance mode settings for the service.",
+	MarkdownDescription: "Maintenance mode settings for the service.",
+	Attributes: map[string]schema.Attribute{
+		"enabled": schema.BoolAttribute{
+			Optional:    true,
+			Description: "Enable maintenance mode for the service.",
+		},
+		"uri": schema.StringAttribute{
+			Optional:    true,
+			Description: "URI to redirect to when maintenance mode is enabled.",
+		},
+	},
 }
 
 var MaxShutdownDelaySeconds = schema.Int64Attribute{

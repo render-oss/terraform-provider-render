@@ -2,7 +2,6 @@ package internal
 
 import (
 	"context"
-
 	"terraform-provider-render/internal/client"
 	"terraform-provider-render/internal/provider/common"
 	"terraform-provider-render/internal/provider/webservice"
@@ -33,6 +32,7 @@ func UpdateServiceRequestFromModel(ctx context.Context, plan webservice.WebServi
 		PreDeployCommand:           &preDeployCommand,
 		Previews:                   common.PreviewsObjectToPreviews(ctx, plan.Previews),
 		PullRequestPreviewsEnabled: &pullRequestPreviewsEnabled,
+		MaintenanceMode:            common.ToClientMaintenanceMode(plan.MaintenanceMode),
 		MaxShutdownDelaySeconds:    common.ValueAsIntPointer(plan.MaxShutdownDelaySeconds),
 		Runtime:                    common.From(client.ServiceRuntime(plan.RuntimeSource.Runtime())),
 	}

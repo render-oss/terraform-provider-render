@@ -3,16 +3,14 @@ package common
 import (
 	"fmt"
 	"strings"
+	"terraform-provider-render/internal/client"
+	"terraform-provider-render/internal/client/autoscaling"
+	commontypes "terraform-provider-render/internal/provider/common/types"
 
 	"github.com/hashicorp/terraform-plugin-framework/attr"
 	"github.com/hashicorp/terraform-plugin-framework/diag"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
-
-	"terraform-provider-render/internal/client/autoscaling"
-	commontypes "terraform-provider-render/internal/provider/common/types"
-
-	"terraform-provider-render/internal/client"
 )
 
 const (
@@ -23,6 +21,28 @@ const (
 var criteriaTypes = map[string]attr.Type{
 	CriteriaEnabled:    types.BoolType,
 	CriteriaPercentage: types.Int64Type,
+}
+
+func MaintenanceModeFromClient(maintenanceMode *client.MaintenanceMode) *MaintenanceModeModel {
+	if maintenanceMode == nil {
+		return nil
+	}
+
+	return &MaintenanceModeModel{
+		Enabled: types.BoolValue(maintenanceMode.Enabled),
+		Uri:     types.StringValue(maintenanceMode.Uri),
+	}
+}
+
+func ToClientMaintenanceMode(maintenanceMode *MaintenanceModeModel) *client.MaintenanceMode {
+	if maintenanceMode == nil {
+		return nil
+	}
+
+	return &client.MaintenanceMode{
+		Enabled: maintenanceMode.Enabled.ValueBool(),
+		Uri:     maintenanceMode.Uri.ValueString(),
+	}
 }
 
 func AutoscalingFromClient(autoscaling *autoscaling.AutoscalingConfig, diags diag.Diagnostics) *AutoscalingModel {

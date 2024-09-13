@@ -2,10 +2,9 @@ package datasource
 
 import (
 	"context"
+	"terraform-provider-render/internal/provider/types/datasource"
 
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
-
-	"terraform-provider-render/internal/provider/types/datasource"
 )
 
 func Schema(ctx context.Context) schema.Schema {
@@ -30,6 +29,7 @@ func Schema(ctx context.Context) schema.Schema {
 			"start_command":                 datasource.StartCommand,
 			"region":                        datasource.Region,
 			"url":                           datasource.ServiceURL,
+			"maintenance_mode":              datasource.MaintenanceMode,
 			"max_shutdown_delay_seconds":    datasource.MaxShutdownDelaySeconds,
 			"env_vars":                      datasource.EnvVars,
 			"secret_files":                  datasource.SecretFiles,
