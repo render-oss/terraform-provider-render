@@ -71,6 +71,10 @@ func (r *registryCredentialResource) Create(ctx context.Context, req resource.Cr
 		registry = client.GITLAB
 	case types.StringValue("DOCKER"):
 		registry = client.DOCKER
+	case types.StringValue("AWS_ECR"):
+		registry = client.AWSECR
+	case types.StringValue("GOOGLE_ARTIFACT"):
+		registry = client.GOOGLEARTIFACT
 	default:
 		resp.Diagnostics.AddError(
 			"Error creating registry credential",

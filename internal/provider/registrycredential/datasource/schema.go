@@ -22,7 +22,7 @@ func RegistryCredentialDataSourceSchema(ctx context.Context) schema.Schema {
 			},
 			"registry": schema.StringAttribute{
 				Computed:    true,
-				Description: "The registry to use this credential with. One of GITHUB, GITLAB, DOCKER.",
+				Description: "The registry to use this credential with. One of GITHUB, GITLAB, DOCKER, AWS_ECR, GOOGLE_ARTIFACT.",
 			},
 			"username": schema.StringAttribute{
 				Computed:    true,

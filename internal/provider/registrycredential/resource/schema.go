@@ -45,6 +45,8 @@ func RegistryCredentialResourceSchema(ctx context.Context) schema.Schema {
 						"GITHUB",
 						"GITLAB",
 						"DOCKER",
+						"AWS_ECR",
+						"GOOGLE_ARTIFACT",
 					),
 				},
 			},
