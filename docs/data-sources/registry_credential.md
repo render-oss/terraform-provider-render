@@ -26,4 +26,4 @@ Provides information about a Render Registry Credential.
 ### Read-Only
 
 - `name` (String) Descriptive name for this credential
-- `registry` (String) The registry to use this credential with. One of GITHUB, GITLAB, DOCKER.
+- `registry` (String) The registry to use this credential with. One of `GITHUB`, `GITLAB`, `DOCKER`, `AWS_ECR`, `GOOGLE_ARTIFACT`.
