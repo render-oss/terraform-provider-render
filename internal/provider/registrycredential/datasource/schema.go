@@ -21,8 +21,9 @@ func RegistryCredentialDataSourceSchema(ctx context.Context) schema.Schema {
 				Description: "Descriptive name for this credential",
 			},
 			"registry": schema.StringAttribute{
-				Computed:    true,
-				Description: "The registry to use this credential with. One of GITHUB, GITLAB, DOCKER, AWS_ECR, GOOGLE_ARTIFACT.",
+				Computed:            true,
+				Description:         "The registry to use this credential with. One of GITHUB, GITLAB, DOCKER, AWS_ECR, GOOGLE_ARTIFACT.",
+				MarkdownDescription: "The registry to use this credential with. One of `GITHUB`, `GITLAB`, `DOCKER`, `AWS_ECR`, `GOOGLE_ARTIFACT`.",
 			},
 			"username": schema.StringAttribute{
 				Computed:    true,

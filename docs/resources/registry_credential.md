@@ -28,7 +28,7 @@ resource "render_registry_credential" "example" {
 
 - `auth_token` (String, Sensitive) The auth token to use when pulling the image
 - `name` (String) Descriptive name for this credential
-- `registry` (String) The registry to use this credential with. One of `GITHUB`, `GITLAB`, `DOCKER`.
+- `registry` (String) The registry to use this credential with. One of `GITHUB`, `GITLAB`, `DOCKER`, `AWS_ECR`, `GOOGLE_ARTIFACT`.
 - `username` (String) The username associated with the credential
 
 ### Read-Only

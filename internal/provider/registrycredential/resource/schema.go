@@ -38,8 +38,8 @@ func RegistryCredentialResourceSchema(ctx context.Context) schema.Schema {
 			},
 			"registry": schema.StringAttribute{
 				Required:            true,
-				Description:         "The registry to use this credential with. One of GITHUB, GITLAB, DOCKER.",
-				MarkdownDescription: "The registry to use this credential with. One of `GITHUB`, `GITLAB`, `DOCKER`.",
+				Description:         "The registry to use this credential with. One of GITHUB, GITLAB, DOCKER, AWS_ECR, GOOGLE_ARTIFACT.",
+				MarkdownDescription: "The registry to use this credential with. One of `GITHUB`, `GITLAB`, `DOCKER`, `AWS_ECR`, `GOOGLE_ARTIFACT`.",
 				Validators: []validator.String{
 					stringvalidator.OneOf(
 						"GITHUB",
