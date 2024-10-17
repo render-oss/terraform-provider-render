@@ -63,6 +63,24 @@ func (r *envGroupLinkResource) Create(ctx context.Context, req resource.CreateRe
 		return
 	}
 
+	existingEnvGroup, err := r.getEnvGroup(ctx, plan.EnvGroupId.ValueString())
+	if err != nil {
+		resp.Diagnostics.AddError("unable to get environment group", err.Error())
+		return
+	}
+
+	// Attempting to create a service link for an env group that already exists and is linked to another service
+	// will result in an inconsistent state error. The user should instead import the existing env group link and
+	// update it. We check to see if the service link already exists and contains a service ID not in the plan.
+	for _, id := range existingEnvGroup.ServiceLinks {
+		if !slices.Contains(plan.ServiceIds, id.Id) {
+			resp.Diagnostics.AddError(
+				fmt.Sprintf("service link already exists for %s", existingEnvGroup.Id),
+				"import the existing service link before adding a new service")
+			return
+		}
+	}
+
 	envGroup, err := r.linkServices(ctx, plan.EnvGroupId.ValueString(), plan.ServiceIds)
 	if err != nil {
 		resp.Diagnostics.AddError("Unable to add service to environment group", err.Error())
