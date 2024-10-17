@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"net/http"
 	"net/http/httptest"
+	"regexp"
 	"strings"
 	"testing"
 
@@ -61,10 +62,34 @@ func TestEnvGroupLinkResource(t *testing.T) {
 			},
 		},
 	})
+	t.Run("ExistingServiceLink", func(t *testing.T) {
+		fakeServer := envGroupLinkServer(t, "existing-id")
+
+		resource.Test(t, resource.TestCase{
+			ProtoV6ProviderFactories: map[string]func() (tfprotov6.ProviderServer, error){
+				"render": providerserver.NewProtocol6WithError(provider.New("test", provider.WithHost(fakeServer.URL))()),
+			},
+			Steps: []resource.TestStep{
+				{
+					Config: providerCfg + `
+						resource "render_env_group_link" "existing" {
+							env_group_id = "existing-id"
+							service_ids  = ["new-service"]
+						}
+					`,
+					ExpectError: regexp.MustCompile(`import the existing service link before adding a new service`),
+				},
+			},
+		})
+	})
 }
 
 func envGroupLinkServer(t *testing.T, envGroupID string) *httptest.Server {
 	envGroup := &client.EnvGroup{Id: envGroupID}
+	if envGroupID == "existing-id" {
+		envGroup.ServiceLinks = []client.ServiceLink{{Id: "existing-service"}}
+	}
+
 	fakeServer := httptest.NewServer(http.HandlerFunc(func(resp http.ResponseWriter, req *http.Request) {
 		resp.Header().Set("Content-Type", "application/json")
 
