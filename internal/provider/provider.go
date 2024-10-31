@@ -5,7 +5,9 @@ import (
 	"net/http"
 	"os"
 	"strings"
+	"time"
 
+	"golang.org/x/time/rate"
 	logstreamdatasource "terraform-provider-render/internal/provider/logstreams/datasource"
 	logstreamresource "terraform-provider-render/internal/provider/logstreams/resource"
 	projectdatasource "terraform-provider-render/internal/provider/project/datasource"
@@ -275,9 +277,16 @@ func (p *renderProvider) Configure(ctx context.Context, req provider.ConfigureRe
 		}),
 	}
 
+	httpClient := &http.Client{}
 	if p.httpClient != nil {
-		opts = append(opts, client.WithHTTPClient(p.httpClient))
+		httpClient = p.httpClient
 	}
+
+	// Rate limit the client to 400 requests per minute.
+	renderRateLimit := rate.NewLimiter(rate.Limit(400/60), 1)
+	rateLimitedClient := NewRateLimitHTTPClient(httpClient, renderRateLimit, time.Sleep)
+
+	opts = append(opts, client.WithHTTPClient(rateLimitedClient))
 
 	client, err := client.NewClientWithResponses(
 		p.Host,
