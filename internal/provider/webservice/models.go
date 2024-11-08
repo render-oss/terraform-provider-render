@@ -9,26 +9,26 @@ import (
 )
 
 type WebServiceModel struct {
-	Id                         types.String                 `tfsdk:"id"`
-	Autoscaling                *common.AutoscalingModel     `tfsdk:"autoscaling"`
-	CustomDomains              []common.CustomDomainModel   `tfsdk:"custom_domains"`
-	RuntimeSource              *common.RuntimeSourceModel   `tfsdk:"runtime_source"`
-	Disk                       *common.DiskModel            `tfsdk:"disk"`
-	EnvironmentID              types.String                 `tfsdk:"environment_id"`
-	HealthCheckPath            types.String                 `tfsdk:"health_check_path"`
-	Name                       types.String                 `tfsdk:"name"`
-	Slug                       types.String                 `tfsdk:"slug"`
-	NumInstances               types.Int64                  `tfsdk:"num_instances"`
-	Plan                       types.String                 `tfsdk:"plan"`
-	PreDeployCommand           types.String                 `tfsdk:"pre_deploy_command"`
-	Previews                   types.Object                 `tfsdk:"previews"`
-	PullRequestPreviewsEnabled types.Bool                   `tfsdk:"pull_request_previews_enabled"`
-	Region                     types.String                 `tfsdk:"region"`
-	RootDirectory              types.String                 `tfsdk:"root_directory"`
-	StartCommand               types.String                 `tfsdk:"start_command"`
-	Url                        types.String                 `tfsdk:"url"`
-	MaxShutdownDelaySeconds    types.Int64                  `tfsdk:"max_shutdown_delay_seconds"`
-	MaintenanceMode            *common.MaintenanceModeModel `tfsdk:"maintenance_mode"`
+	Id                         types.String               `tfsdk:"id"`
+	Autoscaling                *common.AutoscalingModel   `tfsdk:"autoscaling"`
+	CustomDomains              []common.CustomDomainModel `tfsdk:"custom_domains"`
+	RuntimeSource              *common.RuntimeSourceModel `tfsdk:"runtime_source"`
+	Disk                       *common.DiskModel          `tfsdk:"disk"`
+	EnvironmentID              types.String               `tfsdk:"environment_id"`
+	HealthCheckPath            types.String               `tfsdk:"health_check_path"`
+	Name                       types.String               `tfsdk:"name"`
+	Slug                       types.String               `tfsdk:"slug"`
+	NumInstances               types.Int64                `tfsdk:"num_instances"`
+	Plan                       types.String               `tfsdk:"plan"`
+	PreDeployCommand           types.String               `tfsdk:"pre_deploy_command"`
+	Previews                   types.Object               `tfsdk:"previews"`
+	PullRequestPreviewsEnabled types.Bool                 `tfsdk:"pull_request_previews_enabled"`
+	Region                     types.String               `tfsdk:"region"`
+	RootDirectory              types.String               `tfsdk:"root_directory"`
+	StartCommand               types.String               `tfsdk:"start_command"`
+	Url                        types.String               `tfsdk:"url"`
+	MaxShutdownDelaySeconds    types.Int64                `tfsdk:"max_shutdown_delay_seconds"`
+	MaintenanceMode            types.Object               `tfsdk:"maintenance_mode"`
 
 	EnvVars     map[string]common.EnvVarModel     `tfsdk:"env_vars"`
 	SecretFiles map[string]common.SecretFileModel `tfsdk:"secret_files"`
@@ -70,7 +70,7 @@ func ModelForServiceResult(service *common.WrappedService, plan WebServiceModel,
 		Url:                        types.StringValue(details.Url),
 		MaxShutdownDelaySeconds:    common.IntPointerAsValue(details.MaxShutdownDelaySeconds),
 
-		MaintenanceMode:      common.MaintenanceModeFromClient(details.MaintenanceMode),
+		MaintenanceMode:      common.MaintenanceModeFromClient(details.MaintenanceMode, diags),
 		Autoscaling:          common.AutoscalingFromClient(details.Autoscaling, diags),
 		Disk:                 common.DiskToDiskModel(details.Disk),
 		EnvVars:              common.EnvVarsFromClientCursors(service.EnvVars, plan.EnvVars),

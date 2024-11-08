@@ -2,6 +2,7 @@ package resource
 
 import (
 	"regexp"
+
 	"terraform-provider-render/internal/provider/common/validators"
 
 	"github.com/hashicorp/terraform-plugin-framework-validators/int64validator"
@@ -160,9 +161,9 @@ var StartCommand = schema.StringAttribute{
 }
 
 var MaintenanceMode = schema.SingleNestedAttribute{
-	Optional:            true,
-	Description:         "Maintenance mode settings for the service.",
-	MarkdownDescription: "Maintenance mode settings for the service.",
+	Optional:    true,
+	Computed:    true,
+	Description: "Maintenance mode settings for the service.",
 	Attributes: map[string]schema.Attribute{
 		"enabled": schema.BoolAttribute{
 			Optional:    true,

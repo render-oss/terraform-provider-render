@@ -3,6 +3,7 @@ package common
 import (
 	"fmt"
 	"strings"
+
 	"terraform-provider-render/internal/client"
 	"terraform-provider-render/internal/client/autoscaling"
 	commontypes "terraform-provider-render/internal/provider/common/types"
@@ -23,25 +24,48 @@ var criteriaTypes = map[string]attr.Type{
 	CriteriaPercentage: types.Int64Type,
 }
 
-func MaintenanceModeFromClient(maintenanceMode *client.MaintenanceMode) *MaintenanceModeModel {
+var maintenanceModeTypes = map[string]attr.Type{
+	"enabled": types.BoolType,
+	"uri":     types.StringType,
+}
+
+func MaintenanceModeFromClient(maintenanceMode *client.MaintenanceMode, diags diag.Diagnostics) types.Object {
 	if maintenanceMode == nil {
+		return types.ObjectNull(maintenanceModeTypes)
+	}
+
+	objectValue, objectDiags := types.ObjectValue(
+		maintenanceModeTypes,
+		map[string]attr.Value{
+			"enabled": types.BoolValue(maintenanceMode.Enabled),
+			"uri":     types.StringValue(maintenanceMode.Uri),
+		},
+	)
+
+	diags.Append(objectDiags...)
+	return objectValue
+}
+
+func ToClientMaintenanceMode(maintenanceMode types.Object) *client.MaintenanceMode {
+	if maintenanceMode.IsNull() {
 		return nil
 	}
 
-	return &MaintenanceModeModel{
-		Enabled: types.BoolValue(maintenanceMode.Enabled),
-		Uri:     types.StringValue(maintenanceMode.Uri),
-	}
-}
+	maintenanceModeAttributes := maintenanceMode.Attributes()
 
-func ToClientMaintenanceMode(maintenanceMode *MaintenanceModeModel) *client.MaintenanceMode {
-	if maintenanceMode == nil {
+	enabled, ok := maintenanceModeAttributes["enabled"].(types.Bool)
+	if !ok {
+		return nil
+	}
+
+	uri, ok := maintenanceModeAttributes["uri"].(types.String)
+	if !ok {
 		return nil
 	}
 
 	return &client.MaintenanceMode{
-		Enabled: maintenanceMode.Enabled.ValueBool(),
-		Uri:     maintenanceMode.Uri.ValueString(),
+		Enabled: enabled.ValueBool(),
+		Uri:     uri.ValueString(),
 	}
 }
 
