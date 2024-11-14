@@ -176,7 +176,7 @@ func TestAccPostgresResource(t *testing.T) {
 					"database_name":             config.StringVariable("db_name2"),
 					"database_user":             config.StringVariable("db_user2"),
 					"high_availability_enabled": config.BoolVariable(false),
-					"plan":                      config.StringVariable("standard"),
+					"plan":                      config.StringVariable("free"),
 					"ver":                       config.StringVariable("16"),
 					"read_replica":              config.BoolVariable(false),
 					"has_log_stream_setting":    config.BoolVariable(false),
