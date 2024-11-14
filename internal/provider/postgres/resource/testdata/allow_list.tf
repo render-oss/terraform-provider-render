@@ -4,7 +4,7 @@ variable "has_allow_list" {
 
 resource "render_postgres" "test" {
   name = "allow-list-postgres"
-  plan = "starter"
+  plan = "basic_256mb"
   region = "oregon"
   version = "16"
   ip_allow_list = var.has_allow_list ? [
