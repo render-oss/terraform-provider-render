@@ -5,10 +5,11 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/hashicorp/terraform-plugin-framework/path"
-	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"terraform-provider-render/internal/provider/common"
 	"terraform-provider-render/internal/provider/postgres"
+
+	"github.com/hashicorp/terraform-plugin-framework/path"
+	"github.com/hashicorp/terraform-plugin-framework/resource"
 
 	"terraform-provider-render/internal/client"
 	clientpostgres "terraform-provider-render/internal/client/postgres"
@@ -87,6 +88,7 @@ func (r *postgresResource) Create(ctx context.Context, req resource.CreateReques
 			Version:                client.PostgresVersion(plan.Version.ValueString()),
 			Name:                   plan.Name.ValueString(),
 			OwnerId:                r.ownerID,
+			DiskSizeGB:             common.ValueAsIntPointer(plan.DiskSizeGB),
 		})
 	}, &pg)
 	if err != nil {
@@ -217,6 +219,7 @@ func (r *postgresResource) Update(ctx context.Context, req resource.UpdateReques
 			Plan:                   common.From(clientpostgres.PostgresPlans(plan.Plan.ValueString())),
 			DatadogAPIKey:          plan.DatadogAPIKey.ValueStringPointer(),
 			ReadReplicas:           common.From(postgres.ReadReplicaInputFromModel(plan.ReadReplicas)),
+			DiskSizeGB:             common.ValueAsIntPointer(plan.DiskSizeGB),
 		})
 	}, &pg)
 	if err != nil {
