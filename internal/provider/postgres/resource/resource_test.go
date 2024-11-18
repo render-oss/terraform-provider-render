@@ -29,7 +29,7 @@ func TestAccPostgresResource(t *testing.T) {
 					"database_name":             config.StringVariable("db_name"),
 					"database_user":             config.StringVariable("db_user"),
 					"high_availability_enabled": config.BoolVariable(false),
-					"plan":                      config.StringVariable("starter"),
+					"plan":                      config.StringVariable("basic_256mb"),
 					"ver":                       config.StringVariable("15"),
 					"read_replica":              config.BoolVariable(false),
 					"environment_name":          config.StringVariable("first"),
@@ -57,7 +57,7 @@ func TestAccPostgresResource(t *testing.T) {
 					}),
 					resource.TestCheckResourceAttr(resourceName, "database_user", "db_user"),
 
-					resource.TestCheckResourceAttr(resourceName, "plan", "starter"),
+					resource.TestCheckResourceAttr(resourceName, "plan", "basic_256mb"),
 					resource.TestCheckResourceAttr(resourceName, "region", "oregon"),
 					resource.TestCheckResourceAttr(resourceName, "version", "15"),
 					resource.TestCheckResourceAttr(resourceName, "high_availability_enabled", "false"),
@@ -80,7 +80,7 @@ func TestAccPostgresResource(t *testing.T) {
 					}),
 
 					resource.TestCheckResourceAttrWith(resourceName, "connection_info.external_connection_string", func(value string) error {
-						if !regexp.MustCompile(`^postgresql://db_user.*:.{32}@dpg-.*:5434/db_name.*$`).MatchString(value) {
+						if !regexp.MustCompile(`^postgresql://db_user.*:.{32}@dpg-.*:543[2,4]/db_name.*$`).MatchString(value) {
 							return fmt.Errorf("expected external_connection_string: %s to match regex", value)
 						}
 
@@ -88,7 +88,7 @@ func TestAccPostgresResource(t *testing.T) {
 					}),
 
 					resource.TestCheckResourceAttrWith(resourceName, "connection_info.psql_command", func(value string) error {
-						if !regexp.MustCompile(`^PGPASSWORD=.{32} psql -h dpg-.* -p 5434 -U db_user.* db_name.*$`).MatchString(value) {
+						if !regexp.MustCompile(`^PGPASSWORD=.{32} psql -h dpg-.* -p 543[2,4] -U db_user.* db_name.*$`).MatchString(value) {
 							return fmt.Errorf("expected psql_command: %s to match regex", value)
 						}
 
@@ -119,7 +119,7 @@ func TestAccPostgresResource(t *testing.T) {
 					"database_name":             config.StringVariable("db_name"),
 					"database_user":             config.StringVariable("db_user"),
 					"high_availability_enabled": config.BoolVariable(false),
-					"plan":                      config.StringVariable("starter"),
+					"plan":                      config.StringVariable("basic_256mb"),
 					"ver":                       config.StringVariable("15"),
 					"read_replica":              config.BoolVariable(false),
 					"environment_name":          config.StringVariable("first"),
@@ -134,7 +134,7 @@ func TestAccPostgresResource(t *testing.T) {
 					"database_name":             config.StringVariable("db_name"),
 					"database_user":             config.StringVariable("db_user"),
 					"high_availability_enabled": config.BoolVariable(true),
-					"plan":                      config.StringVariable("pro"),
+					"plan":                      config.StringVariable("pro_4gb"),
 					"ver":                       config.StringVariable("15"),
 					"read_replica":              config.BoolVariable(true),
 					"environment_name":          config.StringVariable("second"),
@@ -148,7 +148,7 @@ func TestAccPostgresResource(t *testing.T) {
 				Check: resource.ComposeAggregateTestCheckFunc(
 					resource.TestCheckResourceAttr(resourceName, "name", "new-name"),
 
-					resource.TestCheckResourceAttr(resourceName, "plan", "pro"),
+					resource.TestCheckResourceAttr(resourceName, "plan", "pro_4gb"),
 					resource.TestCheckResourceAttr(resourceName, "region", "oregon"),
 					resource.TestCheckResourceAttr(resourceName, "high_availability_enabled", "true"),
 					resource.TestCheckResourceAttr(resourceName, "read_replicas.0.name", "read-replica"),
@@ -176,7 +176,7 @@ func TestAccPostgresResource(t *testing.T) {
 					"database_name":             config.StringVariable("db_name2"),
 					"database_user":             config.StringVariable("db_user2"),
 					"high_availability_enabled": config.BoolVariable(false),
-					"plan":                      config.StringVariable("standard"),
+					"plan":                      config.StringVariable("free"),
 					"ver":                       config.StringVariable("16"),
 					"read_replica":              config.BoolVariable(false),
 					"has_log_stream_setting":    config.BoolVariable(false),

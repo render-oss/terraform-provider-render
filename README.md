@@ -90,5 +90,5 @@ make testacc
 To generate cassettes, run:
 
 ```shell
-TF_ACC=1 RENDER_OWNER_ID=<your owner id> RENDER_API_KEY=<your api key> RENDER_HOST=<render host> UPDATE_RECORDINGS=true go test -count=1 -v
+TF_ACC=1 RENDER_OWNER_ID=<your owner id such as usr-xxx or tea-xxx> RENDER_API_KEY=<your api key> RENDER_HOST=<render host such as https://api.render.com/v1 > UPDATE_RECORDINGS=true go test -count=1 -v
 ```

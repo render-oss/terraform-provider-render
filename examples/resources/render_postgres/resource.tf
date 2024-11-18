@@ -1,6 +1,6 @@
 resource "render_postgres" "example" {
   name    = "example-postgres-instance"
-  plan    = "pro"
+  plan    = "pro_4gb"
   region  = "ohio"
   version = "14"
 

@@ -72,14 +72,7 @@ func PostgresResourceSchema(ctx context.Context) schema.Schema {
 					boolplanmodifier.UseStateForUnknown(),
 				},
 			},
-			"plan": schema.StringAttribute{
-				Description:         "Plan to use for this postgres. Must be one of free, starter, standard, pro, pro_plus, or a custom plan",
-				MarkdownDescription: "Plan to use for this postgres. Must be one of `free`, `starter`, `standard`, `pro`, `pro_plus`, or a custom plan",
-				Required:            true,
-				Validators: []validator.String{
-					ValidatePostgresPlanFunc(),
-				},
-			},
+			"plan": resource.PostgresPlan,
 			"primary_postgres_id": schema.StringAttribute{
 				Description:         "If this is a replica, the ID of the primary postgres instance",
 				MarkdownDescription: "If this is a replica, the ID of the primary postgres instance",
