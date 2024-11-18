@@ -23,7 +23,7 @@ var (
 	_ resource.ResourceWithImportState = &postgresResource{}
 )
 
-// NewpostgresResource is a helper function to simplify the provider implementation.
+// NewPostgresResource is a helper function to simplify the provider implementation.
 func NewPostgresResource() resource.Resource {
 	return &postgresResource{}
 }
