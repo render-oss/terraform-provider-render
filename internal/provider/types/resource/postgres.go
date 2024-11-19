@@ -69,9 +69,8 @@ func isCustomPostgresPlanFunc() validator.String {
 }
 
 var DiskSizeGB schema.Int64Attribute = schema.Int64Attribute{
-	Description:         "Disk size in GB.",
-	MarkdownDescription: "Disk size in GB.",
-	Computed:            true,
-	Optional:            true,
-	Validators:          []validator.Int64{providerpostgres.ValidateDiskSizeGB()},
+	Description: "Disk size in GB.",
+	Computed:    true,
+	Optional:    true,
+	Validators:  []validator.Int64{providerpostgres.ValidateDiskSizeGB()},
 }
