@@ -35,6 +35,10 @@ variable "has_log_stream_setting" {
   type = bool
 }
 
+variable "disk_size_gb" {
+  type = number
+}
+
 locals {
   environment_map = {
     "first" = render_project.first.environments
@@ -64,6 +68,7 @@ resource "render_postgres" "test" {
   database_user = var.database_user
   high_availability_enabled = var.high_availability_enabled
   plan = var.plan
+  disk_size_gb = var.disk_size_gb
   region = "oregon"
   version = var.ver
   read_replicas = var.read_replica ? [{

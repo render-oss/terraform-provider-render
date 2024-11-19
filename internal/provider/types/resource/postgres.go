@@ -3,6 +3,7 @@ package resource
 import (
 	"regexp"
 	"terraform-provider-render/internal/client/postgres"
+	providerpostgres "terraform-provider-render/internal/provider/postgres"
 
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
@@ -65,4 +66,11 @@ var customRegexp = regexp.MustCompile("^Custom.*$")
 
 func isCustomPostgresPlanFunc() validator.String {
 	return stringvalidator.RegexMatches(customRegexp, "")
+}
+
+var DiskSizeGB schema.Int64Attribute = schema.Int64Attribute{
+	Description: "Disk size in GB.",
+	Computed:    true,
+	Optional:    true,
+	Validators:  []validator.Int64{providerpostgres.ValidateDiskSizeGB()},
 }

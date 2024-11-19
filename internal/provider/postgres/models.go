@@ -1,12 +1,13 @@
 package postgres
 
 import (
-	"github.com/hashicorp/terraform-plugin-framework/attr"
-	"github.com/hashicorp/terraform-plugin-framework/diag"
-	"github.com/hashicorp/terraform-plugin-framework/types"
 	"terraform-provider-render/internal/client/logs"
 	"terraform-provider-render/internal/provider/common"
 	commontypes "terraform-provider-render/internal/provider/common/types"
+
+	"github.com/hashicorp/terraform-plugin-framework/attr"
+	"github.com/hashicorp/terraform-plugin-framework/diag"
+	"github.com/hashicorp/terraform-plugin-framework/types"
 
 	"terraform-provider-render/internal/client"
 )
@@ -28,6 +29,7 @@ type PostgresModel struct {
 	Version                 types.String                  `tfsdk:"version"`
 	ConnectionInfo          types.Object                  `tfsdk:"connection_info"`
 	LogStreamOverride       types.Object                  `tfsdk:"log_stream_override"`
+	DiskSizeGB              types.Int64                   `tfsdk:"disk_size_gb"`
 }
 
 type ReadReplica struct {
@@ -109,6 +111,7 @@ func ModelFromClient(postgres *client.Postgres, connectionInfo *client.PostgresC
 		Version:                 types.StringValue(string(postgres.Version)),
 		ConnectionInfo:          connectionInfoFromClient(connectionInfo, diags),
 		LogStreamOverride:       common.LogStreamOverrideFromClient(logStreamOverrides, existingModel.LogStreamOverride, diags),
+		DiskSizeGB:              common.IntPointerAsValue(postgres.DiskSizeGB),
 	}
 	return postgresModel
 }

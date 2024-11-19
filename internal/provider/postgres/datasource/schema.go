@@ -3,10 +3,11 @@ package datasource
 import (
 	"context"
 
-	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
 	commontypes "terraform-provider-render/internal/provider/common/types"
 	"terraform-provider-render/internal/provider/types/datasource"
 	"terraform-provider-render/internal/provider/types/resource"
+
+	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
 )
 
 func PostgresDataSourceSchema(ctx context.Context) schema.Schema {
@@ -124,6 +125,7 @@ func PostgresDataSourceSchema(ctx context.Context) schema.Schema {
 				Computed:            true,
 			},
 			"log_stream_override": resource.LogStreamOverride,
+			"disk_size_gb":        datasource.DiskSizeGB,
 		},
 	}
 }

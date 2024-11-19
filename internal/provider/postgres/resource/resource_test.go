@@ -34,6 +34,7 @@ func TestAccPostgresResource(t *testing.T) {
 					"read_replica":              config.BoolVariable(false),
 					"environment_name":          config.StringVariable("first"),
 					"has_log_stream_setting":    config.BoolVariable(true),
+					"disk_size_gb":              config.IntegerVariable(20),
 				},
 				ConfigPlanChecks: resource.ConfigPlanChecks{
 					PreApply: []plancheck.PlanCheck{
@@ -58,6 +59,7 @@ func TestAccPostgresResource(t *testing.T) {
 					resource.TestCheckResourceAttr(resourceName, "database_user", "db_user"),
 
 					resource.TestCheckResourceAttr(resourceName, "plan", "basic_256mb"),
+					resource.TestCheckResourceAttr(resourceName, "disk_size_gb", "20"),
 					resource.TestCheckResourceAttr(resourceName, "region", "oregon"),
 					resource.TestCheckResourceAttr(resourceName, "version", "15"),
 					resource.TestCheckResourceAttr(resourceName, "high_availability_enabled", "false"),
@@ -124,6 +126,7 @@ func TestAccPostgresResource(t *testing.T) {
 					"read_replica":              config.BoolVariable(false),
 					"environment_name":          config.StringVariable("first"),
 					"has_log_stream_setting":    config.BoolVariable(true),
+					"disk_size_gb":              config.IntegerVariable(20),
 				},
 			},
 			{
@@ -139,6 +142,7 @@ func TestAccPostgresResource(t *testing.T) {
 					"read_replica":              config.BoolVariable(true),
 					"environment_name":          config.StringVariable("second"),
 					"has_log_stream_setting":    config.BoolVariable(false),
+					"disk_size_gb":              config.IntegerVariable(25),
 				},
 				ConfigPlanChecks: resource.ConfigPlanChecks{
 					PreApply: []plancheck.PlanCheck{
@@ -149,6 +153,7 @@ func TestAccPostgresResource(t *testing.T) {
 					resource.TestCheckResourceAttr(resourceName, "name", "new-name"),
 
 					resource.TestCheckResourceAttr(resourceName, "plan", "pro_4gb"),
+					resource.TestCheckResourceAttr(resourceName, "disk_size_gb", "25"),
 					resource.TestCheckResourceAttr(resourceName, "region", "oregon"),
 					resource.TestCheckResourceAttr(resourceName, "high_availability_enabled", "true"),
 					resource.TestCheckResourceAttr(resourceName, "read_replicas.0.name", "read-replica"),
@@ -176,10 +181,11 @@ func TestAccPostgresResource(t *testing.T) {
 					"database_name":             config.StringVariable("db_name2"),
 					"database_user":             config.StringVariable("db_user2"),
 					"high_availability_enabled": config.BoolVariable(false),
-					"plan":                      config.StringVariable("free"),
+					"plan":                      config.StringVariable("pro_4gb"),
 					"ver":                       config.StringVariable("16"),
 					"read_replica":              config.BoolVariable(false),
 					"has_log_stream_setting":    config.BoolVariable(false),
+					"disk_size_gb":              config.IntegerVariable(10), // shrink disk to 25 -> 10
 				},
 				Check: resource.ComposeAggregateTestCheckFunc(
 					resource.TestCheckResourceAttr(resourceName, "version", "16"),
@@ -190,6 +196,7 @@ func TestAccPostgresResource(t *testing.T) {
 						return fmt.Errorf("expected database_name to start with db_name, got: %s", value)
 					}),
 					resource.TestCheckResourceAttr(resourceName, "database_user", "db_user2"),
+					resource.TestCheckResourceAttr(resourceName, "disk_size_gb", "10"),
 				),
 			},
 		},

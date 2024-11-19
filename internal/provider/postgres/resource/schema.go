@@ -161,6 +161,7 @@ func PostgresResourceSchema(ctx context.Context) schema.Schema {
 				},
 			},
 			"log_stream_override": resource.LogStreamOverride,
+			"disk_size_gb":        resource.DiskSizeGB,
 		},
 	}
 }

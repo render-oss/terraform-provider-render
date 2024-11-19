@@ -15,7 +15,7 @@ description: |-
 ```terraform
 resource "render_postgres" "example" {
   name    = "example-postgres-instance"
-  plan    = "pro"
+  plan    = "pro_4gb"
   region  = "ohio"
   version = "14"
 
@@ -32,7 +32,7 @@ resource "render_postgres" "example" {
 ### Required
 
 - `name` (String) Descriptive name for this postgres
-- `plan` (String) Plan to use for this postgres. Must be one of `free`, `starter`, `standard`, `pro`, `pro_plus`, or a custom plan
+- `plan` (String) Plan to use for this postgres. Must be `free`, a basic plan (like `basic_256mb`), a pro plan (like `pro_4gb`), an accelerated plan (like `accelerated_16gb`), `starter`, `standard`, `pro`, `pro_plus`, or a custom plan
 - `region` (String) Region the postgres instance in
 - `version` (String) The Postgres version
 
@@ -41,6 +41,7 @@ resource "render_postgres" "example" {
 - `database_name` (String) Name of the database in the postgres instance
 - `database_user` (String) Name of the user in the postgres instance
 - `datadog_api_key` (String, Sensitive) Datadog API key to use when sending postgres metrics
+- `disk_size_gb` (Number) Disk size in GB.
 - `environment_id` (String) ID of the [project environment](https://docs.render.com/projects) that the resource belongs to
 - `high_availability_enabled` (Boolean) Whether high availability is enabled for this postgres
 - `ip_allow_list` (Attributes Set) List of IP addresses that are allowed to connect to the instance. If no IP addresses are provided, only connections via the private network will be allowed. (see [below for nested schema](#nestedatt--ip_allow_list))
