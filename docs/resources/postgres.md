@@ -42,10 +42,10 @@ resource "render_postgres" "example" {
 - `database_user` (String) Name of the user in the postgres instance
 - `datadog_api_key` (String, Sensitive) Datadog API key to use when sending postgres metrics
 - `disk_size_gb` (Number) Disk size in GB.
-- `environment_id` (String) ID of the [project environment](https://docs.render.com/projects) that the resource belongs to
+- `environment_id` (String) ID of the [project environment](https://render.com/docs/projects) that the resource belongs to
 - `high_availability_enabled` (Boolean) Whether high availability is enabled for this postgres
 - `ip_allow_list` (Attributes Set) List of IP addresses that are allowed to connect to the instance. If no IP addresses are provided, only connections via the private network will be allowed. (see [below for nested schema](#nestedatt--ip_allow_list))
-- `log_stream_override` (Attributes) Configure the [log stream override settings](https://docs.render.com/log-streams#overriding-defaults) for this service. These will override the global log stream settings of the user or team. (see [below for nested schema](#nestedatt--log_stream_override))
+- `log_stream_override` (Attributes) Configure the [log stream override settings](https://render.com/docs/log-streams#overriding-defaults) for this service. These will override the global log stream settings of the user or team. (see [below for nested schema](#nestedatt--log_stream_override))
 - `read_replicas` (Attributes Set) List of read replicas. (see [below for nested schema](#nestedatt--read_replicas))
 
 ### Read-Only

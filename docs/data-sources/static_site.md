@@ -25,7 +25,7 @@ Provides information about a Render Static Site.
 
 ### Read-Only
 
-- `auto_deploy` (Boolean) [Automatic deploy](https://docs.render.com/deploys#automatic-git-deploys) on every push to your repository, or changes to your service settings or environment.
+- `auto_deploy` (Boolean) [Automatic deploy](https://render.com/docs/deploys#automatic-git-deploys) on every push to your repository, or changes to your service settings or environment.
 - `branch` (String) Branch to build
 - `build_command` (String) Command to build the service
 - `build_filter` (Attributes) Filter for files and paths to monitor for automatic deploys. Filter paths are absolute. If you've defined a root directory, you can still define paths outside of the root directory. (see [below for nested schema](#nestedatt--build_filter))
@@ -34,7 +34,7 @@ Provides information about a Render Static Site.
 - `headers` (Attributes List) (see [below for nested schema](#nestedatt--headers))
 - `name` (String) Name of the service
 - `notification_override` (Attributes) Set the notification settings for this service. These will override the notification settings of the owner. (see [below for nested schema](#nestedatt--notification_override))
-- `previews` (Attributes) [Pull request previews](https://docs.render.com/pull-request-previews#pull-request-previews-git-backed) settings (see [below for nested schema](#nestedatt--previews))
+- `previews` (Attributes) [Pull request previews](https://render.com/docs/pull-request-previews#pull-request-previews-git-backed) settings (see [below for nested schema](#nestedatt--previews))
 - `publish_path` (String) Path to the directory to publish
 - `pull_request_previews_enabled` (Boolean, Deprecated)
 - `repo_url` (String) URL of the repository to build
@@ -100,7 +100,7 @@ Read-Only:
 
 Read-Only:
 
-- `generation` (String) Generation mode for [pull request previews](https://docs.render.com/pull-request-previews#pull-request-previews-git-backed). One of `off`, `manual`, or `automatic`. Defaults to `off`.
+- `generation` (String) Generation mode for [pull request previews](https://render.com/docs/pull-request-previews#pull-request-previews-git-backed). One of `off`, `manual`, or `automatic`. Defaults to `off`.
 
 
 <a id="nestedatt--routes"></a>

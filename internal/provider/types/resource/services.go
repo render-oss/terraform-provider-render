@@ -100,7 +100,7 @@ var ConnectionInfo = schema.SingleNestedAttribute{
 var Region = schema.StringAttribute{
 	Required:            true,
 	Description:         "Region to deploy the service. One of frankfurt, ohio, oregon, singapore, virginia.",
-	MarkdownDescription: "[Region](https://docs.render.com/regions) to deploy the service. One of `frankfurt`, `ohio`, `oregon`, `singapore`, `virginia`.",
+	MarkdownDescription: "[Region](https://render.com/docs/regions) to deploy the service. One of `frankfurt`, `ohio`, `oregon`, `singapore`, `virginia`.",
 	Validators: []validator.String{
 		RegionValidator,
 	},
@@ -113,7 +113,7 @@ var HealthCheckPath = schema.StringAttribute{
 	Optional:            true,
 	Computed:            true,
 	Description:         "If you're running a server, enter the path where your server will always return a 200 OK response. We use it to monitor your app and for zero downtime deploys.",
-	MarkdownDescription: "If you're running a server, enter the path where your server will always return a 200 OK response. We use it to monitor your app and for [zero downtime deploys](https://docs.render.com/deploys#zero-downtime-deploys).",
+	MarkdownDescription: "If you're running a server, enter the path where your server will always return a 200 OK response. We use it to monitor your app and for [zero downtime deploys](https://render.com/docs/deploys#zero-downtime-deploys).",
 	Default:             stringdefault.StaticString(""),
 }
 
@@ -131,7 +131,7 @@ var PRPreviewsEnabled = schema.BoolAttribute{
 	Computed:            true,
 	Description:         "Enable pull request previews for the service.",
 	DeprecationMessage:  "Configure previews.generation instead",
-	MarkdownDescription: "Enable [pull request previews](https://docs.render.com/pull-request-previews#pull-request-previews-git-backed) for the service.",
+	MarkdownDescription: "Enable [pull request previews](https://render.com/docs/pull-request-previews#pull-request-previews-git-backed) for the service.",
 }
 
 var PublishPath = schema.StringAttribute{
@@ -146,7 +146,7 @@ var AutoDeploy = schema.BoolAttribute{
 	Optional:            true,
 	Default:             booldefault.StaticBool(true),
 	Description:         "Automatic deploy on every push to your repository, or changes to your service settings or environment.",
-	MarkdownDescription: "[Automatic deploy](https://docs.render.com/deploys#automatic-git-deploys) on every push to your repository, or changes to your service settings or environment.",
+	MarkdownDescription: "[Automatic deploy](https://render.com/docs/deploys#automatic-git-deploys) on every push to your repository, or changes to your service settings or environment.",
 }
 
 var BuildCommand = schema.StringAttribute{
@@ -157,7 +157,7 @@ var BuildCommand = schema.StringAttribute{
 var StartCommand = schema.StringAttribute{
 	Optional:            true,
 	Description:         "Command to run the service. When using native runtimes, this will be used as the start command. For Docker and image-backed services, this will override the default Docker command for the image.",
-	MarkdownDescription: "Command to run the service. When using native runtimes, this will be used as the start command and is required. For [Docker](https://docs.render.com/docker) and [image-backed](https://docs.render.com/deploy-an-image) services, this will override the default Docker command for the image.",
+	MarkdownDescription: "Command to run the service. When using native runtimes, this will be used as the start command and is required. For [Docker](https://render.com/docs/docker) and [image-backed](https://render.com/docs/deploy-an-image) services, this will override the default Docker command for the image.",
 }
 
 var MaintenanceMode = schema.SingleNestedAttribute{
@@ -200,13 +200,13 @@ var RootDirectory = schema.StringAttribute{
 	Computed:            true,
 	Optional:            true,
 	Description:         "When you specify a root directory, Render runs all your commands in the specified directory and ignores changes outside the directory. Defaults to the repository root.",
-	MarkdownDescription: "When you specify a [root directory](https://docs.render.com/monorepo-support#root-directory), Render runs all your commands in the specified directory and ignores changes outside the directory. Defaults to the repository root.",
+	MarkdownDescription: "When you specify a [root directory](https://render.com/docs/monorepo-support#root-directory), Render runs all your commands in the specified directory and ignores changes outside the directory. Defaults to the repository root.",
 }
 
 var Routes = schema.ListNestedAttribute{
 	Optional:            true,
 	Description:         "List of redirect and rewrite rules to apply to a static site.",
-	MarkdownDescription: "List of [redirect and rewrite rules](https://docs.render.com/redirects-rewrites) to apply to a static site.",
+	MarkdownDescription: "List of [redirect and rewrite rules](https://render.com/docs/redirects-rewrites) to apply to a static site.",
 	NestedObject: schema.NestedAttributeObject{
 		Attributes: map[string]schema.Attribute{
 			"source": schema.StringAttribute{
@@ -241,7 +241,7 @@ var ServiceURL = schema.StringAttribute{
 
 var Disk = schema.SingleNestedAttribute{
 	Description:         "Persistent disk to attach to the service.",
-	MarkdownDescription: "[Persistent disk](https://docs.render.com/disks) to attach to the service.",
+	MarkdownDescription: "[Persistent disk](https://render.com/docs/disks) to attach to the service.",
 	Optional:            true,
 	Attributes: map[string]schema.Attribute{
 		"id": schema.StringAttribute{
@@ -280,7 +280,7 @@ type BuildFilterModel struct {
 var BuildFilter = schema.SingleNestedAttribute{
 	Optional:            true,
 	Description:         "Apply build filters to configure which changes in your git repository trigger automatic deploys. If you've defined a root directory, you can still define paths outside of the root directory.",
-	MarkdownDescription: "Apply [build filters](https://docs.render.com/monorepo-support#build-filters) to configure which changes in your git repository trigger automatic deploys. If you've defined a root directory, you can still define paths outside of the root directory.",
+	MarkdownDescription: "Apply [build filters](https://render.com/docs/monorepo-support#build-filters) to configure which changes in your git repository trigger automatic deploys. If you've defined a root directory, you can still define paths outside of the root directory.",
 	Attributes: map[string]schema.Attribute{
 		"paths": schema.ListAttribute{
 			ElementType: types.StringType,
@@ -305,13 +305,13 @@ var Previews = schema.SingleNestedAttribute{
 	Optional:            true,
 	Computed:            true,
 	Description:         "Pull request previews settings",
-	MarkdownDescription: "[Pull request previews](https://docs.render.com/pull-request-previews#pull-request-previews-git-backed) settings",
+	MarkdownDescription: "[Pull request previews](https://render.com/docs/pull-request-previews#pull-request-previews-git-backed) settings",
 	Attributes: map[string]schema.Attribute{
 		"generation": schema.StringAttribute{
 			Optional:            true,
 			Computed:            true,
 			Description:         "Generation mode for pull request previews. One of `off`, `manual`, or `automatic`. Defaults to `off`.",
-			MarkdownDescription: "Generation mode for [pull request previews](https://docs.render.com/pull-request-previews#pull-request-previews-git-backed). One of `off`, `manual`, or `automatic`. Defaults to `off`.",
+			MarkdownDescription: "Generation mode for [pull request previews](https://render.com/docs/pull-request-previews#pull-request-previews-git-backed). One of `off`, `manual`, or `automatic`. Defaults to `off`.",
 			Validators:          []validator.String{stringvalidator.OneOf("off", "manual", "automatic")},
 		},
 	},

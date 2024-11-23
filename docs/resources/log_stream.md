@@ -3,12 +3,12 @@
 page_title: "render_log_stream Resource - render"
 subcategory: ""
 description: |-
-  Configure the log stream override settings https://docs.render.com/log-streams#setup for this owner.
+  Configure the log stream override settings https://render.com/docs/log-streams#setup for this owner.
 ---
 
 # render_log_stream (Resource)
 
-Configure the [log stream override settings](https://docs.render.com/log-streams#setup) for this owner.
+Configure the [log stream override settings](https://render.com/docs/log-streams#setup) for this owner.
 
 
 

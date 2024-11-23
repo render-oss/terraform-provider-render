@@ -95,7 +95,7 @@ var Region = schema.StringAttribute{
 var HealthCheckPath = schema.StringAttribute{
 	Computed:            true,
 	Description:         "If you're running a server, enter the path where your server will always return a 200 OK response. We use it to monitor your app and for zero downtime deploys.",
-	MarkdownDescription: "If you're running a server, enter the path where your server will always return a 200 OK response. We use it to monitor your app and for [zero downtime deploys](https://docs.render.com/deploys#zero-downtime-deploys).",
+	MarkdownDescription: "If you're running a server, enter the path where your server will always return a 200 OK response. We use it to monitor your app and for [zero downtime deploys](https://render.com/docs/deploys#zero-downtime-deploys).",
 }
 
 var MaintenanceMode = schema.SingleNestedAttribute{
@@ -188,12 +188,12 @@ var RootDirectory = schema.StringAttribute{
 var Previews = schema.SingleNestedAttribute{
 	Computed:            true,
 	Description:         "Pull request previews settings",
-	MarkdownDescription: "[Pull request previews](https://docs.render.com/pull-request-previews#pull-request-previews-git-backed) settings",
+	MarkdownDescription: "[Pull request previews](https://render.com/docs/pull-request-previews#pull-request-previews-git-backed) settings",
 	Attributes: map[string]schema.Attribute{
 		"generation": schema.StringAttribute{
 			Computed:            true,
 			Description:         "Generation mode for pull request previews. One of `off`, `manual`, or `automatic`. Defaults to `off`.",
-			MarkdownDescription: "Generation mode for [pull request previews](https://docs.render.com/pull-request-previews#pull-request-previews-git-backed). One of `off`, `manual`, or `automatic`. Defaults to `off`.",
+			MarkdownDescription: "Generation mode for [pull request previews](https://render.com/docs/pull-request-previews#pull-request-previews-git-backed). One of `off`, `manual`, or `automatic`. Defaults to `off`.",
 		},
 	},
 }

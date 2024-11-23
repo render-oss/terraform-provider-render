@@ -23,7 +23,7 @@ description: |-
 
 - `datadog_api_key` (String, Sensitive) Datadog API key to use when sending postgres metrics
 - `disk_size_gb` (Number) Disk size in GB.
-- `log_stream_override` (Attributes) Configure the [log stream override settings](https://docs.render.com/log-streams#overriding-defaults) for this service. These will override the global log stream settings of the user or team. (see [below for nested schema](#nestedatt--log_stream_override))
+- `log_stream_override` (Attributes) Configure the [log stream override settings](https://render.com/docs/log-streams#overriding-defaults) for this service. These will override the global log stream settings of the user or team. (see [below for nested schema](#nestedatt--log_stream_override))
 - `primary_postgres_id` (String) If this is a replica, the ID of the primary postgres instance
 
 ### Read-Only

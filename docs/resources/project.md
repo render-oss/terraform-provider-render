@@ -3,12 +3,12 @@
 page_title: "render_project Resource - render"
 subcategory: ""
 description: |-
-  Project https://docs.render.com/projects to organize collections of environments and resources.
+  Project https://render.com/docs/projects to organize collections of environments and resources.
 ---
 
 # render_project (Resource)
 
-[Project](https://docs.render.com/projects) to organize collections of environments and resources.
+[Project](https://render.com/docs/projects) to organize collections of environments and resources.
 
 ## Example Usage
 

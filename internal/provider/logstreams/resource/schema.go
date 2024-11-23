@@ -31,6 +31,6 @@ func Schema(ctx context.Context) schema.Schema {
 				MarkdownDescription: "The token to use when sending logs.",
 			},
 		},
-		Description: "Configure the [log stream override settings](https://docs.render.com/log-streams#setup) for this owner.",
+		Description: "Configure the [log stream override settings](https://render.com/docs/log-streams#setup) for this owner.",
 	}
 }
