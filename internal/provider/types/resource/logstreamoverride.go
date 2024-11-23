@@ -31,5 +31,5 @@ var LogStreamOverride = schema.SingleNestedAttribute{
 	},
 	Optional:    true,
 	Computed:    true,
-	Description: "Configure the [log stream override settings](https://docs.render.com/log-streams#overriding-defaults) for this service. These will override the global log stream settings of the user or team.",
+	Description: "Configure the [log stream override settings](https://render.com/docs/log-streams#overriding-defaults) for this service. These will override the global log stream settings of the user or team.",
 }

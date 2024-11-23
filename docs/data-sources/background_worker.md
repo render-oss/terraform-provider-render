@@ -21,7 +21,7 @@ Provides information about a Render Background Worker.
 
 ### Optional
 
-- `log_stream_override` (Attributes) Configure the [log stream override settings](https://docs.render.com/log-streams#overriding-defaults) for this service. These will override the global log stream settings of the user or team. (see [below for nested schema](#nestedatt--log_stream_override))
+- `log_stream_override` (Attributes) Configure the [log stream override settings](https://render.com/docs/log-streams#overriding-defaults) for this service. These will override the global log stream settings of the user or team. (see [below for nested schema](#nestedatt--log_stream_override))
 
 ### Read-Only
 
@@ -35,7 +35,7 @@ Provides information about a Render Background Worker.
 - `num_instances` (Number)
 - `plan` (String) Plan to use for the service
 - `pre_deploy_command` (String) This command runs before starting your service. It is typically used for tasks like running a database migration or uploading assets to a CDN.
-- `previews` (Attributes) [Pull request previews](https://docs.render.com/pull-request-previews#pull-request-previews-git-backed) settings (see [below for nested schema](#nestedatt--previews))
+- `previews` (Attributes) [Pull request previews](https://render.com/docs/pull-request-previews#pull-request-previews-git-backed) settings (see [below for nested schema](#nestedatt--previews))
 - `pull_request_previews_enabled` (Boolean, Deprecated)
 - `region` (String) Region to deploy the service
 - `root_directory` (String) Defaults to repository root. When you specify a root directory that is different from your repository root, Render runs all your commands in the specified directory and ignores changes outside the directory.
@@ -132,7 +132,7 @@ Read-Only:
 
 Read-Only:
 
-- `generation` (String) Generation mode for [pull request previews](https://docs.render.com/pull-request-previews#pull-request-previews-git-backed). One of `off`, `manual`, or `automatic`. Defaults to `off`.
+- `generation` (String) Generation mode for [pull request previews](https://render.com/docs/pull-request-previews#pull-request-previews-git-backed). One of `off`, `manual`, or `automatic`. Defaults to `off`.
 
 
 <a id="nestedatt--runtime_source"></a>
@@ -149,7 +149,7 @@ Read-Only:
 
 Read-Only:
 
-- `auto_deploy` (Boolean) [Automatic deploy](https://docs.render.com/deploys#automatic-git-deploys) on every push to your repository, or changes to your service settings or environment.
+- `auto_deploy` (Boolean) [Automatic deploy](https://render.com/docs/deploys#automatic-git-deploys) on every push to your repository, or changes to your service settings or environment.
 - `branch` (String) Branch to build
 - `build_filter` (Attributes) Filter for files and paths to monitor for automatic deploys. Filter paths are absolute. If you've defined a root directory, you can still define paths outside of the root directory. (see [below for nested schema](#nestedatt--runtime_source--docker--build_filter))
 - `context` (String) [Docker build context directory.](https://docs.docker.com/reference/dockerfile/#usage) This is relative to your repository root. Defaults to the root.
@@ -186,7 +186,7 @@ Read-Only:
 
 Read-Only:
 
-- `auto_deploy` (Boolean) [Automatic deploy](https://docs.render.com/deploys#automatic-git-deploys) on every push to your repository, or changes to your service settings or environment.
+- `auto_deploy` (Boolean) [Automatic deploy](https://render.com/docs/deploys#automatic-git-deploys) on every push to your repository, or changes to your service settings or environment.
 - `branch` (String) Branch to build
 - `build_command` (String) Command to build the service
 - `build_filter` (Attributes) Filter for files and paths to monitor for automatic deploys. Filter paths are absolute. If you've defined a root directory, you can still define paths outside of the root directory. (see [below for nested schema](#nestedatt--runtime_source--native_runtime--build_filter))

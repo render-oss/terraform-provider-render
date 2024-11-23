@@ -10,7 +10,7 @@ import (
 var Headers = schema.SetNestedAttribute{
 	Optional:            true,
 	Description:         "List of headers to apply to requests for static sites",
-	MarkdownDescription: "List of [headers](https://docs.render.com/static-site-headers) to apply to requests for static sites",
+	MarkdownDescription: "List of [headers](https://render.com/docs/static-site-headers) to apply to requests for static sites",
 	NestedObject: schema.NestedAttributeObject{
 		Attributes: map[string]schema.Attribute{
 			"path": schema.StringAttribute{

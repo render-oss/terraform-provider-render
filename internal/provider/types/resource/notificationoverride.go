@@ -29,5 +29,5 @@ var NotificationOverride = schema.SingleNestedAttribute{
 	},
 	Optional:    true,
 	Computed:    true,
-	Description: "Configure the [notification settings](https://docs.render.com/notifications) for this service. These will override the global notification settings of the user or team.",
+	Description: "Configure the [notification settings](https://render.com/docs/notifications) for this service. These will override the global notification settings of the user or team.",
 }

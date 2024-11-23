@@ -52,7 +52,7 @@ resource "render_env_group" "example" {
 ### Optional
 
 - `env_vars` (Attributes Map) Map of environment variable names to their values. (see [below for nested schema](#nestedatt--env_vars))
-- `environment_id` (String) ID of the [project environment](https://docs.render.com/projects) that the resource belongs to
+- `environment_id` (String) ID of the [project environment](https://render.com/docs/projects) that the resource belongs to
 - `secret_files` (Attributes Map) A map of secret file paths to their contents. (see [below for nested schema](#nestedatt--secret_files))
 
 ### Read-Only

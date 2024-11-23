@@ -26,7 +26,7 @@ type DockerDetailsModel struct {
 var DockerDetails = schema.SingleNestedAttribute{
 	Optional:            true,
 	Description:         "Details for building and deploying a service using a Dockerfile.",
-	MarkdownDescription: "Details for building and deploying a service [using a Dockerfile](https://docs.render.com/docker).",
+	MarkdownDescription: "Details for building and deploying a service [using a Dockerfile](https://render.com/docs/docker).",
 	Attributes: map[string]schema.Attribute{
 		"auto_deploy":  AutoDeploy,
 		"repo_url":     RepoURL,
@@ -51,7 +51,7 @@ var DockerDetails = schema.SingleNestedAttribute{
 
 var NativeRuntimeDetails = schema.SingleNestedAttribute{
 	Description:         "Details for building and deploying a service using one of Render's native runtimes.",
-	MarkdownDescription: "Details for building and deploying a service using one of Render's [native runtimes](https://docs.render.com/native-runtimes).",
+	MarkdownDescription: "Details for building and deploying a service using one of Render's [native runtimes](https://render.com/docs/native-runtimes).",
 	Optional:            true,
 	Attributes: map[string]schema.Attribute{
 		"auto_deploy":   AutoDeploy,
@@ -97,7 +97,7 @@ var RegistryCredentialID = schema.StringAttribute{
 var RuntimeSource = schema.SingleNestedAttribute{
 	Required:            true,
 	Description:         "Source of the build artifacts or image that run your service. You must provide one of native_runtime, docker, or image.",
-	MarkdownDescription: "Source of the build artifacts or image that run your service. You must provide one of [native_runtime](https://docs.render.com/native-runtimes), [docker](https://docs.render.com/docker), or [image](https://docs.render.com/deploy-an-image).",
+	MarkdownDescription: "Source of the build artifacts or image that run your service. You must provide one of [native_runtime](https://render.com/docs/native-runtimes), [docker](https://render.com/docs/docker), or [image](https://render.com/docs/deploy-an-image).",
 	Attributes: map[string]schema.Attribute{
 		"native_runtime": NativeRuntimeDetails,
 		"docker":         DockerDetails,
@@ -112,7 +112,7 @@ var PreDeployCommand = schema.StringAttribute{
 
 var RuntimeSourceImage = schema.SingleNestedAttribute{
 	Description:         "Details for deploying a service using a Docker image from a registry.",
-	MarkdownDescription: "Details for deploying a service using a [Docker image from a registry](https://docs.render.com/deploy-an-image).",
+	MarkdownDescription: "Details for deploying a service using a [Docker image from a registry](https://render.com/docs/deploy-an-image).",
 	Optional:            true,
 	Attributes: map[string]schema.Attribute{
 		"image_url":              ImageURL,

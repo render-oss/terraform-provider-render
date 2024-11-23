@@ -21,7 +21,7 @@ var AutoDeploy = schema.BoolAttribute{
 	Computed:            true,
 	Default:             booldefault.StaticBool(true),
 	Description:         "Automatic deploy on every push to your repository, or changes to your service settings or environment.",
-	MarkdownDescription: "[Automatic deploy](https://docs.render.com/deploys#automatic-git-deploys) on every push to your repository, or changes to your service settings or environment.",
+	MarkdownDescription: "[Automatic deploy](https://render.com/docs/deploys#automatic-git-deploys) on every push to your repository, or changes to your service settings or environment.",
 }
 
 var DockerDetails = schema.SingleNestedAttribute{

@@ -8,7 +8,7 @@ import (
 
 var Autoscaling = schema.SingleNestedAttribute{
 	Description:         "Autoscaling settings for the service",
-	MarkdownDescription: "[Autoscaling settings](https://docs.render.com/scaling#autoscaling) for the service",
+	MarkdownDescription: "[Autoscaling settings](https://render.com/docs/scaling#autoscaling) for the service",
 	Attributes: map[string]schema.Attribute{
 		"criteria": schema.SingleNestedAttribute{
 			Attributes: map[string]schema.Attribute{
