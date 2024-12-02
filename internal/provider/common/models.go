@@ -29,6 +29,16 @@ var maintenanceModeTypes = map[string]attr.Type{
 	"uri":     types.StringType,
 }
 
+func DefaultMaintenanceMode() types.Object {
+	return types.ObjectValueMust(
+		maintenanceModeTypes,
+		map[string]attr.Value{
+			"enabled": types.BoolValue(false),
+			"uri":     types.StringValue(""),
+		},
+	)
+}
+
 func MaintenanceModeFromClient(maintenanceMode *client.MaintenanceMode, diags diag.Diagnostics) types.Object {
 	if maintenanceMode == nil {
 		return types.ObjectNull(maintenanceModeTypes)

@@ -3,6 +3,9 @@ package resource
 import (
 	"regexp"
 
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/objectdefault"
+
+	"terraform-provider-render/internal/provider/common"
 	"terraform-provider-render/internal/provider/common/validators"
 
 	"github.com/hashicorp/terraform-plugin-framework-validators/int64validator"
@@ -161,15 +164,19 @@ var StartCommand = schema.StringAttribute{
 }
 
 var MaintenanceMode = schema.SingleNestedAttribute{
+	Optional:    true,
 	Computed:    true,
 	Description: "Maintenance mode settings for the service.",
+	Default:     objectdefault.StaticValue(common.DefaultMaintenanceMode()),
 	Attributes: map[string]schema.Attribute{
 		"enabled": schema.BoolAttribute{
+			Optional:    true,
 			Computed:    true,
 			Default:     booldefault.StaticBool(false),
 			Description: "Whether maintenance mode is enabled",
 		},
 		"uri": schema.StringAttribute{
+			Optional:    true,
 			Computed:    true,
 			Default:     stringdefault.StaticString(""),
 			Description: "URI to redirect to when maintenance mode is enabled",
