@@ -161,17 +161,18 @@ var StartCommand = schema.StringAttribute{
 }
 
 var MaintenanceMode = schema.SingleNestedAttribute{
-	Optional:    true,
 	Computed:    true,
 	Description: "Maintenance mode settings for the service.",
 	Attributes: map[string]schema.Attribute{
 		"enabled": schema.BoolAttribute{
-			Optional:    true,
-			Description: "Enable maintenance mode for the service.",
+			Computed:    true,
+			Default:     booldefault.StaticBool(false),
+			Description: "Whether maintenance mode is enabled",
 		},
 		"uri": schema.StringAttribute{
-			Optional:    true,
-			Description: "URI to redirect to when maintenance mode is enabled.",
+			Computed:    true,
+			Default:     stringdefault.StaticString(""),
+			Description: "URI to redirect to when maintenance mode is enabled",
 		},
 	},
 }
