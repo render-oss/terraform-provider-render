@@ -99,7 +99,6 @@ var HealthCheckPath = schema.StringAttribute{
 }
 
 var MaintenanceMode = schema.SingleNestedAttribute{
-	Optional:    true,
 	Computed:    true,
 	Description: "Maintenance mode settings",
 	Attributes: map[string]schema.Attribute{
