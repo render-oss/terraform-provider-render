@@ -130,7 +130,7 @@ func TestUpdateService(t *testing.T) {
 		c, err := client.NewClientWithResponses(mockAPI.URL)
 		require.NoError(t, err)
 
-		wrapped, err := common.UpdateService(context.Background(), c, common.UpdateServiceReq{
+		wrapped, err := common.UpdateService(context.Background(), c, false, common.UpdateServiceReq{
 			ServiceID: "some-service-id",
 			Disk: &common.DiskStateAndPlan{
 				State: &common.DiskModel{ID: types.StringValue("some-disk-id")},
@@ -154,5 +154,45 @@ func TestUpdateService(t *testing.T) {
 		assert.Equal(t, "updated-disk", details.Disk.Name)
 
 		assert.True(t, deployCalled, "it should deploy the service")
+	})
+	t.Run("it skips deploy when skip is set", func(t *testing.T) {
+		var deployCalled bool
+
+		mockAPI := th.NewMockRenderAPI(map[string]http.HandlerFunc{
+			"/services/some-service-id": th.StaticResponse(&client.Service{
+				Id: "some-service-id", Name: "updated-service",
+			}),
+			"/services/some-service-id/env-vars": th.StaticResponse([]client.EnvVarWithCursor{
+				{EnvVar: client.EnvVar{Key: "updated-env-var", Value: "val"}},
+			}),
+			"/services/some-service-id/secret-files": th.ListResponse(
+				[]client.SecretFileWithCursor{
+					{SecretFile: client.SecretFile{Name: "updated-secret-file", Content: "val1"}},
+				},
+			),
+			"/disks/some-disk-id": th.StaticResponse(disks.DiskDetails{Name: "updated-disk"}),
+			"/services/some-service-id/deploys": func(resp http.ResponseWriter, req *http.Request) {
+				deployCalled = true
+				resp.WriteHeader(http.StatusCreated)
+			},
+			"/services/some-service-id/scale": func(resp http.ResponseWriter, req *http.Request) {
+				resp.WriteHeader(http.StatusAccepted)
+			},
+			"/notification-settings/overrides/services/some-service-id": th.StaticResponse(struct{}{}),
+		})
+
+		c, err := client.NewClientWithResponses(mockAPI.URL)
+		require.NoError(t, err)
+
+		_, err = common.UpdateService(context.Background(), c, true, common.UpdateServiceReq{
+			ServiceID: "some-service-id",
+			Disk: &common.DiskStateAndPlan{
+				State: &common.DiskModel{ID: types.StringValue("some-disk-id")},
+				Plan:  &common.DiskModel{ID: types.StringValue("some-disk-id")},
+			},
+		}, common.ServiceTypeWebService)
+		require.NoError(t, err)
+
+		assert.False(t, deployCalled, "it should not deploy the service")
 	})
 }

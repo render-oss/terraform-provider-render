@@ -23,7 +23,6 @@ Provides information about a Render Web Service.
 
 - `custom_domains` (Attributes Set) Custom domains to associate with the service. (see [below for nested schema](#nestedatt--custom_domains))
 - `log_stream_override` (Attributes) Configure the [log stream override settings](https://render.com/docs/log-streams#overriding-defaults) for this service. These will override the global log stream settings of the user or team. (see [below for nested schema](#nestedatt--log_stream_override))
-- `maintenance_mode` (Attributes) Maintenance mode settings (see [below for nested schema](#nestedatt--maintenance_mode))
 
 ### Read-Only
 
@@ -32,6 +31,7 @@ Provides information about a Render Web Service.
 - `env_vars` (Attributes Map) Map of environment variable names to their values. (see [below for nested schema](#nestedatt--env_vars))
 - `environment_id` (String) Unique identifier for the environment that the resource belongs to
 - `health_check_path` (String) If you're running a server, enter the path where your server will always return a 200 OK response. We use it to monitor your app and for [zero downtime deploys](https://render.com/docs/deploys#zero-downtime-deploys).
+- `maintenance_mode` (Attributes) Maintenance mode settings (see [below for nested schema](#nestedatt--maintenance_mode))
 - `max_shutdown_delay_seconds` (Number) The maximum amount of time (in seconds) that Render waits for your application process to exit gracefully after sending it a SIGTERM signal before sending a SIGKILL signal.
 - `name` (String) Name of the service
 - `notification_override` (Attributes) Set the notification settings for this service. These will override the notification settings of the owner. (see [below for nested schema](#nestedatt--notification_override))
@@ -74,15 +74,6 @@ Optional:
 
 - `endpoint` (String) The endpoint to send logs to.
 - `token` (String, Sensitive) The token to use when sending logs.
-
-
-<a id="nestedatt--maintenance_mode"></a>
-### Nested Schema for `maintenance_mode`
-
-Read-Only:
-
-- `enabled` (Boolean) Whether maintenance mode is enabled
-- `uri` (String) URI to redirect to when maintenance mode is enabled
 
 
 <a id="nestedatt--autoscaling"></a>
@@ -144,6 +135,15 @@ Read-Only:
 
 - `generate_value` (Boolean)
 - `value` (String, Sensitive)
+
+
+<a id="nestedatt--maintenance_mode"></a>
+### Nested Schema for `maintenance_mode`
+
+Read-Only:
+
+- `enabled` (Boolean) Whether maintenance mode is enabled
+- `uri` (String) URI to redirect to when maintenance mode is enabled
 
 
 <a id="nestedatt--notification_override"></a>

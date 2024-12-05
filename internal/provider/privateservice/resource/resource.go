@@ -30,10 +30,11 @@ func NewPrivateServiceResource() resource.Resource {
 
 // privateServiceResource is the resource implementation.
 type privateServiceResource struct {
-	client                  *client.ClientWithResponses
-	ownerID                 string
-	poller                  *common.Poller
-	waitForDeployCompletion bool
+	client                       *client.ClientWithResponses
+	ownerID                      string
+	poller                       *common.Poller
+	waitForDeployCompletion      bool
+	skipDeployAfterServiceUpdate bool
 }
 
 // Configure adds the provider configured Client to the resource.
@@ -47,6 +48,7 @@ func (r *privateServiceResource) Configure(_ context.Context, req resource.Confi
 	r.ownerID = data.OwnerID
 	r.poller = data.Poller
 	r.waitForDeployCompletion = data.WaitForDeployCompletion
+	r.skipDeployAfterServiceUpdate = data.SkipDeployAfterServiceUpdate
 }
 
 // Metadata returns the resource type name.
@@ -206,7 +208,7 @@ func (r *privateServiceResource) Update(ctx context.Context, req resource.Update
 		return
 	}
 
-	service, err := common.UpdateService(ctx, r.client, common.UpdateServiceReq{
+	service, err := common.UpdateService(ctx, r.client, r.skipDeployAfterServiceUpdate, common.UpdateServiceReq{
 		ServiceID:   plan.Id.ValueString(),
 		Service:     serviceDetails,
 		EnvVars:     evs,

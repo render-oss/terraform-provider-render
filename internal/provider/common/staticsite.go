@@ -56,8 +56,8 @@ func WrapStaticSite(ctx context.Context, apiClient *client.ClientWithResponses, 
 
 }
 
-func UpdateStaticSite(ctx context.Context, apiClient *client.ClientWithResponses, req UpdateStaticSiteReq) (*WrappedStaticSite, error) {
-	wrappedService, err := UpdateService(ctx, apiClient, UpdateServiceReq{
+func UpdateStaticSite(ctx context.Context, apiClient *client.ClientWithResponses, skipDeploy bool, req UpdateStaticSiteReq) (*WrappedStaticSite, error) {
+	wrappedService, err := UpdateService(ctx, apiClient, skipDeploy, UpdateServiceReq{
 		ServiceID:            req.ServiceID,
 		Service:              req.Service,
 		CustomDomains:        req.CustomDomains,

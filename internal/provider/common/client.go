@@ -12,6 +12,7 @@ import (
 
 	"github.com/hashicorp/terraform-plugin-framework/diag"
 	"github.com/hashicorp/terraform-plugin-framework/types"
+
 	"terraform-provider-render/internal/client"
 	"terraform-provider-render/internal/client/disks"
 	"terraform-provider-render/internal/client/logs"
@@ -553,7 +554,7 @@ var scalableServiceTypes = []ServiceType{
 	ServiceTypeBackgroundWorker,
 }
 
-func UpdateService(ctx context.Context, apiClient *client.ClientWithResponses, req UpdateServiceReq, serviceType ServiceType) (*WrappedService, error) {
+func UpdateService(ctx context.Context, apiClient *client.ClientWithResponses, skipDeploy bool, req UpdateServiceReq, serviceType ServiceType) (*WrappedService, error) {
 	// must happen before updating the service so the instance count is reflected in the service response
 	if req.InstanceCount != nil && *req.InstanceCount > 0 && slices.Contains(scalableServiceTypes, serviceType) {
 		if err := updateInstanceCount(ctx, apiClient, req.ServiceID, int(*req.InstanceCount)); err != nil {
@@ -637,16 +638,19 @@ func UpdateService(ctx context.Context, apiClient *client.ClientWithResponses, r
 		}
 	}
 
-	err = Create(func() (*http.Response, error) {
-		return apiClient.CreateDeploy(ctx, req.ServiceID, client.CreateDeployJSONRequestBody{})
-	}, nil)
-	if err != nil {
-		return nil, fmt.Errorf("unable to deploy service: %w", err)
+	if !skipDeploy {
+		err = Create(func() (*http.Response, error) {
+			return apiClient.CreateDeploy(ctx, req.ServiceID, client.CreateDeployJSONRequestBody{})
+		}, nil)
+		if err != nil {
+			return nil, fmt.Errorf("unable to deploy service: %w", err)
+		}
 	}
 
 	return &WrappedService{
-		Service:       service,
-		CustomDomains: cds, EnvVars: envVars,
+		Service:              service,
+		CustomDomains:        cds,
+		EnvVars:              envVars,
 		SecretFiles:          secretFiles,
 		NotificationOverride: notificationOverride,
 		LogStreamOverride:    logStreamOverride,

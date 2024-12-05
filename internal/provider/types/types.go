@@ -11,10 +11,11 @@ import (
 )
 
 type Data struct {
-	Client                  *client.ClientWithResponses
-	OwnerID                 string
-	Poller                  *common.Poller
-	WaitForDeployCompletion bool
+	Client                       *client.ClientWithResponses
+	OwnerID                      string
+	Poller                       *common.Poller
+	WaitForDeployCompletion      bool
+	SkipDeployAfterServiceUpdate bool
 }
 
 func ConfigureDatasource(req datasource.ConfigureRequest, resp *datasource.ConfigureResponse) *Data {

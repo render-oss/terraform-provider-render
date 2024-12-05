@@ -269,8 +269,8 @@ Optional:
 
 Optional:
 
-- `enabled` (Boolean) Enable maintenance mode for the service.
-- `uri` (String) URI to redirect to when maintenance mode is enabled.
+- `enabled` (Boolean) Whether maintenance mode is enabled
+- `uri` (String) URI to redirect to when maintenance mode is enabled
 
 
 <a id="nestedatt--notification_override"></a>
