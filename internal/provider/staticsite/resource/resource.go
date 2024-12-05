@@ -28,8 +28,9 @@ func NewStaticSiteResource() resource.Resource {
 
 // staticSiteResource is the resource implementation.
 type staticSiteResource struct {
-	client  *client.ClientWithResponses
-	ownerID string
+	client                       *client.ClientWithResponses
+	ownerID                      string
+	skipDeployAfterServiceUpdate bool
 }
 
 // Configure adds the provider configured Client to the resource.
@@ -41,6 +42,7 @@ func (r *staticSiteResource) Configure(_ context.Context, req resource.Configure
 
 	r.client = data.Client
 	r.ownerID = data.OwnerID
+	r.skipDeployAfterServiceUpdate = data.SkipDeployAfterServiceUpdate
 }
 
 // Metadata returns the resource type name.
@@ -190,7 +192,7 @@ func (r *staticSiteResource) Update(ctx context.Context, req resource.UpdateRequ
 		return
 	}
 
-	wrappedService, err := common.UpdateStaticSite(ctx, r.client, common.UpdateStaticSiteReq{
+	wrappedService, err := common.UpdateStaticSite(ctx, r.client, r.skipDeployAfterServiceUpdate, common.UpdateStaticSiteReq{
 		ServiceID: plan.Id.ValueString(),
 		Service:   serviceDetails,
 		CustomDomains: common.CustomDomainStateAndPlan{

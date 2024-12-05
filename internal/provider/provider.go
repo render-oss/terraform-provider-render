@@ -8,6 +8,7 @@ import (
 	"time"
 
 	"golang.org/x/time/rate"
+
 	logstreamdatasource "terraform-provider-render/internal/provider/logstreams/datasource"
 	logstreamresource "terraform-provider-render/internal/provider/logstreams/resource"
 	projectdatasource "terraform-provider-render/internal/provider/project/datasource"
@@ -51,9 +52,10 @@ import (
 
 // renderProviderModel maps provider schema data to a Go type.
 type renderProviderModel struct {
-	APIKey                  types.String `tfsdk:"api_key"`
-	OwnerID                 types.String `tfsdk:"owner_id"`
-	WaitForDeployCompletion types.Bool   `tfsdk:"wait_for_deploy_completion"`
+	APIKey                       types.String `tfsdk:"api_key"`
+	OwnerID                      types.String `tfsdk:"owner_id"`
+	WaitForDeployCompletion      types.Bool   `tfsdk:"wait_for_deploy_completion"`
+	SkipDeployAfterServiceUpdate types.Bool   `tfsdk:"skip_deploy_after_service_update"`
 }
 
 // Ensure the implementation satisfies the expected interfaces.
@@ -120,13 +122,14 @@ type renderProvider struct {
 	// version is set to the provider version on release, "dev" when the
 	// provider is built and ran locally, and "test" when running acceptance
 	// testing.
-	version                 string
-	APIKey                  string `tfsdk:"api_key"`
-	OwnerID                 string `tfsdk:"owner_id"`
-	Host                    string
-	httpClient              *http.Client
-	poller                  *common.Poller
-	waitForDeployCompletion bool
+	version                      string
+	APIKey                       string `tfsdk:"api_key"`
+	OwnerID                      string `tfsdk:"owner_id"`
+	Host                         string
+	httpClient                   *http.Client
+	poller                       *common.Poller
+	waitForDeployCompletion      bool
+	skipDeployAfterServiceUpdate bool
 }
 
 // Metadata returns the provider type name.
@@ -154,6 +157,10 @@ func (p *renderProvider) Schema(_ context.Context, _ provider.SchemaRequest, res
 			"wait_for_deploy_completion": schema.BoolAttribute{
 				Optional:    true,
 				Description: "If set to true, the provider will wait for deployments to complete when creating web services, private services, and background workers before continuing. This is useful when you have services that depend on one another and the dependencies must be live for the dependent service to successfully start. The default value is false. The provider will read this value from the RENDER_WAIT_FOR_DEPLOY_COMPLETION environment variable if set.",
+			},
+			"skip_deploy_after_service_update": schema.BoolAttribute{
+				Optional:    true,
+				Description: "If set to true, the provider won't deploy a service after updating it.",
 			},
 		},
 	}
@@ -228,6 +235,15 @@ func (p *renderProvider) Configure(ctx context.Context, req provider.ConfigureRe
 
 	if !config.WaitForDeployCompletion.IsNull() {
 		p.waitForDeployCompletion = config.WaitForDeployCompletion.ValueBool()
+	}
+
+	p.skipDeployAfterServiceUpdate = false
+	if value := os.Getenv("RENDER_SKIP_DEPLOY_AFTER_SERVICE_UPDATE"); value != "" {
+		p.skipDeployAfterServiceUpdate = strings.ToLower(value) == "true"
+	}
+
+	if !config.SkipDeployAfterServiceUpdate.IsNull() {
+		p.skipDeployAfterServiceUpdate = config.SkipDeployAfterServiceUpdate.ValueBool()
 	}
 
 	// If any of the expected configurations are missing, return
@@ -306,10 +322,11 @@ func (p *renderProvider) Configure(ctx context.Context, req provider.ConfigureRe
 	}
 
 	data := &rendertypes.Data{
-		Client:                  client,
-		OwnerID:                 p.OwnerID,
-		Poller:                  p.poller,
-		WaitForDeployCompletion: p.waitForDeployCompletion,
+		Client:                       client,
+		OwnerID:                      p.OwnerID,
+		Poller:                       p.poller,
+		WaitForDeployCompletion:      p.waitForDeployCompletion,
+		SkipDeployAfterServiceUpdate: p.skipDeployAfterServiceUpdate,
 	}
 
 	resp.DataSourceData = data

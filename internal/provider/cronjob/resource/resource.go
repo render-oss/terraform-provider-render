@@ -30,8 +30,9 @@ func NewCronJobResource() resource.Resource {
 
 // cronJobResource is the resource implementation.
 type cronJobResource struct {
-	client  *client.ClientWithResponses
-	ownerID string
+	client                       *client.ClientWithResponses
+	ownerID                      string
+	skipDeployAfterServiceUpdate bool
 }
 
 // Configure adds the provider configured Client to the resource.
@@ -43,6 +44,7 @@ func (r *cronJobResource) Configure(_ context.Context, req resource.ConfigureReq
 
 	r.client = data.Client
 	r.ownerID = data.OwnerID
+	r.skipDeployAfterServiceUpdate = data.SkipDeployAfterServiceUpdate
 }
 
 // Metadata returns the resource type name.
@@ -171,7 +173,7 @@ func (r *cronJobResource) Update(ctx context.Context, req resource.UpdateRequest
 		return
 	}
 
-	service, err := common.UpdateService(ctx, r.client, common.UpdateServiceReq{
+	service, err := common.UpdateService(ctx, r.client, r.skipDeployAfterServiceUpdate, common.UpdateServiceReq{
 		ServiceID:   plan.Id.ValueString(),
 		Service:     serviceDetails,
 		EnvVars:     evs,
