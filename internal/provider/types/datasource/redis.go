@@ -1,9 +1,10 @@
 package datasource
 
 import (
+	"terraform-provider-render/internal/provider/redis"
+
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
-	"terraform-provider-render/internal/provider/redis"
 )
 
 var MaxMemoryPolicy = schema.StringAttribute{

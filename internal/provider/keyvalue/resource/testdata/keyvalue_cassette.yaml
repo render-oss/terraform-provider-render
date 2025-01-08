@@ -1,0 +1,3182 @@
+---
+version: 2
+interactions:
+    - id: 0
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 116
+        transfer_encoding: []
+        trailer: {}
+        host: https://api.testing.render.com/v1
+        remote_addr: ""
+        request_uri: ""
+        body: '{"environments":[{"name":"prod","protectedStatus":"protected"}],"name":"first","ownerId":"some-owner-id"}'
+        form: {}
+        headers:
+            Authorization:
+                - some-api-key
+            Content-Type:
+                - application/json
+            User-Agent:
+                - terraform-provider-render/test
+        url: https://api.testing.render.com/v1/projects
+        method: POST
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: 285
+        uncompressed: false
+        body: |
+            {"createdAt":"2024-09-09T16:35:27.305482Z","environmentIds":["evm-crfi7js8m55c703hl2fg"],"id":"prj-crfi7js8m55c703hl2f0","name":"first","owner":{"email":"email@example.com","id":"some-owner-id","name":"Test Terraform","type":"team"},"updatedAt":"2024-09-09T16:35:27.305482Z"}
+        headers:
+            Content-Length:
+                - "285"
+            Content-Type:
+                - application/json; charset=utf-8
+            Date:
+                - Mon, 09 Sep 2024 16:35:27 GMT
+            Ratelimit-Limit:
+                - "10000"
+            Ratelimit-Remaining:
+                - "9998"
+            Ratelimit-Reset:
+                - "32"
+            Referrer-Policy:
+                - same-origin
+            Render-Request-Id:
+                - api-cb6686ccd-gtczz/osocDdt2rF-000143
+            Vary:
+                - Origin
+            X-Content-Type-Options:
+                - nosniff
+            X-Frame-Options:
+                - DENY
+            X-Xss-Protection:
+                - 1; mode=block
+        status: 201 Created
+        code: 201
+        duration: 145.171ms
+    - id: 1
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 0
+        transfer_encoding: []
+        trailer: {}
+        host: https://api.testing.render.com/v1
+        remote_addr: ""
+        request_uri: ""
+        body: ""
+        form: {}
+        headers:
+            Authorization:
+                - some-api-key
+            User-Agent:
+                - terraform-provider-render/test
+        url: https://api.testing.render.com/v1/environments/evm-crfi7js8m55c703hl2fg
+        method: GET
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: 190
+        uncompressed: false
+        body: |
+            {"databasesIds":null,"envGroupIds":null,"id":"evm-crfi7js8m55c703hl2fg","name":"prod","projectId":"prj-crfi7js8m55c703hl2f0","protectedStatus":"protected","keyValueIds":null,"serviceIds":null}
+        headers:
+            Content-Length:
+                - "190"
+            Content-Type:
+                - application/json; charset=utf-8
+            Date:
+                - Mon, 09 Sep 2024 16:35:27 GMT
+            Ratelimit-Limit:
+                - "10000"
+            Ratelimit-Remaining:
+                - "9987"
+            Ratelimit-Reset:
+                - "32"
+            Referrer-Policy:
+                - same-origin
+            Render-Request-Id:
+                - api-cb6686ccd-gtczz/osocDdt2rF-000144
+            Vary:
+                - Origin
+            X-Content-Type-Options:
+                - nosniff
+            X-Frame-Options:
+                - DENY
+            X-Xss-Protection:
+                - 1; mode=block
+        status: 200 OK
+        code: 200
+        duration: 41.325375ms
+    - id: 2
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 117
+        transfer_encoding: []
+        trailer: {}
+        host: https://api.testing.render.com/v1
+        remote_addr: ""
+        request_uri: ""
+        body: '{"environments":[{"name":"prod","protectedStatus":"protected"}],"name":"second","ownerId":"some-owner-id"}'
+        form: {}
+        headers:
+            Authorization:
+                - some-api-key
+            Content-Type:
+                - application/json
+            User-Agent:
+                - terraform-provider-render/test
+        url: https://api.testing.render.com/v1/projects
+        method: POST
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: 286
+        uncompressed: false
+        body: |
+            {"createdAt":"2024-09-09T16:35:27.450645Z","environmentIds":["evm-crfi7js8m55c703hl2gg"],"id":"prj-crfi7js8m55c703hl2g0","name":"second","owner":{"email":"email@example.com","id":"some-owner-id","name":"Test Terraform","type":"team"},"updatedAt":"2024-09-09T16:35:27.450645Z"}
+        headers:
+            Content-Length:
+                - "286"
+            Content-Type:
+                - application/json; charset=utf-8
+            Date:
+                - Mon, 09 Sep 2024 16:35:27 GMT
+            Ratelimit-Limit:
+                - "10000"
+            Ratelimit-Remaining:
+                - "9997"
+            Ratelimit-Reset:
+                - "32"
+            Referrer-Policy:
+                - same-origin
+            Render-Request-Id:
+                - api-cb6686ccd-gtczz/osocDdt2rF-000145
+            Vary:
+                - Origin
+            X-Content-Type-Options:
+                - nosniff
+            X-Frame-Options:
+                - DENY
+            X-Xss-Protection:
+                - 1; mode=block
+        status: 201 Created
+        code: 201
+        duration: 81.226083ms
+    - id: 3
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 0
+        transfer_encoding: []
+        trailer: {}
+        host: https://api.testing.render.com/v1
+        remote_addr: ""
+        request_uri: ""
+        body: ""
+        form: {}
+        headers:
+            Authorization:
+                - some-api-key
+            User-Agent:
+                - terraform-provider-render/test
+        url: https://api.testing.render.com/v1/environments/evm-crfi7js8m55c703hl2gg
+        method: GET
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: 190
+        uncompressed: false
+        body: |
+            {"databasesIds":null,"envGroupIds":null,"id":"evm-crfi7js8m55c703hl2gg","name":"prod","projectId":"prj-crfi7js8m55c703hl2g0","protectedStatus":"protected","keyValueIds":null,"serviceIds":null}
+        headers:
+            Content-Length:
+                - "190"
+            Content-Type:
+                - application/json; charset=utf-8
+            Date:
+                - Mon, 09 Sep 2024 16:35:27 GMT
+            Ratelimit-Limit:
+                - "10000"
+            Ratelimit-Remaining:
+                - "9986"
+            Ratelimit-Reset:
+                - "32"
+            Referrer-Policy:
+                - same-origin
+            Render-Request-Id:
+                - api-cb6686ccd-gtczz/osocDdt2rF-000146
+            Vary:
+                - Origin
+            X-Content-Type-Options:
+                - nosniff
+            X-Frame-Options:
+                - DENY
+            X-Xss-Protection:
+                - 1; mode=block
+        status: 200 OK
+        code: 200
+        duration: 40.835125ms
+    - id: 4
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 281
+        transfer_encoding: []
+        trailer: {}
+        host: https://api.testing.render.com/v1
+        remote_addr: ""
+        request_uri: ""
+        body: '{"environmentId":"evm-crfi7js8m55c703hl2fg","ipAllowList":[{"cidrBlock":"1.1.1.1/32","description":"test"},{"cidrBlock":"2.0.0.0/8","description":"test-2"}],"maxmemoryPolicy":"allkeys_lfu","name":"test-keyvalue","ownerId":"some-owner-id","plan":"starter","region":"oregon"}'
+        form: {}
+        headers:
+            Authorization:
+                - some-api-key
+            Content-Type:
+                - application/json
+            User-Agent:
+                - terraform-provider-render/test
+        url: https://api.testing.render.com/v1/key-value
+        method: POST
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: 524
+        uncompressed: false
+        body: |
+            {"createdAt":"2024-09-09T16:35:27.643669961Z","environmentId":"evm-crfi7js8m55c703hl2fg","id":"red-crfi7js8m55c703hl2h0","ipAllowList":[{"cidrBlock":"1.1.1.1/32","description":"test"},{"cidrBlock":"2.0.0.0/8","description":"test-2"}],"name":"test-keyvalue","options":{"maxmemoryPolicy":"allkeys_lfu"},"owner":{"email":"email@example.com","id":"some-owner-id","name":"Test Terraform","type":"team"},"plan":"starter","region":"oregon","status":"creating","updatedAt":"2024-09-09T16:35:27.643669961Z","version":"6.2.14"}
+        headers:
+            Content-Length:
+                - "524"
+            Content-Type:
+                - application/json; charset=utf-8
+            Date:
+                - Mon, 09 Sep 2024 16:35:27 GMT
+            Ratelimit-Limit:
+                - "10000"
+            Ratelimit-Remaining:
+                - "9999"
+            Ratelimit-Reset:
+                - "32"
+            Referrer-Policy:
+                - same-origin
+            Render-Request-Id:
+                - api-cb6686ccd-gtczz/osocDdt2rF-000147
+            Vary:
+                - Origin
+            X-Content-Type-Options:
+                - nosniff
+            X-Frame-Options:
+                - DENY
+            X-Xss-Protection:
+                - 1; mode=block
+        status: 201 Created
+        code: 201
+        duration: 223.503667ms
+    - id: 5
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 0
+        transfer_encoding: []
+        trailer: {}
+        host: https://api.testing.render.com/v1
+        remote_addr: ""
+        request_uri: ""
+        body: ""
+        form: {}
+        headers:
+            Authorization:
+                - some-api-key
+            User-Agent:
+                - terraform-provider-render/test
+        url: https://api.testing.render.com/v1/key-value/red-crfi7js8m55c703hl2h0/connection-info
+        method: GET
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: 365
+        uncompressed: false
+        body: |
+            {"externalConnectionString":"rediss://red-crfi7js8m55c703hl2h0:gIRSGDdOQriMcOCPQHj1durmcXvsgVqm@oregon-redis.localhost.render.com:6377","internalConnectionString":"redis://red-crfi7js8m55c703hl2h0:6379","redisCLICommand":" REDISCLI_AUTH=gIRSGDdOQriMcOCPQHj1durmcXvsgVqm valkey-cli --user red-crfi7js8m55c703hl2h0 -h oregon-redis.localhost.render.com -p 6377 --tls"}
+        headers:
+            Content-Length:
+                - "365"
+            Content-Type:
+                - application/json; charset=utf-8
+            Date:
+                - Mon, 09 Sep 2024 16:35:27 GMT
+            Ratelimit-Limit:
+                - "10000"
+            Ratelimit-Remaining:
+                - "9985"
+            Ratelimit-Reset:
+                - "32"
+            Referrer-Policy:
+                - same-origin
+            Render-Request-Id:
+                - api-cb6686ccd-gtczz/osocDdt2rF-000148
+            Vary:
+                - Origin
+            X-Content-Type-Options:
+                - nosniff
+            X-Frame-Options:
+                - DENY
+            X-Xss-Protection:
+                - 1; mode=block
+        status: 200 OK
+        code: 200
+        duration: 51.036208ms
+    - id: 6
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 18
+        transfer_encoding: []
+        trailer: {}
+        host: https://api.testing.render.com/v1
+        remote_addr: ""
+        request_uri: ""
+        body: '{"setting":"drop"}'
+        form: {}
+        headers:
+            Authorization:
+                - some-api-key
+            Content-Type:
+                - application/json
+            User-Agent:
+                - terraform-provider-render/test
+        url: https://api.testing.render.com/v1/logs/streams/resource/red-crfi7js8m55c703hl2h0
+        method: PUT
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: 73
+        uncompressed: false
+        body: |
+            {"endpoint":"","resourceId":"red-crfi7js8m55c703hl2h0","setting":"drop"}
+        headers:
+            Content-Length:
+                - "73"
+            Content-Type:
+                - application/json; charset=utf-8
+            Date:
+                - Mon, 09 Sep 2024 16:35:27 GMT
+            Ratelimit-Limit:
+                - "10000"
+            Ratelimit-Remaining:
+                - "9996"
+            Ratelimit-Reset:
+                - "32"
+            Referrer-Policy:
+                - same-origin
+            Render-Request-Id:
+                - api-cb6686ccd-gtczz/osocDdt2rF-000149
+            Vary:
+                - Origin
+            X-Content-Type-Options:
+                - nosniff
+            X-Frame-Options:
+                - DENY
+            X-Xss-Protection:
+                - 1; mode=block
+        status: 200 OK
+        code: 200
+        duration: 46.927083ms
+    - id: 7
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 0
+        transfer_encoding: []
+        trailer: {}
+        host: https://api.testing.render.com/v1
+        remote_addr: ""
+        request_uri: ""
+        body: ""
+        form: {}
+        headers:
+            Authorization:
+                - some-api-key
+            User-Agent:
+                - terraform-provider-render/test
+        url: https://api.testing.render.com/v1/projects/prj-crfi7js8m55c703hl2f0
+        method: GET
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: 285
+        uncompressed: false
+        body: |
+            {"createdAt":"2024-09-09T16:35:27.305482Z","environmentIds":["evm-crfi7js8m55c703hl2fg"],"id":"prj-crfi7js8m55c703hl2f0","name":"first","owner":{"email":"email@example.com","id":"some-owner-id","name":"Test Terraform","type":"team"},"updatedAt":"2024-09-09T16:35:27.305482Z"}
+        headers:
+            Content-Length:
+                - "285"
+            Content-Type:
+                - application/json; charset=utf-8
+            Date:
+                - Mon, 09 Sep 2024 16:35:28 GMT
+            Ratelimit-Limit:
+                - "10000"
+            Ratelimit-Remaining:
+                - "9984"
+            Ratelimit-Reset:
+                - "31"
+            Referrer-Policy:
+                - same-origin
+            Render-Request-Id:
+                - api-cb6686ccd-gtczz/osocDdt2rF-000150
+            Vary:
+                - Origin
+            X-Content-Type-Options:
+                - nosniff
+            X-Frame-Options:
+                - DENY
+            X-Xss-Protection:
+                - 1; mode=block
+        status: 200 OK
+        code: 200
+        duration: 62.751583ms
+    - id: 8
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 0
+        transfer_encoding: []
+        trailer: {}
+        host: https://api.testing.render.com/v1
+        remote_addr: ""
+        request_uri: ""
+        body: ""
+        form: {}
+        headers:
+            Authorization:
+                - some-api-key
+            User-Agent:
+                - terraform-provider-render/test
+        url: https://api.testing.render.com/v1/environments/evm-crfi7js8m55c703hl2fg
+        method: GET
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: 214
+        uncompressed: false
+        body: |
+            {"databasesIds":null,"envGroupIds":null,"id":"evm-crfi7js8m55c703hl2fg","name":"prod","projectId":"prj-crfi7js8m55c703hl2f0","protectedStatus":"protected","keyValueIds":["red-crfi7js8m55c703hl2h0"],"serviceIds":null}
+        headers:
+            Content-Length:
+                - "214"
+            Content-Type:
+                - application/json; charset=utf-8
+            Date:
+                - Mon, 09 Sep 2024 16:35:28 GMT
+            Ratelimit-Limit:
+                - "10000"
+            Ratelimit-Remaining:
+                - "9983"
+            Ratelimit-Reset:
+                - "31"
+            Referrer-Policy:
+                - same-origin
+            Render-Request-Id:
+                - api-cb6686ccd-gtczz/osocDdt2rF-000151
+            Vary:
+                - Origin
+            X-Content-Type-Options:
+                - nosniff
+            X-Frame-Options:
+                - DENY
+            X-Xss-Protection:
+                - 1; mode=block
+        status: 200 OK
+        code: 200
+        duration: 37.430167ms
+    - id: 9
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 0
+        transfer_encoding: []
+        trailer: {}
+        host: https://api.testing.render.com/v1
+        remote_addr: ""
+        request_uri: ""
+        body: ""
+        form: {}
+        headers:
+            Authorization:
+                - some-api-key
+            User-Agent:
+                - terraform-provider-render/test
+        url: https://api.testing.render.com/v1/projects/prj-crfi7js8m55c703hl2g0
+        method: GET
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: 286
+        uncompressed: false
+        body: |
+            {"createdAt":"2024-09-09T16:35:27.450645Z","environmentIds":["evm-crfi7js8m55c703hl2gg"],"id":"prj-crfi7js8m55c703hl2g0","name":"second","owner":{"email":"email@example.com","id":"some-owner-id","name":"Test Terraform","type":"team"},"updatedAt":"2024-09-09T16:35:27.450645Z"}
+        headers:
+            Content-Length:
+                - "286"
+            Content-Type:
+                - application/json; charset=utf-8
+            Date:
+                - Mon, 09 Sep 2024 16:35:28 GMT
+            Ratelimit-Limit:
+                - "10000"
+            Ratelimit-Remaining:
+                - "9982"
+            Ratelimit-Reset:
+                - "31"
+            Referrer-Policy:
+                - same-origin
+            Render-Request-Id:
+                - api-cb6686ccd-gtczz/osocDdt2rF-000152
+            Vary:
+                - Origin
+            X-Content-Type-Options:
+                - nosniff
+            X-Frame-Options:
+                - DENY
+            X-Xss-Protection:
+                - 1; mode=block
+        status: 200 OK
+        code: 200
+        duration: 57.957209ms
+    - id: 10
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 0
+        transfer_encoding: []
+        trailer: {}
+        host: https://api.testing.render.com/v1
+        remote_addr: ""
+        request_uri: ""
+        body: ""
+        form: {}
+        headers:
+            Authorization:
+                - some-api-key
+            User-Agent:
+                - terraform-provider-render/test
+        url: https://api.testing.render.com/v1/environments/evm-crfi7js8m55c703hl2gg
+        method: GET
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: 190
+        uncompressed: false
+        body: |
+            {"databasesIds":null,"envGroupIds":null,"id":"evm-crfi7js8m55c703hl2gg","name":"prod","projectId":"prj-crfi7js8m55c703hl2g0","protectedStatus":"protected","keyValueIds":null,"serviceIds":null}
+        headers:
+            Content-Length:
+                - "190"
+            Content-Type:
+                - application/json; charset=utf-8
+            Date:
+                - Mon, 09 Sep 2024 16:35:28 GMT
+            Ratelimit-Limit:
+                - "10000"
+            Ratelimit-Remaining:
+                - "9981"
+            Ratelimit-Reset:
+                - "31"
+            Referrer-Policy:
+                - same-origin
+            Render-Request-Id:
+                - api-cb6686ccd-gtczz/osocDdt2rF-000153
+            Vary:
+                - Origin
+            X-Content-Type-Options:
+                - nosniff
+            X-Frame-Options:
+                - DENY
+            X-Xss-Protection:
+                - 1; mode=block
+        status: 200 OK
+        code: 200
+        duration: 39.032458ms
+    - id: 11
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 0
+        transfer_encoding: []
+        trailer: {}
+        host: https://api.testing.render.com/v1
+        remote_addr: ""
+        request_uri: ""
+        body: ""
+        form: {}
+        headers:
+            Authorization:
+                - some-api-key
+            User-Agent:
+                - terraform-provider-render/test
+        url: https://api.testing.render.com/v1/key-value/red-crfi7js8m55c703hl2h0
+        method: GET
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: 516
+        uncompressed: false
+        body: |
+            {"createdAt":"2024-09-09T16:35:27.64367Z","environmentId":"evm-crfi7js8m55c703hl2fg","id":"red-crfi7js8m55c703hl2h0","ipAllowList":[{"cidrBlock":"1.1.1.1/32","description":"test"},{"cidrBlock":"2.0.0.0/8","description":"test-2"}],"name":"test-keyvalue","options":{"maxmemoryPolicy":"allkeys_lfu"},"owner":{"email":"email@example.com","id":"some-owner-id","name":"Test Terraform","type":"team"},"plan":"starter","region":"oregon","status":"creating","updatedAt":"2024-09-09T16:35:27.64367Z","version":"6.2.14"}
+        headers:
+            Content-Length:
+                - "516"
+            Content-Type:
+                - application/json; charset=utf-8
+            Date:
+                - Mon, 09 Sep 2024 16:35:28 GMT
+            Ratelimit-Limit:
+                - "10000"
+            Ratelimit-Remaining:
+                - "9980"
+            Ratelimit-Reset:
+                - "31"
+            Referrer-Policy:
+                - same-origin
+            Render-Request-Id:
+                - api-cb6686ccd-gtczz/osocDdt2rF-000154
+            Vary:
+                - Origin
+            X-Content-Type-Options:
+                - nosniff
+            X-Frame-Options:
+                - DENY
+            X-Xss-Protection:
+                - 1; mode=block
+        status: 200 OK
+        code: 200
+        duration: 55.451416ms
+    - id: 12
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 0
+        transfer_encoding: []
+        trailer: {}
+        host: https://api.testing.render.com/v1
+        remote_addr: ""
+        request_uri: ""
+        body: ""
+        form: {}
+        headers:
+            Authorization:
+                - some-api-key
+            User-Agent:
+                - terraform-provider-render/test
+        url: https://api.testing.render.com/v1/key-value/red-crfi7js8m55c703hl2h0/connection-info
+        method: GET
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: 365
+        uncompressed: false
+        body: |
+            {"externalConnectionString":"rediss://red-crfi7js8m55c703hl2h0:gIRSGDdOQriMcOCPQHj1durmcXvsgVqm@oregon-redis.localhost.render.com:6377","internalConnectionString":"redis://red-crfi7js8m55c703hl2h0:6379","redisCLICommand":" REDISCLI_AUTH=gIRSGDdOQriMcOCPQHj1durmcXvsgVqm valkey-cli --user red-crfi7js8m55c703hl2h0 -h oregon-redis.localhost.render.com -p 6377 --tls"}
+        headers:
+            Content-Length:
+                - "365"
+            Content-Type:
+                - application/json; charset=utf-8
+            Date:
+                - Mon, 09 Sep 2024 16:35:28 GMT
+            Ratelimit-Limit:
+                - "10000"
+            Ratelimit-Remaining:
+                - "9979"
+            Ratelimit-Reset:
+                - "31"
+            Referrer-Policy:
+                - same-origin
+            Render-Request-Id:
+                - api-cb6686ccd-gtczz/osocDdt2rF-000155
+            Vary:
+                - Origin
+            X-Content-Type-Options:
+                - nosniff
+            X-Frame-Options:
+                - DENY
+            X-Xss-Protection:
+                - 1; mode=block
+        status: 200 OK
+        code: 200
+        duration: 54.70275ms
+    - id: 13
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 0
+        transfer_encoding: []
+        trailer: {}
+        host: https://api.testing.render.com/v1
+        remote_addr: ""
+        request_uri: ""
+        body: ""
+        form: {}
+        headers:
+            Authorization:
+                - some-api-key
+            User-Agent:
+                - terraform-provider-render/test
+        url: https://api.testing.render.com/v1/logs/streams/resource/red-crfi7js8m55c703hl2h0
+        method: GET
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: 73
+        uncompressed: false
+        body: |
+            {"endpoint":"","resourceId":"red-crfi7js8m55c703hl2h0","setting":"drop"}
+        headers:
+            Content-Length:
+                - "73"
+            Content-Type:
+                - application/json; charset=utf-8
+            Date:
+                - Mon, 09 Sep 2024 16:35:28 GMT
+            Ratelimit-Limit:
+                - "10000"
+            Ratelimit-Remaining:
+                - "9978"
+            Ratelimit-Reset:
+                - "31"
+            Referrer-Policy:
+                - same-origin
+            Render-Request-Id:
+                - api-cb6686ccd-gtczz/osocDdt2rF-000156
+            Vary:
+                - Origin
+            X-Content-Type-Options:
+                - nosniff
+            X-Frame-Options:
+                - DENY
+            X-Xss-Protection:
+                - 1; mode=block
+        status: 200 OK
+        code: 200
+        duration: 52.137375ms
+    - id: 14
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 0
+        transfer_encoding: []
+        trailer: {}
+        host: https://api.testing.render.com/v1
+        remote_addr: ""
+        request_uri: ""
+        body: ""
+        form: {}
+        headers:
+            Authorization:
+                - some-api-key
+            User-Agent:
+                - terraform-provider-render/test
+        url: https://api.testing.render.com/v1/kk-value/red-crfi7js8m55c703hl2h0
+        method: GET
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: 516
+        uncompressed: false
+        body: |
+            {"createdAt":"2024-09-09T16:35:27.64367Z","environmentId":"evm-crfi7js8m55c703hl2fg","id":"red-crfi7js8m55c703hl2h0","ipAllowList":[{"cidrBlock":"1.1.1.1/32","description":"test"},{"cidrBlock":"2.0.0.0/8","description":"test-2"}],"name":"test-keyvalue","options":{"maxmemoryPolicy":"allkeys_lfu"},"owner":{"email":"email@example.com","id":"some-owner-id","name":"Test Terraform","type":"team"},"plan":"starter","region":"oregon","status":"creating","updatedAt":"2024-09-09T16:35:27.64367Z","version":"6.2.14"}
+        headers:
+            Content-Length:
+                - "516"
+            Content-Type:
+                - application/json; charset=utf-8
+            Date:
+                - Mon, 09 Sep 2024 16:35:28 GMT
+            Ratelimit-Limit:
+                - "10000"
+            Ratelimit-Remaining:
+                - "9977"
+            Ratelimit-Reset:
+                - "31"
+            Referrer-Policy:
+                - same-origin
+            Render-Request-Id:
+                - api-cb6686ccd-gtczz/osocDdt2rF-000157
+            Vary:
+                - Origin
+            X-Content-Type-Options:
+                - nosniff
+            X-Frame-Options:
+                - DENY
+            X-Xss-Protection:
+                - 1; mode=block
+        status: 200 OK
+        code: 200
+        duration: 59.175ms
+    - id: 15
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 0
+        transfer_encoding: []
+        trailer: {}
+        host: https://api.testing.render.com/v1
+        remote_addr: ""
+        request_uri: ""
+        body: ""
+        form: {}
+        headers:
+            Authorization:
+                - some-api-key
+            User-Agent:
+                - terraform-provider-render/test
+        url: https://api.testing.render.com/v1/key-value/red-crfi7js8m55c703hl2h0/connection-info
+        method: GET
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: 365
+        uncompressed: false
+        body: |
+            {"externalConnectionString":"rediss://red-crfi7js8m55c703hl2h0:gIRSGDdOQriMcOCPQHj1durmcXvsgVqm@oregon-redis.localhost.render.com:6377","internalConnectionString":"redis://red-crfi7js8m55c703hl2h0:6379","redisCLICommand":" REDISCLI_AUTH=gIRSGDdOQriMcOCPQHj1durmcXvsgVqm valkey-cli --user red-crfi7js8m55c703hl2h0 -h oregon-redis.localhost.render.com -p 6377 --tls"}
+        headers:
+            Content-Length:
+                - "365"
+            Content-Type:
+                - application/json; charset=utf-8
+            Date:
+                - Mon, 09 Sep 2024 16:35:28 GMT
+            Ratelimit-Limit:
+                - "10000"
+            Ratelimit-Remaining:
+                - "9976"
+            Ratelimit-Reset:
+                - "31"
+            Referrer-Policy:
+                - same-origin
+            Render-Request-Id:
+                - api-cb6686ccd-gtczz/osocDdt2rF-000158
+            Vary:
+                - Origin
+            X-Content-Type-Options:
+                - nosniff
+            X-Frame-Options:
+                - DENY
+            X-Xss-Protection:
+                - 1; mode=block
+        status: 200 OK
+        code: 200
+        duration: 52.420791ms
+    - id: 16
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 0
+        transfer_encoding: []
+        trailer: {}
+        host: https://api.testing.render.com/v1
+        remote_addr: ""
+        request_uri: ""
+        body: ""
+        form: {}
+        headers:
+            Authorization:
+                - some-api-key
+            User-Agent:
+                - terraform-provider-render/test
+        url: https://api.testing.render.com/v1/logs/streams/resource/red-crfi7js8m55c703hl2h0
+        method: GET
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: 73
+        uncompressed: false
+        body: |
+            {"endpoint":"","resourceId":"red-crfi7js8m55c703hl2h0","setting":"drop"}
+        headers:
+            Content-Length:
+                - "73"
+            Content-Type:
+                - application/json; charset=utf-8
+            Date:
+                - Mon, 09 Sep 2024 16:35:28 GMT
+            Ratelimit-Limit:
+                - "10000"
+            Ratelimit-Remaining:
+                - "9975"
+            Ratelimit-Reset:
+                - "31"
+            Referrer-Policy:
+                - same-origin
+            Render-Request-Id:
+                - api-cb6686ccd-gtczz/osocDdt2rF-000159
+            Vary:
+                - Origin
+            X-Content-Type-Options:
+                - nosniff
+            X-Frame-Options:
+                - DENY
+            X-Xss-Protection:
+                - 1; mode=block
+        status: 200 OK
+        code: 200
+        duration: 48.333083ms
+    - id: 17
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 0
+        transfer_encoding: []
+        trailer: {}
+        host: https://api.testing.render.com/v1
+        remote_addr: ""
+        request_uri: ""
+        body: ""
+        form: {}
+        headers:
+            Authorization:
+                - some-api-key
+            User-Agent:
+                - terraform-provider-render/test
+        url: https://api.testing.render.com/v1/projects/prj-crfi7js8m55c703hl2f0
+        method: GET
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: 285
+        uncompressed: false
+        body: |
+            {"createdAt":"2024-09-09T16:35:27.305482Z","environmentIds":["evm-crfi7js8m55c703hl2fg"],"id":"prj-crfi7js8m55c703hl2f0","name":"first","owner":{"email":"email@example.com","id":"some-owner-id","name":"Test Terraform","type":"team"},"updatedAt":"2024-09-09T16:35:27.305482Z"}
+        headers:
+            Content-Length:
+                - "285"
+            Content-Type:
+                - application/json; charset=utf-8
+            Date:
+                - Mon, 09 Sep 2024 16:35:29 GMT
+            Ratelimit-Limit:
+                - "10000"
+            Ratelimit-Remaining:
+                - "9974"
+            Ratelimit-Reset:
+                - "30"
+            Referrer-Policy:
+                - same-origin
+            Render-Request-Id:
+                - api-cb6686ccd-gtczz/osocDdt2rF-000160
+            Vary:
+                - Origin
+            X-Content-Type-Options:
+                - nosniff
+            X-Frame-Options:
+                - DENY
+            X-Xss-Protection:
+                - 1; mode=block
+        status: 200 OK
+        code: 200
+        duration: 57.213625ms
+    - id: 18
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 0
+        transfer_encoding: []
+        trailer: {}
+        host: https://api.testing.render.com/v1
+        remote_addr: ""
+        request_uri: ""
+        body: ""
+        form: {}
+        headers:
+            Authorization:
+                - some-api-key
+            User-Agent:
+                - terraform-provider-render/test
+        url: https://api.testing.render.com/v1/environments/evm-crfi7js8m55c703hl2fg
+        method: GET
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: 214
+        uncompressed: false
+        body: |
+            {"databasesIds":null,"envGroupIds":null,"id":"evm-crfi7js8m55c703hl2fg","name":"prod","projectId":"prj-crfi7js8m55c703hl2f0","protectedStatus":"protected","keyValueIds":["red-crfi7js8m55c703hl2h0"],"serviceIds":null}
+        headers:
+            Content-Length:
+                - "214"
+            Content-Type:
+                - application/json; charset=utf-8
+            Date:
+                - Mon, 09 Sep 2024 16:35:29 GMT
+            Ratelimit-Limit:
+                - "10000"
+            Ratelimit-Remaining:
+                - "9973"
+            Ratelimit-Reset:
+                - "30"
+            Referrer-Policy:
+                - same-origin
+            Render-Request-Id:
+                - api-cb6686ccd-gtczz/osocDdt2rF-000161
+            Vary:
+                - Origin
+            X-Content-Type-Options:
+                - nosniff
+            X-Frame-Options:
+                - DENY
+            X-Xss-Protection:
+                - 1; mode=block
+        status: 200 OK
+        code: 200
+        duration: 35.155291ms
+    - id: 19
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 0
+        transfer_encoding: []
+        trailer: {}
+        host: https://api.testing.render.com/v1
+        remote_addr: ""
+        request_uri: ""
+        body: ""
+        form: {}
+        headers:
+            Authorization:
+                - some-api-key
+            User-Agent:
+                - terraform-provider-render/test
+        url: https://api.testing.render.com/v1/projects/prj-crfi7js8m55c703hl2g0
+        method: GET
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: 286
+        uncompressed: false
+        body: |
+            {"createdAt":"2024-09-09T16:35:27.450645Z","environmentIds":["evm-crfi7js8m55c703hl2gg"],"id":"prj-crfi7js8m55c703hl2g0","name":"second","owner":{"email":"email@example.com","id":"some-owner-id","name":"Test Terraform","type":"team"},"updatedAt":"2024-09-09T16:35:27.450645Z"}
+        headers:
+            Content-Length:
+                - "286"
+            Content-Type:
+                - application/json; charset=utf-8
+            Date:
+                - Mon, 09 Sep 2024 16:35:29 GMT
+            Ratelimit-Limit:
+                - "10000"
+            Ratelimit-Remaining:
+                - "9972"
+            Ratelimit-Reset:
+                - "30"
+            Referrer-Policy:
+                - same-origin
+            Render-Request-Id:
+                - api-cb6686ccd-gtczz/osocDdt2rF-000162
+            Vary:
+                - Origin
+            X-Content-Type-Options:
+                - nosniff
+            X-Frame-Options:
+                - DENY
+            X-Xss-Protection:
+                - 1; mode=block
+        status: 200 OK
+        code: 200
+        duration: 52.636792ms
+    - id: 20
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 0
+        transfer_encoding: []
+        trailer: {}
+        host: https://api.testing.render.com/v1
+        remote_addr: ""
+        request_uri: ""
+        body: ""
+        form: {}
+        headers:
+            Authorization:
+                - some-api-key
+            User-Agent:
+                - terraform-provider-render/test
+        url: https://api.testing.render.com/v1/environments/evm-crfi7js8m55c703hl2gg
+        method: GET
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: 190
+        uncompressed: false
+        body: |
+            {"databasesIds":null,"envGroupIds":null,"id":"evm-crfi7js8m55c703hl2gg","name":"prod","projectId":"prj-crfi7js8m55c703hl2g0","protectedStatus":"protected","keyValueIds":null,"serviceIds":null}
+        headers:
+            Content-Length:
+                - "190"
+            Content-Type:
+                - application/json; charset=utf-8
+            Date:
+                - Mon, 09 Sep 2024 16:35:29 GMT
+            Ratelimit-Limit:
+                - "10000"
+            Ratelimit-Remaining:
+                - "9971"
+            Ratelimit-Reset:
+                - "30"
+            Referrer-Policy:
+                - same-origin
+            Render-Request-Id:
+                - api-cb6686ccd-gtczz/osocDdt2rF-000163
+            Vary:
+                - Origin
+            X-Content-Type-Options:
+                - nosniff
+            X-Frame-Options:
+                - DENY
+            X-Xss-Protection:
+                - 1; mode=block
+        status: 200 OK
+        code: 200
+        duration: 37.055417ms
+    - id: 21
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 0
+        transfer_encoding: []
+        trailer: {}
+        host: https://api.testing.render.com/v1
+        remote_addr: ""
+        request_uri: ""
+        body: ""
+        form: {}
+        headers:
+            Authorization:
+                - some-api-key
+            User-Agent:
+                - terraform-provider-render/test
+        url: https://api.testing.render.com/v1/key-value/red-crfi7js8m55c703hl2h0
+        method: GET
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: 516
+        uncompressed: false
+        body: |
+            {"createdAt":"2024-09-09T16:35:27.64367Z","environmentId":"evm-crfi7js8m55c703hl2fg","id":"red-crfi7js8m55c703hl2h0","ipAllowList":[{"cidrBlock":"1.1.1.1/32","description":"test"},{"cidrBlock":"2.0.0.0/8","description":"test-2"}],"name":"test-keyvalue","options":{"maxmemoryPolicy":"allkeys_lfu"},"owner":{"email":"email@example.com","id":"some-owner-id","name":"Test Terraform","type":"team"},"plan":"starter","region":"oregon","status":"creating","updatedAt":"2024-09-09T16:35:27.64367Z","version":"6.2.14"}
+        headers:
+            Content-Length:
+                - "516"
+            Content-Type:
+                - application/json; charset=utf-8
+            Date:
+                - Mon, 09 Sep 2024 16:35:29 GMT
+            Ratelimit-Limit:
+                - "10000"
+            Ratelimit-Remaining:
+                - "9970"
+            Ratelimit-Reset:
+                - "30"
+            Referrer-Policy:
+                - same-origin
+            Render-Request-Id:
+                - api-cb6686ccd-gtczz/osocDdt2rF-000164
+            Vary:
+                - Origin
+            X-Content-Type-Options:
+                - nosniff
+            X-Frame-Options:
+                - DENY
+            X-Xss-Protection:
+                - 1; mode=block
+        status: 200 OK
+        code: 200
+        duration: 74.7005ms
+    - id: 22
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 0
+        transfer_encoding: []
+        trailer: {}
+        host: https://api.testing.render.com/v1
+        remote_addr: ""
+        request_uri: ""
+        body: ""
+        form: {}
+        headers:
+            Authorization:
+                - some-api-key
+            User-Agent:
+                - terraform-provider-render/test
+        url: https://api.testing.render.com/v1/key-value/red-crfi7js8m55c703hl2h0/connection-info
+        method: GET
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: 365
+        uncompressed: false
+        body: |
+            {"externalConnectionString":"rediss://red-crfi7js8m55c703hl2h0:gIRSGDdOQriMcOCPQHj1durmcXvsgVqm@oregon-redis.localhost.render.com:6377","internalConnectionString":"redis://red-crfi7js8m55c703hl2h0:6379","redisCLICommand":" REDISCLI_AUTH=gIRSGDdOQriMcOCPQHj1durmcXvsgVqm valkey-cli --user red-crfi7js8m55c703hl2h0 -h oregon-redis.localhost.render.com -p 6377 --tls"}
+        headers:
+            Content-Length:
+                - "365"
+            Content-Type:
+                - application/json; charset=utf-8
+            Date:
+                - Mon, 09 Sep 2024 16:35:29 GMT
+            Ratelimit-Limit:
+                - "10000"
+            Ratelimit-Remaining:
+                - "9969"
+            Ratelimit-Reset:
+                - "30"
+            Referrer-Policy:
+                - same-origin
+            Render-Request-Id:
+                - api-cb6686ccd-gtczz/osocDdt2rF-000165
+            Vary:
+                - Origin
+            X-Content-Type-Options:
+                - nosniff
+            X-Frame-Options:
+                - DENY
+            X-Xss-Protection:
+                - 1; mode=block
+        status: 200 OK
+        code: 200
+        duration: 46.818667ms
+    - id: 23
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 0
+        transfer_encoding: []
+        trailer: {}
+        host: https://api.testing.render.com/v1
+        remote_addr: ""
+        request_uri: ""
+        body: ""
+        form: {}
+        headers:
+            Authorization:
+                - some-api-key
+            User-Agent:
+                - terraform-provider-render/test
+        url: https://api.testing.render.com/v1/logs/streams/resource/red-crfi7js8m55c703hl2h0
+        method: GET
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: 73
+        uncompressed: false
+        body: |
+            {"endpoint":"","resourceId":"red-crfi7js8m55c703hl2h0","setting":"drop"}
+        headers:
+            Content-Length:
+                - "73"
+            Content-Type:
+                - application/json; charset=utf-8
+            Date:
+                - Mon, 09 Sep 2024 16:35:29 GMT
+            Ratelimit-Limit:
+                - "10000"
+            Ratelimit-Remaining:
+                - "9968"
+            Ratelimit-Reset:
+                - "30"
+            Referrer-Policy:
+                - same-origin
+            Render-Request-Id:
+                - api-cb6686ccd-gtczz/osocDdt2rF-000166
+            Vary:
+                - Origin
+            X-Content-Type-Options:
+                - nosniff
+            X-Frame-Options:
+                - DENY
+            X-Xss-Protection:
+                - 1; mode=block
+        status: 200 OK
+        code: 200
+        duration: 50.907584ms
+    - id: 24
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 91
+        transfer_encoding: []
+        trailer: {}
+        host: https://api.testing.render.com/v1
+        remote_addr: ""
+        request_uri: ""
+        body: '{"ipAllowList":[],"maxmemoryPolicy":"noeviction","name":"test-keyvalue-new","plan":"standard"}'
+        form: {}
+        headers:
+            Authorization:
+                - some-api-key
+            Content-Type:
+                - application/json
+            User-Agent:
+                - terraform-provider-render/test
+        url: https://api.testing.render.com/v1/key-value/red-crfi7js8m55c703hl2h0
+        method: PATCH
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: 427
+        uncompressed: false
+        body: |
+            {"createdAt":"2024-09-09T16:35:27.64367Z","environmentId":"evm-crfi7js8m55c703hl2fg","id":"red-crfi7js8m55c703hl2h0","ipAllowList":null,"name":"test-keyvalue-new","options":{"maxmemoryPolicy":"noeviction"},"owner":{"email":"email@example.com","id":"some-owner-id","name":"Test Terraform","type":"team"},"plan":"standard","region":"oregon","status":"creating","updatedAt":"2024-09-09T16:35:29.577498Z","version":"6.2.14"}
+        headers:
+            Content-Length:
+                - "427"
+            Content-Type:
+                - application/json; charset=utf-8
+            Date:
+                - Mon, 09 Sep 2024 16:35:29 GMT
+            Ratelimit-Limit:
+                - "10000"
+            Ratelimit-Remaining:
+                - "9995"
+            Ratelimit-Reset:
+                - "30"
+            Referrer-Policy:
+                - same-origin
+            Render-Request-Id:
+                - api-cb6686ccd-gtczz/osocDdt2rF-000167
+            Vary:
+                - Origin
+            X-Content-Type-Options:
+                - nosniff
+            X-Frame-Options:
+                - DENY
+            X-Xss-Protection:
+                - 1; mode=block
+        status: 200 OK
+        code: 200
+        duration: 175.396375ms
+    - id: 25
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 0
+        transfer_encoding: []
+        trailer: {}
+        host: https://api.testing.render.com/v1
+        remote_addr: ""
+        request_uri: ""
+        body: ""
+        form: {}
+        headers:
+            Authorization:
+                - some-api-key
+            User-Agent:
+                - terraform-provider-render/test
+        url: https://api.testing.render.com/v1/key-value/red-crfi7js8m55c703hl2h0/connection-info
+        method: GET
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: 365
+        uncompressed: false
+        body: |
+            {"externalConnectionString":"rediss://red-crfi7js8m55c703hl2h0:gIRSGDdOQriMcOCPQHj1durmcXvsgVqm@oregon-redis.localhost.render.com:6377","internalConnectionString":"redis://red-crfi7js8m55c703hl2h0:6379","redisCLICommand":" REDISCLI_AUTH=gIRSGDdOQriMcOCPQHj1durmcXvsgVqm valkey-cli --user red-crfi7js8m55c703hl2h0 -h oregon-redis.localhost.render.com -p 6377 --tls"}
+        headers:
+            Content-Length:
+                - "365"
+            Content-Type:
+                - application/json; charset=utf-8
+            Date:
+                - Mon, 09 Sep 2024 16:35:29 GMT
+            Ratelimit-Limit:
+                - "10000"
+            Ratelimit-Remaining:
+                - "9967"
+            Ratelimit-Reset:
+                - "30"
+            Referrer-Policy:
+                - same-origin
+            Render-Request-Id:
+                - api-cb6686ccd-gtczz/osocDdt2rF-000168
+            Vary:
+                - Origin
+            X-Content-Type-Options:
+                - nosniff
+            X-Frame-Options:
+                - DENY
+            X-Xss-Protection:
+                - 1; mode=block
+        status: 200 OK
+        code: 200
+        duration: 50.571ms
+    - id: 26
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 0
+        transfer_encoding: []
+        trailer: {}
+        host: https://api.testing.render.com/v1
+        remote_addr: ""
+        request_uri: ""
+        body: ""
+        form: {}
+        headers:
+            Authorization:
+                - some-api-key
+            User-Agent:
+                - terraform-provider-render/test
+        url: https://api.testing.render.com/v1/logs/streams/resource/red-crfi7js8m55c703hl2h0
+        method: DELETE
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: 0
+        uncompressed: false
+        body: ""
+        headers:
+            Date:
+                - Mon, 09 Sep 2024 16:35:29 GMT
+            Ratelimit-Limit:
+                - "10000"
+            Ratelimit-Remaining:
+                - "9994"
+            Ratelimit-Reset:
+                - "30"
+            Referrer-Policy:
+                - same-origin
+            Render-Request-Id:
+                - api-cb6686ccd-gtczz/osocDdt2rF-000169
+            Vary:
+                - Origin
+            X-Content-Type-Options:
+                - nosniff
+            X-Frame-Options:
+                - DENY
+            X-Xss-Protection:
+                - 1; mode=block
+        status: 204 No Content
+        code: 204
+        duration: 51.482583ms
+    - id: 27
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 0
+        transfer_encoding: []
+        trailer: {}
+        host: https://api.testing.render.com/v1
+        remote_addr: ""
+        request_uri: ""
+        body: ""
+        form: {}
+        headers:
+            Authorization:
+                - some-api-key
+            User-Agent:
+                - terraform-provider-render/test
+        url: https://api.testing.render.com/v1/environments/red-crfi7js8m55c703hl2h0/resources?resourceIds=red-crfi7js8m55c703hl2h0
+        method: DELETE
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: 0
+        uncompressed: false
+        body: ""
+        headers:
+            Date:
+                - Mon, 09 Sep 2024 16:35:29 GMT
+            Ratelimit-Limit:
+                - "10000"
+            Ratelimit-Remaining:
+                - "9993"
+            Ratelimit-Reset:
+                - "30"
+            Referrer-Policy:
+                - same-origin
+            Render-Request-Id:
+                - api-cb6686ccd-gtczz/osocDdt2rF-000170
+            Vary:
+                - Origin
+            X-Content-Type-Options:
+                - nosniff
+            X-Frame-Options:
+                - DENY
+            X-Xss-Protection:
+                - 1; mode=block
+        status: 204 No Content
+        code: 204
+        duration: 64.240417ms
+    - id: 28
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 44
+        transfer_encoding: []
+        trailer: {}
+        host: https://api.testing.render.com/v1
+        remote_addr: ""
+        request_uri: ""
+        body: '{"resourceIds":["red-crfi7js8m55c703hl2h0"]}'
+        form: {}
+        headers:
+            Authorization:
+                - some-api-key
+            Content-Type:
+                - application/json
+            User-Agent:
+                - terraform-provider-render/test
+        url: https://api.testing.render.com/v1/environments/evm-crfi7js8m55c703hl2gg/resources
+        method: POST
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: 214
+        uncompressed: false
+        body: |
+            {"databasesIds":null,"envGroupIds":null,"id":"evm-crfi7js8m55c703hl2gg","name":"prod","projectId":"prj-crfi7js8m55c703hl2g0","protectedStatus":"protected","keyValueIds":["red-crfi7js8m55c703hl2h0"],"serviceIds":null}
+        headers:
+            Content-Length:
+                - "214"
+            Content-Type:
+                - application/json; charset=utf-8
+            Date:
+                - Mon, 09 Sep 2024 16:35:29 GMT
+            Ratelimit-Limit:
+                - "10000"
+            Ratelimit-Remaining:
+                - "9992"
+            Ratelimit-Reset:
+                - "30"
+            Referrer-Policy:
+                - same-origin
+            Render-Request-Id:
+                - api-cb6686ccd-gtczz/osocDdt2rF-000171
+            Vary:
+                - Origin
+            X-Content-Type-Options:
+                - nosniff
+            X-Frame-Options:
+                - DENY
+            X-Xss-Protection:
+                - 1; mode=block
+        status: 201 Created
+        code: 201
+        duration: 88.095459ms
+    - id: 29
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 0
+        transfer_encoding: []
+        trailer: {}
+        host: https://api.testing.render.com/v1
+        remote_addr: ""
+        request_uri: ""
+        body: ""
+        form: {}
+        headers:
+            Authorization:
+                - some-api-key
+            User-Agent:
+                - terraform-provider-render/test
+        url: https://api.testing.render.com/v1/projects/prj-crfi7js8m55c703hl2f0
+        method: GET
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: 285
+        uncompressed: false
+        body: |
+            {"createdAt":"2024-09-09T16:35:27.305482Z","environmentIds":["evm-crfi7js8m55c703hl2fg"],"id":"prj-crfi7js8m55c703hl2f0","name":"first","owner":{"email":"email@example.com","id":"some-owner-id","name":"Test Terraform","type":"team"},"updatedAt":"2024-09-09T16:35:27.305482Z"}
+        headers:
+            Content-Length:
+                - "285"
+            Content-Type:
+                - application/json; charset=utf-8
+            Date:
+                - Mon, 09 Sep 2024 16:35:30 GMT
+            Ratelimit-Limit:
+                - "10000"
+            Ratelimit-Remaining:
+                - "9966"
+            Ratelimit-Reset:
+                - "29"
+            Referrer-Policy:
+                - same-origin
+            Render-Request-Id:
+                - api-cb6686ccd-gtczz/osocDdt2rF-000172
+            Vary:
+                - Origin
+            X-Content-Type-Options:
+                - nosniff
+            X-Frame-Options:
+                - DENY
+            X-Xss-Protection:
+                - 1; mode=block
+        status: 200 OK
+        code: 200
+        duration: 60.280292ms
+    - id: 30
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 0
+        transfer_encoding: []
+        trailer: {}
+        host: https://api.testing.render.com/v1
+        remote_addr: ""
+        request_uri: ""
+        body: ""
+        form: {}
+        headers:
+            Authorization:
+                - some-api-key
+            User-Agent:
+                - terraform-provider-render/test
+        url: https://api.testing.render.com/v1/environments/evm-crfi7js8m55c703hl2fg
+        method: GET
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: 190
+        uncompressed: false
+        body: |
+            {"databasesIds":null,"envGroupIds":null,"id":"evm-crfi7js8m55c703hl2fg","name":"prod","projectId":"prj-crfi7js8m55c703hl2f0","protectedStatus":"protected","keyValueIds":null,"serviceIds":null}
+        headers:
+            Content-Length:
+                - "190"
+            Content-Type:
+                - application/json; charset=utf-8
+            Date:
+                - Mon, 09 Sep 2024 16:35:30 GMT
+            Ratelimit-Limit:
+                - "10000"
+            Ratelimit-Remaining:
+                - "9965"
+            Ratelimit-Reset:
+                - "29"
+            Referrer-Policy:
+                - same-origin
+            Render-Request-Id:
+                - api-cb6686ccd-gtczz/osocDdt2rF-000173
+            Vary:
+                - Origin
+            X-Content-Type-Options:
+                - nosniff
+            X-Frame-Options:
+                - DENY
+            X-Xss-Protection:
+                - 1; mode=block
+        status: 200 OK
+        code: 200
+        duration: 36.725375ms
+    - id: 31
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 0
+        transfer_encoding: []
+        trailer: {}
+        host: https://api.testing.render.com/v1
+        remote_addr: ""
+        request_uri: ""
+        body: ""
+        form: {}
+        headers:
+            Authorization:
+                - some-api-key
+            User-Agent:
+                - terraform-provider-render/test
+        url: https://api.testing.render.com/v1/projects/prj-crfi7js8m55c703hl2g0
+        method: GET
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: 286
+        uncompressed: false
+        body: |
+            {"createdAt":"2024-09-09T16:35:27.450645Z","environmentIds":["evm-crfi7js8m55c703hl2gg"],"id":"prj-crfi7js8m55c703hl2g0","name":"second","owner":{"email":"email@example.com","id":"some-owner-id","name":"Test Terraform","type":"team"},"updatedAt":"2024-09-09T16:35:27.450645Z"}
+        headers:
+            Content-Length:
+                - "286"
+            Content-Type:
+                - application/json; charset=utf-8
+            Date:
+                - Mon, 09 Sep 2024 16:35:30 GMT
+            Ratelimit-Limit:
+                - "10000"
+            Ratelimit-Remaining:
+                - "9964"
+            Ratelimit-Reset:
+                - "29"
+            Referrer-Policy:
+                - same-origin
+            Render-Request-Id:
+                - api-cb6686ccd-gtczz/osocDdt2rF-000174
+            Vary:
+                - Origin
+            X-Content-Type-Options:
+                - nosniff
+            X-Frame-Options:
+                - DENY
+            X-Xss-Protection:
+                - 1; mode=block
+        status: 200 OK
+        code: 200
+        duration: 59.267083ms
+    - id: 32
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 0
+        transfer_encoding: []
+        trailer: {}
+        host: https://api.testing.render.com/v1
+        remote_addr: ""
+        request_uri: ""
+        body: ""
+        form: {}
+        headers:
+            Authorization:
+                - some-api-key
+            User-Agent:
+                - terraform-provider-render/test
+        url: https://api.testing.render.com/v1/environments/evm-crfi7js8m55c703hl2gg
+        method: GET
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: 214
+        uncompressed: false
+        body: |
+            {"databasesIds":null,"envGroupIds":null,"id":"evm-crfi7js8m55c703hl2gg","name":"prod","projectId":"prj-crfi7js8m55c703hl2g0","protectedStatus":"protected","keyValueIds":["red-crfi7js8m55c703hl2h0"],"serviceIds":null}
+        headers:
+            Content-Length:
+                - "214"
+            Content-Type:
+                - application/json; charset=utf-8
+            Date:
+                - Mon, 09 Sep 2024 16:35:30 GMT
+            Ratelimit-Limit:
+                - "10000"
+            Ratelimit-Remaining:
+                - "9963"
+            Ratelimit-Reset:
+                - "29"
+            Referrer-Policy:
+                - same-origin
+            Render-Request-Id:
+                - api-cb6686ccd-gtczz/osocDdt2rF-000175
+            Vary:
+                - Origin
+            X-Content-Type-Options:
+                - nosniff
+            X-Frame-Options:
+                - DENY
+            X-Xss-Protection:
+                - 1; mode=block
+        status: 200 OK
+        code: 200
+        duration: 35.862083ms
+    - id: 33
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 0
+        transfer_encoding: []
+        trailer: {}
+        host: https://api.testing.render.com/v1
+        remote_addr: ""
+        request_uri: ""
+        body: ""
+        form: {}
+        headers:
+            Authorization:
+                - some-api-key
+            User-Agent:
+                - terraform-provider-render/test
+        url: https://api.testing.render.com/v1/key-value/red-crfi7js8m55c703hl2h0
+        method: GET
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: 427
+        uncompressed: false
+        body: |
+            {"createdAt":"2024-09-09T16:35:27.64367Z","environmentId":"evm-crfi7js8m55c703hl2gg","id":"red-crfi7js8m55c703hl2h0","ipAllowList":null,"name":"test-keyvalue-new","options":{"maxmemoryPolicy":"noeviction"},"owner":{"email":"email@example.com","id":"some-owner-id","name":"Test Terraform","type":"team"},"plan":"standard","region":"oregon","status":"creating","updatedAt":"2024-09-09T16:35:29.885293Z","version":"6.2.14"}
+        headers:
+            Content-Length:
+                - "427"
+            Content-Type:
+                - application/json; charset=utf-8
+            Date:
+                - Mon, 09 Sep 2024 16:35:30 GMT
+            Ratelimit-Limit:
+                - "10000"
+            Ratelimit-Remaining:
+                - "9962"
+            Ratelimit-Reset:
+                - "29"
+            Referrer-Policy:
+                - same-origin
+            Render-Request-Id:
+                - api-cb6686ccd-gtczz/osocDdt2rF-000176
+            Vary:
+                - Origin
+            X-Content-Type-Options:
+                - nosniff
+            X-Frame-Options:
+                - DENY
+            X-Xss-Protection:
+                - 1; mode=block
+        status: 200 OK
+        code: 200
+        duration: 55.817083ms
+    - id: 34
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 0
+        transfer_encoding: []
+        trailer: {}
+        host: https://api.testing.render.com/v1
+        remote_addr: ""
+        request_uri: ""
+        body: ""
+        form: {}
+        headers:
+            Authorization:
+                - some-api-key
+            User-Agent:
+                - terraform-provider-render/test
+        url: https://api.testing.render.com/v1/key-value/red-crfi7js8m55c703hl2h0/connection-info
+        method: GET
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: 365
+        uncompressed: false
+        body: |
+            {"externalConnectionString":"rediss://red-crfi7js8m55c703hl2h0:gIRSGDdOQriMcOCPQHj1durmcXvsgVqm@oregon-redis.localhost.render.com:6377","internalConnectionString":"redis://red-crfi7js8m55c703hl2h0:6379","redisCLICommand":" REDISCLI_AUTH=gIRSGDdOQriMcOCPQHj1durmcXvsgVqm valkey-cli --user red-crfi7js8m55c703hl2h0 -h oregon-redis.localhost.render.com -p 6377 --tls"}
+        headers:
+            Content-Length:
+                - "365"
+            Content-Type:
+                - application/json; charset=utf-8
+            Date:
+                - Mon, 09 Sep 2024 16:35:30 GMT
+            Ratelimit-Limit:
+                - "10000"
+            Ratelimit-Remaining:
+                - "9961"
+            Ratelimit-Reset:
+                - "29"
+            Referrer-Policy:
+                - same-origin
+            Render-Request-Id:
+                - api-cb6686ccd-gtczz/osocDdt2rF-000177
+            Vary:
+                - Origin
+            X-Content-Type-Options:
+                - nosniff
+            X-Frame-Options:
+                - DENY
+            X-Xss-Protection:
+                - 1; mode=block
+        status: 200 OK
+        code: 200
+        duration: 51.258791ms
+    - id: 35
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 0
+        transfer_encoding: []
+        trailer: {}
+        host: https://api.testing.render.com/v1
+        remote_addr: ""
+        request_uri: ""
+        body: ""
+        form: {}
+        headers:
+            Authorization:
+                - some-api-key
+            User-Agent:
+                - terraform-provider-render/test
+        url: https://api.testing.render.com/v1/logs/streams/resource/red-crfi7js8m55c703hl2h0
+        method: GET
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: 50
+        uncompressed: false
+        body: |
+            {"message":"not found: red-crfi7js8m55c703hl2h0"}
+        headers:
+            Content-Length:
+                - "50"
+            Content-Type:
+                - application/json; charset=utf-8
+            Date:
+                - Mon, 09 Sep 2024 16:35:30 GMT
+            Ratelimit-Limit:
+                - "10000"
+            Ratelimit-Remaining:
+                - "9960"
+            Ratelimit-Reset:
+                - "29"
+            Referrer-Policy:
+                - same-origin
+            Render-Request-Id:
+                - api-cb6686ccd-gtczz/osocDdt2rF-000178
+            Vary:
+                - Origin
+            X-Content-Type-Options:
+                - nosniff
+            X-Frame-Options:
+                - DENY
+            X-Xss-Protection:
+                - 1; mode=block
+        status: 404 Not Found
+        code: 404
+        duration: 33.894542ms
+    - id: 36
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 0
+        transfer_encoding: []
+        trailer: {}
+        host: https://api.testing.render.com/v1
+        remote_addr: ""
+        request_uri: ""
+        body: ""
+        form: {}
+        headers:
+            Authorization:
+                - some-api-key
+            User-Agent:
+                - terraform-provider-render/test
+        url: https://api.testing.render.com/v1/projects/prj-crfi7js8m55c703hl2f0
+        method: GET
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: 285
+        uncompressed: false
+        body: |
+            {"createdAt":"2024-09-09T16:35:27.305482Z","environmentIds":["evm-crfi7js8m55c703hl2fg"],"id":"prj-crfi7js8m55c703hl2f0","name":"first","owner":{"email":"email@example.com","id":"some-owner-id","name":"Test Terraform","type":"team"},"updatedAt":"2024-09-09T16:35:27.305482Z"}
+        headers:
+            Content-Length:
+                - "285"
+            Content-Type:
+                - application/json; charset=utf-8
+            Date:
+                - Mon, 09 Sep 2024 16:35:30 GMT
+            Ratelimit-Limit:
+                - "10000"
+            Ratelimit-Remaining:
+                - "9959"
+            Ratelimit-Reset:
+                - "29"
+            Referrer-Policy:
+                - same-origin
+            Render-Request-Id:
+                - api-cb6686ccd-gtczz/osocDdt2rF-000179
+            Vary:
+                - Origin
+            X-Content-Type-Options:
+                - nosniff
+            X-Frame-Options:
+                - DENY
+            X-Xss-Protection:
+                - 1; mode=block
+        status: 200 OK
+        code: 200
+        duration: 53.741458ms
+    - id: 37
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 0
+        transfer_encoding: []
+        trailer: {}
+        host: https://api.testing.render.com/v1
+        remote_addr: ""
+        request_uri: ""
+        body: ""
+        form: {}
+        headers:
+            Authorization:
+                - some-api-key
+            User-Agent:
+                - terraform-provider-render/test
+        url: https://api.testing.render.com/v1/environments/evm-crfi7js8m55c703hl2fg
+        method: GET
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: 190
+        uncompressed: false
+        body: |
+            {"databasesIds":null,"envGroupIds":null,"id":"evm-crfi7js8m55c703hl2fg","name":"prod","projectId":"prj-crfi7js8m55c703hl2f0","protectedStatus":"protected","keyValueIds":null,"serviceIds":null}
+        headers:
+            Content-Length:
+                - "190"
+            Content-Type:
+                - application/json; charset=utf-8
+            Date:
+                - Mon, 09 Sep 2024 16:35:30 GMT
+            Ratelimit-Limit:
+                - "10000"
+            Ratelimit-Remaining:
+                - "9958"
+            Ratelimit-Reset:
+                - "29"
+            Referrer-Policy:
+                - same-origin
+            Render-Request-Id:
+                - api-cb6686ccd-gtczz/osocDdt2rF-000180
+            Vary:
+                - Origin
+            X-Content-Type-Options:
+                - nosniff
+            X-Frame-Options:
+                - DENY
+            X-Xss-Protection:
+                - 1; mode=block
+        status: 200 OK
+        code: 200
+        duration: 41.849834ms
+    - id: 38
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 0
+        transfer_encoding: []
+        trailer: {}
+        host: https://api.testing.render.com/v1
+        remote_addr: ""
+        request_uri: ""
+        body: ""
+        form: {}
+        headers:
+            Authorization:
+                - some-api-key
+            User-Agent:
+                - terraform-provider-render/test
+        url: https://api.testing.render.com/v1/projects/prj-crfi7js8m55c703hl2g0
+        method: GET
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: 286
+        uncompressed: false
+        body: |
+            {"createdAt":"2024-09-09T16:35:27.450645Z","environmentIds":["evm-crfi7js8m55c703hl2gg"],"id":"prj-crfi7js8m55c703hl2g0","name":"second","owner":{"email":"email@example.com","id":"some-owner-id","name":"Test Terraform","type":"team"},"updatedAt":"2024-09-09T16:35:27.450645Z"}
+        headers:
+            Content-Length:
+                - "286"
+            Content-Type:
+                - application/json; charset=utf-8
+            Date:
+                - Mon, 09 Sep 2024 16:35:30 GMT
+            Ratelimit-Limit:
+                - "10000"
+            Ratelimit-Remaining:
+                - "9957"
+            Ratelimit-Reset:
+                - "29"
+            Referrer-Policy:
+                - same-origin
+            Render-Request-Id:
+                - api-cb6686ccd-gtczz/osocDdt2rF-000181
+            Vary:
+                - Origin
+            X-Content-Type-Options:
+                - nosniff
+            X-Frame-Options:
+                - DENY
+            X-Xss-Protection:
+                - 1; mode=block
+        status: 200 OK
+        code: 200
+        duration: 58.923833ms
+    - id: 39
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 0
+        transfer_encoding: []
+        trailer: {}
+        host: https://api.testing.render.com/v1
+        remote_addr: ""
+        request_uri: ""
+        body: ""
+        form: {}
+        headers:
+            Authorization:
+                - some-api-key
+            User-Agent:
+                - terraform-provider-render/test
+        url: https://api.testing.render.com/v1/environments/evm-crfi7js8m55c703hl2gg
+        method: GET
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: 214
+        uncompressed: false
+        body: |
+            {"databasesIds":null,"envGroupIds":null,"id":"evm-crfi7js8m55c703hl2gg","name":"prod","projectId":"prj-crfi7js8m55c703hl2g0","protectedStatus":"protected","keyValueIds":["red-crfi7js8m55c703hl2h0"],"serviceIds":null}
+        headers:
+            Content-Length:
+                - "214"
+            Content-Type:
+                - application/json; charset=utf-8
+            Date:
+                - Mon, 09 Sep 2024 16:35:30 GMT
+            Ratelimit-Limit:
+                - "10000"
+            Ratelimit-Remaining:
+                - "9956"
+            Ratelimit-Reset:
+                - "29"
+            Referrer-Policy:
+                - same-origin
+            Render-Request-Id:
+                - api-cb6686ccd-gtczz/osocDdt2rF-000182
+            Vary:
+                - Origin
+            X-Content-Type-Options:
+                - nosniff
+            X-Frame-Options:
+                - DENY
+            X-Xss-Protection:
+                - 1; mode=block
+        status: 200 OK
+        code: 200
+        duration: 37.673542ms
+    - id: 40
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 0
+        transfer_encoding: []
+        trailer: {}
+        host: https://api.testing.render.com/v1
+        remote_addr: ""
+        request_uri: ""
+        body: ""
+        form: {}
+        headers:
+            Authorization:
+                - some-api-key
+            User-Agent:
+                - terraform-provider-render/test
+        url: https://api.testing.render.com/v1/key-value/red-crfi7js8m55c703hl2h0
+        method: GET
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: 427
+        uncompressed: false
+        body: |
+            {"createdAt":"2024-09-09T16:35:27.64367Z","environmentId":"evm-crfi7js8m55c703hl2gg","id":"red-crfi7js8m55c703hl2h0","ipAllowList":null,"name":"test-keyvalue-new","options":{"maxmemoryPolicy":"noeviction"},"owner":{"email":"email@example.com","id":"some-owner-id","name":"Test Terraform","type":"team"},"plan":"standard","region":"oregon","status":"creating","updatedAt":"2024-09-09T16:35:29.885293Z","version":"6.2.14"}
+        headers:
+            Content-Length:
+                - "427"
+            Content-Type:
+                - application/json; charset=utf-8
+            Date:
+                - Mon, 09 Sep 2024 16:35:30 GMT
+            Ratelimit-Limit:
+                - "10000"
+            Ratelimit-Remaining:
+                - "9955"
+            Ratelimit-Reset:
+                - "29"
+            Referrer-Policy:
+                - same-origin
+            Render-Request-Id:
+                - api-cb6686ccd-gtczz/osocDdt2rF-000183
+            Vary:
+                - Origin
+            X-Content-Type-Options:
+                - nosniff
+            X-Frame-Options:
+                - DENY
+            X-Xss-Protection:
+                - 1; mode=block
+        status: 200 OK
+        code: 200
+        duration: 55.740833ms
+    - id: 41
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 0
+        transfer_encoding: []
+        trailer: {}
+        host: https://api.testing.render.com/v1
+        remote_addr: ""
+        request_uri: ""
+        body: ""
+        form: {}
+        headers:
+            Authorization:
+                - some-api-key
+            User-Agent:
+                - terraform-provider-render/test
+        url: https://api.testing.render.com/v1/key-value/red-crfi7js8m55c703hl2h0/connection-info
+        method: GET
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: 365
+        uncompressed: false
+        body: |
+            {"externalConnectionString":"rediss://red-crfi7js8m55c703hl2h0:gIRSGDdOQriMcOCPQHj1durmcXvsgVqm@oregon-redis.localhost.render.com:6377","internalConnectionString":"redis://red-crfi7js8m55c703hl2h0:6379","redisCLICommand":" REDISCLI_AUTH=gIRSGDdOQriMcOCPQHj1durmcXvsgVqm valkey-cli --user red-crfi7js8m55c703hl2h0 -h oregon-redis.localhost.render.com -p 6377 --tls"}
+        headers:
+            Content-Length:
+                - "365"
+            Content-Type:
+                - application/json; charset=utf-8
+            Date:
+                - Mon, 09 Sep 2024 16:35:30 GMT
+            Ratelimit-Limit:
+                - "10000"
+            Ratelimit-Remaining:
+                - "9954"
+            Ratelimit-Reset:
+                - "29"
+            Referrer-Policy:
+                - same-origin
+            Render-Request-Id:
+                - api-cb6686ccd-gtczz/osocDdt2rF-000184
+            Vary:
+                - Origin
+            X-Content-Type-Options:
+                - nosniff
+            X-Frame-Options:
+                - DENY
+            X-Xss-Protection:
+                - 1; mode=block
+        status: 200 OK
+        code: 200
+        duration: 49.450459ms
+    - id: 42
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 0
+        transfer_encoding: []
+        trailer: {}
+        host: https://api.testing.render.com/v1
+        remote_addr: ""
+        request_uri: ""
+        body: ""
+        form: {}
+        headers:
+            Authorization:
+                - some-api-key
+            User-Agent:
+                - terraform-provider-render/test
+        url: https://api.testing.render.com/v1/logs/streams/resource/red-crfi7js8m55c703hl2h0
+        method: GET
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: 50
+        uncompressed: false
+        body: |
+            {"message":"not found: red-crfi7js8m55c703hl2h0"}
+        headers:
+            Content-Length:
+                - "50"
+            Content-Type:
+                - application/json; charset=utf-8
+            Date:
+                - Mon, 09 Sep 2024 16:35:30 GMT
+            Ratelimit-Limit:
+                - "10000"
+            Ratelimit-Remaining:
+                - "9953"
+            Ratelimit-Reset:
+                - "29"
+            Referrer-Policy:
+                - same-origin
+            Render-Request-Id:
+                - api-cb6686ccd-gtczz/osocDdt2rF-000185
+            Vary:
+                - Origin
+            X-Content-Type-Options:
+                - nosniff
+            X-Frame-Options:
+                - DENY
+            X-Xss-Protection:
+                - 1; mode=block
+        status: 404 Not Found
+        code: 404
+        duration: 36.42925ms
+    - id: 43
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 187
+        transfer_encoding: []
+        trailer: {}
+        host: https://api.testing.render.com/v1
+        remote_addr: ""
+        request_uri: ""
+        body: '{"ipAllowList":[{"cidrBlock":"1.1.1.1/32","description":"test"},{"cidrBlock":"2.0.0.0/8","description":"test-2"}],"maxmemoryPolicy":"noeviction","name":"test-keyvalue-new","plan":"standard"}'
+        form: {}
+        headers:
+            Authorization:
+                - some-api-key
+            Content-Type:
+                - application/json
+            User-Agent:
+                - terraform-provider-render/test
+        url: https://api.testing.render.com/v1/key-value/red-crfi7js8m55c703hl2h0
+        method: PATCH
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: 521
+        uncompressed: false
+        body: |
+            {"createdAt":"2024-09-09T16:35:27.64367Z","environmentId":"evm-crfi7js8m55c703hl2gg","id":"red-crfi7js8m55c703hl2h0","ipAllowList":[{"cidrBlock":"1.1.1.1/32","description":"test"},{"cidrBlock":"2.0.0.0/8","description":"test-2"}],"name":"test-keyvalue-new","options":{"maxmemoryPolicy":"noeviction"},"owner":{"email":"email@example.com","id":"some-owner-id","name":"Test Terraform","type":"team"},"plan":"standard","region":"oregon","status":"creating","updatedAt":"2024-09-09T16:35:31.240641Z","version":"6.2.14"}
+        headers:
+            Content-Length:
+                - "521"
+            Content-Type:
+                - application/json; charset=utf-8
+            Date:
+                - Mon, 09 Sep 2024 16:35:31 GMT
+            Ratelimit-Limit:
+                - "10000"
+            Ratelimit-Remaining:
+                - "9991"
+            Ratelimit-Reset:
+                - "28"
+            Referrer-Policy:
+                - same-origin
+            Render-Request-Id:
+                - api-cb6686ccd-gtczz/osocDdt2rF-000186
+            Vary:
+                - Origin
+            X-Content-Type-Options:
+                - nosniff
+            X-Frame-Options:
+                - DENY
+            X-Xss-Protection:
+                - 1; mode=block
+        status: 200 OK
+        code: 200
+        duration: 202.713875ms
+    - id: 44
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 0
+        transfer_encoding: []
+        trailer: {}
+        host: https://api.testing.render.com/v1
+        remote_addr: ""
+        request_uri: ""
+        body: ""
+        form: {}
+        headers:
+            Authorization:
+                - some-api-key
+            User-Agent:
+                - terraform-provider-render/test
+        url: https://api.testing.render.com/v1/key-value/red-crfi7js8m55c703hl2h0/connection-info
+        method: GET
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: 365
+        uncompressed: false
+        body: |
+            {"externalConnectionString":"rediss://red-crfi7js8m55c703hl2h0:gIRSGDdOQriMcOCPQHj1durmcXvsgVqm@oregon-redis.localhost.render.com:6377","internalConnectionString":"redis://red-crfi7js8m55c703hl2h0:6379","redisCLICommand":" REDISCLI_AUTH=gIRSGDdOQriMcOCPQHj1durmcXvsgVqm valkey-cli --user red-crfi7js8m55c703hl2h0 -h oregon-redis.localhost.render.com -p 6377 --tls"}
+        headers:
+            Content-Length:
+                - "365"
+            Content-Type:
+                - application/json; charset=utf-8
+            Date:
+                - Mon, 09 Sep 2024 16:35:31 GMT
+            Ratelimit-Limit:
+                - "10000"
+            Ratelimit-Remaining:
+                - "9952"
+            Ratelimit-Reset:
+                - "28"
+            Referrer-Policy:
+                - same-origin
+            Render-Request-Id:
+                - api-cb6686ccd-gtczz/osocDdt2rF-000187
+            Vary:
+                - Origin
+            X-Content-Type-Options:
+                - nosniff
+            X-Frame-Options:
+                - DENY
+            X-Xss-Protection:
+                - 1; mode=block
+        status: 200 OK
+        code: 200
+        duration: 51.00625ms
+    - id: 45
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 0
+        transfer_encoding: []
+        trailer: {}
+        host: https://api.testing.render.com/v1
+        remote_addr: ""
+        request_uri: ""
+        body: ""
+        form: {}
+        headers:
+            Authorization:
+                - some-api-key
+            User-Agent:
+                - terraform-provider-render/test
+        url: https://api.testing.render.com/v1/projects/prj-crfi7js8m55c703hl2f0
+        method: GET
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: 285
+        uncompressed: false
+        body: |
+            {"createdAt":"2024-09-09T16:35:27.305482Z","environmentIds":["evm-crfi7js8m55c703hl2fg"],"id":"prj-crfi7js8m55c703hl2f0","name":"first","owner":{"email":"email@example.com","id":"some-owner-id","name":"Test Terraform","type":"team"},"updatedAt":"2024-09-09T16:35:27.305482Z"}
+        headers:
+            Content-Length:
+                - "285"
+            Content-Type:
+                - application/json; charset=utf-8
+            Date:
+                - Mon, 09 Sep 2024 16:35:31 GMT
+            Ratelimit-Limit:
+                - "10000"
+            Ratelimit-Remaining:
+                - "9951"
+            Ratelimit-Reset:
+                - "28"
+            Referrer-Policy:
+                - same-origin
+            Render-Request-Id:
+                - api-cb6686ccd-gtczz/osocDdt2rF-000188
+            Vary:
+                - Origin
+            X-Content-Type-Options:
+                - nosniff
+            X-Frame-Options:
+                - DENY
+            X-Xss-Protection:
+                - 1; mode=block
+        status: 200 OK
+        code: 200
+        duration: 61.002583ms
+    - id: 46
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 0
+        transfer_encoding: []
+        trailer: {}
+        host: https://api.testing.render.com/v1
+        remote_addr: ""
+        request_uri: ""
+        body: ""
+        form: {}
+        headers:
+            Authorization:
+                - some-api-key
+            User-Agent:
+                - terraform-provider-render/test
+        url: https://api.testing.render.com/v1/environments/evm-crfi7js8m55c703hl2fg
+        method: GET
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: 190
+        uncompressed: false
+        body: |
+            {"databasesIds":null,"envGroupIds":null,"id":"evm-crfi7js8m55c703hl2fg","name":"prod","projectId":"prj-crfi7js8m55c703hl2f0","protectedStatus":"protected","keyValueIds":null,"serviceIds":null}
+        headers:
+            Content-Length:
+                - "190"
+            Content-Type:
+                - application/json; charset=utf-8
+            Date:
+                - Mon, 09 Sep 2024 16:35:31 GMT
+            Ratelimit-Limit:
+                - "10000"
+            Ratelimit-Remaining:
+                - "9950"
+            Ratelimit-Reset:
+                - "28"
+            Referrer-Policy:
+                - same-origin
+            Render-Request-Id:
+                - api-cb6686ccd-gtczz/osocDdt2rF-000189
+            Vary:
+                - Origin
+            X-Content-Type-Options:
+                - nosniff
+            X-Frame-Options:
+                - DENY
+            X-Xss-Protection:
+                - 1; mode=block
+        status: 200 OK
+        code: 200
+        duration: 36.159333ms
+    - id: 47
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 0
+        transfer_encoding: []
+        trailer: {}
+        host: https://api.testing.render.com/v1
+        remote_addr: ""
+        request_uri: ""
+        body: ""
+        form: {}
+        headers:
+            Authorization:
+                - some-api-key
+            User-Agent:
+                - terraform-provider-render/test
+        url: https://api.testing.render.com/v1/projects/prj-crfi7js8m55c703hl2g0
+        method: GET
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: 286
+        uncompressed: false
+        body: |
+            {"createdAt":"2024-09-09T16:35:27.450645Z","environmentIds":["evm-crfi7js8m55c703hl2gg"],"id":"prj-crfi7js8m55c703hl2g0","name":"second","owner":{"email":"email@example.com","id":"some-owner-id","name":"Test Terraform","type":"team"},"updatedAt":"2024-09-09T16:35:27.450645Z"}
+        headers:
+            Content-Length:
+                - "286"
+            Content-Type:
+                - application/json; charset=utf-8
+            Date:
+                - Mon, 09 Sep 2024 16:35:31 GMT
+            Ratelimit-Limit:
+                - "10000"
+            Ratelimit-Remaining:
+                - "9949"
+            Ratelimit-Reset:
+                - "28"
+            Referrer-Policy:
+                - same-origin
+            Render-Request-Id:
+                - api-cb6686ccd-gtczz/osocDdt2rF-000190
+            Vary:
+                - Origin
+            X-Content-Type-Options:
+                - nosniff
+            X-Frame-Options:
+                - DENY
+            X-Xss-Protection:
+                - 1; mode=block
+        status: 200 OK
+        code: 200
+        duration: 59.393625ms
+    - id: 48
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 0
+        transfer_encoding: []
+        trailer: {}
+        host: https://api.testing.render.com/v1
+        remote_addr: ""
+        request_uri: ""
+        body: ""
+        form: {}
+        headers:
+            Authorization:
+                - some-api-key
+            User-Agent:
+                - terraform-provider-render/test
+        url: https://api.testing.render.com/v1/environments/evm-crfi7js8m55c703hl2gg
+        method: GET
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: 214
+        uncompressed: false
+        body: |
+            {"databasesIds":null,"envGroupIds":null,"id":"evm-crfi7js8m55c703hl2gg","name":"prod","projectId":"prj-crfi7js8m55c703hl2g0","protectedStatus":"protected","keyValueIds":["red-crfi7js8m55c703hl2h0"],"serviceIds":null}
+        headers:
+            Content-Length:
+                - "214"
+            Content-Type:
+                - application/json; charset=utf-8
+            Date:
+                - Mon, 09 Sep 2024 16:35:31 GMT
+            Ratelimit-Limit:
+                - "10000"
+            Ratelimit-Remaining:
+                - "9948"
+            Ratelimit-Reset:
+                - "28"
+            Referrer-Policy:
+                - same-origin
+            Render-Request-Id:
+                - api-cb6686ccd-gtczz/osocDdt2rF-000191
+            Vary:
+                - Origin
+            X-Content-Type-Options:
+                - nosniff
+            X-Frame-Options:
+                - DENY
+            X-Xss-Protection:
+                - 1; mode=block
+        status: 200 OK
+        code: 200
+        duration: 38.683625ms
+    - id: 49
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 0
+        transfer_encoding: []
+        trailer: {}
+        host: https://api.testing.render.com/v1
+        remote_addr: ""
+        request_uri: ""
+        body: ""
+        form: {}
+        headers:
+            Authorization:
+                - some-api-key
+            User-Agent:
+                - terraform-provider-render/test
+        url: https://api.testing.render.com/v1/key-value/red-crfi7js8m55c703hl2h0
+        method: GET
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: 521
+        uncompressed: false
+        body: |
+            {"createdAt":"2024-09-09T16:35:27.64367Z","environmentId":"evm-crfi7js8m55c703hl2gg","id":"red-crfi7js8m55c703hl2h0","ipAllowList":[{"cidrBlock":"1.1.1.1/32","description":"test"},{"cidrBlock":"2.0.0.0/8","description":"test-2"}],"name":"test-keyvalue-new","options":{"maxmemoryPolicy":"noeviction"},"owner":{"email":"email@example.com","id":"some-owner-id","name":"Test Terraform","type":"team"},"plan":"standard","region":"oregon","status":"creating","updatedAt":"2024-09-09T16:35:31.240641Z","version":"6.2.14"}
+        headers:
+            Content-Length:
+                - "521"
+            Content-Type:
+                - application/json; charset=utf-8
+            Date:
+                - Mon, 09 Sep 2024 16:35:31 GMT
+            Ratelimit-Limit:
+                - "10000"
+            Ratelimit-Remaining:
+                - "9947"
+            Ratelimit-Reset:
+                - "28"
+            Referrer-Policy:
+                - same-origin
+            Render-Request-Id:
+                - api-cb6686ccd-gtczz/osocDdt2rF-000192
+            Vary:
+                - Origin
+            X-Content-Type-Options:
+                - nosniff
+            X-Frame-Options:
+                - DENY
+            X-Xss-Protection:
+                - 1; mode=block
+        status: 200 OK
+        code: 200
+        duration: 57.896917ms
+    - id: 50
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 0
+        transfer_encoding: []
+        trailer: {}
+        host: https://api.testing.render.com/v1
+        remote_addr: ""
+        request_uri: ""
+        body: ""
+        form: {}
+        headers:
+            Authorization:
+                - some-api-key
+            User-Agent:
+                - terraform-provider-render/test
+        url: https://api.testing.render.com/v1/key-value/red-crfi7js8m55c703hl2h0/connection-info
+        method: GET
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: 365
+        uncompressed: false
+        body: |
+            {"externalConnectionString":"rediss://red-crfi7js8m55c703hl2h0:gIRSGDdOQriMcOCPQHj1durmcXvsgVqm@oregon-redis.localhost.render.com:6377","internalConnectionString":"redis://red-crfi7js8m55c703hl2h0:6379","redisCLICommand":" REDISCLI_AUTH=gIRSGDdOQriMcOCPQHj1durmcXvsgVqm valkey-cli --user red-crfi7js8m55c703hl2h0 -h oregon-redis.localhost.render.com -p 6377 --tls"}
+        headers:
+            Content-Length:
+                - "365"
+            Content-Type:
+                - application/json; charset=utf-8
+            Date:
+                - Mon, 09 Sep 2024 16:35:31 GMT
+            Ratelimit-Limit:
+                - "10000"
+            Ratelimit-Remaining:
+                - "9946"
+            Ratelimit-Reset:
+                - "28"
+            Referrer-Policy:
+                - same-origin
+            Render-Request-Id:
+                - api-cb6686ccd-gtczz/osocDdt2rF-000193
+            Vary:
+                - Origin
+            X-Content-Type-Options:
+                - nosniff
+            X-Frame-Options:
+                - DENY
+            X-Xss-Protection:
+                - 1; mode=block
+        status: 200 OK
+        code: 200
+        duration: 54.598209ms
+    - id: 51
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 0
+        transfer_encoding: []
+        trailer: {}
+        host: https://api.testing.render.com/v1
+        remote_addr: ""
+        request_uri: ""
+        body: ""
+        form: {}
+        headers:
+            Authorization:
+                - some-api-key
+            User-Agent:
+                - terraform-provider-render/test
+        url: https://api.testing.render.com/v1/logs/streams/resource/red-crfi7js8m55c703hl2h0
+        method: GET
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: 50
+        uncompressed: false
+        body: |
+            {"message":"not found: red-crfi7js8m55c703hl2h0"}
+        headers:
+            Content-Length:
+                - "50"
+            Content-Type:
+                - application/json; charset=utf-8
+            Date:
+                - Mon, 09 Sep 2024 16:35:31 GMT
+            Ratelimit-Limit:
+                - "10000"
+            Ratelimit-Remaining:
+                - "9945"
+            Ratelimit-Reset:
+                - "28"
+            Referrer-Policy:
+                - same-origin
+            Render-Request-Id:
+                - api-cb6686ccd-gtczz/osocDdt2rF-000194
+            Vary:
+                - Origin
+            X-Content-Type-Options:
+                - nosniff
+            X-Frame-Options:
+                - DENY
+            X-Xss-Protection:
+                - 1; mode=block
+        status: 404 Not Found
+        code: 404
+        duration: 34.140375ms
+    - id: 52
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 0
+        transfer_encoding: []
+        trailer: {}
+        host: https://api.testing.render.com/v1
+        remote_addr: ""
+        request_uri: ""
+        body: ""
+        form: {}
+        headers:
+            Authorization:
+                - some-api-key
+            User-Agent:
+                - terraform-provider-render/test
+        url: https://api.testing.render.com/v1/key-value/red-crfi7js8m55c703hl2h0
+        method: DELETE
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: 0
+        uncompressed: false
+        body: ""
+        headers:
+            Date:
+                - Mon, 09 Sep 2024 16:35:32 GMT
+            Ratelimit-Limit:
+                - "10000"
+            Ratelimit-Remaining:
+                - "9990"
+            Ratelimit-Reset:
+                - "27"
+            Referrer-Policy:
+                - same-origin
+            Render-Request-Id:
+                - api-cb6686ccd-gtczz/osocDdt2rF-000195
+            Vary:
+                - Origin
+            X-Content-Type-Options:
+                - nosniff
+            X-Frame-Options:
+                - DENY
+            X-Xss-Protection:
+                - 1; mode=block
+        status: 204 No Content
+        code: 204
+        duration: 61.533292ms
+    - id: 53
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 0
+        transfer_encoding: []
+        trailer: {}
+        host: https://api.testing.render.com/v1
+        remote_addr: ""
+        request_uri: ""
+        body: ""
+        form: {}
+        headers:
+            Authorization:
+                - some-api-key
+            User-Agent:
+                - terraform-provider-render/test
+        url: https://api.testing.render.com/v1/projects/prj-crfi7js8m55c703hl2g0
+        method: DELETE
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: 0
+        uncompressed: false
+        body: ""
+        headers:
+            Date:
+                - Mon, 09 Sep 2024 16:35:32 GMT
+            Ratelimit-Limit:
+                - "10000"
+            Ratelimit-Remaining:
+                - "9989"
+            Ratelimit-Reset:
+                - "27"
+            Referrer-Policy:
+                - same-origin
+            Render-Request-Id:
+                - api-cb6686ccd-gtczz/osocDdt2rF-000196
+            Vary:
+                - Origin
+            X-Content-Type-Options:
+                - nosniff
+            X-Frame-Options:
+                - DENY
+            X-Xss-Protection:
+                - 1; mode=block
+        status: 204 No Content
+        code: 204
+        duration: 76.609375ms
+    - id: 54
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 0
+        transfer_encoding: []
+        trailer: {}
+        host: https://api.testing.render.com/v1
+        remote_addr: ""
+        request_uri: ""
+        body: ""
+        form: {}
+        headers:
+            Authorization:
+                - some-api-key
+            User-Agent:
+                - terraform-provider-render/test
+        url: https://api.testing.render.com/v1/projects/prj-crfi7js8m55c703hl2f0
+        method: DELETE
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: 0
+        uncompressed: false
+        body: ""
+        headers:
+            Date:
+                - Mon, 09 Sep 2024 16:35:32 GMT
+            Ratelimit-Limit:
+                - "10000"
+            Ratelimit-Remaining:
+                - "9988"
+            Ratelimit-Reset:
+                - "27"
+            Referrer-Policy:
+                - same-origin
+            Render-Request-Id:
+                - api-cb6686ccd-gtczz/osocDdt2rF-000197
+            Vary:
+                - Origin
+            X-Content-Type-Options:
+                - nosniff
+            X-Frame-Options:
+                - DENY
+            X-Xss-Protection:
+                - 1; mode=block
+        status: 204 No Content
+        code: 204
+        duration: 90.261125ms

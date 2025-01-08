@@ -27,6 +27,7 @@ import (
 
 	backgroundwokrerresource "terraform-provider-render/internal/provider/backgroundworker/resource"
 	envgroupresource "terraform-provider-render/internal/provider/envgroup/resource"
+	keyvalueresource "terraform-provider-render/internal/provider/keyvalue/resource"
 	notificationsdatasource "terraform-provider-render/internal/provider/notifications/datasource"
 	privateserviceresource "terraform-provider-render/internal/provider/privateservice/resource"
 	redisdatasource "terraform-provider-render/internal/provider/redis/datasource"
@@ -39,6 +40,7 @@ import (
 	cronjobdatasource "terraform-provider-render/internal/provider/cronjob/datasource"
 	cronjobresource "terraform-provider-render/internal/provider/cronjob/resource"
 	envgroupdatasource "terraform-provider-render/internal/provider/envgroup/datasource"
+	keyvaluedatasource "terraform-provider-render/internal/provider/keyvalue/datasource"
 	notificationsresource "terraform-provider-render/internal/provider/notifications/resource"
 	postgresdatasource "terraform-provider-render/internal/provider/postgres/datasource"
 	postgresresource "terraform-provider-render/internal/provider/postgres/resource"
@@ -340,6 +342,7 @@ func (p *renderProvider) DataSources(_ context.Context) []func() datasource.Data
 		cronjobdatasource.NewCronJobSource,
 		envgroupdatasource.NewEnvGroupDataSource,
 		envgroupdatasource.NewEnvGroupLinkDataSource,
+		keyvaluedatasource.NewKeyValueSource,
 		notificationsdatasource.NewNotificationSettingDataSource,
 		logstreamdatasource.NewLogStreamSettingDataSource,
 		postgresdatasource.NewPostgresDataSource,
@@ -359,6 +362,7 @@ func (p *renderProvider) Resources(_ context.Context) []func() resource.Resource
 		cronjobresource.NewCronJobResource,
 		envgroupresource.NewEnvGroupResource,
 		envgroupresource.NewEnvGroupLinkResource,
+		keyvalueresource.NewKeyValueResource,
 		logstreamresource.NewLogStreamSettingResource,
 		notificationsresource.NewNotificationSettingResource,
 		postgresresource.NewPostgresResource,
