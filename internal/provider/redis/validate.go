@@ -31,11 +31,11 @@ func ValidateRedisPlanFunc() validator.String {
 
 func isNonCustomRedisPlanFunc() validator.String {
 	return stringvalidator.OneOf(
-		string(client.RedisPlanFree),
-		string(client.RedisPlanPro),
-		string(client.RedisPlanProPlus),
-		string(client.RedisPlanStandard),
-		string(client.RedisPlanStarter),
+		string(client.Free),
+		string(client.Pro),
+		string(client.ProPlus),
+		string(client.Standard),
+		string(client.Starter),
 	)
 }
 

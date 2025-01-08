@@ -23,7 +23,7 @@ var RedisPlan = schema.StringAttribute{
 	Computed:            true,
 	Description:         "Plan for the Redis instance. Must be one of free, starter, standard, pro, pro_plus, or a custom plan.",
 	MarkdownDescription: "Plan for the Redis instance. Must be one of `free`, `starter`, `standard`, `pro`, `pro_plus`, or a custom plan.",
-	Default:             stringdefault.StaticString(string(client.RedisPlanProPlus)),
+	Default:             stringdefault.StaticString(string(client.ProPlus)),
 	Validators: []validator.String{
 		redis.ValidateRedisPlanFunc(),
 	},
