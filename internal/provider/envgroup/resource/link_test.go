@@ -87,7 +87,7 @@ func TestEnvGroupLinkResource(t *testing.T) {
 func envGroupLinkServer(t *testing.T, envGroupID string) *httptest.Server {
 	envGroup := &client.EnvGroup{Id: envGroupID}
 	if envGroupID == "existing-id" {
-		envGroup.ServiceLinks = []client.ServiceLink{{Id: "existing-service"}}
+		envGroup.ServiceLinks = []client.EnvGroupLink{{Id: "existing-service"}}
 	}
 
 	fakeServer := httptest.NewServer(http.HandlerFunc(func(resp http.ResponseWriter, req *http.Request) {
@@ -98,7 +98,7 @@ func envGroupLinkServer(t *testing.T, envGroupID string) *httptest.Server {
 		case http.MethodPost:
 			pathParts := strings.Split(req.URL.Path, "/")
 			serviceID := pathParts[len(pathParts)-1]
-			envGroup.ServiceLinks = append(envGroup.ServiceLinks, client.ServiceLink{Id: serviceID})
+			envGroup.ServiceLinks = append(envGroup.ServiceLinks, client.EnvGroupLink{Id: serviceID})
 		case http.MethodDelete:
 			pathParts := strings.Split(req.URL.Path, "/")
 			serviceID := pathParts[len(pathParts)-1]

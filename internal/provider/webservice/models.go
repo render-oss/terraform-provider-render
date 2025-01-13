@@ -79,7 +79,7 @@ func ModelForServiceResult(service *common.WrappedService, plan WebServiceModel,
 		LogStreamOverride:    common.LogStreamOverrideFromClient(service.LogStreamOverride, plan.LogStreamOverride, diags),
 	}
 
-	runtimeSource, err := common.RuntimeSourceFromClient(service.Service, details.Env, details.EnvSpecificDetails)
+	runtimeSource, err := common.RuntimeSourceFromClient(service.Service, details.Runtime, details.EnvSpecificDetails)
 	if err != nil {
 		return nil, err
 	}
