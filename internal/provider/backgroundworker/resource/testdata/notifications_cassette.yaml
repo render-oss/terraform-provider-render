@@ -29,27 +29,27 @@ interactions:
         proto_minor: 0
         transfer_encoding: []
         trailer: {}
-        content_length: 777
+        content_length: 847
         uncompressed: false
         body: |
-            {"deployId":"dep-crfi4iq39eqs702lfd50","service":{"autoDeploy":"yes","createdAt":"2024-09-09T16:28:59.240882Z","dashboardUrl":"http://dashboard.render.localhost:3000/worker/srv-crfi4iq39eqs702lfd40","id":"srv-crfi4iq39eqs702lfd40","imagePath":"docker.io/library/nginx:latest","name":"autoscaling-test","notifyOnFail":"default","ownerId":"some-owner-id","rootDir":"","serviceDetails":{"buildPlan":"starter","env":"image","envSpecificDetails":{"dockerCommand":"","dockerContext":"","dockerfilePath":""},"numInstances":1,"plan":"starter","previews":{"generation":"off"},"pullRequestPreviewsEnabled":"no","region":"oregon"},"slug":"autoscaling-test-98qt","suspended":"not_suspended","suspenders":[],"type":"background_worker","updatedAt":"2024-09-09T16:28:59.442724Z"}}
+            {"deployId":"dep-cu2k54bqf0us73fbve0g","service":{"autoDeploy":"yes","createdAt":"2025-01-13T16:42:57.578451Z","dashboardUrl":"https://dashboard.render.com/worker/srv-cu2k54bqf0us73fbvdv0","id":"srv-cu2k54bqf0us73fbvdv0","imagePath":"docker.io/library/nginx:latest","name":"autoscaling-test","notifyOnFail":"default","ownerId":"tea-cspvinogph6c73ft00h0","rootDir":"","serviceDetails":{"buildPlan":"starter","env":"image","envSpecificDetails":{"dockerCommand":"","dockerContext":"","dockerfilePath":""},"numInstances":1,"plan":"starter","previews":{"generation":"off"},"pullRequestPreviewsEnabled":"no","region":"oregon","runtime":"image","sshAddress":"srv-email@example.com"},"slug":"autoscaling-test-vbun","suspended":"not_suspended","suspenders":[],"type":"background_worker","updatedAt":"2025-01-13T16:42:58.005219Z"}}
         headers:
             Content-Length:
-                - "777"
+                - "847"
             Content-Type:
                 - application/json; charset=utf-8
             Date:
-                - Mon, 09 Sep 2024 16:28:59 GMT
+                - Mon, 13 Jan 2025 16:42:58 GMT
             Ratelimit-Limit:
-                - "10000"
+                - "20"
             Ratelimit-Remaining:
-                - "9997"
+                - "17"
             Ratelimit-Reset:
-                - "1"
+                - "1023"
             Referrer-Policy:
                 - same-origin
             Render-Request-Id:
-                - api-76dcfc777b-j4kxq/nqfTj1kSz7-000566
+                - api-7767dddd75-m2trm/tatrYy6WLK-002277
             Vary:
                 - Origin
             X-Content-Type-Options:
@@ -60,7 +60,7 @@ interactions:
                 - 1; mode=block
         status: 201 Created
         code: 201
-        duration: 612.66775ms
+        duration: 1.55968525s
     - id: 1
       request:
         proto: HTTP/1.1
@@ -81,7 +81,7 @@ interactions:
                 - application/json
             User-Agent:
                 - terraform-provider-render/test
-        url: https://api.testing.render.com/v1/notification-settings/overrides/services/srv-crfi4iq39eqs702lfd40
+        url: https://api.testing.render.com/v1/notification-settings/overrides/services/srv-cu2k54bqf0us73fbvdv0
         method: PATCH
       response:
         proto: HTTP/2.0
@@ -89,30 +89,25 @@ interactions:
         proto_minor: 0
         transfer_encoding: []
         trailer: {}
-        content_length: 106
-        uncompressed: false
+        content_length: -1
+        uncompressed: true
         body: |
-            {"notificationsToSend":"all","previewNotificationsEnabled":"true","serviceId":"srv-crfi4iq39eqs702lfd40"}
+            {"notificationsToSend":"all","previewNotificationsEnabled":"true","serviceId":"srv-cu2k54bqf0us73fbvdv0"}
         headers:
-            Content-Length:
-                - "106"
             Content-Type:
                 - application/json; charset=utf-8
             Date:
-                - Mon, 09 Sep 2024 16:28:59 GMT
+                - Mon, 13 Jan 2025 16:42:58 GMT
             Ratelimit-Limit:
-                - "10000"
-                - "10000"
+                - "100"
             Ratelimit-Remaining:
-                - "9741"
-                - "9966"
+                - "71"
             Ratelimit-Reset:
-                - "0"
-                - "0"
+                - "1"
             Referrer-Policy:
                 - same-origin
             Render-Request-Id:
-                - api-76dcfc777b-j4kxq/nqfTj1kSz7-000567
+                - api-7767dddd75-m2trm/tatrYy6WLK-002286
             Vary:
                 - Origin
             X-Content-Type-Options:
@@ -123,7 +118,7 @@ interactions:
                 - 1; mode=block
         status: 200 OK
         code: 200
-        duration: 23.466833ms
+        duration: 102.415541ms
     - id: 2
       request:
         proto: HTTP/1.1
@@ -142,7 +137,7 @@ interactions:
                 - some-api-key
             User-Agent:
                 - terraform-provider-render/test
-        url: https://api.testing.render.com/v1/services/srv-crfi4iq39eqs702lfd40/env-vars
+        url: https://api.testing.render.com/v1/services/srv-cu2k54bqf0us73fbvdv0/env-vars
         method: GET
       response:
         proto: HTTP/2.0
@@ -160,17 +155,17 @@ interactions:
             Content-Type:
                 - application/json; charset=utf-8
             Date:
-                - Mon, 09 Sep 2024 16:28:59 GMT
+                - Mon, 13 Jan 2025 16:42:58 GMT
             Ratelimit-Limit:
-                - "10000"
+                - "400"
             Ratelimit-Remaining:
-                - "9740"
+                - "193"
             Ratelimit-Reset:
-                - "0"
+                - "1"
             Referrer-Policy:
                 - same-origin
             Render-Request-Id:
-                - api-76dcfc777b-j4kxq/nqfTj1kSz7-000568
+                - api-7767dddd75-m2trm/tatrYy6WLK-002287
             Vary:
                 - Origin
             X-Content-Type-Options:
@@ -181,7 +176,7 @@ interactions:
                 - 1; mode=block
         status: 200 OK
         code: 200
-        duration: 21.474667ms
+        duration: 102.204958ms
     - id: 3
       request:
         proto: HTTP/1.1
@@ -200,7 +195,7 @@ interactions:
                 - some-api-key
             User-Agent:
                 - terraform-provider-render/test
-        url: https://api.testing.render.com/v1/services/srv-crfi4iq39eqs702lfd40/secret-files
+        url: https://api.testing.render.com/v1/services/srv-cu2k54bqf0us73fbvdv0/secret-files
         method: GET
       response:
         proto: HTTP/2.0
@@ -218,17 +213,17 @@ interactions:
             Content-Type:
                 - application/json; charset=utf-8
             Date:
-                - Mon, 09 Sep 2024 16:28:59 GMT
+                - Mon, 13 Jan 2025 16:42:58 GMT
             Ratelimit-Limit:
-                - "10000"
+                - "400"
             Ratelimit-Remaining:
-                - "9739"
+                - "192"
             Ratelimit-Reset:
-                - "0"
+                - "1"
             Referrer-Policy:
                 - same-origin
             Render-Request-Id:
-                - api-76dcfc777b-j4kxq/nqfTj1kSz7-000569
+                - api-7767dddd75-m2trm/tatrYy6WLK-002290
             Vary:
                 - Origin
             X-Content-Type-Options:
@@ -239,7 +234,7 @@ interactions:
                 - 1; mode=block
         status: 200 OK
         code: 200
-        duration: 22.251166ms
+        duration: 123.3785ms
     - id: 4
       request:
         proto: HTTP/1.1
@@ -258,7 +253,7 @@ interactions:
                 - some-api-key
             User-Agent:
                 - terraform-provider-render/test
-        url: https://api.testing.render.com/v1/notification-settings/overrides/services/srv-crfi4iq39eqs702lfd40
+        url: https://api.testing.render.com/v1/notification-settings/overrides/services/srv-cu2k54bqf0us73fbvdv0
         method: GET
       response:
         proto: HTTP/2.0
@@ -266,27 +261,25 @@ interactions:
         proto_minor: 0
         transfer_encoding: []
         trailer: {}
-        content_length: 106
-        uncompressed: false
+        content_length: -1
+        uncompressed: true
         body: |
-            {"notificationsToSend":"all","previewNotificationsEnabled":"true","serviceId":"srv-crfi4iq39eqs702lfd40"}
+            {"notificationsToSend":"all","previewNotificationsEnabled":"true","serviceId":"srv-cu2k54bqf0us73fbvdv0"}
         headers:
-            Content-Length:
-                - "106"
             Content-Type:
                 - application/json; charset=utf-8
             Date:
-                - Mon, 09 Sep 2024 16:28:59 GMT
+                - Mon, 13 Jan 2025 16:42:58 GMT
             Ratelimit-Limit:
-                - "10000"
+                - "400"
             Ratelimit-Remaining:
-                - "9738"
+                - "191"
             Ratelimit-Reset:
-                - "0"
+                - "1"
             Referrer-Policy:
                 - same-origin
             Render-Request-Id:
-                - api-76dcfc777b-j4kxq/nqfTj1kSz7-000570
+                - api-7767dddd75-m2trm/tatrYy6WLK-002292
             Vary:
                 - Origin
             X-Content-Type-Options:
@@ -297,7 +290,7 @@ interactions:
                 - 1; mode=block
         status: 200 OK
         code: 200
-        duration: 22.249417ms
+        duration: 104.98175ms
     - id: 5
       request:
         proto: HTTP/1.1
@@ -316,7 +309,7 @@ interactions:
                 - some-api-key
             User-Agent:
                 - terraform-provider-render/test
-        url: https://api.testing.render.com/v1/logs/streams/resource/srv-crfi4iq39eqs702lfd40
+        url: https://api.testing.render.com/v1/logs/streams/resource/srv-cu2k54bqf0us73fbvdv0
         method: GET
       response:
         proto: HTTP/2.0
@@ -324,27 +317,25 @@ interactions:
         proto_minor: 0
         transfer_encoding: []
         trailer: {}
-        content_length: 50
-        uncompressed: false
+        content_length: -1
+        uncompressed: true
         body: |
-            {"message":"not found: srv-crfi4iq39eqs702lfd40"}
+            {"message":"not found: srv-cu2k54bqf0us73fbvdv0"}
         headers:
-            Content-Length:
-                - "50"
             Content-Type:
                 - application/json; charset=utf-8
             Date:
-                - Mon, 09 Sep 2024 16:28:59 GMT
+                - Mon, 13 Jan 2025 16:42:58 GMT
             Ratelimit-Limit:
-                - "10000"
+                - "400"
             Ratelimit-Remaining:
-                - "9737"
+                - "190"
             Ratelimit-Reset:
-                - "0"
+                - "1"
             Referrer-Policy:
                 - same-origin
             Render-Request-Id:
-                - api-76dcfc777b-j4kxq/nqfTj1kSz7-000571
+                - api-7767dddd75-m2trm/tatrYy6WLK-002293
             Vary:
                 - Origin
             X-Content-Type-Options:
@@ -355,7 +346,7 @@ interactions:
                 - 1; mode=block
         status: 404 Not Found
         code: 404
-        duration: 19.191375ms
+        duration: 165.582958ms
     - id: 6
       request:
         proto: HTTP/1.1
@@ -382,27 +373,25 @@ interactions:
         proto_minor: 0
         transfer_encoding: []
         trailer: {}
-        content_length: 784
-        uncompressed: false
+        content_length: -1
+        uncompressed: true
         body: |
-            [{"cursor":"EzP5dw8em7g0aXEzOWVxczcwMmxmZDQw","service":{"autoDeploy":"yes","createdAt":"2024-09-09T16:28:59.240882Z","dashboardUrl":"http://dashboard.render.localhost:3000/worker/srv-crfi4iq39eqs702lfd40","id":"srv-crfi4iq39eqs702lfd40","imagePath":"docker.io/library/nginx:latest","name":"autoscaling-test","notifyOnFail":"notify","ownerId":"some-owner-id","rootDir":"","serviceDetails":{"buildPlan":"starter","env":"image","envSpecificDetails":{"dockerCommand":"","dockerContext":"","dockerfilePath":""},"numInstances":1,"plan":"starter","previews":{"generation":"off"},"pullRequestPreviewsEnabled":"no","region":"oregon"},"slug":"autoscaling-test-98qt","suspended":"not_suspended","suspenders":[],"type":"background_worker","updatedAt":"2024-09-09T16:28:59.442724Z"}}]
+            [{"cursor":"-oJLKv3lnsg1NGJxZjB1czczZmJ2ZHYw","service":{"autoDeploy":"yes","createdAt":"2025-01-13T16:42:57.578451Z","dashboardUrl":"https://dashboard.render.com/worker/srv-cu2k54bqf0us73fbvdv0","id":"srv-cu2k54bqf0us73fbvdv0","imagePath":"docker.io/library/nginx:latest","name":"autoscaling-test","notifyOnFail":"notify","ownerId":"tea-cspvinogph6c73ft00h0","rootDir":"","serviceDetails":{"buildPlan":"starter","env":"image","envSpecificDetails":{"dockerCommand":"","dockerContext":"","dockerfilePath":""},"numInstances":1,"plan":"starter","previews":{"generation":"off"},"pullRequestPreviewsEnabled":"no","region":"oregon","runtime":"image","sshAddress":"srv-email@example.com"},"slug":"autoscaling-test-vbun","suspended":"not_suspended","suspenders":[],"type":"background_worker","updatedAt":"2025-01-13T16:42:58.005219Z"}}]
         headers:
-            Content-Length:
-                - "784"
             Content-Type:
                 - application/json; charset=utf-8
             Date:
-                - Mon, 09 Sep 2024 16:28:59 GMT
+                - Mon, 13 Jan 2025 16:42:59 GMT
             Ratelimit-Limit:
-                - "10000"
+                - "400"
             Ratelimit-Remaining:
-                - "9736"
+                - "189"
             Ratelimit-Reset:
                 - "0"
             Referrer-Policy:
                 - same-origin
             Render-Request-Id:
-                - api-76dcfc777b-j4kxq/nqfTj1kSz7-000572
+                - api-7767dddd75-m2trm/tatrYy6WLK-002295
             Vary:
                 - Origin
             X-Content-Type-Options:
@@ -413,7 +402,7 @@ interactions:
                 - 1; mode=block
         status: 200 OK
         code: 200
-        duration: 24.6095ms
+        duration: 167.624375ms
     - id: 7
       request:
         proto: HTTP/1.1
@@ -432,7 +421,7 @@ interactions:
                 - some-api-key
             User-Agent:
                 - terraform-provider-render/test
-        url: https://api.testing.render.com/v1/services/srv-crfi4iq39eqs702lfd40/env-vars
+        url: https://api.testing.render.com/v1/services/srv-cu2k54bqf0us73fbvdv0/env-vars
         method: GET
       response:
         proto: HTTP/2.0
@@ -450,17 +439,17 @@ interactions:
             Content-Type:
                 - application/json; charset=utf-8
             Date:
-                - Mon, 09 Sep 2024 16:28:59 GMT
+                - Mon, 13 Jan 2025 16:42:59 GMT
             Ratelimit-Limit:
-                - "10000"
+                - "400"
             Ratelimit-Remaining:
-                - "9735"
+                - "188"
             Ratelimit-Reset:
                 - "0"
             Referrer-Policy:
                 - same-origin
             Render-Request-Id:
-                - api-76dcfc777b-j4kxq/nqfTj1kSz7-000573
+                - api-7767dddd75-m2trm/tatrYy6WLK-002296
             Vary:
                 - Origin
             X-Content-Type-Options:
@@ -471,7 +460,7 @@ interactions:
                 - 1; mode=block
         status: 200 OK
         code: 200
-        duration: 25.287791ms
+        duration: 94.964917ms
     - id: 8
       request:
         proto: HTTP/1.1
@@ -490,7 +479,7 @@ interactions:
                 - some-api-key
             User-Agent:
                 - terraform-provider-render/test
-        url: https://api.testing.render.com/v1/services/srv-crfi4iq39eqs702lfd40/secret-files
+        url: https://api.testing.render.com/v1/services/srv-cu2k54bqf0us73fbvdv0/secret-files
         method: GET
       response:
         proto: HTTP/2.0
@@ -508,17 +497,17 @@ interactions:
             Content-Type:
                 - application/json; charset=utf-8
             Date:
-                - Mon, 09 Sep 2024 16:28:59 GMT
+                - Mon, 13 Jan 2025 16:42:59 GMT
             Ratelimit-Limit:
-                - "10000"
+                - "400"
             Ratelimit-Remaining:
-                - "9734"
+                - "187"
             Ratelimit-Reset:
                 - "0"
             Referrer-Policy:
                 - same-origin
             Render-Request-Id:
-                - api-76dcfc777b-j4kxq/nqfTj1kSz7-000574
+                - api-7767dddd75-m2trm/tatrYy6WLK-002297
             Vary:
                 - Origin
             X-Content-Type-Options:
@@ -529,7 +518,7 @@ interactions:
                 - 1; mode=block
         status: 200 OK
         code: 200
-        duration: 22.818041ms
+        duration: 126.593375ms
     - id: 9
       request:
         proto: HTTP/1.1
@@ -548,7 +537,7 @@ interactions:
                 - some-api-key
             User-Agent:
                 - terraform-provider-render/test
-        url: https://api.testing.render.com/v1/notification-settings/overrides/services/srv-crfi4iq39eqs702lfd40
+        url: https://api.testing.render.com/v1/notification-settings/overrides/services/srv-cu2k54bqf0us73fbvdv0
         method: GET
       response:
         proto: HTTP/2.0
@@ -556,27 +545,25 @@ interactions:
         proto_minor: 0
         transfer_encoding: []
         trailer: {}
-        content_length: 106
-        uncompressed: false
+        content_length: -1
+        uncompressed: true
         body: |
-            {"notificationsToSend":"all","previewNotificationsEnabled":"true","serviceId":"srv-crfi4iq39eqs702lfd40"}
+            {"notificationsToSend":"all","previewNotificationsEnabled":"true","serviceId":"srv-cu2k54bqf0us73fbvdv0"}
         headers:
-            Content-Length:
-                - "106"
             Content-Type:
                 - application/json; charset=utf-8
             Date:
-                - Mon, 09 Sep 2024 16:28:59 GMT
+                - Mon, 13 Jan 2025 16:42:59 GMT
             Ratelimit-Limit:
-                - "10000"
+                - "400"
             Ratelimit-Remaining:
-                - "9733"
+                - "186"
             Ratelimit-Reset:
                 - "0"
             Referrer-Policy:
                 - same-origin
             Render-Request-Id:
-                - api-76dcfc777b-j4kxq/nqfTj1kSz7-000575
+                - api-7767dddd75-m2trm/tatrYy6WLK-002298
             Vary:
                 - Origin
             X-Content-Type-Options:
@@ -587,7 +574,7 @@ interactions:
                 - 1; mode=block
         status: 200 OK
         code: 200
-        duration: 20.476625ms
+        duration: 100.793125ms
     - id: 10
       request:
         proto: HTTP/1.1
@@ -606,7 +593,7 @@ interactions:
                 - some-api-key
             User-Agent:
                 - terraform-provider-render/test
-        url: https://api.testing.render.com/v1/logs/streams/resource/srv-crfi4iq39eqs702lfd40
+        url: https://api.testing.render.com/v1/logs/streams/resource/srv-cu2k54bqf0us73fbvdv0
         method: GET
       response:
         proto: HTTP/2.0
@@ -614,27 +601,25 @@ interactions:
         proto_minor: 0
         transfer_encoding: []
         trailer: {}
-        content_length: 50
-        uncompressed: false
+        content_length: -1
+        uncompressed: true
         body: |
-            {"message":"not found: srv-crfi4iq39eqs702lfd40"}
+            {"message":"not found: srv-cu2k54bqf0us73fbvdv0"}
         headers:
-            Content-Length:
-                - "50"
             Content-Type:
                 - application/json; charset=utf-8
             Date:
-                - Mon, 09 Sep 2024 16:28:59 GMT
+                - Mon, 13 Jan 2025 16:42:59 GMT
             Ratelimit-Limit:
-                - "10000"
+                - "400"
             Ratelimit-Remaining:
-                - "9732"
+                - "185"
             Ratelimit-Reset:
                 - "0"
             Referrer-Policy:
                 - same-origin
             Render-Request-Id:
-                - api-76dcfc777b-j4kxq/nqfTj1kSz7-000576
+                - api-7767dddd75-m2trm/tatrYy6WLK-002300
             Vary:
                 - Origin
             X-Content-Type-Options:
@@ -645,7 +630,7 @@ interactions:
                 - 1; mode=block
         status: 404 Not Found
         code: 404
-        duration: 19.792208ms
+        duration: 161.645291ms
     - id: 11
       request:
         proto: HTTP/1.1
@@ -664,7 +649,7 @@ interactions:
                 - some-api-key
             User-Agent:
                 - terraform-provider-render/test
-        url: https://api.testing.render.com/v1/services/srv-crfi4iq39eqs702lfd40
+        url: https://api.testing.render.com/v1/services/srv-cu2k54bqf0us73fbvdv0
         method: GET
       response:
         proto: HTTP/2.0
@@ -672,27 +657,25 @@ interactions:
         proto_minor: 0
         transfer_encoding: []
         trailer: {}
-        content_length: 726
-        uncompressed: false
+        content_length: -1
+        uncompressed: true
         body: |
-            {"autoDeploy":"yes","createdAt":"2024-09-09T16:28:59.240882Z","dashboardUrl":"http://dashboard.render.localhost:3000/worker/srv-crfi4iq39eqs702lfd40","id":"srv-crfi4iq39eqs702lfd40","imagePath":"docker.io/library/nginx:latest","name":"autoscaling-test","notifyOnFail":"notify","ownerId":"some-owner-id","rootDir":"","serviceDetails":{"buildPlan":"starter","env":"image","envSpecificDetails":{"dockerCommand":"","dockerContext":"","dockerfilePath":""},"numInstances":1,"plan":"starter","previews":{"generation":"off"},"pullRequestPreviewsEnabled":"no","region":"oregon"},"slug":"autoscaling-test-98qt","suspended":"not_suspended","suspenders":[],"type":"background_worker","updatedAt":"2024-09-09T16:28:59.442724Z"}
+            {"autoDeploy":"yes","createdAt":"2025-01-13T16:42:57.578451Z","dashboardUrl":"https://dashboard.render.com/worker/srv-cu2k54bqf0us73fbvdv0","id":"srv-cu2k54bqf0us73fbvdv0","imagePath":"docker.io/library/nginx:latest","name":"autoscaling-test","notifyOnFail":"notify","ownerId":"tea-cspvinogph6c73ft00h0","rootDir":"","serviceDetails":{"buildPlan":"starter","env":"image","envSpecificDetails":{"dockerCommand":"","dockerContext":"","dockerfilePath":""},"numInstances":1,"plan":"starter","previews":{"generation":"off"},"pullRequestPreviewsEnabled":"no","region":"oregon","runtime":"image","sshAddress":"srv-email@example.com"},"slug":"autoscaling-test-vbun","suspended":"not_suspended","suspenders":[],"type":"background_worker","updatedAt":"2025-01-13T16:42:58.005219Z"}
         headers:
-            Content-Length:
-                - "726"
             Content-Type:
                 - application/json; charset=utf-8
             Date:
-                - Mon, 09 Sep 2024 16:28:59 GMT
+                - Mon, 13 Jan 2025 16:42:59 GMT
             Ratelimit-Limit:
-                - "10000"
+                - "400"
             Ratelimit-Remaining:
-                - "9731"
+                - "184"
             Ratelimit-Reset:
                 - "0"
             Referrer-Policy:
                 - same-origin
             Render-Request-Id:
-                - api-76dcfc777b-j4kxq/nqfTj1kSz7-000577
+                - api-7767dddd75-m2trm/tatrYy6WLK-002302
             Vary:
                 - Origin
             X-Content-Type-Options:
@@ -703,7 +686,7 @@ interactions:
                 - 1; mode=block
         status: 200 OK
         code: 200
-        duration: 23.40475ms
+        duration: 96.9285ms
     - id: 12
       request:
         proto: HTTP/1.1
@@ -722,7 +705,7 @@ interactions:
                 - some-api-key
             User-Agent:
                 - terraform-provider-render/test
-        url: https://api.testing.render.com/v1/services/srv-crfi4iq39eqs702lfd40/env-vars
+        url: https://api.testing.render.com/v1/services/srv-cu2k54bqf0us73fbvdv0/env-vars
         method: GET
       response:
         proto: HTTP/2.0
@@ -740,17 +723,17 @@ interactions:
             Content-Type:
                 - application/json; charset=utf-8
             Date:
-                - Mon, 09 Sep 2024 16:28:59 GMT
+                - Mon, 13 Jan 2025 16:43:00 GMT
             Ratelimit-Limit:
-                - "10000"
+                - "400"
             Ratelimit-Remaining:
-                - "9730"
+                - "399"
             Ratelimit-Reset:
-                - "0"
+                - "59"
             Referrer-Policy:
                 - same-origin
             Render-Request-Id:
-                - api-76dcfc777b-j4kxq/nqfTj1kSz7-000578
+                - api-7767dddd75-m2trm/tatrYy6WLK-002304
             Vary:
                 - Origin
             X-Content-Type-Options:
@@ -761,7 +744,7 @@ interactions:
                 - 1; mode=block
         status: 200 OK
         code: 200
-        duration: 31.488292ms
+        duration: 92.252917ms
     - id: 13
       request:
         proto: HTTP/1.1
@@ -780,7 +763,7 @@ interactions:
                 - some-api-key
             User-Agent:
                 - terraform-provider-render/test
-        url: https://api.testing.render.com/v1/services/srv-crfi4iq39eqs702lfd40/secret-files
+        url: https://api.testing.render.com/v1/services/srv-cu2k54bqf0us73fbvdv0/secret-files
         method: GET
       response:
         proto: HTTP/2.0
@@ -798,17 +781,17 @@ interactions:
             Content-Type:
                 - application/json; charset=utf-8
             Date:
-                - Mon, 09 Sep 2024 16:28:59 GMT
+                - Mon, 13 Jan 2025 16:43:00 GMT
             Ratelimit-Limit:
-                - "10000"
+                - "400"
             Ratelimit-Remaining:
-                - "9729"
+                - "398"
             Ratelimit-Reset:
-                - "0"
+                - "59"
             Referrer-Policy:
                 - same-origin
             Render-Request-Id:
-                - api-76dcfc777b-j4kxq/nqfTj1kSz7-000579
+                - api-7767dddd75-m2trm/tatrYy6WLK-002306
             Vary:
                 - Origin
             X-Content-Type-Options:
@@ -819,7 +802,7 @@ interactions:
                 - 1; mode=block
         status: 200 OK
         code: 200
-        duration: 24.787542ms
+        duration: 97.066583ms
     - id: 14
       request:
         proto: HTTP/1.1
@@ -838,7 +821,7 @@ interactions:
                 - some-api-key
             User-Agent:
                 - terraform-provider-render/test
-        url: https://api.testing.render.com/v1/notification-settings/overrides/services/srv-crfi4iq39eqs702lfd40
+        url: https://api.testing.render.com/v1/notification-settings/overrides/services/srv-cu2k54bqf0us73fbvdv0
         method: GET
       response:
         proto: HTTP/2.0
@@ -846,27 +829,25 @@ interactions:
         proto_minor: 0
         transfer_encoding: []
         trailer: {}
-        content_length: 106
-        uncompressed: false
+        content_length: -1
+        uncompressed: true
         body: |
-            {"notificationsToSend":"all","previewNotificationsEnabled":"true","serviceId":"srv-crfi4iq39eqs702lfd40"}
+            {"notificationsToSend":"all","previewNotificationsEnabled":"true","serviceId":"srv-cu2k54bqf0us73fbvdv0"}
         headers:
-            Content-Length:
-                - "106"
             Content-Type:
                 - application/json; charset=utf-8
             Date:
-                - Mon, 09 Sep 2024 16:28:59 GMT
+                - Mon, 13 Jan 2025 16:43:00 GMT
             Ratelimit-Limit:
-                - "10000"
+                - "400"
             Ratelimit-Remaining:
-                - "9728"
+                - "397"
             Ratelimit-Reset:
-                - "0"
+                - "59"
             Referrer-Policy:
                 - same-origin
             Render-Request-Id:
-                - api-76dcfc777b-j4kxq/nqfTj1kSz7-000580
+                - api-7767dddd75-m2trm/tatrYy6WLK-002308
             Vary:
                 - Origin
             X-Content-Type-Options:
@@ -877,7 +858,7 @@ interactions:
                 - 1; mode=block
         status: 200 OK
         code: 200
-        duration: 20.151084ms
+        duration: 106.313375ms
     - id: 15
       request:
         proto: HTTP/1.1
@@ -896,7 +877,7 @@ interactions:
                 - some-api-key
             User-Agent:
                 - terraform-provider-render/test
-        url: https://api.testing.render.com/v1/logs/streams/resource/srv-crfi4iq39eqs702lfd40
+        url: https://api.testing.render.com/v1/logs/streams/resource/srv-cu2k54bqf0us73fbvdv0
         method: GET
       response:
         proto: HTTP/2.0
@@ -904,27 +885,25 @@ interactions:
         proto_minor: 0
         transfer_encoding: []
         trailer: {}
-        content_length: 50
-        uncompressed: false
+        content_length: -1
+        uncompressed: true
         body: |
-            {"message":"not found: srv-crfi4iq39eqs702lfd40"}
+            {"message":"not found: srv-cu2k54bqf0us73fbvdv0"}
         headers:
-            Content-Length:
-                - "50"
             Content-Type:
                 - application/json; charset=utf-8
             Date:
-                - Mon, 09 Sep 2024 16:28:59 GMT
+                - Mon, 13 Jan 2025 16:43:00 GMT
             Ratelimit-Limit:
-                - "10000"
+                - "400"
             Ratelimit-Remaining:
-                - "9727"
+                - "396"
             Ratelimit-Reset:
-                - "0"
+                - "59"
             Referrer-Policy:
                 - same-origin
             Render-Request-Id:
-                - api-76dcfc777b-j4kxq/nqfTj1kSz7-000581
+                - api-7767dddd75-m2trm/tatrYy6WLK-002309
             Vary:
                 - Origin
             X-Content-Type-Options:
@@ -935,7 +914,7 @@ interactions:
                 - 1; mode=block
         status: 404 Not Found
         code: 404
-        duration: 20.213292ms
+        duration: 188.550167ms
     - id: 16
       request:
         proto: HTTP/1.1
@@ -954,7 +933,7 @@ interactions:
                 - some-api-key
             User-Agent:
                 - terraform-provider-render/test
-        url: https://api.testing.render.com/v1/services/srv-crfi4iq39eqs702lfd40
+        url: https://api.testing.render.com/v1/services/srv-cu2k54bqf0us73fbvdv0
         method: GET
       response:
         proto: HTTP/2.0
@@ -962,27 +941,25 @@ interactions:
         proto_minor: 0
         transfer_encoding: []
         trailer: {}
-        content_length: 726
-        uncompressed: false
+        content_length: -1
+        uncompressed: true
         body: |
-            {"autoDeploy":"yes","createdAt":"2024-09-09T16:28:59.240882Z","dashboardUrl":"http://dashboard.render.localhost:3000/worker/srv-crfi4iq39eqs702lfd40","id":"srv-crfi4iq39eqs702lfd40","imagePath":"docker.io/library/nginx:latest","name":"autoscaling-test","notifyOnFail":"notify","ownerId":"some-owner-id","rootDir":"","serviceDetails":{"buildPlan":"starter","env":"image","envSpecificDetails":{"dockerCommand":"","dockerContext":"","dockerfilePath":""},"numInstances":1,"plan":"starter","previews":{"generation":"off"},"pullRequestPreviewsEnabled":"no","region":"oregon"},"slug":"autoscaling-test-98qt","suspended":"not_suspended","suspenders":[],"type":"background_worker","updatedAt":"2024-09-09T16:28:59.442724Z"}
+            {"autoDeploy":"yes","createdAt":"2025-01-13T16:42:57.578451Z","dashboardUrl":"https://dashboard.render.com/worker/srv-cu2k54bqf0us73fbvdv0","id":"srv-cu2k54bqf0us73fbvdv0","imagePath":"docker.io/library/nginx:latest","name":"autoscaling-test","notifyOnFail":"notify","ownerId":"tea-cspvinogph6c73ft00h0","rootDir":"","serviceDetails":{"buildPlan":"starter","env":"image","envSpecificDetails":{"dockerCommand":"","dockerContext":"","dockerfilePath":""},"numInstances":1,"plan":"starter","previews":{"generation":"off"},"pullRequestPreviewsEnabled":"no","region":"oregon","runtime":"image","sshAddress":"srv-email@example.com"},"slug":"autoscaling-test-vbun","suspended":"not_suspended","suspenders":[],"type":"background_worker","updatedAt":"2025-01-13T16:42:58.005219Z"}
         headers:
-            Content-Length:
-                - "726"
             Content-Type:
                 - application/json; charset=utf-8
             Date:
-                - Mon, 09 Sep 2024 16:29:00 GMT
+                - Mon, 13 Jan 2025 16:43:00 GMT
             Ratelimit-Limit:
-                - "10000"
+                - "400"
             Ratelimit-Remaining:
-                - "9999"
+                - "395"
             Ratelimit-Reset:
                 - "59"
             Referrer-Policy:
                 - same-origin
             Render-Request-Id:
-                - api-76dcfc777b-j4kxq/nqfTj1kSz7-000582
+                - api-7767dddd75-m2trm/tatrYy6WLK-002311
             Vary:
                 - Origin
             X-Content-Type-Options:
@@ -993,7 +970,7 @@ interactions:
                 - 1; mode=block
         status: 200 OK
         code: 200
-        duration: 20.450167ms
+        duration: 100.239083ms
     - id: 17
       request:
         proto: HTTP/1.1
@@ -1012,7 +989,7 @@ interactions:
                 - some-api-key
             User-Agent:
                 - terraform-provider-render/test
-        url: https://api.testing.render.com/v1/services/srv-crfi4iq39eqs702lfd40/env-vars
+        url: https://api.testing.render.com/v1/services/srv-cu2k54bqf0us73fbvdv0/env-vars
         method: GET
       response:
         proto: HTTP/2.0
@@ -1030,17 +1007,17 @@ interactions:
             Content-Type:
                 - application/json; charset=utf-8
             Date:
-                - Mon, 09 Sep 2024 16:29:00 GMT
+                - Mon, 13 Jan 2025 16:43:01 GMT
             Ratelimit-Limit:
-                - "10000"
+                - "400"
             Ratelimit-Remaining:
-                - "9998"
+                - "394"
             Ratelimit-Reset:
-                - "59"
+                - "58"
             Referrer-Policy:
                 - same-origin
             Render-Request-Id:
-                - api-76dcfc777b-j4kxq/nqfTj1kSz7-000583
+                - api-7767dddd75-m2trm/tatrYy6WLK-002312
             Vary:
                 - Origin
             X-Content-Type-Options:
@@ -1051,7 +1028,7 @@ interactions:
                 - 1; mode=block
         status: 200 OK
         code: 200
-        duration: 26.9745ms
+        duration: 124.326959ms
     - id: 18
       request:
         proto: HTTP/1.1
@@ -1070,7 +1047,7 @@ interactions:
                 - some-api-key
             User-Agent:
                 - terraform-provider-render/test
-        url: https://api.testing.render.com/v1/services/srv-crfi4iq39eqs702lfd40/secret-files
+        url: https://api.testing.render.com/v1/services/srv-cu2k54bqf0us73fbvdv0/secret-files
         method: GET
       response:
         proto: HTTP/2.0
@@ -1088,17 +1065,17 @@ interactions:
             Content-Type:
                 - application/json; charset=utf-8
             Date:
-                - Mon, 09 Sep 2024 16:29:00 GMT
+                - Mon, 13 Jan 2025 16:43:01 GMT
             Ratelimit-Limit:
-                - "10000"
+                - "400"
             Ratelimit-Remaining:
-                - "9997"
+                - "393"
             Ratelimit-Reset:
-                - "59"
+                - "58"
             Referrer-Policy:
                 - same-origin
             Render-Request-Id:
-                - api-76dcfc777b-j4kxq/nqfTj1kSz7-000584
+                - api-7767dddd75-m2trm/tatrYy6WLK-002316
             Vary:
                 - Origin
             X-Content-Type-Options:
@@ -1109,7 +1086,7 @@ interactions:
                 - 1; mode=block
         status: 200 OK
         code: 200
-        duration: 21.428959ms
+        duration: 100.507833ms
     - id: 19
       request:
         proto: HTTP/1.1
@@ -1128,7 +1105,7 @@ interactions:
                 - some-api-key
             User-Agent:
                 - terraform-provider-render/test
-        url: https://api.testing.render.com/v1/notification-settings/overrides/services/srv-crfi4iq39eqs702lfd40
+        url: https://api.testing.render.com/v1/notification-settings/overrides/services/srv-cu2k54bqf0us73fbvdv0
         method: GET
       response:
         proto: HTTP/2.0
@@ -1136,27 +1113,25 @@ interactions:
         proto_minor: 0
         transfer_encoding: []
         trailer: {}
-        content_length: 106
-        uncompressed: false
+        content_length: -1
+        uncompressed: true
         body: |
-            {"notificationsToSend":"all","previewNotificationsEnabled":"true","serviceId":"srv-crfi4iq39eqs702lfd40"}
+            {"notificationsToSend":"all","previewNotificationsEnabled":"true","serviceId":"srv-cu2k54bqf0us73fbvdv0"}
         headers:
-            Content-Length:
-                - "106"
             Content-Type:
                 - application/json; charset=utf-8
             Date:
-                - Mon, 09 Sep 2024 16:29:00 GMT
+                - Mon, 13 Jan 2025 16:43:01 GMT
             Ratelimit-Limit:
-                - "10000"
+                - "400"
             Ratelimit-Remaining:
-                - "9996"
+                - "392"
             Ratelimit-Reset:
-                - "59"
+                - "58"
             Referrer-Policy:
                 - same-origin
             Render-Request-Id:
-                - api-76dcfc777b-j4kxq/nqfTj1kSz7-000585
+                - api-7767dddd75-m2trm/tatrYy6WLK-002317
             Vary:
                 - Origin
             X-Content-Type-Options:
@@ -1167,7 +1142,7 @@ interactions:
                 - 1; mode=block
         status: 200 OK
         code: 200
-        duration: 19.024167ms
+        duration: 111.77525ms
     - id: 20
       request:
         proto: HTTP/1.1
@@ -1186,7 +1161,7 @@ interactions:
                 - some-api-key
             User-Agent:
                 - terraform-provider-render/test
-        url: https://api.testing.render.com/v1/logs/streams/resource/srv-crfi4iq39eqs702lfd40
+        url: https://api.testing.render.com/v1/logs/streams/resource/srv-cu2k54bqf0us73fbvdv0
         method: GET
       response:
         proto: HTTP/2.0
@@ -1194,27 +1169,25 @@ interactions:
         proto_minor: 0
         transfer_encoding: []
         trailer: {}
-        content_length: 50
-        uncompressed: false
+        content_length: -1
+        uncompressed: true
         body: |
-            {"message":"not found: srv-crfi4iq39eqs702lfd40"}
+            {"message":"not found: srv-cu2k54bqf0us73fbvdv0"}
         headers:
-            Content-Length:
-                - "50"
             Content-Type:
                 - application/json; charset=utf-8
             Date:
-                - Mon, 09 Sep 2024 16:29:00 GMT
+                - Mon, 13 Jan 2025 16:43:01 GMT
             Ratelimit-Limit:
-                - "10000"
+                - "400"
             Ratelimit-Remaining:
-                - "9995"
+                - "391"
             Ratelimit-Reset:
-                - "59"
+                - "58"
             Referrer-Policy:
                 - same-origin
             Render-Request-Id:
-                - api-76dcfc777b-j4kxq/nqfTj1kSz7-000586
+                - api-7767dddd75-m2trm/tatrYy6WLK-002319
             Vary:
                 - Origin
             X-Content-Type-Options:
@@ -1225,7 +1198,7 @@ interactions:
                 - 1; mode=block
         status: 404 Not Found
         code: 404
-        duration: 21.551292ms
+        duration: 177.779959ms
     - id: 21
       request:
         proto: HTTP/1.1
@@ -1244,7 +1217,7 @@ interactions:
                 - some-api-key
             User-Agent:
                 - terraform-provider-render/test
-        url: https://api.testing.render.com/v1/services/srv-crfi4iq39eqs702lfd40
+        url: https://api.testing.render.com/v1/services/srv-cu2k54bqf0us73fbvdv0
         method: GET
       response:
         proto: HTTP/2.0
@@ -1252,27 +1225,25 @@ interactions:
         proto_minor: 0
         transfer_encoding: []
         trailer: {}
-        content_length: 726
-        uncompressed: false
+        content_length: -1
+        uncompressed: true
         body: |
-            {"autoDeploy":"yes","createdAt":"2024-09-09T16:28:59.240882Z","dashboardUrl":"http://dashboard.render.localhost:3000/worker/srv-crfi4iq39eqs702lfd40","id":"srv-crfi4iq39eqs702lfd40","imagePath":"docker.io/library/nginx:latest","name":"autoscaling-test","notifyOnFail":"notify","ownerId":"some-owner-id","rootDir":"","serviceDetails":{"buildPlan":"starter","env":"image","envSpecificDetails":{"dockerCommand":"","dockerContext":"","dockerfilePath":""},"numInstances":1,"plan":"starter","previews":{"generation":"off"},"pullRequestPreviewsEnabled":"no","region":"oregon"},"slug":"autoscaling-test-98qt","suspended":"not_suspended","suspenders":[],"type":"background_worker","updatedAt":"2024-09-09T16:28:59.442724Z"}
+            {"autoDeploy":"yes","createdAt":"2025-01-13T16:42:57.578451Z","dashboardUrl":"https://dashboard.render.com/worker/srv-cu2k54bqf0us73fbvdv0","id":"srv-cu2k54bqf0us73fbvdv0","imagePath":"docker.io/library/nginx:latest","name":"autoscaling-test","notifyOnFail":"notify","ownerId":"tea-cspvinogph6c73ft00h0","rootDir":"","serviceDetails":{"buildPlan":"starter","env":"image","envSpecificDetails":{"dockerCommand":"","dockerContext":"","dockerfilePath":""},"numInstances":1,"plan":"starter","previews":{"generation":"off"},"pullRequestPreviewsEnabled":"no","region":"oregon","runtime":"image","sshAddress":"srv-email@example.com"},"slug":"autoscaling-test-vbun","suspended":"not_suspended","suspenders":[],"type":"background_worker","updatedAt":"2025-01-13T16:42:58.005219Z"}
         headers:
-            Content-Length:
-                - "726"
             Content-Type:
                 - application/json; charset=utf-8
             Date:
-                - Mon, 09 Sep 2024 16:29:00 GMT
+                - Mon, 13 Jan 2025 16:43:01 GMT
             Ratelimit-Limit:
-                - "10000"
+                - "400"
             Ratelimit-Remaining:
-                - "9994"
+                - "390"
             Ratelimit-Reset:
-                - "59"
+                - "58"
             Referrer-Policy:
                 - same-origin
             Render-Request-Id:
-                - api-76dcfc777b-j4kxq/nqfTj1kSz7-000587
+                - api-7767dddd75-m2trm/tatrYy6WLK-002322
             Vary:
                 - Origin
             X-Content-Type-Options:
@@ -1283,7 +1254,7 @@ interactions:
                 - 1; mode=block
         status: 200 OK
         code: 200
-        duration: 18.493ms
+        duration: 96.3635ms
     - id: 22
       request:
         proto: HTTP/1.1
@@ -1302,7 +1273,7 @@ interactions:
                 - some-api-key
             User-Agent:
                 - terraform-provider-render/test
-        url: https://api.testing.render.com/v1/services/srv-crfi4iq39eqs702lfd40/env-vars
+        url: https://api.testing.render.com/v1/services/srv-cu2k54bqf0us73fbvdv0/env-vars
         method: GET
       response:
         proto: HTTP/2.0
@@ -1320,17 +1291,17 @@ interactions:
             Content-Type:
                 - application/json; charset=utf-8
             Date:
-                - Mon, 09 Sep 2024 16:29:00 GMT
+                - Mon, 13 Jan 2025 16:43:02 GMT
             Ratelimit-Limit:
-                - "10000"
+                - "400"
             Ratelimit-Remaining:
-                - "9993"
+                - "389"
             Ratelimit-Reset:
-                - "59"
+                - "57"
             Referrer-Policy:
                 - same-origin
             Render-Request-Id:
-                - api-76dcfc777b-j4kxq/nqfTj1kSz7-000588
+                - api-7767dddd75-m2trm/tatrYy6WLK-002324
             Vary:
                 - Origin
             X-Content-Type-Options:
@@ -1341,7 +1312,7 @@ interactions:
                 - 1; mode=block
         status: 200 OK
         code: 200
-        duration: 21.782083ms
+        duration: 101.324458ms
     - id: 23
       request:
         proto: HTTP/1.1
@@ -1360,7 +1331,7 @@ interactions:
                 - some-api-key
             User-Agent:
                 - terraform-provider-render/test
-        url: https://api.testing.render.com/v1/services/srv-crfi4iq39eqs702lfd40/secret-files
+        url: https://api.testing.render.com/v1/services/srv-cu2k54bqf0us73fbvdv0/secret-files
         method: GET
       response:
         proto: HTTP/2.0
@@ -1378,17 +1349,17 @@ interactions:
             Content-Type:
                 - application/json; charset=utf-8
             Date:
-                - Mon, 09 Sep 2024 16:29:00 GMT
+                - Mon, 13 Jan 2025 16:43:02 GMT
             Ratelimit-Limit:
-                - "10000"
+                - "400"
             Ratelimit-Remaining:
-                - "9992"
+                - "388"
             Ratelimit-Reset:
-                - "59"
+                - "57"
             Referrer-Policy:
                 - same-origin
             Render-Request-Id:
-                - api-76dcfc777b-j4kxq/nqfTj1kSz7-000589
+                - api-7767dddd75-m2trm/tatrYy6WLK-002325
             Vary:
                 - Origin
             X-Content-Type-Options:
@@ -1399,7 +1370,7 @@ interactions:
                 - 1; mode=block
         status: 200 OK
         code: 200
-        duration: 26.43225ms
+        duration: 94.953583ms
     - id: 24
       request:
         proto: HTTP/1.1
@@ -1418,7 +1389,7 @@ interactions:
                 - some-api-key
             User-Agent:
                 - terraform-provider-render/test
-        url: https://api.testing.render.com/v1/notification-settings/overrides/services/srv-crfi4iq39eqs702lfd40
+        url: https://api.testing.render.com/v1/notification-settings/overrides/services/srv-cu2k54bqf0us73fbvdv0
         method: GET
       response:
         proto: HTTP/2.0
@@ -1426,27 +1397,25 @@ interactions:
         proto_minor: 0
         transfer_encoding: []
         trailer: {}
-        content_length: 106
-        uncompressed: false
+        content_length: -1
+        uncompressed: true
         body: |
-            {"notificationsToSend":"all","previewNotificationsEnabled":"true","serviceId":"srv-crfi4iq39eqs702lfd40"}
+            {"notificationsToSend":"all","previewNotificationsEnabled":"true","serviceId":"srv-cu2k54bqf0us73fbvdv0"}
         headers:
-            Content-Length:
-                - "106"
             Content-Type:
                 - application/json; charset=utf-8
             Date:
-                - Mon, 09 Sep 2024 16:29:00 GMT
+                - Mon, 13 Jan 2025 16:43:02 GMT
             Ratelimit-Limit:
-                - "10000"
+                - "400"
             Ratelimit-Remaining:
-                - "9991"
+                - "387"
             Ratelimit-Reset:
-                - "59"
+                - "57"
             Referrer-Policy:
                 - same-origin
             Render-Request-Id:
-                - api-76dcfc777b-j4kxq/nqfTj1kSz7-000590
+                - api-7767dddd75-m2trm/tatrYy6WLK-002328
             Vary:
                 - Origin
             X-Content-Type-Options:
@@ -1457,7 +1426,7 @@ interactions:
                 - 1; mode=block
         status: 200 OK
         code: 200
-        duration: 21.438959ms
+        duration: 90.27525ms
     - id: 25
       request:
         proto: HTTP/1.1
@@ -1476,7 +1445,7 @@ interactions:
                 - some-api-key
             User-Agent:
                 - terraform-provider-render/test
-        url: https://api.testing.render.com/v1/logs/streams/resource/srv-crfi4iq39eqs702lfd40
+        url: https://api.testing.render.com/v1/logs/streams/resource/srv-cu2k54bqf0us73fbvdv0
         method: GET
       response:
         proto: HTTP/2.0
@@ -1484,27 +1453,25 @@ interactions:
         proto_minor: 0
         transfer_encoding: []
         trailer: {}
-        content_length: 50
-        uncompressed: false
+        content_length: -1
+        uncompressed: true
         body: |
-            {"message":"not found: srv-crfi4iq39eqs702lfd40"}
+            {"message":"not found: srv-cu2k54bqf0us73fbvdv0"}
         headers:
-            Content-Length:
-                - "50"
             Content-Type:
                 - application/json; charset=utf-8
             Date:
-                - Mon, 09 Sep 2024 16:29:00 GMT
+                - Mon, 13 Jan 2025 16:43:02 GMT
             Ratelimit-Limit:
-                - "10000"
+                - "400"
             Ratelimit-Remaining:
-                - "9990"
+                - "386"
             Ratelimit-Reset:
-                - "59"
+                - "57"
             Referrer-Policy:
                 - same-origin
             Render-Request-Id:
-                - api-76dcfc777b-j4kxq/nqfTj1kSz7-000591
+                - api-7767dddd75-m2trm/tatrYy6WLK-002330
             Vary:
                 - Origin
             X-Content-Type-Options:
@@ -1515,7 +1482,7 @@ interactions:
                 - 1; mode=block
         status: 404 Not Found
         code: 404
-        duration: 24.829375ms
+        duration: 172.373875ms
     - id: 26
       request:
         proto: HTTP/1.1
@@ -1534,7 +1501,7 @@ interactions:
                 - some-api-key
             User-Agent:
                 - terraform-provider-render/test
-        url: https://api.testing.render.com/v1/services/srv-crfi4iq39eqs702lfd40
+        url: https://api.testing.render.com/v1/services/srv-cu2k54bqf0us73fbvdv0
         method: GET
       response:
         proto: HTTP/2.0
@@ -1542,27 +1509,25 @@ interactions:
         proto_minor: 0
         transfer_encoding: []
         trailer: {}
-        content_length: 726
-        uncompressed: false
+        content_length: -1
+        uncompressed: true
         body: |
-            {"autoDeploy":"yes","createdAt":"2024-09-09T16:28:59.240882Z","dashboardUrl":"http://dashboard.render.localhost:3000/worker/srv-crfi4iq39eqs702lfd40","id":"srv-crfi4iq39eqs702lfd40","imagePath":"docker.io/library/nginx:latest","name":"autoscaling-test","notifyOnFail":"notify","ownerId":"some-owner-id","rootDir":"","serviceDetails":{"buildPlan":"starter","env":"image","envSpecificDetails":{"dockerCommand":"","dockerContext":"","dockerfilePath":""},"numInstances":1,"plan":"starter","previews":{"generation":"off"},"pullRequestPreviewsEnabled":"no","region":"oregon"},"slug":"autoscaling-test-98qt","suspended":"not_suspended","suspenders":[],"type":"background_worker","updatedAt":"2024-09-09T16:28:59.442724Z"}
+            {"autoDeploy":"yes","createdAt":"2025-01-13T16:42:57.578451Z","dashboardUrl":"https://dashboard.render.com/worker/srv-cu2k54bqf0us73fbvdv0","id":"srv-cu2k54bqf0us73fbvdv0","imagePath":"docker.io/library/nginx:latest","name":"autoscaling-test","notifyOnFail":"notify","ownerId":"tea-cspvinogph6c73ft00h0","rootDir":"","serviceDetails":{"buildPlan":"starter","env":"image","envSpecificDetails":{"dockerCommand":"","dockerContext":"","dockerfilePath":""},"numInstances":1,"plan":"starter","previews":{"generation":"off"},"pullRequestPreviewsEnabled":"no","region":"oregon","runtime":"image","sshAddress":"srv-email@example.com"},"slug":"autoscaling-test-vbun","suspended":"not_suspended","suspenders":[],"type":"background_worker","updatedAt":"2025-01-13T16:42:58.005219Z"}
         headers:
-            Content-Length:
-                - "726"
             Content-Type:
                 - application/json; charset=utf-8
             Date:
-                - Mon, 09 Sep 2024 16:29:00 GMT
+                - Mon, 13 Jan 2025 16:43:02 GMT
             Ratelimit-Limit:
-                - "10000"
+                - "400"
             Ratelimit-Remaining:
-                - "9989"
+                - "385"
             Ratelimit-Reset:
-                - "59"
+                - "57"
             Referrer-Policy:
                 - same-origin
             Render-Request-Id:
-                - api-76dcfc777b-j4kxq/nqfTj1kSz7-000592
+                - api-7767dddd75-m2trm/tatrYy6WLK-002331
             Vary:
                 - Origin
             X-Content-Type-Options:
@@ -1573,7 +1538,7 @@ interactions:
                 - 1; mode=block
         status: 200 OK
         code: 200
-        duration: 20.481417ms
+        duration: 93.011333ms
     - id: 27
       request:
         proto: HTTP/1.1
@@ -1592,7 +1557,7 @@ interactions:
                 - some-api-key
             User-Agent:
                 - terraform-provider-render/test
-        url: https://api.testing.render.com/v1/services/srv-crfi4iq39eqs702lfd40/env-vars
+        url: https://api.testing.render.com/v1/services/srv-cu2k54bqf0us73fbvdv0/env-vars
         method: GET
       response:
         proto: HTTP/2.0
@@ -1610,17 +1575,17 @@ interactions:
             Content-Type:
                 - application/json; charset=utf-8
             Date:
-                - Mon, 09 Sep 2024 16:29:00 GMT
+                - Mon, 13 Jan 2025 16:43:02 GMT
             Ratelimit-Limit:
-                - "10000"
+                - "400"
             Ratelimit-Remaining:
-                - "9988"
+                - "384"
             Ratelimit-Reset:
-                - "59"
+                - "57"
             Referrer-Policy:
                 - same-origin
             Render-Request-Id:
-                - api-76dcfc777b-j4kxq/nqfTj1kSz7-000593
+                - api-7767dddd75-m2trm/tatrYy6WLK-002334
             Vary:
                 - Origin
             X-Content-Type-Options:
@@ -1631,7 +1596,7 @@ interactions:
                 - 1; mode=block
         status: 200 OK
         code: 200
-        duration: 23.345458ms
+        duration: 128.568291ms
     - id: 28
       request:
         proto: HTTP/1.1
@@ -1650,7 +1615,7 @@ interactions:
                 - some-api-key
             User-Agent:
                 - terraform-provider-render/test
-        url: https://api.testing.render.com/v1/services/srv-crfi4iq39eqs702lfd40/secret-files
+        url: https://api.testing.render.com/v1/services/srv-cu2k54bqf0us73fbvdv0/secret-files
         method: GET
       response:
         proto: HTTP/2.0
@@ -1668,17 +1633,17 @@ interactions:
             Content-Type:
                 - application/json; charset=utf-8
             Date:
-                - Mon, 09 Sep 2024 16:29:00 GMT
+                - Mon, 13 Jan 2025 16:43:03 GMT
             Ratelimit-Limit:
-                - "10000"
+                - "400"
             Ratelimit-Remaining:
-                - "9987"
+                - "383"
             Ratelimit-Reset:
-                - "59"
+                - "56"
             Referrer-Policy:
                 - same-origin
             Render-Request-Id:
-                - api-76dcfc777b-j4kxq/nqfTj1kSz7-000594
+                - api-7767dddd75-m2trm/tatrYy6WLK-002336
             Vary:
                 - Origin
             X-Content-Type-Options:
@@ -1689,7 +1654,7 @@ interactions:
                 - 1; mode=block
         status: 200 OK
         code: 200
-        duration: 24.1265ms
+        duration: 104.746667ms
     - id: 29
       request:
         proto: HTTP/1.1
@@ -1708,7 +1673,7 @@ interactions:
                 - some-api-key
             User-Agent:
                 - terraform-provider-render/test
-        url: https://api.testing.render.com/v1/notification-settings/overrides/services/srv-crfi4iq39eqs702lfd40
+        url: https://api.testing.render.com/v1/notification-settings/overrides/services/srv-cu2k54bqf0us73fbvdv0
         method: GET
       response:
         proto: HTTP/2.0
@@ -1716,27 +1681,25 @@ interactions:
         proto_minor: 0
         transfer_encoding: []
         trailer: {}
-        content_length: 106
-        uncompressed: false
+        content_length: -1
+        uncompressed: true
         body: |
-            {"notificationsToSend":"all","previewNotificationsEnabled":"true","serviceId":"srv-crfi4iq39eqs702lfd40"}
+            {"notificationsToSend":"all","previewNotificationsEnabled":"true","serviceId":"srv-cu2k54bqf0us73fbvdv0"}
         headers:
-            Content-Length:
-                - "106"
             Content-Type:
                 - application/json; charset=utf-8
             Date:
-                - Mon, 09 Sep 2024 16:29:00 GMT
+                - Mon, 13 Jan 2025 16:43:03 GMT
             Ratelimit-Limit:
-                - "10000"
+                - "400"
             Ratelimit-Remaining:
-                - "9986"
+                - "382"
             Ratelimit-Reset:
-                - "59"
+                - "56"
             Referrer-Policy:
                 - same-origin
             Render-Request-Id:
-                - api-76dcfc777b-j4kxq/nqfTj1kSz7-000595
+                - api-7767dddd75-zqsqf/rtQy8BuN0w-459750
             Vary:
                 - Origin
             X-Content-Type-Options:
@@ -1747,7 +1710,7 @@ interactions:
                 - 1; mode=block
         status: 200 OK
         code: 200
-        duration: 29.823666ms
+        duration: 140.413625ms
     - id: 30
       request:
         proto: HTTP/1.1
@@ -1766,7 +1729,7 @@ interactions:
                 - some-api-key
             User-Agent:
                 - terraform-provider-render/test
-        url: https://api.testing.render.com/v1/logs/streams/resource/srv-crfi4iq39eqs702lfd40
+        url: https://api.testing.render.com/v1/logs/streams/resource/srv-cu2k54bqf0us73fbvdv0
         method: GET
       response:
         proto: HTTP/2.0
@@ -1774,27 +1737,25 @@ interactions:
         proto_minor: 0
         transfer_encoding: []
         trailer: {}
-        content_length: 50
-        uncompressed: false
+        content_length: -1
+        uncompressed: true
         body: |
-            {"message":"not found: srv-crfi4iq39eqs702lfd40"}
+            {"message":"not found: srv-cu2k54bqf0us73fbvdv0"}
         headers:
-            Content-Length:
-                - "50"
             Content-Type:
                 - application/json; charset=utf-8
             Date:
-                - Mon, 09 Sep 2024 16:29:00 GMT
+                - Mon, 13 Jan 2025 16:43:03 GMT
             Ratelimit-Limit:
-                - "10000"
+                - "400"
             Ratelimit-Remaining:
-                - "9985"
+                - "381"
             Ratelimit-Reset:
-                - "59"
+                - "56"
             Referrer-Policy:
                 - same-origin
             Render-Request-Id:
-                - api-76dcfc777b-j4kxq/nqfTj1kSz7-000596
+                - api-7767dddd75-m2trm/tatrYy6WLK-002342
             Vary:
                 - Origin
             X-Content-Type-Options:
@@ -1805,7 +1766,7 @@ interactions:
                 - 1; mode=block
         status: 404 Not Found
         code: 404
-        duration: 26.6725ms
+        duration: 171.473375ms
     - id: 31
       request:
         proto: HTTP/1.1
@@ -1824,7 +1785,7 @@ interactions:
                 - some-api-key
             User-Agent:
                 - terraform-provider-render/test
-        url: https://api.testing.render.com/v1/services/srv-crfi4iq39eqs702lfd40
+        url: https://api.testing.render.com/v1/services/srv-cu2k54bqf0us73fbvdv0
         method: GET
       response:
         proto: HTTP/2.0
@@ -1832,27 +1793,25 @@ interactions:
         proto_minor: 0
         transfer_encoding: []
         trailer: {}
-        content_length: 726
-        uncompressed: false
+        content_length: -1
+        uncompressed: true
         body: |
-            {"autoDeploy":"yes","createdAt":"2024-09-09T16:28:59.240882Z","dashboardUrl":"http://dashboard.render.localhost:3000/worker/srv-crfi4iq39eqs702lfd40","id":"srv-crfi4iq39eqs702lfd40","imagePath":"docker.io/library/nginx:latest","name":"autoscaling-test","notifyOnFail":"notify","ownerId":"some-owner-id","rootDir":"","serviceDetails":{"buildPlan":"starter","env":"image","envSpecificDetails":{"dockerCommand":"","dockerContext":"","dockerfilePath":""},"numInstances":1,"plan":"starter","previews":{"generation":"off"},"pullRequestPreviewsEnabled":"no","region":"oregon"},"slug":"autoscaling-test-98qt","suspended":"not_suspended","suspenders":[],"type":"background_worker","updatedAt":"2024-09-09T16:28:59.442724Z"}
+            {"autoDeploy":"yes","createdAt":"2025-01-13T16:42:57.578451Z","dashboardUrl":"https://dashboard.render.com/worker/srv-cu2k54bqf0us73fbvdv0","id":"srv-cu2k54bqf0us73fbvdv0","imagePath":"docker.io/library/nginx:latest","name":"autoscaling-test","notifyOnFail":"notify","ownerId":"tea-cspvinogph6c73ft00h0","rootDir":"","serviceDetails":{"buildPlan":"starter","env":"image","envSpecificDetails":{"dockerCommand":"","dockerContext":"","dockerfilePath":""},"numInstances":1,"plan":"starter","previews":{"generation":"off"},"pullRequestPreviewsEnabled":"no","region":"oregon","runtime":"image","sshAddress":"srv-email@example.com"},"slug":"autoscaling-test-vbun","suspended":"not_suspended","suspenders":[],"type":"background_worker","updatedAt":"2025-01-13T16:42:58.005219Z"}
         headers:
-            Content-Length:
-                - "726"
             Content-Type:
                 - application/json; charset=utf-8
             Date:
-                - Mon, 09 Sep 2024 16:29:00 GMT
+                - Mon, 13 Jan 2025 16:43:03 GMT
             Ratelimit-Limit:
-                - "10000"
+                - "400"
             Ratelimit-Remaining:
-                - "9984"
+                - "380"
             Ratelimit-Reset:
-                - "59"
+                - "56"
             Referrer-Policy:
                 - same-origin
             Render-Request-Id:
-                - api-76dcfc777b-j4kxq/nqfTj1kSz7-000597
+                - api-7767dddd75-m2trm/tatrYy6WLK-002344
             Vary:
                 - Origin
             X-Content-Type-Options:
@@ -1863,7 +1822,7 @@ interactions:
                 - 1; mode=block
         status: 200 OK
         code: 200
-        duration: 22.779292ms
+        duration: 96.853625ms
     - id: 32
       request:
         proto: HTTP/1.1
@@ -1882,7 +1841,7 @@ interactions:
                 - some-api-key
             User-Agent:
                 - terraform-provider-render/test
-        url: https://api.testing.render.com/v1/services/srv-crfi4iq39eqs702lfd40/env-vars
+        url: https://api.testing.render.com/v1/services/srv-cu2k54bqf0us73fbvdv0/env-vars
         method: GET
       response:
         proto: HTTP/2.0
@@ -1900,17 +1859,17 @@ interactions:
             Content-Type:
                 - application/json; charset=utf-8
             Date:
-                - Mon, 09 Sep 2024 16:29:00 GMT
+                - Mon, 13 Jan 2025 16:43:03 GMT
             Ratelimit-Limit:
-                - "10000"
+                - "400"
             Ratelimit-Remaining:
-                - "9983"
+                - "379"
             Ratelimit-Reset:
-                - "59"
+                - "56"
             Referrer-Policy:
                 - same-origin
             Render-Request-Id:
-                - api-76dcfc777b-j4kxq/nqfTj1kSz7-000598
+                - api-7767dddd75-m2trm/tatrYy6WLK-002346
             Vary:
                 - Origin
             X-Content-Type-Options:
@@ -1921,7 +1880,7 @@ interactions:
                 - 1; mode=block
         status: 200 OK
         code: 200
-        duration: 23.085583ms
+        duration: 92.660666ms
     - id: 33
       request:
         proto: HTTP/1.1
@@ -1940,7 +1899,7 @@ interactions:
                 - some-api-key
             User-Agent:
                 - terraform-provider-render/test
-        url: https://api.testing.render.com/v1/services/srv-crfi4iq39eqs702lfd40/secret-files
+        url: https://api.testing.render.com/v1/services/srv-cu2k54bqf0us73fbvdv0/secret-files
         method: GET
       response:
         proto: HTTP/2.0
@@ -1958,17 +1917,17 @@ interactions:
             Content-Type:
                 - application/json; charset=utf-8
             Date:
-                - Mon, 09 Sep 2024 16:29:00 GMT
+                - Mon, 13 Jan 2025 16:43:04 GMT
             Ratelimit-Limit:
-                - "10000"
+                - "400"
             Ratelimit-Remaining:
-                - "9982"
+                - "378"
             Ratelimit-Reset:
-                - "59"
+                - "56"
             Referrer-Policy:
                 - same-origin
             Render-Request-Id:
-                - api-76dcfc777b-j4kxq/nqfTj1kSz7-000599
+                - api-7767dddd75-m2trm/tatrYy6WLK-002347
             Vary:
                 - Origin
             X-Content-Type-Options:
@@ -1979,7 +1938,7 @@ interactions:
                 - 1; mode=block
         status: 200 OK
         code: 200
-        duration: 26.131708ms
+        duration: 90.37375ms
     - id: 34
       request:
         proto: HTTP/1.1
@@ -1998,7 +1957,7 @@ interactions:
                 - some-api-key
             User-Agent:
                 - terraform-provider-render/test
-        url: https://api.testing.render.com/v1/notification-settings/overrides/services/srv-crfi4iq39eqs702lfd40
+        url: https://api.testing.render.com/v1/notification-settings/overrides/services/srv-cu2k54bqf0us73fbvdv0
         method: GET
       response:
         proto: HTTP/2.0
@@ -2006,27 +1965,25 @@ interactions:
         proto_minor: 0
         transfer_encoding: []
         trailer: {}
-        content_length: 106
-        uncompressed: false
+        content_length: -1
+        uncompressed: true
         body: |
-            {"notificationsToSend":"all","previewNotificationsEnabled":"true","serviceId":"srv-crfi4iq39eqs702lfd40"}
+            {"notificationsToSend":"all","previewNotificationsEnabled":"true","serviceId":"srv-cu2k54bqf0us73fbvdv0"}
         headers:
-            Content-Length:
-                - "106"
             Content-Type:
                 - application/json; charset=utf-8
             Date:
-                - Mon, 09 Sep 2024 16:29:00 GMT
+                - Mon, 13 Jan 2025 16:43:04 GMT
             Ratelimit-Limit:
-                - "10000"
+                - "400"
             Ratelimit-Remaining:
-                - "9981"
+                - "377"
             Ratelimit-Reset:
-                - "59"
+                - "55"
             Referrer-Policy:
                 - same-origin
             Render-Request-Id:
-                - api-76dcfc777b-j4kxq/nqfTj1kSz7-000600
+                - api-7767dddd75-m2trm/tatrYy6WLK-002349
             Vary:
                 - Origin
             X-Content-Type-Options:
@@ -2037,7 +1994,7 @@ interactions:
                 - 1; mode=block
         status: 200 OK
         code: 200
-        duration: 21.269ms
+        duration: 96.446083ms
     - id: 35
       request:
         proto: HTTP/1.1
@@ -2056,7 +2013,7 @@ interactions:
                 - some-api-key
             User-Agent:
                 - terraform-provider-render/test
-        url: https://api.testing.render.com/v1/logs/streams/resource/srv-crfi4iq39eqs702lfd40
+        url: https://api.testing.render.com/v1/logs/streams/resource/srv-cu2k54bqf0us73fbvdv0
         method: GET
       response:
         proto: HTTP/2.0
@@ -2064,27 +2021,25 @@ interactions:
         proto_minor: 0
         transfer_encoding: []
         trailer: {}
-        content_length: 50
-        uncompressed: false
+        content_length: -1
+        uncompressed: true
         body: |
-            {"message":"not found: srv-crfi4iq39eqs702lfd40"}
+            {"message":"not found: srv-cu2k54bqf0us73fbvdv0"}
         headers:
-            Content-Length:
-                - "50"
             Content-Type:
                 - application/json; charset=utf-8
             Date:
-                - Mon, 09 Sep 2024 16:29:00 GMT
+                - Mon, 13 Jan 2025 16:43:04 GMT
             Ratelimit-Limit:
-                - "10000"
+                - "400"
             Ratelimit-Remaining:
-                - "9980"
+                - "376"
             Ratelimit-Reset:
-                - "59"
+                - "55"
             Referrer-Policy:
                 - same-origin
             Render-Request-Id:
-                - api-76dcfc777b-j4kxq/nqfTj1kSz7-000601
+                - api-7767dddd75-m2trm/tatrYy6WLK-002353
             Vary:
                 - Origin
             X-Content-Type-Options:
@@ -2095,7 +2050,7 @@ interactions:
                 - 1; mode=block
         status: 404 Not Found
         code: 404
-        duration: 20.186708ms
+        duration: 176.621375ms
     - id: 36
       request:
         proto: HTTP/1.1
@@ -2116,7 +2071,7 @@ interactions:
                 - application/json
             User-Agent:
                 - terraform-provider-render/test
-        url: https://api.testing.render.com/v1/services/srv-crfi4iq39eqs702lfd40
+        url: https://api.testing.render.com/v1/services/srv-cu2k54bqf0us73fbvdv0
         method: PATCH
       response:
         proto: HTTP/2.0
@@ -2124,27 +2079,25 @@ interactions:
         proto_minor: 0
         transfer_encoding: []
         trailer: {}
-        content_length: 726
-        uncompressed: false
+        content_length: -1
+        uncompressed: true
         body: |
-            {"autoDeploy":"yes","createdAt":"2024-09-09T16:28:59.240882Z","dashboardUrl":"http://dashboard.render.localhost:3000/worker/srv-crfi4iq39eqs702lfd40","id":"srv-crfi4iq39eqs702lfd40","imagePath":"docker.io/library/nginx:latest","name":"autoscaling-test","notifyOnFail":"notify","ownerId":"some-owner-id","rootDir":"","serviceDetails":{"buildPlan":"starter","env":"image","envSpecificDetails":{"dockerCommand":"","dockerContext":"","dockerfilePath":""},"numInstances":1,"plan":"starter","previews":{"generation":"off"},"pullRequestPreviewsEnabled":"no","region":"oregon"},"slug":"autoscaling-test-98qt","suspended":"not_suspended","suspenders":[],"type":"background_worker","updatedAt":"2024-09-09T16:28:59.442724Z"}
+            {"autoDeploy":"yes","createdAt":"2025-01-13T16:42:57.578451Z","dashboardUrl":"https://dashboard.render.com/worker/srv-cu2k54bqf0us73fbvdv0","id":"srv-cu2k54bqf0us73fbvdv0","imagePath":"docker.io/library/nginx:latest","name":"autoscaling-test","notifyOnFail":"notify","ownerId":"tea-cspvinogph6c73ft00h0","rootDir":"","serviceDetails":{"buildPlan":"starter","env":"image","envSpecificDetails":{"dockerCommand":"","dockerContext":"","dockerfilePath":""},"numInstances":1,"plan":"starter","previews":{"generation":"off"},"pullRequestPreviewsEnabled":"no","region":"oregon","runtime":"image","sshAddress":"srv-email@example.com"},"slug":"autoscaling-test-vbun","suspended":"not_suspended","suspenders":[],"type":"background_worker","updatedAt":"2025-01-13T16:43:04.918104Z"}
         headers:
-            Content-Length:
-                - "726"
             Content-Type:
                 - application/json; charset=utf-8
             Date:
-                - Mon, 09 Sep 2024 16:29:01 GMT
+                - Mon, 13 Jan 2025 16:43:05 GMT
             Ratelimit-Limit:
                 - "10"
             Ratelimit-Remaining:
                 - "9"
             Ratelimit-Reset:
-                - "59"
+                - "55"
             Referrer-Policy:
                 - same-origin
             Render-Request-Id:
-                - api-76dcfc777b-j4kxq/nqfTj1kSz7-000602
+                - api-7767dddd75-m2trm/tatrYy6WLK-002354
             Vary:
                 - Origin
             X-Content-Type-Options:
@@ -2155,7 +2108,7 @@ interactions:
                 - 1; mode=block
         status: 200 OK
         code: 200
-        duration: 315.632375ms
+        duration: 1.231298041s
     - id: 37
       request:
         proto: HTTP/1.1
@@ -2176,7 +2129,7 @@ interactions:
                 - application/json
             User-Agent:
                 - terraform-provider-render/test
-        url: https://api.testing.render.com/v1/services/srv-crfi4iq39eqs702lfd40/env-vars
+        url: https://api.testing.render.com/v1/services/srv-cu2k54bqf0us73fbvdv0/env-vars
         method: PUT
       response:
         proto: HTTP/2.0
@@ -2194,17 +2147,17 @@ interactions:
             Content-Type:
                 - application/json; charset=utf-8
             Date:
-                - Mon, 09 Sep 2024 16:29:01 GMT
+                - Mon, 13 Jan 2025 16:43:05 GMT
             Ratelimit-Limit:
-                - "10000"
+                - "100"
             Ratelimit-Remaining:
-                - "9999"
+                - "99"
             Ratelimit-Reset:
-                - "58"
+                - "54"
             Referrer-Policy:
                 - same-origin
             Render-Request-Id:
-                - api-76dcfc777b-j4kxq/nqfTj1kSz7-000603
+                - api-7767dddd75-m2trm/tatrYy6WLK-002363
             Vary:
                 - Origin
             X-Content-Type-Options:
@@ -2215,7 +2168,7 @@ interactions:
                 - 1; mode=block
         status: 200 OK
         code: 200
-        duration: 21.155542ms
+        duration: 111.528625ms
     - id: 38
       request:
         proto: HTTP/1.1
@@ -2236,7 +2189,7 @@ interactions:
                 - application/json
             User-Agent:
                 - terraform-provider-render/test
-        url: https://api.testing.render.com/v1/services/srv-crfi4iq39eqs702lfd40/secret-files
+        url: https://api.testing.render.com/v1/services/srv-cu2k54bqf0us73fbvdv0/secret-files
         method: PUT
       response:
         proto: HTTP/2.0
@@ -2254,17 +2207,17 @@ interactions:
             Content-Type:
                 - application/json; charset=utf-8
             Date:
-                - Mon, 09 Sep 2024 16:29:01 GMT
+                - Mon, 13 Jan 2025 16:43:06 GMT
             Ratelimit-Limit:
-                - "10000"
+                - "100"
             Ratelimit-Remaining:
-                - "9998"
+                - "98"
             Ratelimit-Reset:
-                - "58"
+                - "53"
             Referrer-Policy:
                 - same-origin
             Render-Request-Id:
-                - api-76dcfc777b-j4kxq/nqfTj1kSz7-000604
+                - api-7767dddd75-m2trm/tatrYy6WLK-002365
             Vary:
                 - Origin
             X-Content-Type-Options:
@@ -2275,7 +2228,7 @@ interactions:
                 - 1; mode=block
         status: 200 OK
         code: 200
-        duration: 28.790542ms
+        duration: 94.806125ms
     - id: 39
       request:
         proto: HTTP/1.1
@@ -2296,7 +2249,7 @@ interactions:
                 - application/json
             User-Agent:
                 - terraform-provider-render/test
-        url: https://api.testing.render.com/v1/notification-settings/overrides/services/srv-crfi4iq39eqs702lfd40
+        url: https://api.testing.render.com/v1/notification-settings/overrides/services/srv-cu2k54bqf0us73fbvdv0
         method: PATCH
       response:
         proto: HTTP/2.0
@@ -2304,30 +2257,25 @@ interactions:
         proto_minor: 0
         transfer_encoding: []
         trailer: {}
-        content_length: 111
-        uncompressed: false
+        content_length: -1
+        uncompressed: true
         body: |
-            {"notificationsToSend":"failure","previewNotificationsEnabled":"false","serviceId":"srv-crfi4iq39eqs702lfd40"}
+            {"notificationsToSend":"failure","previewNotificationsEnabled":"false","serviceId":"srv-cu2k54bqf0us73fbvdv0"}
         headers:
-            Content-Length:
-                - "111"
             Content-Type:
                 - application/json; charset=utf-8
             Date:
-                - Mon, 09 Sep 2024 16:29:01 GMT
+                - Mon, 13 Jan 2025 16:43:06 GMT
             Ratelimit-Limit:
-                - "10000"
-                - "10000"
+                - "100"
             Ratelimit-Remaining:
-                - "9979"
-                - "9997"
+                - "97"
             Ratelimit-Reset:
-                - "58"
-                - "58"
+                - "53"
             Referrer-Policy:
                 - same-origin
             Render-Request-Id:
-                - api-76dcfc777b-j4kxq/nqfTj1kSz7-000605
+                - api-7767dddd75-m2trm/tatrYy6WLK-002366
             Vary:
                 - Origin
             X-Content-Type-Options:
@@ -2338,7 +2286,7 @@ interactions:
                 - 1; mode=block
         status: 200 OK
         code: 200
-        duration: 22.620958ms
+        duration: 98.003667ms
     - id: 40
       request:
         proto: HTTP/1.1
@@ -2359,7 +2307,7 @@ interactions:
                 - application/json
             User-Agent:
                 - terraform-provider-render/test
-        url: https://api.testing.render.com/v1/services/srv-crfi4iq39eqs702lfd40/deploys
+        url: https://api.testing.render.com/v1/services/srv-cu2k54bqf0us73fbvdv0/deploys
         method: POST
       response:
         proto: HTTP/2.0
@@ -2370,24 +2318,24 @@ interactions:
         content_length: 325
         uncompressed: false
         body: |
-            {"id":"dep-crfi4ja39eqs702lfd7g","commit":null,"image":{"ref":"docker.io/library/nginx:latest","sha":"sha256:88a0a069d5e9865fcaaf8c1e53ba6bf3d8d987b0fdc5e0135fec8ce8567d673e"},"status":"update_in_progress","trigger":"api","createdAt":"2024-09-09T16:29:01.414491Z","updatedAt":"2024-09-09T16:29:01.522394Z","finishedAt":null}
+            {"id":"dep-cu2k56jqf0us73fbveag","commit":null,"image":{"ref":"docker.io/library/nginx:latest","sha":"sha256:c375ae41bb29c0615ab18452822fedf1981f8ba7a7b00508b3d901b7ab682947"},"status":"update_in_progress","trigger":"api","createdAt":"2025-01-13T16:43:06.768236Z","updatedAt":"2025-01-13T16:43:06.890481Z","finishedAt":null}
         headers:
             Content-Length:
                 - "325"
             Content-Type:
                 - application/json; charset=utf-8
             Date:
-                - Mon, 09 Sep 2024 16:29:01 GMT
+                - Mon, 13 Jan 2025 16:43:06 GMT
             Ratelimit-Limit:
                 - "10"
             Ratelimit-Remaining:
                 - "8"
             Ratelimit-Reset:
-                - "58"
+                - "53"
             Referrer-Policy:
                 - same-origin
             Render-Request-Id:
-                - api-76dcfc777b-j4kxq/nqfTj1kSz7-000606
+                - api-7767dddd75-m2trm/tatrYy6WLK-002368
             Vary:
                 - Origin
             X-Content-Type-Options:
@@ -2398,7 +2346,7 @@ interactions:
                 - 1; mode=block
         status: 201 Created
         code: 201
-        duration: 330.057541ms
+        duration: 626.600875ms
     - id: 41
       request:
         proto: HTTP/1.1
@@ -2417,7 +2365,7 @@ interactions:
                 - some-api-key
             User-Agent:
                 - terraform-provider-render/test
-        url: https://api.testing.render.com/v1/services/srv-crfi4iq39eqs702lfd40
+        url: https://api.testing.render.com/v1/services/srv-cu2k54bqf0us73fbvdv0
         method: GET
       response:
         proto: HTTP/2.0
@@ -2425,27 +2373,25 @@ interactions:
         proto_minor: 0
         transfer_encoding: []
         trailer: {}
-        content_length: 726
-        uncompressed: false
+        content_length: -1
+        uncompressed: true
         body: |
-            {"autoDeploy":"yes","createdAt":"2024-09-09T16:28:59.240882Z","dashboardUrl":"http://dashboard.render.localhost:3000/worker/srv-crfi4iq39eqs702lfd40","id":"srv-crfi4iq39eqs702lfd40","imagePath":"docker.io/library/nginx:latest","name":"autoscaling-test","notifyOnFail":"notify","ownerId":"some-owner-id","rootDir":"","serviceDetails":{"buildPlan":"starter","env":"image","envSpecificDetails":{"dockerCommand":"","dockerContext":"","dockerfilePath":""},"numInstances":1,"plan":"starter","previews":{"generation":"off"},"pullRequestPreviewsEnabled":"no","region":"oregon"},"slug":"autoscaling-test-98qt","suspended":"not_suspended","suspenders":[],"type":"background_worker","updatedAt":"2024-09-09T16:29:01.450327Z"}
+            {"autoDeploy":"yes","createdAt":"2025-01-13T16:42:57.578451Z","dashboardUrl":"https://dashboard.render.com/worker/srv-cu2k54bqf0us73fbvdv0","id":"srv-cu2k54bqf0us73fbvdv0","imagePath":"docker.io/library/nginx:latest","name":"autoscaling-test","notifyOnFail":"notify","ownerId":"tea-cspvinogph6c73ft00h0","rootDir":"","serviceDetails":{"buildPlan":"starter","env":"image","envSpecificDetails":{"dockerCommand":"","dockerContext":"","dockerfilePath":""},"numInstances":1,"plan":"starter","previews":{"generation":"off"},"pullRequestPreviewsEnabled":"no","region":"oregon","runtime":"image","sshAddress":"srv-email@example.com"},"slug":"autoscaling-test-vbun","suspended":"not_suspended","suspenders":[],"type":"background_worker","updatedAt":"2025-01-13T16:43:06.796406Z"}
         headers:
-            Content-Length:
-                - "726"
             Content-Type:
                 - application/json; charset=utf-8
             Date:
-                - Mon, 09 Sep 2024 16:29:01 GMT
+                - Mon, 13 Jan 2025 16:43:07 GMT
             Ratelimit-Limit:
-                - "10000"
+                - "400"
             Ratelimit-Remaining:
-                - "9978"
+                - "375"
             Ratelimit-Reset:
-                - "58"
+                - "52"
             Referrer-Policy:
                 - same-origin
             Render-Request-Id:
-                - api-76dcfc777b-j4kxq/nqfTj1kSz7-000607
+                - api-7767dddd75-m2trm/tatrYy6WLK-002373
             Vary:
                 - Origin
             X-Content-Type-Options:
@@ -2456,7 +2402,7 @@ interactions:
                 - 1; mode=block
         status: 200 OK
         code: 200
-        duration: 23.894125ms
+        duration: 99.746958ms
     - id: 42
       request:
         proto: HTTP/1.1
@@ -2475,7 +2421,7 @@ interactions:
                 - some-api-key
             User-Agent:
                 - terraform-provider-render/test
-        url: https://api.testing.render.com/v1/services/srv-crfi4iq39eqs702lfd40/env-vars
+        url: https://api.testing.render.com/v1/services/srv-cu2k54bqf0us73fbvdv0/env-vars
         method: GET
       response:
         proto: HTTP/2.0
@@ -2493,17 +2439,17 @@ interactions:
             Content-Type:
                 - application/json; charset=utf-8
             Date:
-                - Mon, 09 Sep 2024 16:29:01 GMT
+                - Mon, 13 Jan 2025 16:43:07 GMT
             Ratelimit-Limit:
-                - "10000"
+                - "400"
             Ratelimit-Remaining:
-                - "9977"
+                - "374"
             Ratelimit-Reset:
-                - "58"
+                - "52"
             Referrer-Policy:
                 - same-origin
             Render-Request-Id:
-                - api-76dcfc777b-j4kxq/nqfTj1kSz7-000608
+                - api-7767dddd75-zqsqf/rtQy8BuN0w-459851
             Vary:
                 - Origin
             X-Content-Type-Options:
@@ -2514,7 +2460,7 @@ interactions:
                 - 1; mode=block
         status: 200 OK
         code: 200
-        duration: 21.645333ms
+        duration: 115.979458ms
     - id: 43
       request:
         proto: HTTP/1.1
@@ -2533,7 +2479,7 @@ interactions:
                 - some-api-key
             User-Agent:
                 - terraform-provider-render/test
-        url: https://api.testing.render.com/v1/services/srv-crfi4iq39eqs702lfd40/secret-files
+        url: https://api.testing.render.com/v1/services/srv-cu2k54bqf0us73fbvdv0/secret-files
         method: GET
       response:
         proto: HTTP/2.0
@@ -2551,17 +2497,17 @@ interactions:
             Content-Type:
                 - application/json; charset=utf-8
             Date:
-                - Mon, 09 Sep 2024 16:29:01 GMT
+                - Mon, 13 Jan 2025 16:43:07 GMT
             Ratelimit-Limit:
-                - "10000"
+                - "400"
             Ratelimit-Remaining:
-                - "9976"
+                - "373"
             Ratelimit-Reset:
-                - "58"
+                - "52"
             Referrer-Policy:
                 - same-origin
             Render-Request-Id:
-                - api-76dcfc777b-j4kxq/nqfTj1kSz7-000609
+                - api-7767dddd75-zqsqf/rtQy8BuN0w-459858
             Vary:
                 - Origin
             X-Content-Type-Options:
@@ -2572,7 +2518,7 @@ interactions:
                 - 1; mode=block
         status: 200 OK
         code: 200
-        duration: 22.464375ms
+        duration: 193.040875ms
     - id: 44
       request:
         proto: HTTP/1.1
@@ -2591,7 +2537,7 @@ interactions:
                 - some-api-key
             User-Agent:
                 - terraform-provider-render/test
-        url: https://api.testing.render.com/v1/notification-settings/overrides/services/srv-crfi4iq39eqs702lfd40
+        url: https://api.testing.render.com/v1/notification-settings/overrides/services/srv-cu2k54bqf0us73fbvdv0
         method: GET
       response:
         proto: HTTP/2.0
@@ -2599,27 +2545,25 @@ interactions:
         proto_minor: 0
         transfer_encoding: []
         trailer: {}
-        content_length: 111
-        uncompressed: false
+        content_length: -1
+        uncompressed: true
         body: |
-            {"notificationsToSend":"failure","previewNotificationsEnabled":"false","serviceId":"srv-crfi4iq39eqs702lfd40"}
+            {"notificationsToSend":"failure","previewNotificationsEnabled":"false","serviceId":"srv-cu2k54bqf0us73fbvdv0"}
         headers:
-            Content-Length:
-                - "111"
             Content-Type:
                 - application/json; charset=utf-8
             Date:
-                - Mon, 09 Sep 2024 16:29:01 GMT
+                - Mon, 13 Jan 2025 16:43:07 GMT
             Ratelimit-Limit:
-                - "10000"
+                - "400"
             Ratelimit-Remaining:
-                - "9975"
+                - "372"
             Ratelimit-Reset:
-                - "58"
+                - "52"
             Referrer-Policy:
                 - same-origin
             Render-Request-Id:
-                - api-76dcfc777b-j4kxq/nqfTj1kSz7-000610
+                - api-7767dddd75-m2trm/tatrYy6WLK-002377
             Vary:
                 - Origin
             X-Content-Type-Options:
@@ -2630,7 +2574,7 @@ interactions:
                 - 1; mode=block
         status: 200 OK
         code: 200
-        duration: 32.130125ms
+        duration: 101.09125ms
     - id: 45
       request:
         proto: HTTP/1.1
@@ -2649,7 +2593,7 @@ interactions:
                 - some-api-key
             User-Agent:
                 - terraform-provider-render/test
-        url: https://api.testing.render.com/v1/logs/streams/resource/srv-crfi4iq39eqs702lfd40
+        url: https://api.testing.render.com/v1/logs/streams/resource/srv-cu2k54bqf0us73fbvdv0
         method: GET
       response:
         proto: HTTP/2.0
@@ -2657,27 +2601,25 @@ interactions:
         proto_minor: 0
         transfer_encoding: []
         trailer: {}
-        content_length: 50
-        uncompressed: false
+        content_length: -1
+        uncompressed: true
         body: |
-            {"message":"not found: srv-crfi4iq39eqs702lfd40"}
+            {"message":"not found: srv-cu2k54bqf0us73fbvdv0"}
         headers:
-            Content-Length:
-                - "50"
             Content-Type:
                 - application/json; charset=utf-8
             Date:
-                - Mon, 09 Sep 2024 16:29:01 GMT
+                - Mon, 13 Jan 2025 16:43:07 GMT
             Ratelimit-Limit:
-                - "10000"
+                - "400"
             Ratelimit-Remaining:
-                - "9974"
+                - "371"
             Ratelimit-Reset:
-                - "58"
+                - "52"
             Referrer-Policy:
                 - same-origin
             Render-Request-Id:
-                - api-76dcfc777b-j4kxq/nqfTj1kSz7-000611
+                - api-7767dddd75-m2trm/tatrYy6WLK-002379
             Vary:
                 - Origin
             X-Content-Type-Options:
@@ -2688,7 +2630,7 @@ interactions:
                 - 1; mode=block
         status: 404 Not Found
         code: 404
-        duration: 29.820875ms
+        duration: 157.340416ms
     - id: 46
       request:
         proto: HTTP/1.1
@@ -2707,7 +2649,7 @@ interactions:
                 - some-api-key
             User-Agent:
                 - terraform-provider-render/test
-        url: https://api.testing.render.com/v1/services/srv-crfi4iq39eqs702lfd40
+        url: https://api.testing.render.com/v1/services/srv-cu2k54bqf0us73fbvdv0
         method: GET
       response:
         proto: HTTP/2.0
@@ -2715,27 +2657,25 @@ interactions:
         proto_minor: 0
         transfer_encoding: []
         trailer: {}
-        content_length: 726
-        uncompressed: false
+        content_length: -1
+        uncompressed: true
         body: |
-            {"autoDeploy":"yes","createdAt":"2024-09-09T16:28:59.240882Z","dashboardUrl":"http://dashboard.render.localhost:3000/worker/srv-crfi4iq39eqs702lfd40","id":"srv-crfi4iq39eqs702lfd40","imagePath":"docker.io/library/nginx:latest","name":"autoscaling-test","notifyOnFail":"notify","ownerId":"some-owner-id","rootDir":"","serviceDetails":{"buildPlan":"starter","env":"image","envSpecificDetails":{"dockerCommand":"","dockerContext":"","dockerfilePath":""},"numInstances":1,"plan":"starter","previews":{"generation":"off"},"pullRequestPreviewsEnabled":"no","region":"oregon"},"slug":"autoscaling-test-98qt","suspended":"not_suspended","suspenders":[],"type":"background_worker","updatedAt":"2024-09-09T16:29:01.450327Z"}
+            {"autoDeploy":"yes","createdAt":"2025-01-13T16:42:57.578451Z","dashboardUrl":"https://dashboard.render.com/worker/srv-cu2k54bqf0us73fbvdv0","id":"srv-cu2k54bqf0us73fbvdv0","imagePath":"docker.io/library/nginx:latest","name":"autoscaling-test","notifyOnFail":"notify","ownerId":"tea-cspvinogph6c73ft00h0","rootDir":"","serviceDetails":{"buildPlan":"starter","env":"image","envSpecificDetails":{"dockerCommand":"","dockerContext":"","dockerfilePath":""},"numInstances":1,"plan":"starter","previews":{"generation":"off"},"pullRequestPreviewsEnabled":"no","region":"oregon","runtime":"image","sshAddress":"srv-email@example.com"},"slug":"autoscaling-test-vbun","suspended":"not_suspended","suspenders":[],"type":"background_worker","updatedAt":"2025-01-13T16:43:06.796406Z"}
         headers:
-            Content-Length:
-                - "726"
             Content-Type:
                 - application/json; charset=utf-8
             Date:
-                - Mon, 09 Sep 2024 16:29:01 GMT
+                - Mon, 13 Jan 2025 16:43:08 GMT
             Ratelimit-Limit:
-                - "10000"
+                - "400"
             Ratelimit-Remaining:
-                - "9973"
+                - "370"
             Ratelimit-Reset:
-                - "58"
+                - "52"
             Referrer-Policy:
                 - same-origin
             Render-Request-Id:
-                - api-76dcfc777b-j4kxq/nqfTj1kSz7-000612
+                - api-7767dddd75-m2trm/tatrYy6WLK-002382
             Vary:
                 - Origin
             X-Content-Type-Options:
@@ -2746,7 +2686,7 @@ interactions:
                 - 1; mode=block
         status: 200 OK
         code: 200
-        duration: 23.578ms
+        duration: 96.74575ms
     - id: 47
       request:
         proto: HTTP/1.1
@@ -2765,7 +2705,7 @@ interactions:
                 - some-api-key
             User-Agent:
                 - terraform-provider-render/test
-        url: https://api.testing.render.com/v1/services/srv-crfi4iq39eqs702lfd40/env-vars
+        url: https://api.testing.render.com/v1/services/srv-cu2k54bqf0us73fbvdv0/env-vars
         method: GET
       response:
         proto: HTTP/2.0
@@ -2783,17 +2723,17 @@ interactions:
             Content-Type:
                 - application/json; charset=utf-8
             Date:
-                - Mon, 09 Sep 2024 16:29:01 GMT
+                - Mon, 13 Jan 2025 16:43:08 GMT
             Ratelimit-Limit:
-                - "10000"
+                - "400"
             Ratelimit-Remaining:
-                - "9972"
+                - "369"
             Ratelimit-Reset:
-                - "58"
+                - "51"
             Referrer-Policy:
                 - same-origin
             Render-Request-Id:
-                - api-76dcfc777b-j4kxq/nqfTj1kSz7-000613
+                - api-7767dddd75-m2trm/tatrYy6WLK-002386
             Vary:
                 - Origin
             X-Content-Type-Options:
@@ -2804,7 +2744,7 @@ interactions:
                 - 1; mode=block
         status: 200 OK
         code: 200
-        duration: 25.524959ms
+        duration: 90.388625ms
     - id: 48
       request:
         proto: HTTP/1.1
@@ -2823,7 +2763,7 @@ interactions:
                 - some-api-key
             User-Agent:
                 - terraform-provider-render/test
-        url: https://api.testing.render.com/v1/services/srv-crfi4iq39eqs702lfd40/secret-files
+        url: https://api.testing.render.com/v1/services/srv-cu2k54bqf0us73fbvdv0/secret-files
         method: GET
       response:
         proto: HTTP/2.0
@@ -2841,17 +2781,17 @@ interactions:
             Content-Type:
                 - application/json; charset=utf-8
             Date:
-                - Mon, 09 Sep 2024 16:29:01 GMT
+                - Mon, 13 Jan 2025 16:43:08 GMT
             Ratelimit-Limit:
-                - "10000"
+                - "400"
             Ratelimit-Remaining:
-                - "9971"
+                - "368"
             Ratelimit-Reset:
-                - "58"
+                - "51"
             Referrer-Policy:
                 - same-origin
             Render-Request-Id:
-                - api-76dcfc777b-j4kxq/nqfTj1kSz7-000614
+                - api-7767dddd75-m2trm/tatrYy6WLK-002388
             Vary:
                 - Origin
             X-Content-Type-Options:
@@ -2862,7 +2802,7 @@ interactions:
                 - 1; mode=block
         status: 200 OK
         code: 200
-        duration: 21.82975ms
+        duration: 93.535ms
     - id: 49
       request:
         proto: HTTP/1.1
@@ -2881,7 +2821,7 @@ interactions:
                 - some-api-key
             User-Agent:
                 - terraform-provider-render/test
-        url: https://api.testing.render.com/v1/notification-settings/overrides/services/srv-crfi4iq39eqs702lfd40
+        url: https://api.testing.render.com/v1/notification-settings/overrides/services/srv-cu2k54bqf0us73fbvdv0
         method: GET
       response:
         proto: HTTP/2.0
@@ -2889,27 +2829,25 @@ interactions:
         proto_minor: 0
         transfer_encoding: []
         trailer: {}
-        content_length: 111
-        uncompressed: false
+        content_length: -1
+        uncompressed: true
         body: |
-            {"notificationsToSend":"failure","previewNotificationsEnabled":"false","serviceId":"srv-crfi4iq39eqs702lfd40"}
+            {"notificationsToSend":"failure","previewNotificationsEnabled":"false","serviceId":"srv-cu2k54bqf0us73fbvdv0"}
         headers:
-            Content-Length:
-                - "111"
             Content-Type:
                 - application/json; charset=utf-8
             Date:
-                - Mon, 09 Sep 2024 16:29:01 GMT
+                - Mon, 13 Jan 2025 16:43:08 GMT
             Ratelimit-Limit:
-                - "10000"
+                - "400"
             Ratelimit-Remaining:
-                - "9970"
+                - "367"
             Ratelimit-Reset:
-                - "58"
+                - "51"
             Referrer-Policy:
                 - same-origin
             Render-Request-Id:
-                - api-76dcfc777b-j4kxq/nqfTj1kSz7-000615
+                - api-7767dddd75-m2trm/tatrYy6WLK-002390
             Vary:
                 - Origin
             X-Content-Type-Options:
@@ -2920,7 +2858,7 @@ interactions:
                 - 1; mode=block
         status: 200 OK
         code: 200
-        duration: 16.937583ms
+        duration: 96.533125ms
     - id: 50
       request:
         proto: HTTP/1.1
@@ -2939,7 +2877,7 @@ interactions:
                 - some-api-key
             User-Agent:
                 - terraform-provider-render/test
-        url: https://api.testing.render.com/v1/logs/streams/resource/srv-crfi4iq39eqs702lfd40
+        url: https://api.testing.render.com/v1/logs/streams/resource/srv-cu2k54bqf0us73fbvdv0
         method: GET
       response:
         proto: HTTP/2.0
@@ -2947,27 +2885,25 @@ interactions:
         proto_minor: 0
         transfer_encoding: []
         trailer: {}
-        content_length: 50
-        uncompressed: false
+        content_length: -1
+        uncompressed: true
         body: |
-            {"message":"not found: srv-crfi4iq39eqs702lfd40"}
+            {"message":"not found: srv-cu2k54bqf0us73fbvdv0"}
         headers:
-            Content-Length:
-                - "50"
             Content-Type:
                 - application/json; charset=utf-8
             Date:
-                - Mon, 09 Sep 2024 16:29:01 GMT
+                - Mon, 13 Jan 2025 16:43:08 GMT
             Ratelimit-Limit:
-                - "10000"
+                - "400"
             Ratelimit-Remaining:
-                - "9969"
+                - "366"
             Ratelimit-Reset:
-                - "58"
+                - "51"
             Referrer-Policy:
                 - same-origin
             Render-Request-Id:
-                - api-76dcfc777b-j4kxq/nqfTj1kSz7-000616
+                - api-7767dddd75-m2trm/tatrYy6WLK-002393
             Vary:
                 - Origin
             X-Content-Type-Options:
@@ -2978,7 +2914,7 @@ interactions:
                 - 1; mode=block
         status: 404 Not Found
         code: 404
-        duration: 19.629084ms
+        duration: 175.248125ms
     - id: 51
       request:
         proto: HTTP/1.1
@@ -2997,7 +2933,7 @@ interactions:
                 - some-api-key
             User-Agent:
                 - terraform-provider-render/test
-        url: https://api.testing.render.com/v1/services/srv-crfi4iq39eqs702lfd40
+        url: https://api.testing.render.com/v1/services/srv-cu2k54bqf0us73fbvdv0
         method: GET
       response:
         proto: HTTP/2.0
@@ -3005,27 +2941,25 @@ interactions:
         proto_minor: 0
         transfer_encoding: []
         trailer: {}
-        content_length: 726
-        uncompressed: false
+        content_length: -1
+        uncompressed: true
         body: |
-            {"autoDeploy":"yes","createdAt":"2024-09-09T16:28:59.240882Z","dashboardUrl":"http://dashboard.render.localhost:3000/worker/srv-crfi4iq39eqs702lfd40","id":"srv-crfi4iq39eqs702lfd40","imagePath":"docker.io/library/nginx:latest","name":"autoscaling-test","notifyOnFail":"notify","ownerId":"some-owner-id","rootDir":"","serviceDetails":{"buildPlan":"starter","env":"image","envSpecificDetails":{"dockerCommand":"","dockerContext":"","dockerfilePath":""},"numInstances":1,"plan":"starter","previews":{"generation":"off"},"pullRequestPreviewsEnabled":"no","region":"oregon"},"slug":"autoscaling-test-98qt","suspended":"not_suspended","suspenders":[],"type":"background_worker","updatedAt":"2024-09-09T16:29:01.450327Z"}
+            {"autoDeploy":"yes","createdAt":"2025-01-13T16:42:57.578451Z","dashboardUrl":"https://dashboard.render.com/worker/srv-cu2k54bqf0us73fbvdv0","id":"srv-cu2k54bqf0us73fbvdv0","imagePath":"docker.io/library/nginx:latest","name":"autoscaling-test","notifyOnFail":"notify","ownerId":"tea-cspvinogph6c73ft00h0","rootDir":"","serviceDetails":{"buildPlan":"starter","env":"image","envSpecificDetails":{"dockerCommand":"","dockerContext":"","dockerfilePath":""},"numInstances":1,"plan":"starter","previews":{"generation":"off"},"pullRequestPreviewsEnabled":"no","region":"oregon","runtime":"image","sshAddress":"srv-email@example.com"},"slug":"autoscaling-test-vbun","suspended":"not_suspended","suspenders":[],"type":"background_worker","updatedAt":"2025-01-13T16:43:06.796406Z"}
         headers:
-            Content-Length:
-                - "726"
             Content-Type:
                 - application/json; charset=utf-8
             Date:
-                - Mon, 09 Sep 2024 16:29:02 GMT
+                - Mon, 13 Jan 2025 16:43:08 GMT
             Ratelimit-Limit:
-                - "10000"
+                - "400"
             Ratelimit-Remaining:
-                - "9968"
+                - "365"
             Ratelimit-Reset:
-                - "57"
+                - "51"
             Referrer-Policy:
                 - same-origin
             Render-Request-Id:
-                - api-76dcfc777b-j4kxq/nqfTj1kSz7-000617
+                - api-7767dddd75-m2trm/tatrYy6WLK-002400
             Vary:
                 - Origin
             X-Content-Type-Options:
@@ -3036,7 +2970,7 @@ interactions:
                 - 1; mode=block
         status: 200 OK
         code: 200
-        duration: 19.246125ms
+        duration: 100.910166ms
     - id: 52
       request:
         proto: HTTP/1.1
@@ -3055,7 +2989,7 @@ interactions:
                 - some-api-key
             User-Agent:
                 - terraform-provider-render/test
-        url: https://api.testing.render.com/v1/services/srv-crfi4iq39eqs702lfd40/env-vars
+        url: https://api.testing.render.com/v1/services/srv-cu2k54bqf0us73fbvdv0/env-vars
         method: GET
       response:
         proto: HTTP/2.0
@@ -3073,17 +3007,17 @@ interactions:
             Content-Type:
                 - application/json; charset=utf-8
             Date:
-                - Mon, 09 Sep 2024 16:29:02 GMT
+                - Mon, 13 Jan 2025 16:43:09 GMT
             Ratelimit-Limit:
-                - "10000"
+                - "400"
             Ratelimit-Remaining:
-                - "9967"
+                - "364"
             Ratelimit-Reset:
-                - "57"
+                - "50"
             Referrer-Policy:
                 - same-origin
             Render-Request-Id:
-                - api-76dcfc777b-j4kxq/nqfTj1kSz7-000618
+                - api-7767dddd75-m2trm/tatrYy6WLK-002401
             Vary:
                 - Origin
             X-Content-Type-Options:
@@ -3094,7 +3028,7 @@ interactions:
                 - 1; mode=block
         status: 200 OK
         code: 200
-        duration: 22.039666ms
+        duration: 97.124042ms
     - id: 53
       request:
         proto: HTTP/1.1
@@ -3113,7 +3047,7 @@ interactions:
                 - some-api-key
             User-Agent:
                 - terraform-provider-render/test
-        url: https://api.testing.render.com/v1/services/srv-crfi4iq39eqs702lfd40/secret-files
+        url: https://api.testing.render.com/v1/services/srv-cu2k54bqf0us73fbvdv0/secret-files
         method: GET
       response:
         proto: HTTP/2.0
@@ -3131,17 +3065,17 @@ interactions:
             Content-Type:
                 - application/json; charset=utf-8
             Date:
-                - Mon, 09 Sep 2024 16:29:02 GMT
+                - Mon, 13 Jan 2025 16:43:09 GMT
             Ratelimit-Limit:
-                - "10000"
+                - "400"
             Ratelimit-Remaining:
-                - "9966"
+                - "363"
             Ratelimit-Reset:
-                - "57"
+                - "50"
             Referrer-Policy:
                 - same-origin
             Render-Request-Id:
-                - api-76dcfc777b-j4kxq/nqfTj1kSz7-000619
+                - api-7767dddd75-m2trm/tatrYy6WLK-002403
             Vary:
                 - Origin
             X-Content-Type-Options:
@@ -3152,7 +3086,7 @@ interactions:
                 - 1; mode=block
         status: 200 OK
         code: 200
-        duration: 22.024333ms
+        duration: 101.697833ms
     - id: 54
       request:
         proto: HTTP/1.1
@@ -3171,7 +3105,7 @@ interactions:
                 - some-api-key
             User-Agent:
                 - terraform-provider-render/test
-        url: https://api.testing.render.com/v1/notification-settings/overrides/services/srv-crfi4iq39eqs702lfd40
+        url: https://api.testing.render.com/v1/notification-settings/overrides/services/srv-cu2k54bqf0us73fbvdv0
         method: GET
       response:
         proto: HTTP/2.0
@@ -3179,27 +3113,25 @@ interactions:
         proto_minor: 0
         transfer_encoding: []
         trailer: {}
-        content_length: 111
-        uncompressed: false
+        content_length: -1
+        uncompressed: true
         body: |
-            {"notificationsToSend":"failure","previewNotificationsEnabled":"false","serviceId":"srv-crfi4iq39eqs702lfd40"}
+            {"notificationsToSend":"failure","previewNotificationsEnabled":"false","serviceId":"srv-cu2k54bqf0us73fbvdv0"}
         headers:
-            Content-Length:
-                - "111"
             Content-Type:
                 - application/json; charset=utf-8
             Date:
-                - Mon, 09 Sep 2024 16:29:02 GMT
+                - Mon, 13 Jan 2025 16:43:09 GMT
             Ratelimit-Limit:
-                - "10000"
+                - "400"
             Ratelimit-Remaining:
-                - "9965"
+                - "362"
             Ratelimit-Reset:
-                - "57"
+                - "50"
             Referrer-Policy:
                 - same-origin
             Render-Request-Id:
-                - api-76dcfc777b-j4kxq/nqfTj1kSz7-000620
+                - api-7767dddd75-m2trm/tatrYy6WLK-002405
             Vary:
                 - Origin
             X-Content-Type-Options:
@@ -3210,7 +3142,7 @@ interactions:
                 - 1; mode=block
         status: 200 OK
         code: 200
-        duration: 16.941833ms
+        duration: 93.358542ms
     - id: 55
       request:
         proto: HTTP/1.1
@@ -3229,7 +3161,7 @@ interactions:
                 - some-api-key
             User-Agent:
                 - terraform-provider-render/test
-        url: https://api.testing.render.com/v1/logs/streams/resource/srv-crfi4iq39eqs702lfd40
+        url: https://api.testing.render.com/v1/logs/streams/resource/srv-cu2k54bqf0us73fbvdv0
         method: GET
       response:
         proto: HTTP/2.0
@@ -3237,27 +3169,25 @@ interactions:
         proto_minor: 0
         transfer_encoding: []
         trailer: {}
-        content_length: 50
-        uncompressed: false
+        content_length: -1
+        uncompressed: true
         body: |
-            {"message":"not found: srv-crfi4iq39eqs702lfd40"}
+            {"message":"not found: srv-cu2k54bqf0us73fbvdv0"}
         headers:
-            Content-Length:
-                - "50"
             Content-Type:
                 - application/json; charset=utf-8
             Date:
-                - Mon, 09 Sep 2024 16:29:02 GMT
+                - Mon, 13 Jan 2025 16:43:09 GMT
             Ratelimit-Limit:
-                - "10000"
+                - "400"
             Ratelimit-Remaining:
-                - "9964"
+                - "361"
             Ratelimit-Reset:
-                - "57"
+                - "50"
             Referrer-Policy:
                 - same-origin
             Render-Request-Id:
-                - api-76dcfc777b-j4kxq/nqfTj1kSz7-000621
+                - api-7767dddd75-m2trm/tatrYy6WLK-002409
             Vary:
                 - Origin
             X-Content-Type-Options:
@@ -3268,7 +3198,7 @@ interactions:
                 - 1; mode=block
         status: 404 Not Found
         code: 404
-        duration: 19.43825ms
+        duration: 174.931583ms
     - id: 56
       request:
         proto: HTTP/1.1
@@ -3287,7 +3217,7 @@ interactions:
                 - some-api-key
             User-Agent:
                 - terraform-provider-render/test
-        url: https://api.testing.render.com/v1/services/srv-crfi4iq39eqs702lfd40
+        url: https://api.testing.render.com/v1/services/srv-cu2k54bqf0us73fbvdv0
         method: GET
       response:
         proto: HTTP/2.0
@@ -3295,27 +3225,25 @@ interactions:
         proto_minor: 0
         transfer_encoding: []
         trailer: {}
-        content_length: 726
-        uncompressed: false
+        content_length: -1
+        uncompressed: true
         body: |
-            {"autoDeploy":"yes","createdAt":"2024-09-09T16:28:59.240882Z","dashboardUrl":"http://dashboard.render.localhost:3000/worker/srv-crfi4iq39eqs702lfd40","id":"srv-crfi4iq39eqs702lfd40","imagePath":"docker.io/library/nginx:latest","name":"autoscaling-test","notifyOnFail":"notify","ownerId":"some-owner-id","rootDir":"","serviceDetails":{"buildPlan":"starter","env":"image","envSpecificDetails":{"dockerCommand":"","dockerContext":"","dockerfilePath":""},"numInstances":1,"plan":"starter","previews":{"generation":"off"},"pullRequestPreviewsEnabled":"no","region":"oregon"},"slug":"autoscaling-test-98qt","suspended":"not_suspended","suspenders":[],"type":"background_worker","updatedAt":"2024-09-09T16:29:01.450327Z"}
+            {"autoDeploy":"yes","createdAt":"2025-01-13T16:42:57.578451Z","dashboardUrl":"https://dashboard.render.com/worker/srv-cu2k54bqf0us73fbvdv0","id":"srv-cu2k54bqf0us73fbvdv0","imagePath":"docker.io/library/nginx:latest","name":"autoscaling-test","notifyOnFail":"notify","ownerId":"tea-cspvinogph6c73ft00h0","rootDir":"","serviceDetails":{"buildPlan":"starter","env":"image","envSpecificDetails":{"dockerCommand":"","dockerContext":"","dockerfilePath":""},"numInstances":1,"plan":"starter","previews":{"generation":"off"},"pullRequestPreviewsEnabled":"no","region":"oregon","runtime":"image","sshAddress":"srv-email@example.com"},"slug":"autoscaling-test-vbun","suspended":"not_suspended","suspenders":[],"type":"background_worker","updatedAt":"2025-01-13T16:43:06.796406Z"}
         headers:
-            Content-Length:
-                - "726"
             Content-Type:
                 - application/json; charset=utf-8
             Date:
-                - Mon, 09 Sep 2024 16:29:02 GMT
+                - Mon, 13 Jan 2025 16:43:09 GMT
             Ratelimit-Limit:
-                - "10000"
+                - "400"
             Ratelimit-Remaining:
-                - "9963"
+                - "360"
             Ratelimit-Reset:
-                - "57"
+                - "50"
             Referrer-Policy:
                 - same-origin
             Render-Request-Id:
-                - api-76dcfc777b-j4kxq/nqfTj1kSz7-000622
+                - api-7767dddd75-m2trm/tatrYy6WLK-002412
             Vary:
                 - Origin
             X-Content-Type-Options:
@@ -3326,7 +3254,7 @@ interactions:
                 - 1; mode=block
         status: 200 OK
         code: 200
-        duration: 22.050917ms
+        duration: 97.549333ms
     - id: 57
       request:
         proto: HTTP/1.1
@@ -3345,7 +3273,7 @@ interactions:
                 - some-api-key
             User-Agent:
                 - terraform-provider-render/test
-        url: https://api.testing.render.com/v1/services/srv-crfi4iq39eqs702lfd40/env-vars
+        url: https://api.testing.render.com/v1/services/srv-cu2k54bqf0us73fbvdv0/env-vars
         method: GET
       response:
         proto: HTTP/2.0
@@ -3363,17 +3291,17 @@ interactions:
             Content-Type:
                 - application/json; charset=utf-8
             Date:
-                - Mon, 09 Sep 2024 16:29:02 GMT
+                - Mon, 13 Jan 2025 16:43:10 GMT
             Ratelimit-Limit:
-                - "10000"
+                - "400"
             Ratelimit-Remaining:
-                - "9962"
+                - "359"
             Ratelimit-Reset:
-                - "57"
+                - "50"
             Referrer-Policy:
                 - same-origin
             Render-Request-Id:
-                - api-76dcfc777b-j4kxq/nqfTj1kSz7-000623
+                - api-7767dddd75-m2trm/tatrYy6WLK-002414
             Vary:
                 - Origin
             X-Content-Type-Options:
@@ -3384,7 +3312,7 @@ interactions:
                 - 1; mode=block
         status: 200 OK
         code: 200
-        duration: 46.304875ms
+        duration: 114.745083ms
     - id: 58
       request:
         proto: HTTP/1.1
@@ -3403,7 +3331,7 @@ interactions:
                 - some-api-key
             User-Agent:
                 - terraform-provider-render/test
-        url: https://api.testing.render.com/v1/services/srv-crfi4iq39eqs702lfd40/secret-files
+        url: https://api.testing.render.com/v1/services/srv-cu2k54bqf0us73fbvdv0/secret-files
         method: GET
       response:
         proto: HTTP/2.0
@@ -3421,17 +3349,17 @@ interactions:
             Content-Type:
                 - application/json; charset=utf-8
             Date:
-                - Mon, 09 Sep 2024 16:29:02 GMT
+                - Mon, 13 Jan 2025 16:43:10 GMT
             Ratelimit-Limit:
-                - "10000"
+                - "400"
             Ratelimit-Remaining:
-                - "9961"
+                - "358"
             Ratelimit-Reset:
-                - "57"
+                - "49"
             Referrer-Policy:
                 - same-origin
             Render-Request-Id:
-                - api-76dcfc777b-j4kxq/nqfTj1kSz7-000624
+                - api-7767dddd75-m2trm/tatrYy6WLK-002415
             Vary:
                 - Origin
             X-Content-Type-Options:
@@ -3442,7 +3370,7 @@ interactions:
                 - 1; mode=block
         status: 200 OK
         code: 200
-        duration: 21.33625ms
+        duration: 100.02375ms
     - id: 59
       request:
         proto: HTTP/1.1
@@ -3461,7 +3389,7 @@ interactions:
                 - some-api-key
             User-Agent:
                 - terraform-provider-render/test
-        url: https://api.testing.render.com/v1/notification-settings/overrides/services/srv-crfi4iq39eqs702lfd40
+        url: https://api.testing.render.com/v1/notification-settings/overrides/services/srv-cu2k54bqf0us73fbvdv0
         method: GET
       response:
         proto: HTTP/2.0
@@ -3469,27 +3397,25 @@ interactions:
         proto_minor: 0
         transfer_encoding: []
         trailer: {}
-        content_length: 111
-        uncompressed: false
+        content_length: -1
+        uncompressed: true
         body: |
-            {"notificationsToSend":"failure","previewNotificationsEnabled":"false","serviceId":"srv-crfi4iq39eqs702lfd40"}
+            {"notificationsToSend":"failure","previewNotificationsEnabled":"false","serviceId":"srv-cu2k54bqf0us73fbvdv0"}
         headers:
-            Content-Length:
-                - "111"
             Content-Type:
                 - application/json; charset=utf-8
             Date:
-                - Mon, 09 Sep 2024 16:29:02 GMT
+                - Mon, 13 Jan 2025 16:43:10 GMT
             Ratelimit-Limit:
-                - "10000"
+                - "400"
             Ratelimit-Remaining:
-                - "9960"
+                - "357"
             Ratelimit-Reset:
-                - "57"
+                - "49"
             Referrer-Policy:
                 - same-origin
             Render-Request-Id:
-                - api-76dcfc777b-j4kxq/nqfTj1kSz7-000625
+                - api-7767dddd75-m2trm/tatrYy6WLK-002418
             Vary:
                 - Origin
             X-Content-Type-Options:
@@ -3500,7 +3426,7 @@ interactions:
                 - 1; mode=block
         status: 200 OK
         code: 200
-        duration: 17.654292ms
+        duration: 93.615458ms
     - id: 60
       request:
         proto: HTTP/1.1
@@ -3519,7 +3445,7 @@ interactions:
                 - some-api-key
             User-Agent:
                 - terraform-provider-render/test
-        url: https://api.testing.render.com/v1/logs/streams/resource/srv-crfi4iq39eqs702lfd40
+        url: https://api.testing.render.com/v1/logs/streams/resource/srv-cu2k54bqf0us73fbvdv0
         method: GET
       response:
         proto: HTTP/2.0
@@ -3527,27 +3453,25 @@ interactions:
         proto_minor: 0
         transfer_encoding: []
         trailer: {}
-        content_length: 50
-        uncompressed: false
+        content_length: -1
+        uncompressed: true
         body: |
-            {"message":"not found: srv-crfi4iq39eqs702lfd40"}
+            {"message":"not found: srv-cu2k54bqf0us73fbvdv0"}
         headers:
-            Content-Length:
-                - "50"
             Content-Type:
                 - application/json; charset=utf-8
             Date:
-                - Mon, 09 Sep 2024 16:29:02 GMT
+                - Mon, 13 Jan 2025 16:43:10 GMT
             Ratelimit-Limit:
-                - "10000"
+                - "400"
             Ratelimit-Remaining:
-                - "9959"
+                - "356"
             Ratelimit-Reset:
-                - "57"
+                - "49"
             Referrer-Policy:
                 - same-origin
             Render-Request-Id:
-                - api-76dcfc777b-j4kxq/nqfTj1kSz7-000626
+                - api-7767dddd75-m2trm/tatrYy6WLK-002419
             Vary:
                 - Origin
             X-Content-Type-Options:
@@ -3558,7 +3482,7 @@ interactions:
                 - 1; mode=block
         status: 404 Not Found
         code: 404
-        duration: 20.045666ms
+        duration: 160.387084ms
     - id: 61
       request:
         proto: HTTP/1.1
@@ -3577,7 +3501,7 @@ interactions:
                 - some-api-key
             User-Agent:
                 - terraform-provider-render/test
-        url: https://api.testing.render.com/v1/services/srv-crfi4iq39eqs702lfd40
+        url: https://api.testing.render.com/v1/services/srv-cu2k54bqf0us73fbvdv0
         method: GET
       response:
         proto: HTTP/2.0
@@ -3585,27 +3509,25 @@ interactions:
         proto_minor: 0
         transfer_encoding: []
         trailer: {}
-        content_length: 726
-        uncompressed: false
+        content_length: -1
+        uncompressed: true
         body: |
-            {"autoDeploy":"yes","createdAt":"2024-09-09T16:28:59.240882Z","dashboardUrl":"http://dashboard.render.localhost:3000/worker/srv-crfi4iq39eqs702lfd40","id":"srv-crfi4iq39eqs702lfd40","imagePath":"docker.io/library/nginx:latest","name":"autoscaling-test","notifyOnFail":"notify","ownerId":"some-owner-id","rootDir":"","serviceDetails":{"buildPlan":"starter","env":"image","envSpecificDetails":{"dockerCommand":"","dockerContext":"","dockerfilePath":""},"numInstances":1,"plan":"starter","previews":{"generation":"off"},"pullRequestPreviewsEnabled":"no","region":"oregon"},"slug":"autoscaling-test-98qt","suspended":"not_suspended","suspenders":[],"type":"background_worker","updatedAt":"2024-09-09T16:29:01.450327Z"}
+            {"autoDeploy":"yes","createdAt":"2025-01-13T16:42:57.578451Z","dashboardUrl":"https://dashboard.render.com/worker/srv-cu2k54bqf0us73fbvdv0","id":"srv-cu2k54bqf0us73fbvdv0","imagePath":"docker.io/library/nginx:latest","name":"autoscaling-test","notifyOnFail":"notify","ownerId":"tea-cspvinogph6c73ft00h0","rootDir":"","serviceDetails":{"buildPlan":"starter","env":"image","envSpecificDetails":{"dockerCommand":"","dockerContext":"","dockerfilePath":""},"numInstances":1,"plan":"starter","previews":{"generation":"off"},"pullRequestPreviewsEnabled":"no","region":"oregon","runtime":"image","sshAddress":"srv-email@example.com"},"slug":"autoscaling-test-vbun","suspended":"not_suspended","suspenders":[],"type":"background_worker","updatedAt":"2025-01-13T16:43:06.796406Z"}
         headers:
-            Content-Length:
-                - "726"
             Content-Type:
                 - application/json; charset=utf-8
             Date:
-                - Mon, 09 Sep 2024 16:29:02 GMT
+                - Mon, 13 Jan 2025 16:43:10 GMT
             Ratelimit-Limit:
-                - "10000"
+                - "400"
             Ratelimit-Remaining:
-                - "9958"
+                - "355"
             Ratelimit-Reset:
-                - "57"
+                - "49"
             Referrer-Policy:
                 - same-origin
             Render-Request-Id:
-                - api-76dcfc777b-j4kxq/nqfTj1kSz7-000627
+                - api-7767dddd75-m2trm/tatrYy6WLK-002423
             Vary:
                 - Origin
             X-Content-Type-Options:
@@ -3616,7 +3538,7 @@ interactions:
                 - 1; mode=block
         status: 200 OK
         code: 200
-        duration: 23.178375ms
+        duration: 105.829292ms
     - id: 62
       request:
         proto: HTTP/1.1
@@ -3635,7 +3557,7 @@ interactions:
                 - some-api-key
             User-Agent:
                 - terraform-provider-render/test
-        url: https://api.testing.render.com/v1/services/srv-crfi4iq39eqs702lfd40/env-vars
+        url: https://api.testing.render.com/v1/services/srv-cu2k54bqf0us73fbvdv0/env-vars
         method: GET
       response:
         proto: HTTP/2.0
@@ -3653,17 +3575,17 @@ interactions:
             Content-Type:
                 - application/json; charset=utf-8
             Date:
-                - Mon, 09 Sep 2024 16:29:02 GMT
+                - Mon, 13 Jan 2025 16:43:10 GMT
             Ratelimit-Limit:
-                - "10000"
+                - "400"
             Ratelimit-Remaining:
-                - "9957"
+                - "354"
             Ratelimit-Reset:
-                - "57"
+                - "49"
             Referrer-Policy:
                 - same-origin
             Render-Request-Id:
-                - api-76dcfc777b-j4kxq/nqfTj1kSz7-000628
+                - api-7767dddd75-m2trm/tatrYy6WLK-002424
             Vary:
                 - Origin
             X-Content-Type-Options:
@@ -3674,7 +3596,7 @@ interactions:
                 - 1; mode=block
         status: 200 OK
         code: 200
-        duration: 22.367917ms
+        duration: 92.568875ms
     - id: 63
       request:
         proto: HTTP/1.1
@@ -3693,7 +3615,7 @@ interactions:
                 - some-api-key
             User-Agent:
                 - terraform-provider-render/test
-        url: https://api.testing.render.com/v1/services/srv-crfi4iq39eqs702lfd40/secret-files
+        url: https://api.testing.render.com/v1/services/srv-cu2k54bqf0us73fbvdv0/secret-files
         method: GET
       response:
         proto: HTTP/2.0
@@ -3711,17 +3633,17 @@ interactions:
             Content-Type:
                 - application/json; charset=utf-8
             Date:
-                - Mon, 09 Sep 2024 16:29:02 GMT
+                - Mon, 13 Jan 2025 16:43:11 GMT
             Ratelimit-Limit:
-                - "10000"
+                - "400"
             Ratelimit-Remaining:
-                - "9956"
+                - "353"
             Ratelimit-Reset:
-                - "57"
+                - "48"
             Referrer-Policy:
                 - same-origin
             Render-Request-Id:
-                - api-76dcfc777b-j4kxq/nqfTj1kSz7-000629
+                - api-7767dddd75-m2trm/tatrYy6WLK-002427
             Vary:
                 - Origin
             X-Content-Type-Options:
@@ -3732,7 +3654,7 @@ interactions:
                 - 1; mode=block
         status: 200 OK
         code: 200
-        duration: 25.038792ms
+        duration: 99.703291ms
     - id: 64
       request:
         proto: HTTP/1.1
@@ -3751,7 +3673,7 @@ interactions:
                 - some-api-key
             User-Agent:
                 - terraform-provider-render/test
-        url: https://api.testing.render.com/v1/notification-settings/overrides/services/srv-crfi4iq39eqs702lfd40
+        url: https://api.testing.render.com/v1/notification-settings/overrides/services/srv-cu2k54bqf0us73fbvdv0
         method: GET
       response:
         proto: HTTP/2.0
@@ -3759,27 +3681,25 @@ interactions:
         proto_minor: 0
         transfer_encoding: []
         trailer: {}
-        content_length: 111
-        uncompressed: false
+        content_length: -1
+        uncompressed: true
         body: |
-            {"notificationsToSend":"failure","previewNotificationsEnabled":"false","serviceId":"srv-crfi4iq39eqs702lfd40"}
+            {"notificationsToSend":"failure","previewNotificationsEnabled":"false","serviceId":"srv-cu2k54bqf0us73fbvdv0"}
         headers:
-            Content-Length:
-                - "111"
             Content-Type:
                 - application/json; charset=utf-8
             Date:
-                - Mon, 09 Sep 2024 16:29:02 GMT
+                - Mon, 13 Jan 2025 16:43:11 GMT
             Ratelimit-Limit:
-                - "10000"
+                - "400"
             Ratelimit-Remaining:
-                - "9955"
+                - "352"
             Ratelimit-Reset:
-                - "57"
+                - "48"
             Referrer-Policy:
                 - same-origin
             Render-Request-Id:
-                - api-76dcfc777b-j4kxq/nqfTj1kSz7-000630
+                - api-7767dddd75-m2trm/tatrYy6WLK-002428
             Vary:
                 - Origin
             X-Content-Type-Options:
@@ -3790,7 +3710,7 @@ interactions:
                 - 1; mode=block
         status: 200 OK
         code: 200
-        duration: 20.223709ms
+        duration: 95.963833ms
     - id: 65
       request:
         proto: HTTP/1.1
@@ -3809,7 +3729,7 @@ interactions:
                 - some-api-key
             User-Agent:
                 - terraform-provider-render/test
-        url: https://api.testing.render.com/v1/logs/streams/resource/srv-crfi4iq39eqs702lfd40
+        url: https://api.testing.render.com/v1/logs/streams/resource/srv-cu2k54bqf0us73fbvdv0
         method: GET
       response:
         proto: HTTP/2.0
@@ -3817,27 +3737,25 @@ interactions:
         proto_minor: 0
         transfer_encoding: []
         trailer: {}
-        content_length: 50
-        uncompressed: false
+        content_length: -1
+        uncompressed: true
         body: |
-            {"message":"not found: srv-crfi4iq39eqs702lfd40"}
+            {"message":"not found: srv-cu2k54bqf0us73fbvdv0"}
         headers:
-            Content-Length:
-                - "50"
             Content-Type:
                 - application/json; charset=utf-8
             Date:
-                - Mon, 09 Sep 2024 16:29:02 GMT
+                - Mon, 13 Jan 2025 16:43:11 GMT
             Ratelimit-Limit:
-                - "10000"
+                - "400"
             Ratelimit-Remaining:
-                - "9954"
+                - "351"
             Ratelimit-Reset:
-                - "57"
+                - "48"
             Referrer-Policy:
                 - same-origin
             Render-Request-Id:
-                - api-76dcfc777b-j4kxq/nqfTj1kSz7-000631
+                - api-7767dddd75-m2trm/tatrYy6WLK-002432
             Vary:
                 - Origin
             X-Content-Type-Options:
@@ -3848,7 +3766,7 @@ interactions:
                 - 1; mode=block
         status: 404 Not Found
         code: 404
-        duration: 20.937ms
+        duration: 164.565667ms
     - id: 66
       request:
         proto: HTTP/1.1
@@ -3867,7 +3785,7 @@ interactions:
                 - some-api-key
             User-Agent:
                 - terraform-provider-render/test
-        url: https://api.testing.render.com/v1/services/srv-crfi4iq39eqs702lfd40
+        url: https://api.testing.render.com/v1/services/srv-cu2k54bqf0us73fbvdv0
         method: GET
       response:
         proto: HTTP/2.0
@@ -3875,27 +3793,25 @@ interactions:
         proto_minor: 0
         transfer_encoding: []
         trailer: {}
-        content_length: 726
-        uncompressed: false
+        content_length: -1
+        uncompressed: true
         body: |
-            {"autoDeploy":"yes","createdAt":"2024-09-09T16:28:59.240882Z","dashboardUrl":"http://dashboard.render.localhost:3000/worker/srv-crfi4iq39eqs702lfd40","id":"srv-crfi4iq39eqs702lfd40","imagePath":"docker.io/library/nginx:latest","name":"autoscaling-test","notifyOnFail":"notify","ownerId":"some-owner-id","rootDir":"","serviceDetails":{"buildPlan":"starter","env":"image","envSpecificDetails":{"dockerCommand":"","dockerContext":"","dockerfilePath":""},"numInstances":1,"plan":"starter","previews":{"generation":"off"},"pullRequestPreviewsEnabled":"no","region":"oregon"},"slug":"autoscaling-test-98qt","suspended":"not_suspended","suspenders":[],"type":"background_worker","updatedAt":"2024-09-09T16:29:01.450327Z"}
+            {"autoDeploy":"yes","createdAt":"2025-01-13T16:42:57.578451Z","dashboardUrl":"https://dashboard.render.com/worker/srv-cu2k54bqf0us73fbvdv0","id":"srv-cu2k54bqf0us73fbvdv0","imagePath":"docker.io/library/nginx:latest","name":"autoscaling-test","notifyOnFail":"notify","ownerId":"tea-cspvinogph6c73ft00h0","rootDir":"","serviceDetails":{"buildPlan":"starter","env":"image","envSpecificDetails":{"dockerCommand":"","dockerContext":"","dockerfilePath":""},"numInstances":1,"plan":"starter","previews":{"generation":"off"},"pullRequestPreviewsEnabled":"no","region":"oregon","runtime":"image","sshAddress":"srv-email@example.com"},"slug":"autoscaling-test-vbun","suspended":"not_suspended","suspenders":[],"type":"background_worker","updatedAt":"2025-01-13T16:43:06.796406Z"}
         headers:
-            Content-Length:
-                - "726"
             Content-Type:
                 - application/json; charset=utf-8
             Date:
-                - Mon, 09 Sep 2024 16:29:02 GMT
+                - Mon, 13 Jan 2025 16:43:11 GMT
             Ratelimit-Limit:
-                - "10000"
+                - "400"
             Ratelimit-Remaining:
-                - "9953"
+                - "350"
             Ratelimit-Reset:
-                - "57"
+                - "48"
             Referrer-Policy:
                 - same-origin
             Render-Request-Id:
-                - api-76dcfc777b-j4kxq/nqfTj1kSz7-000632
+                - api-7767dddd75-m2trm/tatrYy6WLK-002434
             Vary:
                 - Origin
             X-Content-Type-Options:
@@ -3906,7 +3822,7 @@ interactions:
                 - 1; mode=block
         status: 200 OK
         code: 200
-        duration: 19.020208ms
+        duration: 97.210959ms
     - id: 67
       request:
         proto: HTTP/1.1
@@ -3925,7 +3841,7 @@ interactions:
                 - some-api-key
             User-Agent:
                 - terraform-provider-render/test
-        url: https://api.testing.render.com/v1/services/srv-crfi4iq39eqs702lfd40/env-vars
+        url: https://api.testing.render.com/v1/services/srv-cu2k54bqf0us73fbvdv0/env-vars
         method: GET
       response:
         proto: HTTP/2.0
@@ -3943,17 +3859,17 @@ interactions:
             Content-Type:
                 - application/json; charset=utf-8
             Date:
-                - Mon, 09 Sep 2024 16:29:02 GMT
+                - Mon, 13 Jan 2025 16:43:11 GMT
             Ratelimit-Limit:
-                - "10000"
+                - "400"
             Ratelimit-Remaining:
-                - "9952"
+                - "349"
             Ratelimit-Reset:
-                - "57"
+                - "48"
             Referrer-Policy:
                 - same-origin
             Render-Request-Id:
-                - api-76dcfc777b-j4kxq/nqfTj1kSz7-000633
+                - api-7767dddd75-m2trm/tatrYy6WLK-002436
             Vary:
                 - Origin
             X-Content-Type-Options:
@@ -3964,7 +3880,7 @@ interactions:
                 - 1; mode=block
         status: 200 OK
         code: 200
-        duration: 22.235ms
+        duration: 119.507708ms
     - id: 68
       request:
         proto: HTTP/1.1
@@ -3983,7 +3899,7 @@ interactions:
                 - some-api-key
             User-Agent:
                 - terraform-provider-render/test
-        url: https://api.testing.render.com/v1/services/srv-crfi4iq39eqs702lfd40/secret-files
+        url: https://api.testing.render.com/v1/services/srv-cu2k54bqf0us73fbvdv0/secret-files
         method: GET
       response:
         proto: HTTP/2.0
@@ -4001,17 +3917,17 @@ interactions:
             Content-Type:
                 - application/json; charset=utf-8
             Date:
-                - Mon, 09 Sep 2024 16:29:02 GMT
+                - Mon, 13 Jan 2025 16:43:11 GMT
             Ratelimit-Limit:
-                - "10000"
+                - "400"
             Ratelimit-Remaining:
-                - "9951"
+                - "348"
             Ratelimit-Reset:
-                - "57"
+                - "48"
             Referrer-Policy:
                 - same-origin
             Render-Request-Id:
-                - api-76dcfc777b-j4kxq/nqfTj1kSz7-000634
+                - api-7767dddd75-m2trm/tatrYy6WLK-002437
             Vary:
                 - Origin
             X-Content-Type-Options:
@@ -4022,7 +3938,7 @@ interactions:
                 - 1; mode=block
         status: 200 OK
         code: 200
-        duration: 23.192667ms
+        duration: 92.135708ms
     - id: 69
       request:
         proto: HTTP/1.1
@@ -4041,7 +3957,7 @@ interactions:
                 - some-api-key
             User-Agent:
                 - terraform-provider-render/test
-        url: https://api.testing.render.com/v1/notification-settings/overrides/services/srv-crfi4iq39eqs702lfd40
+        url: https://api.testing.render.com/v1/notification-settings/overrides/services/srv-cu2k54bqf0us73fbvdv0
         method: GET
       response:
         proto: HTTP/2.0
@@ -4049,27 +3965,25 @@ interactions:
         proto_minor: 0
         transfer_encoding: []
         trailer: {}
-        content_length: 111
-        uncompressed: false
+        content_length: -1
+        uncompressed: true
         body: |
-            {"notificationsToSend":"failure","previewNotificationsEnabled":"false","serviceId":"srv-crfi4iq39eqs702lfd40"}
+            {"notificationsToSend":"failure","previewNotificationsEnabled":"false","serviceId":"srv-cu2k54bqf0us73fbvdv0"}
         headers:
-            Content-Length:
-                - "111"
             Content-Type:
                 - application/json; charset=utf-8
             Date:
-                - Mon, 09 Sep 2024 16:29:02 GMT
+                - Mon, 13 Jan 2025 16:43:12 GMT
             Ratelimit-Limit:
-                - "10000"
+                - "400"
             Ratelimit-Remaining:
-                - "9950"
+                - "347"
             Ratelimit-Reset:
-                - "57"
+                - "47"
             Referrer-Policy:
                 - same-origin
             Render-Request-Id:
-                - api-76dcfc777b-j4kxq/nqfTj1kSz7-000635
+                - api-7767dddd75-m2trm/tatrYy6WLK-002440
             Vary:
                 - Origin
             X-Content-Type-Options:
@@ -4080,7 +3994,7 @@ interactions:
                 - 1; mode=block
         status: 200 OK
         code: 200
-        duration: 26.022542ms
+        duration: 106.889541ms
     - id: 70
       request:
         proto: HTTP/1.1
@@ -4099,7 +4013,7 @@ interactions:
                 - some-api-key
             User-Agent:
                 - terraform-provider-render/test
-        url: https://api.testing.render.com/v1/logs/streams/resource/srv-crfi4iq39eqs702lfd40
+        url: https://api.testing.render.com/v1/logs/streams/resource/srv-cu2k54bqf0us73fbvdv0
         method: GET
       response:
         proto: HTTP/2.0
@@ -4107,27 +4021,25 @@ interactions:
         proto_minor: 0
         transfer_encoding: []
         trailer: {}
-        content_length: 50
-        uncompressed: false
+        content_length: -1
+        uncompressed: true
         body: |
-            {"message":"not found: srv-crfi4iq39eqs702lfd40"}
+            {"message":"not found: srv-cu2k54bqf0us73fbvdv0"}
         headers:
-            Content-Length:
-                - "50"
             Content-Type:
                 - application/json; charset=utf-8
             Date:
-                - Mon, 09 Sep 2024 16:29:02 GMT
+                - Mon, 13 Jan 2025 16:43:12 GMT
             Ratelimit-Limit:
-                - "10000"
+                - "400"
             Ratelimit-Remaining:
-                - "9949"
+                - "346"
             Ratelimit-Reset:
-                - "57"
+                - "47"
             Referrer-Policy:
                 - same-origin
             Render-Request-Id:
-                - api-76dcfc777b-j4kxq/nqfTj1kSz7-000636
+                - api-7767dddd75-m2trm/tatrYy6WLK-002442
             Vary:
                 - Origin
             X-Content-Type-Options:
@@ -4138,7 +4050,7 @@ interactions:
                 - 1; mode=block
         status: 404 Not Found
         code: 404
-        duration: 24.980208ms
+        duration: 166.415417ms
     - id: 71
       request:
         proto: HTTP/1.1
@@ -4157,7 +4069,7 @@ interactions:
                 - some-api-key
             User-Agent:
                 - terraform-provider-render/test
-        url: https://api.testing.render.com/v1/services/srv-crfi4iq39eqs702lfd40
+        url: https://api.testing.render.com/v1/services/srv-cu2k54bqf0us73fbvdv0
         method: GET
       response:
         proto: HTTP/2.0
@@ -4165,27 +4077,25 @@ interactions:
         proto_minor: 0
         transfer_encoding: []
         trailer: {}
-        content_length: 726
-        uncompressed: false
+        content_length: -1
+        uncompressed: true
         body: |
-            {"autoDeploy":"yes","createdAt":"2024-09-09T16:28:59.240882Z","dashboardUrl":"http://dashboard.render.localhost:3000/worker/srv-crfi4iq39eqs702lfd40","id":"srv-crfi4iq39eqs702lfd40","imagePath":"docker.io/library/nginx:latest","name":"autoscaling-test","notifyOnFail":"notify","ownerId":"some-owner-id","rootDir":"","serviceDetails":{"buildPlan":"starter","env":"image","envSpecificDetails":{"dockerCommand":"","dockerContext":"","dockerfilePath":""},"numInstances":1,"plan":"starter","previews":{"generation":"off"},"pullRequestPreviewsEnabled":"no","region":"oregon"},"slug":"autoscaling-test-98qt","suspended":"not_suspended","suspenders":[],"type":"background_worker","updatedAt":"2024-09-09T16:29:01.450327Z"}
+            {"autoDeploy":"yes","createdAt":"2025-01-13T16:42:57.578451Z","dashboardUrl":"https://dashboard.render.com/worker/srv-cu2k54bqf0us73fbvdv0","id":"srv-cu2k54bqf0us73fbvdv0","imagePath":"docker.io/library/nginx:latest","name":"autoscaling-test","notifyOnFail":"notify","ownerId":"tea-cspvinogph6c73ft00h0","rootDir":"","serviceDetails":{"buildPlan":"starter","env":"image","envSpecificDetails":{"dockerCommand":"","dockerContext":"","dockerfilePath":""},"numInstances":1,"plan":"starter","previews":{"generation":"off"},"pullRequestPreviewsEnabled":"no","region":"oregon","runtime":"image","sshAddress":"srv-email@example.com"},"slug":"autoscaling-test-vbun","suspended":"not_suspended","suspenders":[],"type":"background_worker","updatedAt":"2025-01-13T16:43:11.67217Z"}
         headers:
-            Content-Length:
-                - "726"
             Content-Type:
                 - application/json; charset=utf-8
             Date:
-                - Mon, 09 Sep 2024 16:29:02 GMT
+                - Mon, 13 Jan 2025 16:43:12 GMT
             Ratelimit-Limit:
-                - "10000"
+                - "400"
             Ratelimit-Remaining:
-                - "9948"
+                - "345"
             Ratelimit-Reset:
-                - "57"
+                - "47"
             Referrer-Policy:
                 - same-origin
             Render-Request-Id:
-                - api-76dcfc777b-j4kxq/nqfTj1kSz7-000637
+                - api-7767dddd75-m2trm/tatrYy6WLK-002446
             Vary:
                 - Origin
             X-Content-Type-Options:
@@ -4196,7 +4106,7 @@ interactions:
                 - 1; mode=block
         status: 200 OK
         code: 200
-        duration: 23.316208ms
+        duration: 92.385625ms
     - id: 72
       request:
         proto: HTTP/1.1
@@ -4215,7 +4125,7 @@ interactions:
                 - some-api-key
             User-Agent:
                 - terraform-provider-render/test
-        url: https://api.testing.render.com/v1/services/srv-crfi4iq39eqs702lfd40/env-vars
+        url: https://api.testing.render.com/v1/services/srv-cu2k54bqf0us73fbvdv0/env-vars
         method: GET
       response:
         proto: HTTP/2.0
@@ -4233,17 +4143,17 @@ interactions:
             Content-Type:
                 - application/json; charset=utf-8
             Date:
-                - Mon, 09 Sep 2024 16:29:02 GMT
+                - Mon, 13 Jan 2025 16:43:12 GMT
             Ratelimit-Limit:
-                - "10000"
+                - "400"
             Ratelimit-Remaining:
-                - "9947"
+                - "344"
             Ratelimit-Reset:
-                - "57"
+                - "47"
             Referrer-Policy:
                 - same-origin
             Render-Request-Id:
-                - api-76dcfc777b-j4kxq/nqfTj1kSz7-000638
+                - api-7767dddd75-m2trm/tatrYy6WLK-002447
             Vary:
                 - Origin
             X-Content-Type-Options:
@@ -4254,7 +4164,7 @@ interactions:
                 - 1; mode=block
         status: 200 OK
         code: 200
-        duration: 22.544917ms
+        duration: 90.636458ms
     - id: 73
       request:
         proto: HTTP/1.1
@@ -4273,7 +4183,7 @@ interactions:
                 - some-api-key
             User-Agent:
                 - terraform-provider-render/test
-        url: https://api.testing.render.com/v1/services/srv-crfi4iq39eqs702lfd40/secret-files
+        url: https://api.testing.render.com/v1/services/srv-cu2k54bqf0us73fbvdv0/secret-files
         method: GET
       response:
         proto: HTTP/2.0
@@ -4291,17 +4201,17 @@ interactions:
             Content-Type:
                 - application/json; charset=utf-8
             Date:
-                - Mon, 09 Sep 2024 16:29:02 GMT
+                - Mon, 13 Jan 2025 16:43:13 GMT
             Ratelimit-Limit:
-                - "10000"
+                - "400"
             Ratelimit-Remaining:
-                - "9946"
+                - "343"
             Ratelimit-Reset:
-                - "57"
+                - "47"
             Referrer-Policy:
                 - same-origin
             Render-Request-Id:
-                - api-76dcfc777b-j4kxq/nqfTj1kSz7-000639
+                - api-7767dddd75-m2trm/tatrYy6WLK-002448
             Vary:
                 - Origin
             X-Content-Type-Options:
@@ -4312,7 +4222,7 @@ interactions:
                 - 1; mode=block
         status: 200 OK
         code: 200
-        duration: 24.645209ms
+        duration: 93.21625ms
     - id: 74
       request:
         proto: HTTP/1.1
@@ -4331,7 +4241,7 @@ interactions:
                 - some-api-key
             User-Agent:
                 - terraform-provider-render/test
-        url: https://api.testing.render.com/v1/notification-settings/overrides/services/srv-crfi4iq39eqs702lfd40
+        url: https://api.testing.render.com/v1/notification-settings/overrides/services/srv-cu2k54bqf0us73fbvdv0
         method: GET
       response:
         proto: HTTP/2.0
@@ -4339,27 +4249,25 @@ interactions:
         proto_minor: 0
         transfer_encoding: []
         trailer: {}
-        content_length: 111
-        uncompressed: false
+        content_length: -1
+        uncompressed: true
         body: |
-            {"notificationsToSend":"failure","previewNotificationsEnabled":"false","serviceId":"srv-crfi4iq39eqs702lfd40"}
+            {"notificationsToSend":"failure","previewNotificationsEnabled":"false","serviceId":"srv-cu2k54bqf0us73fbvdv0"}
         headers:
-            Content-Length:
-                - "111"
             Content-Type:
                 - application/json; charset=utf-8
             Date:
-                - Mon, 09 Sep 2024 16:29:02 GMT
+                - Mon, 13 Jan 2025 16:43:13 GMT
             Ratelimit-Limit:
-                - "10000"
+                - "400"
             Ratelimit-Remaining:
-                - "9945"
+                - "342"
             Ratelimit-Reset:
-                - "57"
+                - "46"
             Referrer-Policy:
                 - same-origin
             Render-Request-Id:
-                - api-76dcfc777b-j4kxq/nqfTj1kSz7-000640
+                - api-7767dddd75-m2trm/tatrYy6WLK-002449
             Vary:
                 - Origin
             X-Content-Type-Options:
@@ -4370,7 +4278,7 @@ interactions:
                 - 1; mode=block
         status: 200 OK
         code: 200
-        duration: 21.462083ms
+        duration: 100.72425ms
     - id: 75
       request:
         proto: HTTP/1.1
@@ -4389,7 +4297,7 @@ interactions:
                 - some-api-key
             User-Agent:
                 - terraform-provider-render/test
-        url: https://api.testing.render.com/v1/logs/streams/resource/srv-crfi4iq39eqs702lfd40
+        url: https://api.testing.render.com/v1/logs/streams/resource/srv-cu2k54bqf0us73fbvdv0
         method: GET
       response:
         proto: HTTP/2.0
@@ -4397,27 +4305,25 @@ interactions:
         proto_minor: 0
         transfer_encoding: []
         trailer: {}
-        content_length: 50
-        uncompressed: false
+        content_length: -1
+        uncompressed: true
         body: |
-            {"message":"not found: srv-crfi4iq39eqs702lfd40"}
+            {"message":"not found: srv-cu2k54bqf0us73fbvdv0"}
         headers:
-            Content-Length:
-                - "50"
             Content-Type:
                 - application/json; charset=utf-8
             Date:
-                - Mon, 09 Sep 2024 16:29:02 GMT
+                - Mon, 13 Jan 2025 16:43:13 GMT
             Ratelimit-Limit:
-                - "10000"
+                - "400"
             Ratelimit-Remaining:
-                - "9944"
+                - "341"
             Ratelimit-Reset:
-                - "57"
+                - "46"
             Referrer-Policy:
                 - same-origin
             Render-Request-Id:
-                - api-76dcfc777b-j4kxq/nqfTj1kSz7-000641
+                - api-7767dddd75-m2trm/tatrYy6WLK-002450
             Vary:
                 - Origin
             X-Content-Type-Options:
@@ -4428,7 +4334,7 @@ interactions:
                 - 1; mode=block
         status: 404 Not Found
         code: 404
-        duration: 22.895959ms
+        duration: 162.047333ms
     - id: 76
       request:
         proto: HTTP/1.1
@@ -4447,7 +4353,7 @@ interactions:
                 - some-api-key
             User-Agent:
                 - terraform-provider-render/test
-        url: https://api.testing.render.com/v1/services/srv-crfi4iq39eqs702lfd40
+        url: https://api.testing.render.com/v1/services/srv-cu2k54bqf0us73fbvdv0
         method: GET
       response:
         proto: HTTP/2.0
@@ -4455,27 +4361,25 @@ interactions:
         proto_minor: 0
         transfer_encoding: []
         trailer: {}
-        content_length: 726
-        uncompressed: false
+        content_length: -1
+        uncompressed: true
         body: |
-            {"autoDeploy":"yes","createdAt":"2024-09-09T16:28:59.240882Z","dashboardUrl":"http://dashboard.render.localhost:3000/worker/srv-crfi4iq39eqs702lfd40","id":"srv-crfi4iq39eqs702lfd40","imagePath":"docker.io/library/nginx:latest","name":"autoscaling-test","notifyOnFail":"notify","ownerId":"some-owner-id","rootDir":"","serviceDetails":{"buildPlan":"starter","env":"image","envSpecificDetails":{"dockerCommand":"","dockerContext":"","dockerfilePath":""},"numInstances":1,"plan":"starter","previews":{"generation":"off"},"pullRequestPreviewsEnabled":"no","region":"oregon"},"slug":"autoscaling-test-98qt","suspended":"not_suspended","suspenders":[],"type":"background_worker","updatedAt":"2024-09-09T16:29:01.450327Z"}
+            {"autoDeploy":"yes","createdAt":"2025-01-13T16:42:57.578451Z","dashboardUrl":"https://dashboard.render.com/worker/srv-cu2k54bqf0us73fbvdv0","id":"srv-cu2k54bqf0us73fbvdv0","imagePath":"docker.io/library/nginx:latest","name":"autoscaling-test","notifyOnFail":"notify","ownerId":"tea-cspvinogph6c73ft00h0","rootDir":"","serviceDetails":{"buildPlan":"starter","env":"image","envSpecificDetails":{"dockerCommand":"","dockerContext":"","dockerfilePath":""},"numInstances":1,"plan":"starter","previews":{"generation":"off"},"pullRequestPreviewsEnabled":"no","region":"oregon","runtime":"image","sshAddress":"srv-email@example.com"},"slug":"autoscaling-test-vbun","suspended":"not_suspended","suspenders":[],"type":"background_worker","updatedAt":"2025-01-13T16:43:11.67217Z"}
         headers:
-            Content-Length:
-                - "726"
             Content-Type:
                 - application/json; charset=utf-8
             Date:
-                - Mon, 09 Sep 2024 16:29:03 GMT
+                - Mon, 13 Jan 2025 16:43:13 GMT
             Ratelimit-Limit:
-                - "10000"
+                - "400"
             Ratelimit-Remaining:
-                - "9943"
+                - "340"
             Ratelimit-Reset:
-                - "56"
+                - "46"
             Referrer-Policy:
                 - same-origin
             Render-Request-Id:
-                - api-76dcfc777b-j4kxq/nqfTj1kSz7-000642
+                - api-7767dddd75-m2trm/tatrYy6WLK-002456
             Vary:
                 - Origin
             X-Content-Type-Options:
@@ -4486,7 +4390,7 @@ interactions:
                 - 1; mode=block
         status: 200 OK
         code: 200
-        duration: 24.772083ms
+        duration: 108.416209ms
     - id: 77
       request:
         proto: HTTP/1.1
@@ -4505,7 +4409,7 @@ interactions:
                 - some-api-key
             User-Agent:
                 - terraform-provider-render/test
-        url: https://api.testing.render.com/v1/services/srv-crfi4iq39eqs702lfd40/env-vars
+        url: https://api.testing.render.com/v1/services/srv-cu2k54bqf0us73fbvdv0/env-vars
         method: GET
       response:
         proto: HTTP/2.0
@@ -4523,17 +4427,17 @@ interactions:
             Content-Type:
                 - application/json; charset=utf-8
             Date:
-                - Mon, 09 Sep 2024 16:29:03 GMT
+                - Mon, 13 Jan 2025 16:43:13 GMT
             Ratelimit-Limit:
-                - "10000"
+                - "400"
             Ratelimit-Remaining:
-                - "9942"
+                - "339"
             Ratelimit-Reset:
-                - "56"
+                - "46"
             Referrer-Policy:
                 - same-origin
             Render-Request-Id:
-                - api-76dcfc777b-j4kxq/nqfTj1kSz7-000643
+                - api-7767dddd75-m2trm/tatrYy6WLK-002459
             Vary:
                 - Origin
             X-Content-Type-Options:
@@ -4544,7 +4448,7 @@ interactions:
                 - 1; mode=block
         status: 200 OK
         code: 200
-        duration: 26.205083ms
+        duration: 92.187708ms
     - id: 78
       request:
         proto: HTTP/1.1
@@ -4563,7 +4467,7 @@ interactions:
                 - some-api-key
             User-Agent:
                 - terraform-provider-render/test
-        url: https://api.testing.render.com/v1/services/srv-crfi4iq39eqs702lfd40/secret-files
+        url: https://api.testing.render.com/v1/services/srv-cu2k54bqf0us73fbvdv0/secret-files
         method: GET
       response:
         proto: HTTP/2.0
@@ -4581,17 +4485,17 @@ interactions:
             Content-Type:
                 - application/json; charset=utf-8
             Date:
-                - Mon, 09 Sep 2024 16:29:03 GMT
+                - Mon, 13 Jan 2025 16:43:14 GMT
             Ratelimit-Limit:
-                - "10000"
+                - "400"
             Ratelimit-Remaining:
-                - "9941"
+                - "338"
             Ratelimit-Reset:
-                - "56"
+                - "46"
             Referrer-Policy:
                 - same-origin
             Render-Request-Id:
-                - api-76dcfc777b-j4kxq/nqfTj1kSz7-000644
+                - api-7767dddd75-m2trm/tatrYy6WLK-002461
             Vary:
                 - Origin
             X-Content-Type-Options:
@@ -4602,7 +4506,7 @@ interactions:
                 - 1; mode=block
         status: 200 OK
         code: 200
-        duration: 27.844167ms
+        duration: 92.959041ms
     - id: 79
       request:
         proto: HTTP/1.1
@@ -4621,7 +4525,7 @@ interactions:
                 - some-api-key
             User-Agent:
                 - terraform-provider-render/test
-        url: https://api.testing.render.com/v1/notification-settings/overrides/services/srv-crfi4iq39eqs702lfd40
+        url: https://api.testing.render.com/v1/notification-settings/overrides/services/srv-cu2k54bqf0us73fbvdv0
         method: GET
       response:
         proto: HTTP/2.0
@@ -4629,27 +4533,25 @@ interactions:
         proto_minor: 0
         transfer_encoding: []
         trailer: {}
-        content_length: 111
-        uncompressed: false
+        content_length: -1
+        uncompressed: true
         body: |
-            {"notificationsToSend":"failure","previewNotificationsEnabled":"false","serviceId":"srv-crfi4iq39eqs702lfd40"}
+            {"notificationsToSend":"failure","previewNotificationsEnabled":"false","serviceId":"srv-cu2k54bqf0us73fbvdv0"}
         headers:
-            Content-Length:
-                - "111"
             Content-Type:
                 - application/json; charset=utf-8
             Date:
-                - Mon, 09 Sep 2024 16:29:03 GMT
+                - Mon, 13 Jan 2025 16:43:14 GMT
             Ratelimit-Limit:
-                - "10000"
+                - "400"
             Ratelimit-Remaining:
-                - "9940"
+                - "337"
             Ratelimit-Reset:
-                - "56"
+                - "45"
             Referrer-Policy:
                 - same-origin
             Render-Request-Id:
-                - api-76dcfc777b-j4kxq/nqfTj1kSz7-000645
+                - api-7767dddd75-m2trm/tatrYy6WLK-002463
             Vary:
                 - Origin
             X-Content-Type-Options:
@@ -4660,7 +4562,7 @@ interactions:
                 - 1; mode=block
         status: 200 OK
         code: 200
-        duration: 22.795666ms
+        duration: 88.760792ms
     - id: 80
       request:
         proto: HTTP/1.1
@@ -4679,7 +4581,7 @@ interactions:
                 - some-api-key
             User-Agent:
                 - terraform-provider-render/test
-        url: https://api.testing.render.com/v1/logs/streams/resource/srv-crfi4iq39eqs702lfd40
+        url: https://api.testing.render.com/v1/logs/streams/resource/srv-cu2k54bqf0us73fbvdv0
         method: GET
       response:
         proto: HTTP/2.0
@@ -4687,27 +4589,25 @@ interactions:
         proto_minor: 0
         transfer_encoding: []
         trailer: {}
-        content_length: 50
-        uncompressed: false
+        content_length: -1
+        uncompressed: true
         body: |
-            {"message":"not found: srv-crfi4iq39eqs702lfd40"}
+            {"message":"not found: srv-cu2k54bqf0us73fbvdv0"}
         headers:
-            Content-Length:
-                - "50"
             Content-Type:
                 - application/json; charset=utf-8
             Date:
-                - Mon, 09 Sep 2024 16:29:03 GMT
+                - Mon, 13 Jan 2025 16:43:14 GMT
             Ratelimit-Limit:
-                - "10000"
+                - "400"
             Ratelimit-Remaining:
-                - "9939"
+                - "336"
             Ratelimit-Reset:
-                - "56"
+                - "45"
             Referrer-Policy:
                 - same-origin
             Render-Request-Id:
-                - api-76dcfc777b-j4kxq/nqfTj1kSz7-000646
+                - api-7767dddd75-m2trm/tatrYy6WLK-002469
             Vary:
                 - Origin
             X-Content-Type-Options:
@@ -4718,7 +4618,7 @@ interactions:
                 - 1; mode=block
         status: 404 Not Found
         code: 404
-        duration: 25.339083ms
+        duration: 166.418459ms
     - id: 81
       request:
         proto: HTTP/1.1
@@ -4737,7 +4637,7 @@ interactions:
                 - some-api-key
             User-Agent:
                 - terraform-provider-render/test
-        url: https://api.testing.render.com/v1/services/srv-crfi4iq39eqs702lfd40
+        url: https://api.testing.render.com/v1/services/srv-cu2k54bqf0us73fbvdv0
         method: GET
       response:
         proto: HTTP/2.0
@@ -4745,27 +4645,25 @@ interactions:
         proto_minor: 0
         transfer_encoding: []
         trailer: {}
-        content_length: 726
-        uncompressed: false
+        content_length: -1
+        uncompressed: true
         body: |
-            {"autoDeploy":"yes","createdAt":"2024-09-09T16:28:59.240882Z","dashboardUrl":"http://dashboard.render.localhost:3000/worker/srv-crfi4iq39eqs702lfd40","id":"srv-crfi4iq39eqs702lfd40","imagePath":"docker.io/library/nginx:latest","name":"autoscaling-test","notifyOnFail":"notify","ownerId":"some-owner-id","rootDir":"","serviceDetails":{"buildPlan":"starter","env":"image","envSpecificDetails":{"dockerCommand":"","dockerContext":"","dockerfilePath":""},"numInstances":1,"plan":"starter","previews":{"generation":"off"},"pullRequestPreviewsEnabled":"no","region":"oregon"},"slug":"autoscaling-test-98qt","suspended":"not_suspended","suspenders":[],"type":"background_worker","updatedAt":"2024-09-09T16:29:01.450327Z"}
+            {"autoDeploy":"yes","createdAt":"2025-01-13T16:42:57.578451Z","dashboardUrl":"https://dashboard.render.com/worker/srv-cu2k54bqf0us73fbvdv0","id":"srv-cu2k54bqf0us73fbvdv0","imagePath":"docker.io/library/nginx:latest","name":"autoscaling-test","notifyOnFail":"notify","ownerId":"tea-cspvinogph6c73ft00h0","rootDir":"","serviceDetails":{"buildPlan":"starter","env":"image","envSpecificDetails":{"dockerCommand":"","dockerContext":"","dockerfilePath":""},"numInstances":1,"plan":"starter","previews":{"generation":"off"},"pullRequestPreviewsEnabled":"no","region":"oregon","runtime":"image","sshAddress":"srv-email@example.com"},"slug":"autoscaling-test-vbun","suspended":"not_suspended","suspenders":[],"type":"background_worker","updatedAt":"2025-01-13T16:43:11.67217Z"}
         headers:
-            Content-Length:
-                - "726"
             Content-Type:
                 - application/json; charset=utf-8
             Date:
-                - Mon, 09 Sep 2024 16:29:03 GMT
+                - Mon, 13 Jan 2025 16:43:14 GMT
             Ratelimit-Limit:
-                - "10000"
+                - "400"
             Ratelimit-Remaining:
-                - "9938"
+                - "335"
             Ratelimit-Reset:
-                - "56"
+                - "45"
             Referrer-Policy:
                 - same-origin
             Render-Request-Id:
-                - api-76dcfc777b-j4kxq/nqfTj1kSz7-000647
+                - api-7767dddd75-m2trm/tatrYy6WLK-002471
             Vary:
                 - Origin
             X-Content-Type-Options:
@@ -4776,7 +4674,7 @@ interactions:
                 - 1; mode=block
         status: 200 OK
         code: 200
-        duration: 24.116334ms
+        duration: 99.079ms
     - id: 82
       request:
         proto: HTTP/1.1
@@ -4795,7 +4693,7 @@ interactions:
                 - some-api-key
             User-Agent:
                 - terraform-provider-render/test
-        url: https://api.testing.render.com/v1/services/srv-crfi4iq39eqs702lfd40/env-vars
+        url: https://api.testing.render.com/v1/services/srv-cu2k54bqf0us73fbvdv0/env-vars
         method: GET
       response:
         proto: HTTP/2.0
@@ -4813,17 +4711,17 @@ interactions:
             Content-Type:
                 - application/json; charset=utf-8
             Date:
-                - Mon, 09 Sep 2024 16:29:03 GMT
+                - Mon, 13 Jan 2025 16:43:14 GMT
             Ratelimit-Limit:
-                - "10000"
+                - "400"
             Ratelimit-Remaining:
-                - "9937"
+                - "334"
             Ratelimit-Reset:
-                - "56"
+                - "45"
             Referrer-Policy:
                 - same-origin
             Render-Request-Id:
-                - api-76dcfc777b-j4kxq/nqfTj1kSz7-000648
+                - api-7767dddd75-m2trm/tatrYy6WLK-002474
             Vary:
                 - Origin
             X-Content-Type-Options:
@@ -4834,7 +4732,7 @@ interactions:
                 - 1; mode=block
         status: 200 OK
         code: 200
-        duration: 24.924959ms
+        duration: 94.579084ms
     - id: 83
       request:
         proto: HTTP/1.1
@@ -4853,7 +4751,7 @@ interactions:
                 - some-api-key
             User-Agent:
                 - terraform-provider-render/test
-        url: https://api.testing.render.com/v1/services/srv-crfi4iq39eqs702lfd40/secret-files
+        url: https://api.testing.render.com/v1/services/srv-cu2k54bqf0us73fbvdv0/secret-files
         method: GET
       response:
         proto: HTTP/2.0
@@ -4871,17 +4769,17 @@ interactions:
             Content-Type:
                 - application/json; charset=utf-8
             Date:
-                - Mon, 09 Sep 2024 16:29:03 GMT
+                - Mon, 13 Jan 2025 16:43:14 GMT
             Ratelimit-Limit:
-                - "10000"
+                - "400"
             Ratelimit-Remaining:
-                - "9936"
+                - "333"
             Ratelimit-Reset:
-                - "56"
+                - "45"
             Referrer-Policy:
                 - same-origin
             Render-Request-Id:
-                - api-76dcfc777b-j4kxq/nqfTj1kSz7-000649
+                - api-7767dddd75-m2trm/tatrYy6WLK-002480
             Vary:
                 - Origin
             X-Content-Type-Options:
@@ -4892,7 +4790,7 @@ interactions:
                 - 1; mode=block
         status: 200 OK
         code: 200
-        duration: 42.629833ms
+        duration: 105.048958ms
     - id: 84
       request:
         proto: HTTP/1.1
@@ -4911,7 +4809,7 @@ interactions:
                 - some-api-key
             User-Agent:
                 - terraform-provider-render/test
-        url: https://api.testing.render.com/v1/notification-settings/overrides/services/srv-crfi4iq39eqs702lfd40
+        url: https://api.testing.render.com/v1/notification-settings/overrides/services/srv-cu2k54bqf0us73fbvdv0
         method: GET
       response:
         proto: HTTP/2.0
@@ -4919,27 +4817,25 @@ interactions:
         proto_minor: 0
         transfer_encoding: []
         trailer: {}
-        content_length: 111
-        uncompressed: false
+        content_length: -1
+        uncompressed: true
         body: |
-            {"notificationsToSend":"failure","previewNotificationsEnabled":"false","serviceId":"srv-crfi4iq39eqs702lfd40"}
+            {"notificationsToSend":"failure","previewNotificationsEnabled":"false","serviceId":"srv-cu2k54bqf0us73fbvdv0"}
         headers:
-            Content-Length:
-                - "111"
             Content-Type:
                 - application/json; charset=utf-8
             Date:
-                - Mon, 09 Sep 2024 16:29:03 GMT
+                - Mon, 13 Jan 2025 16:43:15 GMT
             Ratelimit-Limit:
-                - "10000"
+                - "400"
             Ratelimit-Remaining:
-                - "9935"
+                - "332"
             Ratelimit-Reset:
-                - "56"
+                - "45"
             Referrer-Policy:
                 - same-origin
             Render-Request-Id:
-                - api-76dcfc777b-j4kxq/nqfTj1kSz7-000650
+                - api-7767dddd75-m2trm/tatrYy6WLK-002484
             Vary:
                 - Origin
             X-Content-Type-Options:
@@ -4950,7 +4846,7 @@ interactions:
                 - 1; mode=block
         status: 200 OK
         code: 200
-        duration: 25.757042ms
+        duration: 103.035375ms
     - id: 85
       request:
         proto: HTTP/1.1
@@ -4969,7 +4865,7 @@ interactions:
                 - some-api-key
             User-Agent:
                 - terraform-provider-render/test
-        url: https://api.testing.render.com/v1/logs/streams/resource/srv-crfi4iq39eqs702lfd40
+        url: https://api.testing.render.com/v1/logs/streams/resource/srv-cu2k54bqf0us73fbvdv0
         method: GET
       response:
         proto: HTTP/2.0
@@ -4977,27 +4873,25 @@ interactions:
         proto_minor: 0
         transfer_encoding: []
         trailer: {}
-        content_length: 50
-        uncompressed: false
+        content_length: -1
+        uncompressed: true
         body: |
-            {"message":"not found: srv-crfi4iq39eqs702lfd40"}
+            {"message":"not found: srv-cu2k54bqf0us73fbvdv0"}
         headers:
-            Content-Length:
-                - "50"
             Content-Type:
                 - application/json; charset=utf-8
             Date:
-                - Mon, 09 Sep 2024 16:29:03 GMT
+                - Mon, 13 Jan 2025 16:43:15 GMT
             Ratelimit-Limit:
-                - "10000"
+                - "400"
             Ratelimit-Remaining:
-                - "9934"
+                - "331"
             Ratelimit-Reset:
-                - "56"
+                - "44"
             Referrer-Policy:
                 - same-origin
             Render-Request-Id:
-                - api-76dcfc777b-j4kxq/nqfTj1kSz7-000651
+                - api-7767dddd75-m2trm/tatrYy6WLK-002486
             Vary:
                 - Origin
             X-Content-Type-Options:
@@ -5008,7 +4902,7 @@ interactions:
                 - 1; mode=block
         status: 404 Not Found
         code: 404
-        duration: 30.554708ms
+        duration: 170.354666ms
     - id: 86
       request:
         proto: HTTP/1.1
@@ -5027,7 +4921,7 @@ interactions:
                 - some-api-key
             User-Agent:
                 - terraform-provider-render/test
-        url: https://api.testing.render.com/v1/services/srv-crfi4iq39eqs702lfd40
+        url: https://api.testing.render.com/v1/services/srv-cu2k54bqf0us73fbvdv0
         method: DELETE
       response:
         proto: HTTP/2.0
@@ -5040,17 +4934,17 @@ interactions:
         body: ""
         headers:
             Date:
-                - Mon, 09 Sep 2024 16:29:03 GMT
+                - Mon, 13 Jan 2025 16:43:15 GMT
             Ratelimit-Limit:
-                - "10000"
+                - "100"
             Ratelimit-Remaining:
-                - "9996"
+                - "96"
             Ratelimit-Reset:
-                - "56"
+                - "44"
             Referrer-Policy:
                 - same-origin
             Render-Request-Id:
-                - api-76dcfc777b-j4kxq/nqfTj1kSz7-000652
+                - api-7767dddd75-m2trm/tatrYy6WLK-002490
             Vary:
                 - Origin
             X-Content-Type-Options:
@@ -5061,4 +4955,4 @@ interactions:
                 - 1; mode=block
         status: 204 No Content
         code: 204
-        duration: 123.598375ms
+        duration: 158.228416ms
