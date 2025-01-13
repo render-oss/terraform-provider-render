@@ -44,11 +44,18 @@ var EnvironmentProtectedStatus = schema.StringAttribute{
 	},
 }
 
+var EnvironmentNetworkIsolated = schema.BoolAttribute{
+	Optional:    true,
+	Computed:    true,
+	Description: "Whether services within this environment are isolated from network requests from other environments",
+}
+
 var Environment = schema.NestedAttributeObject{
 	Attributes: map[string]schema.Attribute{
 		"id":               EnvironmentID,
 		"name":             EnvironmentName,
 		"protected_status": EnvironmentProtectedStatus,
+		"network_isolated": EnvironmentNetworkIsolated,
 	},
 }
 

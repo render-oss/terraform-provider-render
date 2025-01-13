@@ -6,13 +6,13 @@ interactions:
         proto: HTTP/1.1
         proto_major: 1
         proto_minor: 1
-        content_length: 114
+        content_length: 146
         transfer_encoding: []
         trailer: {}
         host: https://api.testing.render.com/v1
         remote_addr: ""
         request_uri: ""
-        body: '{"environments":[{"name":"prod","protectedStatus":"protected"}],"name":"foo","ownerId":"some-owner-id"}'
+        body: '{"environments":[{"name":"prod","networkIsolationEnabled":false,"protectedStatus":"protected"}],"name":"foo","ownerId":"some-owner-id"}'
         form: {}
         headers:
             Authorization:
@@ -29,17 +29,17 @@ interactions:
         proto_minor: 0
         transfer_encoding: []
         trailer: {}
-        content_length: 294
+        content_length: 286
         uncompressed: false
         body: |
-            {"createdAt":"2024-09-04T00:03:16.205068Z","environmentIds":["evm-crbq7h23esus7393umj0"],"id":"prj-crbq7h23esus7393umig","name":"foo","owner":{"email":"email@example.com","id":"some-owner-id","name":"TerraformAcceptanceTesting","type":"team"},"updatedAt":"2024-09-04T00:03:16.205068Z"}
+            {"createdAt":"2025-01-13T16:09:16.897198Z","environmentIds":["evm-cu2jlb4uvdrs71saleqg"],"id":"prj-cu2jlb4uvdrs71saleq0","name":"foo","owner":{"email":"email@example.com","id":"some-owner-id","name":"Terraform Testing","type":"team"},"updatedAt":"2025-01-13T16:09:16.897198Z"}
         headers:
             Content-Length:
-                - "294"
+                - "286"
             Content-Type:
                 - application/json; charset=utf-8
             Date:
-                - Wed, 04 Sep 2024 00:03:16 GMT
+                - Mon, 13 Jan 2025 16:09:16 GMT
             Ratelimit-Limit:
                 - "100"
             Ratelimit-Remaining:
@@ -49,7 +49,7 @@ interactions:
             Referrer-Policy:
                 - same-origin
             Render-Request-Id:
-                - api-5dfb588d7c-vtfzv/Y6vInJ4FWm-469098
+                - api-59dfc564db-h462b/OaC6DLH6bZ-000096
             Vary:
                 - Origin
             X-Content-Type-Options:
@@ -60,7 +60,7 @@ interactions:
                 - 1; mode=block
         status: 201 Created
         code: 201
-        duration: 169.548583ms
+        duration: 251.110458ms
     - id: 1
       request:
         proto: HTTP/1.1
@@ -79,7 +79,7 @@ interactions:
                 - some-api-key
             User-Agent:
                 - terraform-provider-render/test
-        url: https://api.testing.render.com/v1/environments/evm-crbq7h23esus7393umj0
+        url: https://api.testing.render.com/v1/environments/evm-cu2jlb4uvdrs71saleqg
         method: GET
       response:
         proto: HTTP/2.0
@@ -87,25 +87,27 @@ interactions:
         proto_minor: 0
         transfer_encoding: []
         trailer: {}
-        content_length: -1
-        uncompressed: true
+        content_length: 222
+        uncompressed: false
         body: |
-            {"databasesIds":null,"envGroupIds":null,"id":"evm-crbq7h23esus7393umj0","name":"prod","projectId":"prj-crbq7h23esus7393umig","protectedStatus":"protected","redisIds":null,"serviceIds":null}
+            {"databasesIds":null,"envGroupIds":null,"id":"evm-cu2jlb4uvdrs71saleqg","name":"prod","networkIsolationEnabled":false,"projectId":"prj-cu2jlb4uvdrs71saleq0","protectedStatus":"protected","redisIds":null,"serviceIds":null}
         headers:
+            Content-Length:
+                - "222"
             Content-Type:
                 - application/json; charset=utf-8
             Date:
-                - Wed, 04 Sep 2024 00:03:16 GMT
+                - Mon, 13 Jan 2025 16:09:17 GMT
             Ratelimit-Limit:
                 - "400"
             Ratelimit-Remaining:
                 - "399"
             Ratelimit-Reset:
-                - "43"
+                - "42"
             Referrer-Policy:
                 - same-origin
             Render-Request-Id:
-                - api-5dfb588d7c-rpk2v/ghfGv3MfHH-1537498
+                - api-59dfc564db-h462b/OaC6DLH6bZ-000097
             Vary:
                 - Origin
             X-Content-Type-Options:
@@ -116,7 +118,7 @@ interactions:
                 - 1; mode=block
         status: 200 OK
         code: 200
-        duration: 74.848416ms
+        duration: 56.450959ms
     - id: 2
       request:
         proto: HTTP/1.1
@@ -135,7 +137,7 @@ interactions:
                 - some-api-key
             User-Agent:
                 - terraform-provider-render/test
-        url: https://api.testing.render.com/v1/projects/prj-crbq7h23esus7393umig
+        url: https://api.testing.render.com/v1/projects/prj-cu2jlb4uvdrs71saleq0
         method: GET
       response:
         proto: HTTP/2.0
@@ -143,25 +145,27 @@ interactions:
         proto_minor: 0
         transfer_encoding: []
         trailer: {}
-        content_length: -1
-        uncompressed: true
+        content_length: 286
+        uncompressed: false
         body: |
-            {"createdAt":"2024-09-04T00:03:16.205068Z","environmentIds":["evm-crbq7h23esus7393umj0"],"id":"prj-crbq7h23esus7393umig","name":"foo","owner":{"email":"email@example.com","id":"some-owner-id","name":"TerraformAcceptanceTesting","type":"team"},"updatedAt":"2024-09-04T00:03:16.205068Z"}
+            {"createdAt":"2025-01-13T16:09:16.897198Z","environmentIds":["evm-cu2jlb4uvdrs71saleqg"],"id":"prj-cu2jlb4uvdrs71saleq0","name":"foo","owner":{"email":"email@example.com","id":"some-owner-id","name":"Terraform Testing","type":"team"},"updatedAt":"2025-01-13T16:09:16.897198Z"}
         headers:
+            Content-Length:
+                - "286"
             Content-Type:
                 - application/json; charset=utf-8
             Date:
-                - Wed, 04 Sep 2024 00:03:16 GMT
+                - Mon, 13 Jan 2025 16:09:17 GMT
             Ratelimit-Limit:
                 - "400"
             Ratelimit-Remaining:
                 - "398"
             Ratelimit-Reset:
-                - "43"
+                - "42"
             Referrer-Policy:
                 - same-origin
             Render-Request-Id:
-                - api-5dfb588d7c-tjj9c/Cvjs9XM2VF-1107466
+                - api-59dfc564db-h462b/OaC6DLH6bZ-000098
             Vary:
                 - Origin
             X-Content-Type-Options:
@@ -172,7 +176,7 @@ interactions:
                 - 1; mode=block
         status: 200 OK
         code: 200
-        duration: 71.26025ms
+        duration: 115.162ms
     - id: 3
       request:
         proto: HTTP/1.1
@@ -191,7 +195,7 @@ interactions:
                 - some-api-key
             User-Agent:
                 - terraform-provider-render/test
-        url: https://api.testing.render.com/v1/environments/evm-crbq7h23esus7393umj0
+        url: https://api.testing.render.com/v1/environments/evm-cu2jlb4uvdrs71saleqg
         method: GET
       response:
         proto: HTTP/2.0
@@ -199,25 +203,27 @@ interactions:
         proto_minor: 0
         transfer_encoding: []
         trailer: {}
-        content_length: -1
-        uncompressed: true
+        content_length: 222
+        uncompressed: false
         body: |
-            {"databasesIds":null,"envGroupIds":null,"id":"evm-crbq7h23esus7393umj0","name":"prod","projectId":"prj-crbq7h23esus7393umig","protectedStatus":"protected","redisIds":null,"serviceIds":null}
+            {"databasesIds":null,"envGroupIds":null,"id":"evm-cu2jlb4uvdrs71saleqg","name":"prod","networkIsolationEnabled":false,"projectId":"prj-cu2jlb4uvdrs71saleq0","protectedStatus":"protected","redisIds":null,"serviceIds":null}
         headers:
+            Content-Length:
+                - "222"
             Content-Type:
                 - application/json; charset=utf-8
             Date:
-                - Wed, 04 Sep 2024 00:03:16 GMT
+                - Mon, 13 Jan 2025 16:09:17 GMT
             Ratelimit-Limit:
                 - "400"
             Ratelimit-Remaining:
                 - "397"
             Ratelimit-Reset:
-                - "43"
+                - "42"
             Referrer-Policy:
                 - same-origin
             Render-Request-Id:
-                - api-5dfb588d7c-vtfzv/Y6vInJ4FWm-469106
+                - api-59dfc564db-h462b/OaC6DLH6bZ-000099
             Vary:
                 - Origin
             X-Content-Type-Options:
@@ -228,7 +234,7 @@ interactions:
                 - 1; mode=block
         status: 200 OK
         code: 200
-        duration: 89.266333ms
+        duration: 57.825916ms
     - id: 4
       request:
         proto: HTTP/1.1
@@ -247,7 +253,7 @@ interactions:
                 - some-api-key
             User-Agent:
                 - terraform-provider-render/test
-        url: https://api.testing.render.com/v1/projects/prj-crbq7h23esus7393umig
+        url: https://api.testing.render.com/v1/projects/prj-cu2jlb4uvdrs71saleq0
         method: GET
       response:
         proto: HTTP/2.0
@@ -255,25 +261,27 @@ interactions:
         proto_minor: 0
         transfer_encoding: []
         trailer: {}
-        content_length: -1
-        uncompressed: true
+        content_length: 286
+        uncompressed: false
         body: |
-            {"createdAt":"2024-09-04T00:03:16.205068Z","environmentIds":["evm-crbq7h23esus7393umj0"],"id":"prj-crbq7h23esus7393umig","name":"foo","owner":{"email":"email@example.com","id":"some-owner-id","name":"TerraformAcceptanceTesting","type":"team"},"updatedAt":"2024-09-04T00:03:16.205068Z"}
+            {"createdAt":"2025-01-13T16:09:16.897198Z","environmentIds":["evm-cu2jlb4uvdrs71saleqg"],"id":"prj-cu2jlb4uvdrs71saleq0","name":"foo","owner":{"email":"email@example.com","id":"some-owner-id","name":"Terraform Testing","type":"team"},"updatedAt":"2025-01-13T16:09:16.897198Z"}
         headers:
+            Content-Length:
+                - "286"
             Content-Type:
                 - application/json; charset=utf-8
             Date:
-                - Wed, 04 Sep 2024 00:03:16 GMT
+                - Mon, 13 Jan 2025 16:09:17 GMT
             Ratelimit-Limit:
                 - "400"
             Ratelimit-Remaining:
                 - "396"
             Ratelimit-Reset:
-                - "43"
+                - "42"
             Referrer-Policy:
                 - same-origin
             Render-Request-Id:
-                - api-5dfb588d7c-rpk2v/ghfGv3MfHH-1537509
+                - api-59dfc564db-h462b/OaC6DLH6bZ-000100
             Vary:
                 - Origin
             X-Content-Type-Options:
@@ -284,7 +292,7 @@ interactions:
                 - 1; mode=block
         status: 200 OK
         code: 200
-        duration: 80.763833ms
+        duration: 88.85225ms
     - id: 5
       request:
         proto: HTTP/1.1
@@ -303,7 +311,7 @@ interactions:
                 - some-api-key
             User-Agent:
                 - terraform-provider-render/test
-        url: https://api.testing.render.com/v1/environments/evm-crbq7h23esus7393umj0
+        url: https://api.testing.render.com/v1/environments/evm-cu2jlb4uvdrs71saleqg
         method: GET
       response:
         proto: HTTP/2.0
@@ -311,25 +319,27 @@ interactions:
         proto_minor: 0
         transfer_encoding: []
         trailer: {}
-        content_length: -1
-        uncompressed: true
+        content_length: 222
+        uncompressed: false
         body: |
-            {"databasesIds":null,"envGroupIds":null,"id":"evm-crbq7h23esus7393umj0","name":"prod","projectId":"prj-crbq7h23esus7393umig","protectedStatus":"protected","redisIds":null,"serviceIds":null}
+            {"databasesIds":null,"envGroupIds":null,"id":"evm-cu2jlb4uvdrs71saleqg","name":"prod","networkIsolationEnabled":false,"projectId":"prj-cu2jlb4uvdrs71saleq0","protectedStatus":"protected","redisIds":null,"serviceIds":null}
         headers:
+            Content-Length:
+                - "222"
             Content-Type:
                 - application/json; charset=utf-8
             Date:
-                - Wed, 04 Sep 2024 00:03:16 GMT
+                - Mon, 13 Jan 2025 16:09:17 GMT
             Ratelimit-Limit:
                 - "400"
             Ratelimit-Remaining:
                 - "395"
             Ratelimit-Reset:
-                - "43"
+                - "42"
             Referrer-Policy:
                 - same-origin
             Render-Request-Id:
-                - api-5dfb588d7c-tjj9c/Cvjs9XM2VF-1107473
+                - api-59dfc564db-h462b/OaC6DLH6bZ-000101
             Vary:
                 - Origin
             X-Content-Type-Options:
@@ -340,7 +350,7 @@ interactions:
                 - 1; mode=block
         status: 200 OK
         code: 200
-        duration: 65.14975ms
+        duration: 58.825291ms
     - id: 6
       request:
         proto: HTTP/1.1
@@ -359,7 +369,7 @@ interactions:
                 - some-api-key
             User-Agent:
                 - terraform-provider-render/test
-        url: https://api.testing.render.com/v1/projects/prj-crbq7h23esus7393umig
+        url: https://api.testing.render.com/v1/projects/prj-cu2jlb4uvdrs71saleq0
         method: GET
       response:
         proto: HTTP/2.0
@@ -367,15 +377,17 @@ interactions:
         proto_minor: 0
         transfer_encoding: []
         trailer: {}
-        content_length: -1
-        uncompressed: true
+        content_length: 286
+        uncompressed: false
         body: |
-            {"createdAt":"2024-09-04T00:03:16.205068Z","environmentIds":["evm-crbq7h23esus7393umj0"],"id":"prj-crbq7h23esus7393umig","name":"foo","owner":{"email":"email@example.com","id":"some-owner-id","name":"TerraformAcceptanceTesting","type":"team"},"updatedAt":"2024-09-04T00:03:16.205068Z"}
+            {"createdAt":"2025-01-13T16:09:16.897198Z","environmentIds":["evm-cu2jlb4uvdrs71saleqg"],"id":"prj-cu2jlb4uvdrs71saleq0","name":"foo","owner":{"email":"email@example.com","id":"some-owner-id","name":"Terraform Testing","type":"team"},"updatedAt":"2025-01-13T16:09:16.897198Z"}
         headers:
+            Content-Length:
+                - "286"
             Content-Type:
                 - application/json; charset=utf-8
             Date:
-                - Wed, 04 Sep 2024 00:03:17 GMT
+                - Mon, 13 Jan 2025 16:09:18 GMT
             Ratelimit-Limit:
                 - "400"
             Ratelimit-Remaining:
@@ -385,7 +397,7 @@ interactions:
             Referrer-Policy:
                 - same-origin
             Render-Request-Id:
-                - api-5dfb588d7c-vtfzv/Y6vInJ4FWm-469116
+                - api-59dfc564db-h462b/OaC6DLH6bZ-000102
             Vary:
                 - Origin
             X-Content-Type-Options:
@@ -396,7 +408,7 @@ interactions:
                 - 1; mode=block
         status: 200 OK
         code: 200
-        duration: 74.752083ms
+        duration: 105.852792ms
     - id: 7
       request:
         proto: HTTP/1.1
@@ -415,7 +427,7 @@ interactions:
                 - some-api-key
             User-Agent:
                 - terraform-provider-render/test
-        url: https://api.testing.render.com/v1/environments/evm-crbq7h23esus7393umj0
+        url: https://api.testing.render.com/v1/environments/evm-cu2jlb4uvdrs71saleqg
         method: GET
       response:
         proto: HTTP/2.0
@@ -423,25 +435,27 @@ interactions:
         proto_minor: 0
         transfer_encoding: []
         trailer: {}
-        content_length: -1
-        uncompressed: true
+        content_length: 222
+        uncompressed: false
         body: |
-            {"databasesIds":null,"envGroupIds":null,"id":"evm-crbq7h23esus7393umj0","name":"prod","projectId":"prj-crbq7h23esus7393umig","protectedStatus":"protected","redisIds":null,"serviceIds":null}
+            {"databasesIds":null,"envGroupIds":null,"id":"evm-cu2jlb4uvdrs71saleqg","name":"prod","networkIsolationEnabled":false,"projectId":"prj-cu2jlb4uvdrs71saleq0","protectedStatus":"protected","redisIds":null,"serviceIds":null}
         headers:
+            Content-Length:
+                - "222"
             Content-Type:
                 - application/json; charset=utf-8
             Date:
-                - Wed, 04 Sep 2024 00:03:17 GMT
+                - Mon, 13 Jan 2025 16:09:18 GMT
             Ratelimit-Limit:
                 - "400"
             Ratelimit-Remaining:
                 - "393"
             Ratelimit-Reset:
-                - "42"
+                - "41"
             Referrer-Policy:
                 - same-origin
             Render-Request-Id:
-                - api-5dfb588d7c-rpk2v/ghfGv3MfHH-1537517
+                - api-59dfc564db-h462b/OaC6DLH6bZ-000103
             Vary:
                 - Origin
             X-Content-Type-Options:
@@ -452,7 +466,7 @@ interactions:
                 - 1; mode=block
         status: 200 OK
         code: 200
-        duration: 71.147125ms
+        duration: 57.128458ms
     - id: 8
       request:
         proto: HTTP/1.1
@@ -473,7 +487,7 @@ interactions:
                 - application/json
             User-Agent:
                 - terraform-provider-render/test
-        url: https://api.testing.render.com/v1/projects/prj-crbq7h23esus7393umig
+        url: https://api.testing.render.com/v1/projects/prj-cu2jlb4uvdrs71saleq0
         method: PATCH
       response:
         proto: HTTP/2.0
@@ -481,25 +495,27 @@ interactions:
         proto_minor: 0
         transfer_encoding: []
         trailer: {}
-        content_length: -1
-        uncompressed: true
+        content_length: 286
+        uncompressed: false
         body: |
-            {"createdAt":"2024-09-04T00:03:16.205068Z","environmentIds":["evm-crbq7h23esus7393umj0"],"id":"prj-crbq7h23esus7393umig","name":"bar","owner":{"email":"email@example.com","id":"some-owner-id","name":"TerraformAcceptanceTesting","type":"team"},"updatedAt":"2024-09-04T00:03:17.320888Z"}
+            {"createdAt":"2025-01-13T16:09:16.897198Z","environmentIds":["evm-cu2jlb4uvdrs71saleqg"],"id":"prj-cu2jlb4uvdrs71saleq0","name":"bar","owner":{"email":"email@example.com","id":"some-owner-id","name":"Terraform Testing","type":"team"},"updatedAt":"2025-01-13T16:09:18.375085Z"}
         headers:
+            Content-Length:
+                - "286"
             Content-Type:
                 - application/json; charset=utf-8
             Date:
-                - Wed, 04 Sep 2024 00:03:17 GMT
+                - Mon, 13 Jan 2025 16:09:18 GMT
             Ratelimit-Limit:
                 - "100"
             Ratelimit-Remaining:
                 - "98"
             Ratelimit-Reset:
-                - "42"
+                - "41"
             Referrer-Policy:
                 - same-origin
             Render-Request-Id:
-                - api-5dfb588d7c-tjj9c/Cvjs9XM2VF-1107480
+                - api-59dfc564db-h462b/OaC6DLH6bZ-000104
             Vary:
                 - Origin
             X-Content-Type-Options:
@@ -510,19 +526,19 @@ interactions:
                 - 1; mode=block
         status: 200 OK
         code: 200
-        duration: 77.497041ms
+        duration: 106.941417ms
     - id: 9
       request:
         proto: HTTP/1.1
         proto_major: 1
         proto_minor: 1
-        content_length: 45
+        content_length: 77
         transfer_encoding: []
         trailer: {}
         host: https://api.testing.render.com/v1
         remote_addr: ""
         request_uri: ""
-        body: '{"name":"prod","protectedStatus":"protected"}'
+        body: '{"name":"prod","networkIsolationEnabled":false,"protectedStatus":"protected"}'
         form: {}
         headers:
             Authorization:
@@ -531,7 +547,7 @@ interactions:
                 - application/json
             User-Agent:
                 - terraform-provider-render/test
-        url: https://api.testing.render.com/v1/environments/evm-crbq7h23esus7393umj0
+        url: https://api.testing.render.com/v1/environments/evm-cu2jlb4uvdrs71saleqg
         method: PATCH
       response:
         proto: HTTP/2.0
@@ -539,25 +555,27 @@ interactions:
         proto_minor: 0
         transfer_encoding: []
         trailer: {}
-        content_length: -1
-        uncompressed: true
+        content_length: 222
+        uncompressed: false
         body: |
-            {"databasesIds":null,"envGroupIds":null,"id":"evm-crbq7h23esus7393umj0","name":"prod","projectId":"prj-crbq7h23esus7393umig","protectedStatus":"protected","redisIds":null,"serviceIds":null}
+            {"databasesIds":null,"envGroupIds":null,"id":"evm-cu2jlb4uvdrs71saleqg","name":"prod","networkIsolationEnabled":false,"projectId":"prj-cu2jlb4uvdrs71saleq0","protectedStatus":"protected","redisIds":null,"serviceIds":null}
         headers:
+            Content-Length:
+                - "222"
             Content-Type:
                 - application/json; charset=utf-8
             Date:
-                - Wed, 04 Sep 2024 00:03:17 GMT
+                - Mon, 13 Jan 2025 16:09:18 GMT
             Ratelimit-Limit:
                 - "100"
             Ratelimit-Remaining:
                 - "97"
             Ratelimit-Reset:
-                - "42"
+                - "41"
             Referrer-Policy:
                 - same-origin
             Render-Request-Id:
-                - api-5dfb588d7c-vtfzv/Y6vInJ4FWm-469121
+                - api-59dfc564db-h462b/OaC6DLH6bZ-000105
             Vary:
                 - Origin
             X-Content-Type-Options:
@@ -568,7 +586,7 @@ interactions:
                 - 1; mode=block
         status: 200 OK
         code: 200
-        duration: 80.760875ms
+        duration: 104.472583ms
     - id: 10
       request:
         proto: HTTP/1.1
@@ -587,7 +605,7 @@ interactions:
                 - some-api-key
             User-Agent:
                 - terraform-provider-render/test
-        url: https://api.testing.render.com/v1/projects/prj-crbq7h23esus7393umig
+        url: https://api.testing.render.com/v1/projects/prj-cu2jlb4uvdrs71saleq0
         method: GET
       response:
         proto: HTTP/2.0
@@ -595,25 +613,27 @@ interactions:
         proto_minor: 0
         transfer_encoding: []
         trailer: {}
-        content_length: -1
-        uncompressed: true
+        content_length: 286
+        uncompressed: false
         body: |
-            {"createdAt":"2024-09-04T00:03:16.205068Z","environmentIds":["evm-crbq7h23esus7393umj0"],"id":"prj-crbq7h23esus7393umig","name":"bar","owner":{"email":"email@example.com","id":"some-owner-id","name":"TerraformAcceptanceTesting","type":"team"},"updatedAt":"2024-09-04T00:03:17.320888Z"}
+            {"createdAt":"2025-01-13T16:09:16.897198Z","environmentIds":["evm-cu2jlb4uvdrs71saleqg"],"id":"prj-cu2jlb4uvdrs71saleq0","name":"bar","owner":{"email":"email@example.com","id":"some-owner-id","name":"Terraform Testing","type":"team"},"updatedAt":"2025-01-13T16:09:18.375085Z"}
         headers:
+            Content-Length:
+                - "286"
             Content-Type:
                 - application/json; charset=utf-8
             Date:
-                - Wed, 04 Sep 2024 00:03:17 GMT
+                - Mon, 13 Jan 2025 16:09:18 GMT
             Ratelimit-Limit:
                 - "400"
             Ratelimit-Remaining:
                 - "392"
             Ratelimit-Reset:
-                - "42"
+                - "41"
             Referrer-Policy:
                 - same-origin
             Render-Request-Id:
-                - api-5dfb588d7c-rpk2v/ghfGv3MfHH-1537529
+                - api-59dfc564db-h462b/OaC6DLH6bZ-000106
             Vary:
                 - Origin
             X-Content-Type-Options:
@@ -624,7 +644,7 @@ interactions:
                 - 1; mode=block
         status: 200 OK
         code: 200
-        duration: 85.950417ms
+        duration: 92.913709ms
     - id: 11
       request:
         proto: HTTP/1.1
@@ -643,7 +663,7 @@ interactions:
                 - some-api-key
             User-Agent:
                 - terraform-provider-render/test
-        url: https://api.testing.render.com/v1/environments/evm-crbq7h23esus7393umj0
+        url: https://api.testing.render.com/v1/environments/evm-cu2jlb4uvdrs71saleqg
         method: GET
       response:
         proto: HTTP/2.0
@@ -651,25 +671,27 @@ interactions:
         proto_minor: 0
         transfer_encoding: []
         trailer: {}
-        content_length: -1
-        uncompressed: true
+        content_length: 222
+        uncompressed: false
         body: |
-            {"databasesIds":null,"envGroupIds":null,"id":"evm-crbq7h23esus7393umj0","name":"prod","projectId":"prj-crbq7h23esus7393umig","protectedStatus":"protected","redisIds":null,"serviceIds":null}
+            {"databasesIds":null,"envGroupIds":null,"id":"evm-cu2jlb4uvdrs71saleqg","name":"prod","networkIsolationEnabled":false,"projectId":"prj-cu2jlb4uvdrs71saleq0","protectedStatus":"protected","redisIds":null,"serviceIds":null}
         headers:
+            Content-Length:
+                - "222"
             Content-Type:
                 - application/json; charset=utf-8
             Date:
-                - Wed, 04 Sep 2024 00:03:17 GMT
+                - Mon, 13 Jan 2025 16:09:19 GMT
             Ratelimit-Limit:
                 - "400"
             Ratelimit-Remaining:
                 - "391"
             Ratelimit-Reset:
-                - "42"
+                - "41"
             Referrer-Policy:
                 - same-origin
             Render-Request-Id:
-                - api-5dfb588d7c-tjj9c/Cvjs9XM2VF-1107487
+                - api-59dfc564db-h462b/OaC6DLH6bZ-000107
             Vary:
                 - Origin
             X-Content-Type-Options:
@@ -680,7 +702,7 @@ interactions:
                 - 1; mode=block
         status: 200 OK
         code: 200
-        duration: 68.381958ms
+        duration: 51.235458ms
     - id: 12
       request:
         proto: HTTP/1.1
@@ -699,7 +721,7 @@ interactions:
                 - some-api-key
             User-Agent:
                 - terraform-provider-render/test
-        url: https://api.testing.render.com/v1/projects/prj-crbq7h23esus7393umig
+        url: https://api.testing.render.com/v1/projects/prj-cu2jlb4uvdrs71saleq0
         method: GET
       response:
         proto: HTTP/2.0
@@ -707,25 +729,27 @@ interactions:
         proto_minor: 0
         transfer_encoding: []
         trailer: {}
-        content_length: -1
-        uncompressed: true
+        content_length: 286
+        uncompressed: false
         body: |
-            {"createdAt":"2024-09-04T00:03:16.205068Z","environmentIds":["evm-crbq7h23esus7393umj0"],"id":"prj-crbq7h23esus7393umig","name":"bar","owner":{"email":"email@example.com","id":"some-owner-id","name":"TerraformAcceptanceTesting","type":"team"},"updatedAt":"2024-09-04T00:03:17.320888Z"}
+            {"createdAt":"2025-01-13T16:09:16.897198Z","environmentIds":["evm-cu2jlb4uvdrs71saleqg"],"id":"prj-cu2jlb4uvdrs71saleq0","name":"bar","owner":{"email":"email@example.com","id":"some-owner-id","name":"Terraform Testing","type":"team"},"updatedAt":"2025-01-13T16:09:18.375085Z"}
         headers:
+            Content-Length:
+                - "286"
             Content-Type:
                 - application/json; charset=utf-8
             Date:
-                - Wed, 04 Sep 2024 00:03:17 GMT
+                - Mon, 13 Jan 2025 16:09:19 GMT
             Ratelimit-Limit:
                 - "400"
             Ratelimit-Remaining:
                 - "390"
             Ratelimit-Reset:
-                - "42"
+                - "40"
             Referrer-Policy:
                 - same-origin
             Render-Request-Id:
-                - api-5dfb588d7c-vtfzv/Y6vInJ4FWm-469126
+                - api-59dfc564db-h462b/OaC6DLH6bZ-000108
             Vary:
                 - Origin
             X-Content-Type-Options:
@@ -736,7 +760,7 @@ interactions:
                 - 1; mode=block
         status: 200 OK
         code: 200
-        duration: 74.06825ms
+        duration: 99.371958ms
     - id: 13
       request:
         proto: HTTP/1.1
@@ -755,7 +779,7 @@ interactions:
                 - some-api-key
             User-Agent:
                 - terraform-provider-render/test
-        url: https://api.testing.render.com/v1/environments/evm-crbq7h23esus7393umj0
+        url: https://api.testing.render.com/v1/environments/evm-cu2jlb4uvdrs71saleqg
         method: GET
       response:
         proto: HTTP/2.0
@@ -763,25 +787,27 @@ interactions:
         proto_minor: 0
         transfer_encoding: []
         trailer: {}
-        content_length: -1
-        uncompressed: true
+        content_length: 222
+        uncompressed: false
         body: |
-            {"databasesIds":null,"envGroupIds":null,"id":"evm-crbq7h23esus7393umj0","name":"prod","projectId":"prj-crbq7h23esus7393umig","protectedStatus":"protected","redisIds":null,"serviceIds":null}
+            {"databasesIds":null,"envGroupIds":null,"id":"evm-cu2jlb4uvdrs71saleqg","name":"prod","networkIsolationEnabled":false,"projectId":"prj-cu2jlb4uvdrs71saleq0","protectedStatus":"protected","redisIds":null,"serviceIds":null}
         headers:
+            Content-Length:
+                - "222"
             Content-Type:
                 - application/json; charset=utf-8
             Date:
-                - Wed, 04 Sep 2024 00:03:17 GMT
+                - Mon, 13 Jan 2025 16:09:19 GMT
             Ratelimit-Limit:
                 - "400"
             Ratelimit-Remaining:
                 - "389"
             Ratelimit-Reset:
-                - "42"
+                - "40"
             Referrer-Policy:
                 - same-origin
             Render-Request-Id:
-                - api-5dfb588d7c-rpk2v/ghfGv3MfHH-1537533
+                - api-59dfc564db-h462b/OaC6DLH6bZ-000109
             Vary:
                 - Origin
             X-Content-Type-Options:
@@ -792,7 +818,7 @@ interactions:
                 - 1; mode=block
         status: 200 OK
         code: 200
-        duration: 74.368ms
+        duration: 52.308833ms
     - id: 14
       request:
         proto: HTTP/1.1
@@ -813,7 +839,7 @@ interactions:
                 - application/json
             User-Agent:
                 - terraform-provider-render/test
-        url: https://api.testing.render.com/v1/projects/prj-crbq7h23esus7393umig
+        url: https://api.testing.render.com/v1/projects/prj-cu2jlb4uvdrs71saleq0
         method: PATCH
       response:
         proto: HTTP/2.0
@@ -821,25 +847,27 @@ interactions:
         proto_minor: 0
         transfer_encoding: []
         trailer: {}
-        content_length: -1
-        uncompressed: true
+        content_length: 286
+        uncompressed: false
         body: |
-            {"createdAt":"2024-09-04T00:03:16.205068Z","environmentIds":["evm-crbq7h23esus7393umj0"],"id":"prj-crbq7h23esus7393umig","name":"bar","owner":{"email":"email@example.com","id":"some-owner-id","name":"TerraformAcceptanceTesting","type":"team"},"updatedAt":"2024-09-04T00:03:18.148564Z"}
+            {"createdAt":"2025-01-13T16:09:16.897198Z","environmentIds":["evm-cu2jlb4uvdrs71saleqg"],"id":"prj-cu2jlb4uvdrs71saleq0","name":"bar","owner":{"email":"email@example.com","id":"some-owner-id","name":"Terraform Testing","type":"team"},"updatedAt":"2025-01-13T16:09:19.543086Z"}
         headers:
+            Content-Length:
+                - "286"
             Content-Type:
                 - application/json; charset=utf-8
             Date:
-                - Wed, 04 Sep 2024 00:03:18 GMT
+                - Mon, 13 Jan 2025 16:09:19 GMT
             Ratelimit-Limit:
                 - "100"
             Ratelimit-Remaining:
                 - "96"
             Ratelimit-Reset:
-                - "41"
+                - "40"
             Referrer-Policy:
                 - same-origin
             Render-Request-Id:
-                - api-5dfb588d7c-tjj9c/Cvjs9XM2VF-1107489
+                - api-59dfc564db-h462b/OaC6DLH6bZ-000110
             Vary:
                 - Origin
             X-Content-Type-Options:
@@ -850,19 +878,19 @@ interactions:
                 - 1; mode=block
         status: 200 OK
         code: 200
-        duration: 108.254375ms
+        duration: 110.725458ms
     - id: 15
       request:
         proto: HTTP/1.1
         proto_major: 1
         proto_minor: 1
-        content_length: 45
+        content_length: 77
         transfer_encoding: []
         trailer: {}
         host: https://api.testing.render.com/v1
         remote_addr: ""
         request_uri: ""
-        body: '{"name":"prod","protectedStatus":"protected"}'
+        body: '{"name":"prod","networkIsolationEnabled":false,"protectedStatus":"protected"}'
         form: {}
         headers:
             Authorization:
@@ -871,7 +899,7 @@ interactions:
                 - application/json
             User-Agent:
                 - terraform-provider-render/test
-        url: https://api.testing.render.com/v1/environments/evm-crbq7h23esus7393umj0
+        url: https://api.testing.render.com/v1/environments/evm-cu2jlb4uvdrs71saleqg
         method: PATCH
       response:
         proto: HTTP/2.0
@@ -879,25 +907,27 @@ interactions:
         proto_minor: 0
         transfer_encoding: []
         trailer: {}
-        content_length: -1
-        uncompressed: true
+        content_length: 222
+        uncompressed: false
         body: |
-            {"databasesIds":null,"envGroupIds":null,"id":"evm-crbq7h23esus7393umj0","name":"prod","projectId":"prj-crbq7h23esus7393umig","protectedStatus":"protected","redisIds":null,"serviceIds":null}
+            {"databasesIds":null,"envGroupIds":null,"id":"evm-cu2jlb4uvdrs71saleqg","name":"prod","networkIsolationEnabled":false,"projectId":"prj-cu2jlb4uvdrs71saleq0","protectedStatus":"protected","redisIds":null,"serviceIds":null}
         headers:
+            Content-Length:
+                - "222"
             Content-Type:
                 - application/json; charset=utf-8
             Date:
-                - Wed, 04 Sep 2024 00:03:18 GMT
+                - Mon, 13 Jan 2025 16:09:19 GMT
             Ratelimit-Limit:
                 - "100"
             Ratelimit-Remaining:
                 - "95"
             Ratelimit-Reset:
-                - "41"
+                - "40"
             Referrer-Policy:
                 - same-origin
             Render-Request-Id:
-                - api-5dfb588d7c-vtfzv/Y6vInJ4FWm-469128
+                - api-59dfc564db-h462b/OaC6DLH6bZ-000111
             Vary:
                 - Origin
             X-Content-Type-Options:
@@ -908,19 +938,19 @@ interactions:
                 - 1; mode=block
         status: 200 OK
         code: 200
-        duration: 90.493ms
+        duration: 90.229583ms
     - id: 16
       request:
         proto: HTTP/1.1
         proto_major: 1
         proto_minor: 1
-        content_length: 89
+        content_length: 120
         transfer_encoding: []
         trailer: {}
         host: https://api.testing.render.com/v1
         remote_addr: ""
         request_uri: ""
-        body: '{"name":"staging","projectId":"prj-crbq7h23esus7393umig","protectedStatus":"unprotected"}'
+        body: '{"name":"staging","networkIsolationEnabled":true,"projectId":"prj-cu2jlb4uvdrs71saleq0","protectedStatus":"unprotected"}'
         form: {}
         headers:
             Authorization:
@@ -937,27 +967,27 @@ interactions:
         proto_minor: 0
         transfer_encoding: []
         trailer: {}
-        content_length: 195
+        content_length: 226
         uncompressed: false
         body: |
-            {"databasesIds":null,"envGroupIds":null,"id":"evm-crbq7hjv2p9s73djk3o0","name":"staging","projectId":"prj-crbq7h23esus7393umig","protectedStatus":"unprotected","redisIds":null,"serviceIds":null}
+            {"databasesIds":null,"envGroupIds":null,"id":"evm-cu2jlbsuvdrs71saler0","name":"staging","networkIsolationEnabled":true,"projectId":"prj-cu2jlb4uvdrs71saleq0","protectedStatus":"unprotected","redisIds":null,"serviceIds":null}
         headers:
             Content-Length:
-                - "195"
+                - "226"
             Content-Type:
                 - application/json; charset=utf-8
             Date:
-                - Wed, 04 Sep 2024 00:03:18 GMT
+                - Mon, 13 Jan 2025 16:09:19 GMT
             Ratelimit-Limit:
                 - "100"
             Ratelimit-Remaining:
                 - "94"
             Ratelimit-Reset:
-                - "41"
+                - "40"
             Referrer-Policy:
                 - same-origin
             Render-Request-Id:
-                - api-5dfb588d7c-rpk2v/ghfGv3MfHH-1537538
+                - api-59dfc564db-h462b/OaC6DLH6bZ-000112
             Vary:
                 - Origin
             X-Content-Type-Options:
@@ -968,7 +998,7 @@ interactions:
                 - 1; mode=block
         status: 201 Created
         code: 201
-        duration: 70.371875ms
+        duration: 109.291208ms
     - id: 17
       request:
         proto: HTTP/1.1
@@ -987,7 +1017,7 @@ interactions:
                 - some-api-key
             User-Agent:
                 - terraform-provider-render/test
-        url: https://api.testing.render.com/v1/projects/prj-crbq7h23esus7393umig
+        url: https://api.testing.render.com/v1/projects/prj-cu2jlb4uvdrs71saleq0
         method: GET
       response:
         proto: HTTP/2.0
@@ -995,25 +1025,27 @@ interactions:
         proto_minor: 0
         transfer_encoding: []
         trailer: {}
-        content_length: -1
-        uncompressed: true
+        content_length: 313
+        uncompressed: false
         body: |
-            {"createdAt":"2024-09-04T00:03:16.205068Z","environmentIds":["evm-crbq7h23esus7393umj0","evm-crbq7hjv2p9s73djk3o0"],"id":"prj-crbq7h23esus7393umig","name":"bar","owner":{"email":"email@example.com","id":"some-owner-id","name":"TerraformAcceptanceTesting","type":"team"},"updatedAt":"2024-09-04T00:03:18.148564Z"}
+            {"createdAt":"2025-01-13T16:09:16.897198Z","environmentIds":["evm-cu2jlb4uvdrs71saleqg","evm-cu2jlbsuvdrs71saler0"],"id":"prj-cu2jlb4uvdrs71saleq0","name":"bar","owner":{"email":"email@example.com","id":"some-owner-id","name":"Terraform Testing","type":"team"},"updatedAt":"2025-01-13T16:09:19.543086Z"}
         headers:
+            Content-Length:
+                - "313"
             Content-Type:
                 - application/json; charset=utf-8
             Date:
-                - Wed, 04 Sep 2024 00:03:18 GMT
+                - Mon, 13 Jan 2025 16:09:20 GMT
             Ratelimit-Limit:
                 - "400"
             Ratelimit-Remaining:
                 - "388"
             Ratelimit-Reset:
-                - "41"
+                - "39"
             Referrer-Policy:
                 - same-origin
             Render-Request-Id:
-                - api-5dfb588d7c-tjj9c/Cvjs9XM2VF-1107502
+                - api-59dfc564db-h462b/OaC6DLH6bZ-000113
             Vary:
                 - Origin
             X-Content-Type-Options:
@@ -1024,7 +1056,7 @@ interactions:
                 - 1; mode=block
         status: 200 OK
         code: 200
-        duration: 71.189875ms
+        duration: 109.693291ms
     - id: 18
       request:
         proto: HTTP/1.1
@@ -1043,7 +1075,7 @@ interactions:
                 - some-api-key
             User-Agent:
                 - terraform-provider-render/test
-        url: https://api.testing.render.com/v1/environments/evm-crbq7h23esus7393umj0
+        url: https://api.testing.render.com/v1/environments/evm-cu2jlb4uvdrs71saleqg
         method: GET
       response:
         proto: HTTP/2.0
@@ -1051,25 +1083,27 @@ interactions:
         proto_minor: 0
         transfer_encoding: []
         trailer: {}
-        content_length: -1
-        uncompressed: true
+        content_length: 222
+        uncompressed: false
         body: |
-            {"databasesIds":null,"envGroupIds":null,"id":"evm-crbq7h23esus7393umj0","name":"prod","projectId":"prj-crbq7h23esus7393umig","protectedStatus":"protected","redisIds":null,"serviceIds":null}
+            {"databasesIds":null,"envGroupIds":null,"id":"evm-cu2jlb4uvdrs71saleqg","name":"prod","networkIsolationEnabled":false,"projectId":"prj-cu2jlb4uvdrs71saleq0","protectedStatus":"protected","redisIds":null,"serviceIds":null}
         headers:
+            Content-Length:
+                - "222"
             Content-Type:
                 - application/json; charset=utf-8
             Date:
-                - Wed, 04 Sep 2024 00:03:18 GMT
+                - Mon, 13 Jan 2025 16:09:20 GMT
             Ratelimit-Limit:
                 - "400"
             Ratelimit-Remaining:
                 - "387"
             Ratelimit-Reset:
-                - "41"
+                - "39"
             Referrer-Policy:
                 - same-origin
             Render-Request-Id:
-                - api-5dfb588d7c-vtfzv/Y6vInJ4FWm-469131
+                - api-59dfc564db-h462b/OaC6DLH6bZ-000114
             Vary:
                 - Origin
             X-Content-Type-Options:
@@ -1080,7 +1114,7 @@ interactions:
                 - 1; mode=block
         status: 200 OK
         code: 200
-        duration: 70.598666ms
+        duration: 49.570208ms
     - id: 19
       request:
         proto: HTTP/1.1
@@ -1099,7 +1133,7 @@ interactions:
                 - some-api-key
             User-Agent:
                 - terraform-provider-render/test
-        url: https://api.testing.render.com/v1/environments/evm-crbq7hjv2p9s73djk3o0
+        url: https://api.testing.render.com/v1/environments/evm-cu2jlbsuvdrs71saler0
         method: GET
       response:
         proto: HTTP/2.0
@@ -1107,25 +1141,27 @@ interactions:
         proto_minor: 0
         transfer_encoding: []
         trailer: {}
-        content_length: -1
-        uncompressed: true
+        content_length: 226
+        uncompressed: false
         body: |
-            {"databasesIds":null,"envGroupIds":null,"id":"evm-crbq7hjv2p9s73djk3o0","name":"staging","projectId":"prj-crbq7h23esus7393umig","protectedStatus":"unprotected","redisIds":null,"serviceIds":null}
+            {"databasesIds":null,"envGroupIds":null,"id":"evm-cu2jlbsuvdrs71saler0","name":"staging","networkIsolationEnabled":true,"projectId":"prj-cu2jlb4uvdrs71saleq0","protectedStatus":"unprotected","redisIds":null,"serviceIds":null}
         headers:
+            Content-Length:
+                - "226"
             Content-Type:
                 - application/json; charset=utf-8
             Date:
-                - Wed, 04 Sep 2024 00:03:18 GMT
+                - Mon, 13 Jan 2025 16:09:20 GMT
             Ratelimit-Limit:
                 - "400"
             Ratelimit-Remaining:
                 - "386"
             Ratelimit-Reset:
-                - "41"
+                - "39"
             Referrer-Policy:
                 - same-origin
             Render-Request-Id:
-                - api-5dfb588d7c-rpk2v/ghfGv3MfHH-1537544
+                - api-59dfc564db-h462b/OaC6DLH6bZ-000115
             Vary:
                 - Origin
             X-Content-Type-Options:
@@ -1136,7 +1172,7 @@ interactions:
                 - 1; mode=block
         status: 200 OK
         code: 200
-        duration: 61.396292ms
+        duration: 58.349542ms
     - id: 20
       request:
         proto: HTTP/1.1
@@ -1155,7 +1191,7 @@ interactions:
                 - some-api-key
             User-Agent:
                 - terraform-provider-render/test
-        url: https://api.testing.render.com/v1/projects/prj-crbq7h23esus7393umig
+        url: https://api.testing.render.com/v1/projects/prj-cu2jlb4uvdrs71saleq0
         method: GET
       response:
         proto: HTTP/2.0
@@ -1163,25 +1199,27 @@ interactions:
         proto_minor: 0
         transfer_encoding: []
         trailer: {}
-        content_length: -1
-        uncompressed: true
+        content_length: 313
+        uncompressed: false
         body: |
-            {"createdAt":"2024-09-04T00:03:16.205068Z","environmentIds":["evm-crbq7h23esus7393umj0","evm-crbq7hjv2p9s73djk3o0"],"id":"prj-crbq7h23esus7393umig","name":"bar","owner":{"email":"email@example.com","id":"some-owner-id","name":"TerraformAcceptanceTesting","type":"team"},"updatedAt":"2024-09-04T00:03:18.148564Z"}
+            {"createdAt":"2025-01-13T16:09:16.897198Z","environmentIds":["evm-cu2jlb4uvdrs71saleqg","evm-cu2jlbsuvdrs71saler0"],"id":"prj-cu2jlb4uvdrs71saleq0","name":"bar","owner":{"email":"email@example.com","id":"some-owner-id","name":"Terraform Testing","type":"team"},"updatedAt":"2025-01-13T16:09:19.543086Z"}
         headers:
+            Content-Length:
+                - "313"
             Content-Type:
                 - application/json; charset=utf-8
             Date:
-                - Wed, 04 Sep 2024 00:03:18 GMT
+                - Mon, 13 Jan 2025 16:09:20 GMT
             Ratelimit-Limit:
                 - "400"
             Ratelimit-Remaining:
                 - "385"
             Ratelimit-Reset:
-                - "41"
+                - "39"
             Referrer-Policy:
                 - same-origin
             Render-Request-Id:
-                - api-5dfb588d7c-tjj9c/Cvjs9XM2VF-1107508
+                - api-59dfc564db-h462b/OaC6DLH6bZ-000116
             Vary:
                 - Origin
             X-Content-Type-Options:
@@ -1192,7 +1230,7 @@ interactions:
                 - 1; mode=block
         status: 200 OK
         code: 200
-        duration: 88.26175ms
+        duration: 91.061291ms
     - id: 21
       request:
         proto: HTTP/1.1
@@ -1211,7 +1249,7 @@ interactions:
                 - some-api-key
             User-Agent:
                 - terraform-provider-render/test
-        url: https://api.testing.render.com/v1/environments/evm-crbq7h23esus7393umj0
+        url: https://api.testing.render.com/v1/environments/evm-cu2jlb4uvdrs71saleqg
         method: GET
       response:
         proto: HTTP/2.0
@@ -1219,25 +1257,27 @@ interactions:
         proto_minor: 0
         transfer_encoding: []
         trailer: {}
-        content_length: -1
-        uncompressed: true
+        content_length: 222
+        uncompressed: false
         body: |
-            {"databasesIds":null,"envGroupIds":null,"id":"evm-crbq7h23esus7393umj0","name":"prod","projectId":"prj-crbq7h23esus7393umig","protectedStatus":"protected","redisIds":null,"serviceIds":null}
+            {"databasesIds":null,"envGroupIds":null,"id":"evm-cu2jlb4uvdrs71saleqg","name":"prod","networkIsolationEnabled":false,"projectId":"prj-cu2jlb4uvdrs71saleq0","protectedStatus":"protected","redisIds":null,"serviceIds":null}
         headers:
+            Content-Length:
+                - "222"
             Content-Type:
                 - application/json; charset=utf-8
             Date:
-                - Wed, 04 Sep 2024 00:03:18 GMT
+                - Mon, 13 Jan 2025 16:09:20 GMT
             Ratelimit-Limit:
                 - "400"
             Ratelimit-Remaining:
                 - "384"
             Ratelimit-Reset:
-                - "41"
+                - "39"
             Referrer-Policy:
                 - same-origin
             Render-Request-Id:
-                - api-5dfb588d7c-vtfzv/Y6vInJ4FWm-469134
+                - api-59dfc564db-h462b/OaC6DLH6bZ-000117
             Vary:
                 - Origin
             X-Content-Type-Options:
@@ -1248,7 +1288,7 @@ interactions:
                 - 1; mode=block
         status: 200 OK
         code: 200
-        duration: 71.429333ms
+        duration: 51.328375ms
     - id: 22
       request:
         proto: HTTP/1.1
@@ -1267,7 +1307,7 @@ interactions:
                 - some-api-key
             User-Agent:
                 - terraform-provider-render/test
-        url: https://api.testing.render.com/v1/environments/evm-crbq7hjv2p9s73djk3o0
+        url: https://api.testing.render.com/v1/environments/evm-cu2jlbsuvdrs71saler0
         method: GET
       response:
         proto: HTTP/2.0
@@ -1275,25 +1315,27 @@ interactions:
         proto_minor: 0
         transfer_encoding: []
         trailer: {}
-        content_length: -1
-        uncompressed: true
+        content_length: 226
+        uncompressed: false
         body: |
-            {"databasesIds":null,"envGroupIds":null,"id":"evm-crbq7hjv2p9s73djk3o0","name":"staging","projectId":"prj-crbq7h23esus7393umig","protectedStatus":"unprotected","redisIds":null,"serviceIds":null}
+            {"databasesIds":null,"envGroupIds":null,"id":"evm-cu2jlbsuvdrs71saler0","name":"staging","networkIsolationEnabled":true,"projectId":"prj-cu2jlb4uvdrs71saleq0","protectedStatus":"unprotected","redisIds":null,"serviceIds":null}
         headers:
+            Content-Length:
+                - "226"
             Content-Type:
                 - application/json; charset=utf-8
             Date:
-                - Wed, 04 Sep 2024 00:03:19 GMT
+                - Mon, 13 Jan 2025 16:09:21 GMT
             Ratelimit-Limit:
                 - "400"
             Ratelimit-Remaining:
                 - "383"
             Ratelimit-Reset:
-                - "40"
+                - "39"
             Referrer-Policy:
                 - same-origin
             Render-Request-Id:
-                - api-5dfb588d7c-rpk2v/ghfGv3MfHH-1537548
+                - api-59dfc564db-h462b/OaC6DLH6bZ-000118
             Vary:
                 - Origin
             X-Content-Type-Options:
@@ -1304,7 +1346,7 @@ interactions:
                 - 1; mode=block
         status: 200 OK
         code: 200
-        duration: 78.684584ms
+        duration: 53.928625ms
     - id: 23
       request:
         proto: HTTP/1.1
@@ -1325,7 +1367,7 @@ interactions:
                 - application/json
             User-Agent:
                 - terraform-provider-render/test
-        url: https://api.testing.render.com/v1/projects/prj-crbq7h23esus7393umig
+        url: https://api.testing.render.com/v1/projects/prj-cu2jlb4uvdrs71saleq0
         method: PATCH
       response:
         proto: HTTP/2.0
@@ -1333,25 +1375,27 @@ interactions:
         proto_minor: 0
         transfer_encoding: []
         trailer: {}
-        content_length: -1
-        uncompressed: true
+        content_length: 312
+        uncompressed: false
         body: |
-            {"createdAt":"2024-09-04T00:03:16.205068Z","environmentIds":["evm-crbq7h23esus7393umj0","evm-crbq7hjv2p9s73djk3o0"],"id":"prj-crbq7h23esus7393umig","name":"bar","owner":{"email":"email@example.com","id":"some-owner-id","name":"TerraformAcceptanceTesting","type":"team"},"updatedAt":"2024-09-04T00:03:19.207638Z"}
+            {"createdAt":"2025-01-13T16:09:16.897198Z","environmentIds":["evm-cu2jlb4uvdrs71saleqg","evm-cu2jlbsuvdrs71saler0"],"id":"prj-cu2jlb4uvdrs71saleq0","name":"bar","owner":{"email":"email@example.com","id":"some-owner-id","name":"Terraform Testing","type":"team"},"updatedAt":"2025-01-13T16:09:21.17458Z"}
         headers:
+            Content-Length:
+                - "312"
             Content-Type:
                 - application/json; charset=utf-8
             Date:
-                - Wed, 04 Sep 2024 00:03:19 GMT
+                - Mon, 13 Jan 2025 16:09:21 GMT
             Ratelimit-Limit:
                 - "100"
             Ratelimit-Remaining:
                 - "93"
             Ratelimit-Reset:
-                - "40"
+                - "38"
             Referrer-Policy:
                 - same-origin
             Render-Request-Id:
-                - api-5dfb588d7c-tjj9c/Cvjs9XM2VF-1107512
+                - api-59dfc564db-h462b/OaC6DLH6bZ-000119
             Vary:
                 - Origin
             X-Content-Type-Options:
@@ -1362,19 +1406,19 @@ interactions:
                 - 1; mode=block
         status: 200 OK
         code: 200
-        duration: 81.523584ms
+        duration: 105.370625ms
     - id: 24
       request:
         proto: HTTP/1.1
         proto_major: 1
         proto_minor: 1
-        content_length: 45
+        content_length: 77
         transfer_encoding: []
         trailer: {}
         host: https://api.testing.render.com/v1
         remote_addr: ""
         request_uri: ""
-        body: '{"name":"prod","protectedStatus":"protected"}'
+        body: '{"name":"prod","networkIsolationEnabled":false,"protectedStatus":"protected"}'
         form: {}
         headers:
             Authorization:
@@ -1383,7 +1427,7 @@ interactions:
                 - application/json
             User-Agent:
                 - terraform-provider-render/test
-        url: https://api.testing.render.com/v1/environments/evm-crbq7h23esus7393umj0
+        url: https://api.testing.render.com/v1/environments/evm-cu2jlb4uvdrs71saleqg
         method: PATCH
       response:
         proto: HTTP/2.0
@@ -1391,25 +1435,27 @@ interactions:
         proto_minor: 0
         transfer_encoding: []
         trailer: {}
-        content_length: -1
-        uncompressed: true
+        content_length: 222
+        uncompressed: false
         body: |
-            {"databasesIds":null,"envGroupIds":null,"id":"evm-crbq7h23esus7393umj0","name":"prod","projectId":"prj-crbq7h23esus7393umig","protectedStatus":"protected","redisIds":null,"serviceIds":null}
+            {"databasesIds":null,"envGroupIds":null,"id":"evm-cu2jlb4uvdrs71saleqg","name":"prod","networkIsolationEnabled":false,"projectId":"prj-cu2jlb4uvdrs71saleq0","protectedStatus":"protected","redisIds":null,"serviceIds":null}
         headers:
+            Content-Length:
+                - "222"
             Content-Type:
                 - application/json; charset=utf-8
             Date:
-                - Wed, 04 Sep 2024 00:03:19 GMT
+                - Mon, 13 Jan 2025 16:09:21 GMT
             Ratelimit-Limit:
                 - "100"
             Ratelimit-Remaining:
                 - "92"
             Ratelimit-Reset:
-                - "40"
+                - "38"
             Referrer-Policy:
                 - same-origin
             Render-Request-Id:
-                - api-5dfb588d7c-vtfzv/Y6vInJ4FWm-469135
+                - api-59dfc564db-h462b/OaC6DLH6bZ-000120
             Vary:
                 - Origin
             X-Content-Type-Options:
@@ -1420,19 +1466,19 @@ interactions:
                 - 1; mode=block
         status: 200 OK
         code: 200
-        duration: 81.475083ms
+        duration: 90.8025ms
     - id: 25
       request:
         proto: HTTP/1.1
         proto_major: 1
         proto_minor: 1
-        content_length: 52
+        content_length: 84
         transfer_encoding: []
         trailer: {}
         host: https://api.testing.render.com/v1
         remote_addr: ""
         request_uri: ""
-        body: '{"name":"development","protectedStatus":"protected"}'
+        body: '{"name":"development","networkIsolationEnabled":false,"protectedStatus":"protected"}'
         form: {}
         headers:
             Authorization:
@@ -1441,7 +1487,7 @@ interactions:
                 - application/json
             User-Agent:
                 - terraform-provider-render/test
-        url: https://api.testing.render.com/v1/environments/evm-crbq7hjv2p9s73djk3o0
+        url: https://api.testing.render.com/v1/environments/evm-cu2jlbsuvdrs71saler0
         method: PATCH
       response:
         proto: HTTP/2.0
@@ -1449,25 +1495,27 @@ interactions:
         proto_minor: 0
         transfer_encoding: []
         trailer: {}
-        content_length: -1
-        uncompressed: true
+        content_length: 229
+        uncompressed: false
         body: |
-            {"databasesIds":null,"envGroupIds":null,"id":"evm-crbq7hjv2p9s73djk3o0","name":"development","projectId":"prj-crbq7h23esus7393umig","protectedStatus":"protected","redisIds":null,"serviceIds":null}
+            {"databasesIds":null,"envGroupIds":null,"id":"evm-cu2jlbsuvdrs71saler0","name":"development","networkIsolationEnabled":false,"projectId":"prj-cu2jlb4uvdrs71saleq0","protectedStatus":"protected","redisIds":null,"serviceIds":null}
         headers:
+            Content-Length:
+                - "229"
             Content-Type:
                 - application/json; charset=utf-8
             Date:
-                - Wed, 04 Sep 2024 00:03:19 GMT
+                - Mon, 13 Jan 2025 16:09:21 GMT
             Ratelimit-Limit:
                 - "100"
             Ratelimit-Remaining:
                 - "91"
             Ratelimit-Reset:
-                - "40"
+                - "38"
             Referrer-Policy:
                 - same-origin
             Render-Request-Id:
-                - api-5dfb588d7c-rpk2v/ghfGv3MfHH-1537553
+                - api-59dfc564db-h462b/OaC6DLH6bZ-000121
             Vary:
                 - Origin
             X-Content-Type-Options:
@@ -1478,7 +1526,7 @@ interactions:
                 - 1; mode=block
         status: 200 OK
         code: 200
-        duration: 76.871042ms
+        duration: 95.618667ms
     - id: 26
       request:
         proto: HTTP/1.1
@@ -1497,7 +1545,7 @@ interactions:
                 - some-api-key
             User-Agent:
                 - terraform-provider-render/test
-        url: https://api.testing.render.com/v1/projects/prj-crbq7h23esus7393umig
+        url: https://api.testing.render.com/v1/projects/prj-cu2jlb4uvdrs71saleq0
         method: GET
       response:
         proto: HTTP/2.0
@@ -1505,25 +1553,27 @@ interactions:
         proto_minor: 0
         transfer_encoding: []
         trailer: {}
-        content_length: -1
-        uncompressed: true
+        content_length: 312
+        uncompressed: false
         body: |
-            {"createdAt":"2024-09-04T00:03:16.205068Z","environmentIds":["evm-crbq7hjv2p9s73djk3o0","evm-crbq7h23esus7393umj0"],"id":"prj-crbq7h23esus7393umig","name":"bar","owner":{"email":"email@example.com","id":"some-owner-id","name":"TerraformAcceptanceTesting","type":"team"},"updatedAt":"2024-09-04T00:03:19.207638Z"}
+            {"createdAt":"2025-01-13T16:09:16.897198Z","environmentIds":["evm-cu2jlb4uvdrs71saleqg","evm-cu2jlbsuvdrs71saler0"],"id":"prj-cu2jlb4uvdrs71saleq0","name":"bar","owner":{"email":"email@example.com","id":"some-owner-id","name":"Terraform Testing","type":"team"},"updatedAt":"2025-01-13T16:09:21.17458Z"}
         headers:
+            Content-Length:
+                - "312"
             Content-Type:
                 - application/json; charset=utf-8
             Date:
-                - Wed, 04 Sep 2024 00:03:19 GMT
+                - Mon, 13 Jan 2025 16:09:21 GMT
             Ratelimit-Limit:
                 - "400"
             Ratelimit-Remaining:
                 - "382"
             Ratelimit-Reset:
-                - "40"
+                - "38"
             Referrer-Policy:
                 - same-origin
             Render-Request-Id:
-                - api-5dfb588d7c-tjj9c/Cvjs9XM2VF-1107517
+                - api-59dfc564db-h462b/OaC6DLH6bZ-000122
             Vary:
                 - Origin
             X-Content-Type-Options:
@@ -1534,7 +1584,7 @@ interactions:
                 - 1; mode=block
         status: 200 OK
         code: 200
-        duration: 84.495209ms
+        duration: 96.781666ms
     - id: 27
       request:
         proto: HTTP/1.1
@@ -1553,7 +1603,7 @@ interactions:
                 - some-api-key
             User-Agent:
                 - terraform-provider-render/test
-        url: https://api.testing.render.com/v1/environments/evm-crbq7hjv2p9s73djk3o0
+        url: https://api.testing.render.com/v1/environments/evm-cu2jlb4uvdrs71saleqg
         method: GET
       response:
         proto: HTTP/2.0
@@ -1561,25 +1611,27 @@ interactions:
         proto_minor: 0
         transfer_encoding: []
         trailer: {}
-        content_length: -1
-        uncompressed: true
+        content_length: 222
+        uncompressed: false
         body: |
-            {"databasesIds":null,"envGroupIds":null,"id":"evm-crbq7hjv2p9s73djk3o0","name":"development","projectId":"prj-crbq7h23esus7393umig","protectedStatus":"protected","redisIds":null,"serviceIds":null}
+            {"databasesIds":null,"envGroupIds":null,"id":"evm-cu2jlb4uvdrs71saleqg","name":"prod","networkIsolationEnabled":false,"projectId":"prj-cu2jlb4uvdrs71saleq0","protectedStatus":"protected","redisIds":null,"serviceIds":null}
         headers:
+            Content-Length:
+                - "222"
             Content-Type:
                 - application/json; charset=utf-8
             Date:
-                - Wed, 04 Sep 2024 00:03:19 GMT
+                - Mon, 13 Jan 2025 16:09:21 GMT
             Ratelimit-Limit:
                 - "400"
             Ratelimit-Remaining:
                 - "381"
             Ratelimit-Reset:
-                - "40"
+                - "38"
             Referrer-Policy:
                 - same-origin
             Render-Request-Id:
-                - api-5dfb588d7c-vtfzv/Y6vInJ4FWm-469142
+                - api-59dfc564db-h462b/OaC6DLH6bZ-000123
             Vary:
                 - Origin
             X-Content-Type-Options:
@@ -1590,7 +1642,7 @@ interactions:
                 - 1; mode=block
         status: 200 OK
         code: 200
-        duration: 63.947416ms
+        duration: 59.29225ms
     - id: 28
       request:
         proto: HTTP/1.1
@@ -1609,7 +1661,7 @@ interactions:
                 - some-api-key
             User-Agent:
                 - terraform-provider-render/test
-        url: https://api.testing.render.com/v1/environments/evm-crbq7h23esus7393umj0
+        url: https://api.testing.render.com/v1/environments/evm-cu2jlbsuvdrs71saler0
         method: GET
       response:
         proto: HTTP/2.0
@@ -1617,25 +1669,27 @@ interactions:
         proto_minor: 0
         transfer_encoding: []
         trailer: {}
-        content_length: -1
-        uncompressed: true
+        content_length: 229
+        uncompressed: false
         body: |
-            {"databasesIds":null,"envGroupIds":null,"id":"evm-crbq7h23esus7393umj0","name":"prod","projectId":"prj-crbq7h23esus7393umig","protectedStatus":"protected","redisIds":null,"serviceIds":null}
+            {"databasesIds":null,"envGroupIds":null,"id":"evm-cu2jlbsuvdrs71saler0","name":"development","networkIsolationEnabled":false,"projectId":"prj-cu2jlb4uvdrs71saleq0","protectedStatus":"protected","redisIds":null,"serviceIds":null}
         headers:
+            Content-Length:
+                - "229"
             Content-Type:
                 - application/json; charset=utf-8
             Date:
-                - Wed, 04 Sep 2024 00:03:19 GMT
+                - Mon, 13 Jan 2025 16:09:22 GMT
             Ratelimit-Limit:
                 - "400"
             Ratelimit-Remaining:
                 - "380"
             Ratelimit-Reset:
-                - "40"
+                - "37"
             Referrer-Policy:
                 - same-origin
             Render-Request-Id:
-                - api-5dfb588d7c-rpk2v/ghfGv3MfHH-1537561
+                - api-59dfc564db-h462b/OaC6DLH6bZ-000124
             Vary:
                 - Origin
             X-Content-Type-Options:
@@ -1646,7 +1700,7 @@ interactions:
                 - 1; mode=block
         status: 200 OK
         code: 200
-        duration: 76.898042ms
+        duration: 59.353333ms
     - id: 29
       request:
         proto: HTTP/1.1
@@ -1665,7 +1719,7 @@ interactions:
                 - some-api-key
             User-Agent:
                 - terraform-provider-render/test
-        url: https://api.testing.render.com/v1/projects/prj-crbq7h23esus7393umig
+        url: https://api.testing.render.com/v1/projects/prj-cu2jlb4uvdrs71saleq0
         method: GET
       response:
         proto: HTTP/2.0
@@ -1673,25 +1727,27 @@ interactions:
         proto_minor: 0
         transfer_encoding: []
         trailer: {}
-        content_length: -1
-        uncompressed: true
+        content_length: 312
+        uncompressed: false
         body: |
-            {"createdAt":"2024-09-04T00:03:16.205068Z","environmentIds":["evm-crbq7hjv2p9s73djk3o0","evm-crbq7h23esus7393umj0"],"id":"prj-crbq7h23esus7393umig","name":"bar","owner":{"email":"email@example.com","id":"some-owner-id","name":"TerraformAcceptanceTesting","type":"team"},"updatedAt":"2024-09-04T00:03:19.207638Z"}
+            {"createdAt":"2025-01-13T16:09:16.897198Z","environmentIds":["evm-cu2jlb4uvdrs71saleqg","evm-cu2jlbsuvdrs71saler0"],"id":"prj-cu2jlb4uvdrs71saleq0","name":"bar","owner":{"email":"email@example.com","id":"some-owner-id","name":"Terraform Testing","type":"team"},"updatedAt":"2025-01-13T16:09:21.17458Z"}
         headers:
+            Content-Length:
+                - "312"
             Content-Type:
                 - application/json; charset=utf-8
             Date:
-                - Wed, 04 Sep 2024 00:03:19 GMT
+                - Mon, 13 Jan 2025 16:09:22 GMT
             Ratelimit-Limit:
                 - "400"
             Ratelimit-Remaining:
                 - "379"
             Ratelimit-Reset:
-                - "40"
+                - "37"
             Referrer-Policy:
                 - same-origin
             Render-Request-Id:
-                - api-5dfb588d7c-tjj9c/Cvjs9XM2VF-1107524
+                - api-59dfc564db-h462b/OaC6DLH6bZ-000125
             Vary:
                 - Origin
             X-Content-Type-Options:
@@ -1702,7 +1758,7 @@ interactions:
                 - 1; mode=block
         status: 200 OK
         code: 200
-        duration: 70.574208ms
+        duration: 92.024625ms
     - id: 30
       request:
         proto: HTTP/1.1
@@ -1721,7 +1777,7 @@ interactions:
                 - some-api-key
             User-Agent:
                 - terraform-provider-render/test
-        url: https://api.testing.render.com/v1/environments/evm-crbq7hjv2p9s73djk3o0
+        url: https://api.testing.render.com/v1/environments/evm-cu2jlb4uvdrs71saleqg
         method: GET
       response:
         proto: HTTP/2.0
@@ -1729,25 +1785,27 @@ interactions:
         proto_minor: 0
         transfer_encoding: []
         trailer: {}
-        content_length: -1
-        uncompressed: true
+        content_length: 222
+        uncompressed: false
         body: |
-            {"databasesIds":null,"envGroupIds":null,"id":"evm-crbq7hjv2p9s73djk3o0","name":"development","projectId":"prj-crbq7h23esus7393umig","protectedStatus":"protected","redisIds":null,"serviceIds":null}
+            {"databasesIds":null,"envGroupIds":null,"id":"evm-cu2jlb4uvdrs71saleqg","name":"prod","networkIsolationEnabled":false,"projectId":"prj-cu2jlb4uvdrs71saleq0","protectedStatus":"protected","redisIds":null,"serviceIds":null}
         headers:
+            Content-Length:
+                - "222"
             Content-Type:
                 - application/json; charset=utf-8
             Date:
-                - Wed, 04 Sep 2024 00:03:20 GMT
+                - Mon, 13 Jan 2025 16:09:22 GMT
             Ratelimit-Limit:
                 - "400"
             Ratelimit-Remaining:
                 - "378"
             Ratelimit-Reset:
-                - "40"
+                - "37"
             Referrer-Policy:
                 - same-origin
             Render-Request-Id:
-                - api-5dfb588d7c-vtfzv/Y6vInJ4FWm-469145
+                - api-59dfc564db-h462b/OaC6DLH6bZ-000126
             Vary:
                 - Origin
             X-Content-Type-Options:
@@ -1758,7 +1816,7 @@ interactions:
                 - 1; mode=block
         status: 200 OK
         code: 200
-        duration: 72.049167ms
+        duration: 60.378458ms
     - id: 31
       request:
         proto: HTTP/1.1
@@ -1777,7 +1835,7 @@ interactions:
                 - some-api-key
             User-Agent:
                 - terraform-provider-render/test
-        url: https://api.testing.render.com/v1/environments/evm-crbq7h23esus7393umj0
+        url: https://api.testing.render.com/v1/environments/evm-cu2jlbsuvdrs71saler0
         method: GET
       response:
         proto: HTTP/2.0
@@ -1785,25 +1843,27 @@ interactions:
         proto_minor: 0
         transfer_encoding: []
         trailer: {}
-        content_length: -1
-        uncompressed: true
+        content_length: 229
+        uncompressed: false
         body: |
-            {"databasesIds":null,"envGroupIds":null,"id":"evm-crbq7h23esus7393umj0","name":"prod","projectId":"prj-crbq7h23esus7393umig","protectedStatus":"protected","redisIds":null,"serviceIds":null}
+            {"databasesIds":null,"envGroupIds":null,"id":"evm-cu2jlbsuvdrs71saler0","name":"development","networkIsolationEnabled":false,"projectId":"prj-cu2jlb4uvdrs71saleq0","protectedStatus":"protected","redisIds":null,"serviceIds":null}
         headers:
+            Content-Length:
+                - "229"
             Content-Type:
                 - application/json; charset=utf-8
             Date:
-                - Wed, 04 Sep 2024 00:03:20 GMT
+                - Mon, 13 Jan 2025 16:09:22 GMT
             Ratelimit-Limit:
                 - "400"
             Ratelimit-Remaining:
                 - "377"
             Ratelimit-Reset:
-                - "39"
+                - "37"
             Referrer-Policy:
                 - same-origin
             Render-Request-Id:
-                - api-5dfb588d7c-rpk2v/ghfGv3MfHH-1537567
+                - api-59dfc564db-h462b/OaC6DLH6bZ-000127
             Vary:
                 - Origin
             X-Content-Type-Options:
@@ -1814,7 +1874,7 @@ interactions:
                 - 1; mode=block
         status: 200 OK
         code: 200
-        duration: 84.392125ms
+        duration: 51.914084ms
     - id: 32
       request:
         proto: HTTP/1.1
@@ -1835,7 +1895,7 @@ interactions:
                 - application/json
             User-Agent:
                 - terraform-provider-render/test
-        url: https://api.testing.render.com/v1/projects/prj-crbq7h23esus7393umig
+        url: https://api.testing.render.com/v1/projects/prj-cu2jlb4uvdrs71saleq0
         method: PATCH
       response:
         proto: HTTP/2.0
@@ -1843,25 +1903,27 @@ interactions:
         proto_minor: 0
         transfer_encoding: []
         trailer: {}
-        content_length: -1
-        uncompressed: true
+        content_length: 313
+        uncompressed: false
         body: |
-            {"createdAt":"2024-09-04T00:03:16.205068Z","environmentIds":["evm-crbq7hjv2p9s73djk3o0","evm-crbq7h23esus7393umj0"],"id":"prj-crbq7h23esus7393umig","name":"bar","owner":{"email":"email@example.com","id":"some-owner-id","name":"TerraformAcceptanceTesting","type":"team"},"updatedAt":"2024-09-04T00:03:20.257765Z"}
+            {"createdAt":"2025-01-13T16:09:16.897198Z","environmentIds":["evm-cu2jlb4uvdrs71saleqg","evm-cu2jlbsuvdrs71saler0"],"id":"prj-cu2jlb4uvdrs71saleq0","name":"bar","owner":{"email":"email@example.com","id":"some-owner-id","name":"Terraform Testing","type":"team"},"updatedAt":"2025-01-13T16:09:22.792355Z"}
         headers:
+            Content-Length:
+                - "313"
             Content-Type:
                 - application/json; charset=utf-8
             Date:
-                - Wed, 04 Sep 2024 00:03:20 GMT
+                - Mon, 13 Jan 2025 16:09:22 GMT
             Ratelimit-Limit:
                 - "100"
             Ratelimit-Remaining:
                 - "90"
             Ratelimit-Reset:
-                - "39"
+                - "37"
             Referrer-Policy:
                 - same-origin
             Render-Request-Id:
-                - api-5dfb588d7c-tjj9c/Cvjs9XM2VF-1107530
+                - api-59dfc564db-h462b/OaC6DLH6bZ-000128
             Vary:
                 - Origin
             X-Content-Type-Options:
@@ -1872,19 +1934,19 @@ interactions:
                 - 1; mode=block
         status: 200 OK
         code: 200
-        duration: 75.518625ms
+        duration: 108.5535ms
     - id: 33
       request:
         proto: HTTP/1.1
         proto_major: 1
         proto_minor: 1
-        content_length: 45
+        content_length: 77
         transfer_encoding: []
         trailer: {}
         host: https://api.testing.render.com/v1
         remote_addr: ""
         request_uri: ""
-        body: '{"name":"prod","protectedStatus":"protected"}'
+        body: '{"name":"prod","networkIsolationEnabled":false,"protectedStatus":"protected"}'
         form: {}
         headers:
             Authorization:
@@ -1893,7 +1955,7 @@ interactions:
                 - application/json
             User-Agent:
                 - terraform-provider-render/test
-        url: https://api.testing.render.com/v1/environments/evm-crbq7h23esus7393umj0
+        url: https://api.testing.render.com/v1/environments/evm-cu2jlb4uvdrs71saleqg
         method: PATCH
       response:
         proto: HTTP/2.0
@@ -1901,25 +1963,27 @@ interactions:
         proto_minor: 0
         transfer_encoding: []
         trailer: {}
-        content_length: -1
-        uncompressed: true
+        content_length: 222
+        uncompressed: false
         body: |
-            {"databasesIds":null,"envGroupIds":null,"id":"evm-crbq7h23esus7393umj0","name":"prod","projectId":"prj-crbq7h23esus7393umig","protectedStatus":"protected","redisIds":null,"serviceIds":null}
+            {"databasesIds":null,"envGroupIds":null,"id":"evm-cu2jlb4uvdrs71saleqg","name":"prod","networkIsolationEnabled":false,"projectId":"prj-cu2jlb4uvdrs71saleq0","protectedStatus":"protected","redisIds":null,"serviceIds":null}
         headers:
+            Content-Length:
+                - "222"
             Content-Type:
                 - application/json; charset=utf-8
             Date:
-                - Wed, 04 Sep 2024 00:03:20 GMT
+                - Mon, 13 Jan 2025 16:09:23 GMT
             Ratelimit-Limit:
                 - "100"
             Ratelimit-Remaining:
                 - "89"
             Ratelimit-Reset:
-                - "39"
+                - "37"
             Referrer-Policy:
                 - same-origin
             Render-Request-Id:
-                - api-5dfb588d7c-vtfzv/Y6vInJ4FWm-469150
+                - api-59dfc564db-h462b/OaC6DLH6bZ-000129
             Vary:
                 - Origin
             X-Content-Type-Options:
@@ -1930,7 +1994,7 @@ interactions:
                 - 1; mode=block
         status: 200 OK
         code: 200
-        duration: 98.739625ms
+        duration: 93.154917ms
     - id: 34
       request:
         proto: HTTP/1.1
@@ -1949,7 +2013,7 @@ interactions:
                 - some-api-key
             User-Agent:
                 - terraform-provider-render/test
-        url: https://api.testing.render.com/v1/environments/evm-crbq7hjv2p9s73djk3o0
+        url: https://api.testing.render.com/v1/environments/evm-cu2jlbsuvdrs71saler0
         method: DELETE
       response:
         proto: HTTP/2.0
@@ -1962,17 +2026,17 @@ interactions:
         body: ""
         headers:
             Date:
-                - Wed, 04 Sep 2024 00:03:20 GMT
+                - Mon, 13 Jan 2025 16:09:23 GMT
             Ratelimit-Limit:
                 - "100"
             Ratelimit-Remaining:
                 - "88"
             Ratelimit-Reset:
-                - "39"
+                - "36"
             Referrer-Policy:
                 - same-origin
             Render-Request-Id:
-                - api-5dfb588d7c-rpk2v/ghfGv3MfHH-1537577
+                - api-59dfc564db-h462b/OaC6DLH6bZ-000130
             Vary:
                 - Origin
             X-Content-Type-Options:
@@ -1983,7 +2047,7 @@ interactions:
                 - 1; mode=block
         status: 204 No Content
         code: 204
-        duration: 72.980167ms
+        duration: 70.907416ms
     - id: 35
       request:
         proto: HTTP/1.1
@@ -2002,7 +2066,7 @@ interactions:
                 - some-api-key
             User-Agent:
                 - terraform-provider-render/test
-        url: https://api.testing.render.com/v1/projects/prj-crbq7h23esus7393umig
+        url: https://api.testing.render.com/v1/projects/prj-cu2jlb4uvdrs71saleq0
         method: GET
       response:
         proto: HTTP/2.0
@@ -2010,25 +2074,27 @@ interactions:
         proto_minor: 0
         transfer_encoding: []
         trailer: {}
-        content_length: -1
-        uncompressed: true
+        content_length: 286
+        uncompressed: false
         body: |
-            {"createdAt":"2024-09-04T00:03:16.205068Z","environmentIds":["evm-crbq7h23esus7393umj0"],"id":"prj-crbq7h23esus7393umig","name":"bar","owner":{"email":"email@example.com","id":"some-owner-id","name":"TerraformAcceptanceTesting","type":"team"},"updatedAt":"2024-09-04T00:03:20.257765Z"}
+            {"createdAt":"2025-01-13T16:09:16.897198Z","environmentIds":["evm-cu2jlb4uvdrs71saleqg"],"id":"prj-cu2jlb4uvdrs71saleq0","name":"bar","owner":{"email":"email@example.com","id":"some-owner-id","name":"Terraform Testing","type":"team"},"updatedAt":"2025-01-13T16:09:22.792355Z"}
         headers:
+            Content-Length:
+                - "286"
             Content-Type:
                 - application/json; charset=utf-8
             Date:
-                - Wed, 04 Sep 2024 00:03:20 GMT
+                - Mon, 13 Jan 2025 16:09:23 GMT
             Ratelimit-Limit:
                 - "400"
             Ratelimit-Remaining:
                 - "376"
             Ratelimit-Reset:
-                - "39"
+                - "36"
             Referrer-Policy:
                 - same-origin
             Render-Request-Id:
-                - api-5dfb588d7c-tjj9c/Cvjs9XM2VF-1107536
+                - api-59dfc564db-h462b/OaC6DLH6bZ-000131
             Vary:
                 - Origin
             X-Content-Type-Options:
@@ -2039,7 +2105,7 @@ interactions:
                 - 1; mode=block
         status: 200 OK
         code: 200
-        duration: 74.43125ms
+        duration: 87.068791ms
     - id: 36
       request:
         proto: HTTP/1.1
@@ -2058,7 +2124,7 @@ interactions:
                 - some-api-key
             User-Agent:
                 - terraform-provider-render/test
-        url: https://api.testing.render.com/v1/environments/evm-crbq7h23esus7393umj0
+        url: https://api.testing.render.com/v1/environments/evm-cu2jlb4uvdrs71saleqg
         method: GET
       response:
         proto: HTTP/2.0
@@ -2066,25 +2132,27 @@ interactions:
         proto_minor: 0
         transfer_encoding: []
         trailer: {}
-        content_length: -1
-        uncompressed: true
+        content_length: 222
+        uncompressed: false
         body: |
-            {"databasesIds":null,"envGroupIds":null,"id":"evm-crbq7h23esus7393umj0","name":"prod","projectId":"prj-crbq7h23esus7393umig","protectedStatus":"protected","redisIds":null,"serviceIds":null}
+            {"databasesIds":null,"envGroupIds":null,"id":"evm-cu2jlb4uvdrs71saleqg","name":"prod","networkIsolationEnabled":false,"projectId":"prj-cu2jlb4uvdrs71saleq0","protectedStatus":"protected","redisIds":null,"serviceIds":null}
         headers:
+            Content-Length:
+                - "222"
             Content-Type:
                 - application/json; charset=utf-8
             Date:
-                - Wed, 04 Sep 2024 00:03:20 GMT
+                - Mon, 13 Jan 2025 16:09:23 GMT
             Ratelimit-Limit:
                 - "400"
             Ratelimit-Remaining:
                 - "375"
             Ratelimit-Reset:
-                - "39"
+                - "36"
             Referrer-Policy:
                 - same-origin
             Render-Request-Id:
-                - api-5dfb588d7c-vtfzv/Y6vInJ4FWm-469153
+                - api-59dfc564db-h462b/OaC6DLH6bZ-000132
             Vary:
                 - Origin
             X-Content-Type-Options:
@@ -2095,7 +2163,7 @@ interactions:
                 - 1; mode=block
         status: 200 OK
         code: 200
-        duration: 72.757208ms
+        duration: 56.541708ms
     - id: 37
       request:
         proto: HTTP/1.1
@@ -2114,7 +2182,7 @@ interactions:
                 - some-api-key
             User-Agent:
                 - terraform-provider-render/test
-        url: https://api.testing.render.com/v1/projects/prj-crbq7h23esus7393umig
+        url: https://api.testing.render.com/v1/projects/prj-cu2jlb4uvdrs71saleq0
         method: DELETE
       response:
         proto: HTTP/2.0
@@ -2127,17 +2195,17 @@ interactions:
         body: ""
         headers:
             Date:
-                - Wed, 04 Sep 2024 00:03:20 GMT
+                - Mon, 13 Jan 2025 16:09:23 GMT
             Ratelimit-Limit:
                 - "100"
             Ratelimit-Remaining:
                 - "87"
             Ratelimit-Reset:
-                - "39"
+                - "36"
             Referrer-Policy:
                 - same-origin
             Render-Request-Id:
-                - api-5dfb588d7c-rpk2v/ghfGv3MfHH-1537583
+                - api-59dfc564db-h462b/OaC6DLH6bZ-000133
             Vary:
                 - Origin
             X-Content-Type-Options:
@@ -2148,4 +2216,4 @@ interactions:
                 - 1; mode=block
         status: 204 No Content
         code: 204
-        duration: 114.591ms
+        duration: 69.439208ms

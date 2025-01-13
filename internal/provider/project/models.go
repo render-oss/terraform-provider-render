@@ -20,6 +20,7 @@ type EnvironmentModel struct {
 	Id              types.String `tfsdk:"id"`
 	Name            types.String `tfsdk:"name"`
 	ProtectedStatus types.String `tfsdk:"protected_status"`
+	NetworkIsolated types.Bool   `tfsdk:"network_isolated"`
 }
 
 func ClientProtectedStatusFromModel(env EnvironmentModel) client.ProtectedStatus {
@@ -35,6 +36,7 @@ func ModelForEnvironmentResult(env *client.Environment) EnvironmentModel {
 		Id:              types.StringValue(env.Id),
 		Name:            types.StringValue(env.Name),
 		ProtectedStatus: types.StringValue(string(env.ProtectedStatus)),
+		NetworkIsolated: types.BoolValue(env.NetworkIsolationEnabled),
 	}
 }
 

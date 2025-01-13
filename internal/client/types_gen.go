@@ -800,7 +800,10 @@ type Environment struct {
 	EnvGroupIds  []string `json:"envGroupIds"`
 	Id           string   `json:"id"`
 	Name         string   `json:"name"`
-	ProjectId    string   `json:"projectId"`
+
+	// NetworkIsolationEnabled Indicates whether network connections across environments are allowed.
+	NetworkIsolationEnabled NetworkIsolationEnabled `json:"networkIsolationEnabled"`
+	ProjectId               string                  `json:"projectId"`
 
 	// ProtectedStatus Indicates whether an environment is `unprotected` or `protected`. Only admin users can perform destructive actions in `protected` environments.
 	ProtectedStatus ProtectedStatus `json:"protectedStatus"`
@@ -1360,6 +1363,9 @@ type ProjectPATCHInput struct {
 // ProjectPOSTEnvironmentInput defines model for projectPOSTEnvironmentInput.
 type ProjectPOSTEnvironmentInput struct {
 	Name string `json:"name"`
+
+	// NetworkIsolationEnabled Indicates whether network connections across environments are allowed.
+	NetworkIsolationEnabled *NetworkIsolationEnabled `json:"networkIsolationEnabled,omitempty"`
 
 	// ProtectedStatus Indicates whether an environment is `unprotected` or `protected`. Only admin users can perform destructive actions in `protected` environments.
 	ProtectedStatus *ProtectedStatus `json:"protectedStatus,omitempty"`
