@@ -55,6 +55,7 @@ Required:
 Optional:
 
 - `id` (String) Unique identifier of the environment
+- `network_isolated` (Boolean) Whether services within this environment are isolated from network requests from other environments
 
 ## Import
 

@@ -62,8 +62,9 @@ func (r *projectResource) Create(ctx context.Context, req resource.CreateRequest
 
 	for _, env := range plan.Environments {
 		environmentInput = append(environmentInput, client.ProjectPOSTEnvironmentInput{
-			Name:            env.Name.ValueString(),
-			ProtectedStatus: common.From(project.ClientProtectedStatusFromModel(*env)),
+			Name:                    env.Name.ValueString(),
+			ProtectedStatus:         common.From(project.ClientProtectedStatusFromModel(*env)),
+			NetworkIsolationEnabled: common.From(env.NetworkIsolated.ValueBool()),
 		})
 	}
 
@@ -189,8 +190,9 @@ func (r *projectResource) Update(ctx context.Context, req resource.UpdateRequest
 		if slices.Contains(both, env.Id.ValueString()) {
 			// update an existing environment
 			envUpdate := client.EnvironmentPATCHInput{
-				Name:            env.Name.ValueStringPointer(),
-				ProtectedStatus: common.From(project.ClientProtectedStatusFromModel(*env)),
+				Name:                    env.Name.ValueStringPointer(),
+				ProtectedStatus:         common.From(project.ClientProtectedStatusFromModel(*env)),
+				NetworkIsolationEnabled: common.From(env.NetworkIsolated.ValueBool()),
 			}
 
 			var environmentResponse client.Environment
@@ -208,9 +210,10 @@ func (r *projectResource) Update(ctx context.Context, req resource.UpdateRequest
 		} else {
 			// If the environment is not in the state, create it
 			envCreate := client.EnvironmentPOSTInput{
-				ProjectId:       plan.Id.ValueString(),
-				Name:            env.Name.ValueString(),
-				ProtectedStatus: common.From(project.ClientProtectedStatusFromModel(*env)),
+				ProjectId:               plan.Id.ValueString(),
+				Name:                    env.Name.ValueString(),
+				ProtectedStatus:         common.From(project.ClientProtectedStatusFromModel(*env)),
+				NetworkIsolationEnabled: common.From(env.NetworkIsolated.ValueBool()),
 			}
 
 			var environmentResponse client.Environment

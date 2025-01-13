@@ -8,6 +8,10 @@ variable "envProtStatus" {
   type = string
 }
 
+variable "networkIsolated" {
+  type = bool
+}
+
 resource "render_project" "project" {
   name = var.name2
   environments = {
@@ -18,6 +22,7 @@ resource "render_project" "project" {
     staging: {
       name             = var.envName
       protected_status = var.envProtStatus
+      network_isolated = var.networkIsolated
     }
   }
 }

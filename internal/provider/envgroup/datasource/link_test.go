@@ -20,7 +20,7 @@ func TestAccEnvGroupLinkDataSource(t *testing.T) {
 		res, err := json.Marshal(&client.EnvGroup{
 			Id:   "some-id",
 			Name: "some-name",
-			ServiceLinks: []client.ServiceLink{
+			ServiceLinks: []client.EnvGroupLink{
 				{Id: "service1"},
 				{Id: "service2"},
 			},

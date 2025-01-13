@@ -31,4 +31,5 @@ Read-Only:
 
 - `id` (String) Unique identifier for the environment
 - `name` (String) Name of the environment
+- `network_isolated` (Boolean) Whether services within this environment are isolated from network requests from other environments
 - `protected_status` (String) Protected environment

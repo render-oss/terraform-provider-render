@@ -62,6 +62,7 @@ func TestProject(t *testing.T) {
 
 					resource.TestCheckResourceAttr(resourceName, "environments.prod.name", "prod"),
 					resource.TestCheckResourceAttr(resourceName, "environments.prod.protected_status", "protected"),
+					resource.TestCheckResourceAttr(resourceName, "environments.prod.network_isolated", "false"),
 				),
 			},
 			{
@@ -69,9 +70,10 @@ func TestProject(t *testing.T) {
 				ResourceName: resourceName,
 				ConfigFile:   config.StaticFile("./testdata/project-prod-and-staging.tf"),
 				ConfigVariables: config.Variables{
-					"name2":         config.StringVariable("bar"),
-					"envName":       config.StringVariable("staging"),
-					"envProtStatus": config.StringVariable("unprotected"),
+					"name2":           config.StringVariable("bar"),
+					"envName":         config.StringVariable("staging"),
+					"envProtStatus":   config.StringVariable("unprotected"),
+					"networkIsolated": config.BoolVariable(true),
 				},
 				ConfigPlanChecks: resource.ConfigPlanChecks{
 					PreApply: []plancheck.PlanCheck{
@@ -85,16 +87,18 @@ func TestProject(t *testing.T) {
 					resource.TestCheckResourceAttr(resourceName, "environments.prod.protected_status", "protected"),
 					resource.TestCheckResourceAttr(resourceName, "environments.staging.name", "staging"),
 					resource.TestCheckResourceAttr(resourceName, "environments.staging.protected_status", "unprotected"),
+					resource.TestCheckResourceAttr(resourceName, "environments.staging.network_isolated", "true"),
 				),
 			},
 			{
-				// Change env name and protected status
+				// Change env name, protected status, network isolation
 				ResourceName: resourceName,
 				ConfigFile:   config.StaticFile("./testdata/project-prod-and-staging.tf"),
 				ConfigVariables: config.Variables{
-					"name2":         config.StringVariable("bar"),
-					"envName":       config.StringVariable("development"),
-					"envProtStatus": config.StringVariable("protected"),
+					"name2":           config.StringVariable("bar"),
+					"envName":         config.StringVariable("development"),
+					"envProtStatus":   config.StringVariable("protected"),
+					"networkIsolated": config.BoolVariable(false),
 				},
 				ConfigPlanChecks: resource.ConfigPlanChecks{
 					PreApply: []plancheck.PlanCheck{
@@ -108,6 +112,7 @@ func TestProject(t *testing.T) {
 					resource.TestCheckResourceAttr(resourceName, "environments.prod.protected_status", "protected"),
 					resource.TestCheckResourceAttr(resourceName, "environments.staging.name", "development"),
 					resource.TestCheckResourceAttr(resourceName, "environments.staging.protected_status", "protected"),
+					resource.TestCheckResourceAttr(resourceName, "environments.staging.network_isolated", "false"),
 				),
 			},
 			{
