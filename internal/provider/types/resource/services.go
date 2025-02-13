@@ -76,9 +76,33 @@ var RegionValidator = stringvalidator.OneOf(
 	"virginia",
 )
 
-var ConnectionInfo = schema.SingleNestedAttribute{
-	Description:         "Database connection info.",
-	MarkdownDescription: "Database connection info.",
+var KeyValueConnectionInfo = schema.SingleNestedAttribute{
+	Description:         "Key Value connection info.",
+	MarkdownDescription: "Key Value connection info.",
+	Computed:            true,
+	Sensitive:           true,
+	Attributes: map[string]schema.Attribute{
+		"external_connection_string": schema.StringAttribute{
+			Description: "Connection string for external access. Use this to connect to the key value from outside of Render.",
+			Computed:    true,
+			Sensitive:   true,
+		},
+		"internal_connection_string": schema.StringAttribute{
+			Description: "Connection string for internal access. Use this to connect to the key value from within the same Render region.",
+			Computed:    true,
+			Sensitive:   true,
+		},
+		"cli_command": schema.StringAttribute{
+			Description: "Command to connect to the key value using a command line tool (redis-cli or valkey-cli).",
+			Computed:    true,
+			Sensitive:   true,
+		},
+	},
+}
+
+var RedisConnectionInfo = schema.SingleNestedAttribute{
+	Description:         "Redis connection info.",
+	MarkdownDescription: "Redis connection info.",
 	Computed:            true,
 	Sensitive:           true,
 	Attributes: map[string]schema.Attribute{

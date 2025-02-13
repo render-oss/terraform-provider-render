@@ -11,16 +11,16 @@ import (
 
 func Schema(ctx context.Context) schema.Schema {
 	return schema.Schema{
-		Description: "Provides information about a Render Redis instance.",
+		Description: "Provides information about a Render Key Value instance.",
 		Attributes: map[string]schema.Attribute{
 			"id":                  datasource.ServiceID,
 			"environment_id":      datasource.ResourceEnvironmentID,
 			"ip_allow_list":       datasource.IPAllowList,
 			"max_memory_policy":   datasource.MaxMemoryPolicy,
 			"name":                datasource.ServiceName,
-			"plan":                datasource.RedisPlan,
+			"plan":                datasource.KeyValuePlan,
 			"region":              datasource.Region,
-			"connection_info":     datasource.RedisConnectionInfo,
+			"connection_info":     datasource.KeyValueConnectionInfo,
 			"log_stream_override": resource.LogStreamOverride,
 		},
 	}
