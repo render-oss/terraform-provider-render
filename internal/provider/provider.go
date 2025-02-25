@@ -11,6 +11,8 @@ import (
 
 	logstreamdatasource "terraform-provider-render/internal/provider/logstreams/datasource"
 	logstreamresource "terraform-provider-render/internal/provider/logstreams/resource"
+	metricsstreamdatasource "terraform-provider-render/internal/provider/metricstream/datasource"
+	metricsstreamresource "terraform-provider-render/internal/provider/metricstream/resource"
 	projectdatasource "terraform-provider-render/internal/provider/project/datasource"
 	projectresource "terraform-provider-render/internal/provider/project/resource"
 	webhookdatasource "terraform-provider-render/internal/provider/webhook/datasource"
@@ -355,6 +357,7 @@ func (p *renderProvider) DataSources(_ context.Context) []func() datasource.Data
 		staticsitedatasource.NewStaticSiteSource,
 		webservicedatasource.NewWebServiceSource,
 		webhookdatasource.NewWebhookDataSource,
+		metricsstreamdatasource.NewMetricsStreamSettingDataSource,
 	}
 }
 
@@ -376,6 +379,7 @@ func (p *renderProvider) Resources(_ context.Context) []func() resource.Resource
 		staticsiteresource.NewStaticSiteResource,
 		webserviceresource.NewWebServiceResource,
 		webhookresouce.NewWebhookResource,
+		metricsstreamresource.NewMetricsStreamSettingResource,
 	}
 }
 
