@@ -18,6 +18,7 @@ import (
 	externalRef8 "terraform-provider-render/internal/client/metrics"
 	externalRef9 "terraform-provider-render/internal/client/notifications"
 	externalRef10 "terraform-provider-render/internal/client/postgres"
+	externalRef11 "terraform-provider-render/internal/client/webhooks"
 
 	"github.com/oapi-codegen/runtime"
 )
@@ -898,27 +899,27 @@ type JobWithCursor struct {
 	Job    externalRef5.Job `json:"job"`
 }
 
-// KeyValue A Key / Value instance
+// KeyValue A Key Value instance
 type KeyValue struct {
-	// CreatedAt The creation time of the Key / Value instance
+	// CreatedAt The creation time of the Key Value instance
 	CreatedAt time.Time `json:"createdAt"`
 
-	// DashboardUrl The URL to view the Key / Value instance in the Render Dashboard
+	// DashboardUrl The URL to view the Key Value instance in the Render Dashboard
 	DashboardUrl string `json:"dashboardUrl"`
 
-	// EnvironmentId The ID of the environment the Key / Value instance is associated with
+	// EnvironmentId The ID of the environment the Key Value instance is associated with
 	EnvironmentId *string `json:"environmentId,omitempty"`
 
-	// Id The ID of the Key / Value instance
+	// Id The ID of the Key Value instance
 	Id string `json:"id"`
 
-	// IpAllowList The IP allow list for the Key / Value instance
+	// IpAllowList The IP allow list for the Key Value instance
 	IpAllowList []CidrBlockAndDescription `json:"ipAllowList"`
 
-	// Name The name of the Key / Value instance
+	// Name The name of the Key Value instance
 	Name string `json:"name"`
 
-	// Options Options for a Key / Value instance
+	// Options Options for a Key Value instance
 	Options KeyValueOptions `json:"options"`
 	Owner   Owner           `json:"owner"`
 	Plan    KeyValuePlan    `json:"plan"`
@@ -927,16 +928,16 @@ type KeyValue struct {
 	Region Region         `json:"region"`
 	Status DatabaseStatus `json:"status"`
 
-	// UpdatedAt The last updated time of the Key / Value instance
+	// UpdatedAt The last updated time of the Key Value instance
 	UpdatedAt time.Time `json:"updatedAt"`
 
-	// Version The version of Key / Value
+	// Version The version of Key Value
 	Version string `json:"version"`
 }
 
-// KeyValueConnectionInfo A Key / Value instance
+// KeyValueConnectionInfo A Key Value instance
 type KeyValueConnectionInfo struct {
-	// CliCommand The CLI (redis-cli or valkey-cli) command to connect to the Key / Value instance
+	// CliCommand The CLI (redis-cli or valkey-cli) command to connect to the Key Value instance
 	CliCommand string `json:"cliCommand"`
 
 	// ExternalConnectionString The connection string to use from outside Render
@@ -946,25 +947,25 @@ type KeyValueConnectionInfo struct {
 	InternalConnectionString string `json:"internalConnectionString"`
 }
 
-// KeyValueDetail A Key / Value instance
+// KeyValueDetail A Key Value instance
 type KeyValueDetail struct {
-	// CreatedAt The creation time of the Key / Value instance
+	// CreatedAt The creation time of the Key Value instance
 	CreatedAt time.Time `json:"createdAt"`
 
-	// EnvironmentId The ID of the environment the Key / Value instance is associated with
+	// EnvironmentId The ID of the environment the Key Value instance is associated with
 	EnvironmentId *string `json:"environmentId,omitempty"`
 
-	// Id The ID of the Key / Value instance
+	// Id The ID of the Key Value instance
 	Id string `json:"id"`
 
-	// IpAllowList The IP allow list for the Key / Value instance
+	// IpAllowList The IP allow list for the Key Value instance
 	IpAllowList []CidrBlockAndDescription    `json:"ipAllowList"`
 	Maintenance *externalRef7.MaintenanceRun `json:"maintenance,omitempty"`
 
-	// Name The name of the Key / Value instance
+	// Name The name of the Key Value instance
 	Name string `json:"name"`
 
-	// Options Options for a Key / Value instance
+	// Options Options for a Key Value instance
 	Options KeyValueOptions `json:"options"`
 	Owner   Owner           `json:"owner"`
 	Plan    KeyValuePlan    `json:"plan"`
@@ -973,46 +974,46 @@ type KeyValueDetail struct {
 	Region Region         `json:"region"`
 	Status DatabaseStatus `json:"status"`
 
-	// UpdatedAt The last updated time of the Key / Value instance
+	// UpdatedAt The last updated time of the Key Value instance
 	UpdatedAt time.Time `json:"updatedAt"`
 
-	// Version The version of Key / Value
+	// Version The version of Key Value
 	Version string `json:"version"`
 }
 
-// KeyValueOptions Options for a Key / Value instance
+// KeyValueOptions Options for a Key Value instance
 type KeyValueOptions struct {
 	MaxmemoryPolicy *string `json:"maxmemoryPolicy,omitempty"`
 }
 
-// KeyValuePATCHInput Input type for updating a Key / Value instance
+// KeyValuePATCHInput Input type for updating a Key Value instance
 type KeyValuePATCHInput struct {
 	IpAllowList *[]CidrBlockAndDescription `json:"ipAllowList,omitempty"`
 
-	// MaxmemoryPolicy The eviction policy for the Key / Value instance
+	// MaxmemoryPolicy The eviction policy for the Key Value instance
 	MaxmemoryPolicy *MaxmemoryPolicy `json:"maxmemoryPolicy,omitempty"`
 
-	// Name The name of the Key / Value instance
+	// Name The name of the Key Value instance
 	Name *string       `json:"name,omitempty"`
 	Plan *KeyValuePlan `json:"plan,omitempty"`
 }
 
-// KeyValuePOSTInput Input type for creating a Key / Value instance
+// KeyValuePOSTInput Input type for creating a Key Value instance
 type KeyValuePOSTInput struct {
 	EnvironmentId *string                    `json:"environmentId,omitempty"`
 	IpAllowList   *[]CidrBlockAndDescription `json:"ipAllowList,omitempty"`
 
-	// MaxmemoryPolicy The eviction policy for the Key / Value instance
+	// MaxmemoryPolicy The eviction policy for the Key Value instance
 	MaxmemoryPolicy *MaxmemoryPolicy `json:"maxmemoryPolicy,omitempty"`
 
-	// Name The name of the Key / Value instance
+	// Name The name of the Key Value instance
 	Name string `json:"name"`
 
-	// OwnerId The ID of the owner of the Key / Value instance
+	// OwnerId The ID of the owner of the Key Value instance
 	OwnerId string       `json:"ownerId"`
 	Plan    KeyValuePlan `json:"plan"`
 
-	// Region The region where the Key / Value instance is located
+	// Region The region where the Key Value instance is located
 	Region *string `json:"region,omitempty"`
 }
 
@@ -1023,7 +1024,7 @@ type KeyValuePlan string
 type KeyValueWithCursor struct {
 	Cursor Cursor `json:"cursor"`
 
-	// KeyValue A Key / Value instance
+	// KeyValue A Key Value instance
 	KeyValue KeyValue `json:"keyValue"`
 }
 
@@ -1038,7 +1039,7 @@ type MaintenanceMode struct {
 // MaxShutdownDelaySeconds The maximum amount of time (in seconds) that Render waits for your application process to exit gracefully after sending it a SIGTERM signal.
 type MaxShutdownDelaySeconds = int
 
-// MaxmemoryPolicy The eviction policy for the Key / Value instance
+// MaxmemoryPolicy The eviction policy for the Key Value instance
 type MaxmemoryPolicy string
 
 // NativeEnvironmentDetails defines model for nativeEnvironmentDetails.
@@ -1509,7 +1510,7 @@ type RedisOptions struct {
 type RedisPATCHInput struct {
 	IpAllowList *[]CidrBlockAndDescription `json:"ipAllowList,omitempty"`
 
-	// MaxmemoryPolicy The eviction policy for the Key / Value instance
+	// MaxmemoryPolicy The eviction policy for the Key Value instance
 	MaxmemoryPolicy *MaxmemoryPolicy `json:"maxmemoryPolicy,omitempty"`
 
 	// Name The name of the Redis instance
@@ -1522,7 +1523,7 @@ type RedisPOSTInput struct {
 	EnvironmentId *string                    `json:"environmentId,omitempty"`
 	IpAllowList   *[]CidrBlockAndDescription `json:"ipAllowList,omitempty"`
 
-	// MaxmemoryPolicy The eviction policy for the Key / Value instance
+	// MaxmemoryPolicy The eviction policy for the Key Value instance
 	MaxmemoryPolicy *MaxmemoryPolicy `json:"maxmemoryPolicy,omitempty"`
 
 	// Name The name of the Redis instance
@@ -3313,6 +3314,33 @@ type AddOrUpdateSecretFileJSONBody struct {
 	Content *string `json:"content,omitempty"`
 }
 
+// ListWebhooksParams defines parameters for ListWebhooks.
+type ListWebhooksParams struct {
+	// Cursor The position in the result list to start from when fetching paginated results. For details, see [Pagination](https://api-docs.render.com/reference/pagination).
+	Cursor *CursorParam `form:"cursor,omitempty" json:"cursor,omitempty"`
+
+	// Limit The maximum number of items to return. For details, see [Pagination](https://api-docs.render.com/reference/pagination).
+	Limit *LimitParam `form:"limit,omitempty" json:"limit,omitempty"`
+
+	// OwnerId The ID of the owner (team or personal user) whose resources should be returned
+	OwnerId *OwnerIdParam `form:"ownerId,omitempty" json:"ownerId,omitempty"`
+}
+
+// ListWebhookEventsParams defines parameters for ListWebhookEvents.
+type ListWebhookEventsParams struct {
+	// SentBefore Filter events sent before this time (specified as an ISO 8601 timestamp)
+	SentBefore *externalRef11.SentBeforeParam `form:"sentBefore,omitempty" json:"sentBefore,omitempty"`
+
+	// SentAfter Filter for resources sent after a certain time (specified as an ISO 8601 timestamp)
+	SentAfter *externalRef11.SentAfterParam `form:"sentAfter,omitempty" json:"sentAfter,omitempty"`
+
+	// Limit The maximum number of items to return. For details, see [Pagination](https://api-docs.render.com/reference/pagination).
+	Limit *LimitParam `form:"limit,omitempty" json:"limit,omitempty"`
+
+	// Cursor The position in the result list to start from when fetching paginated results. For details, see [Pagination](https://api-docs.render.com/reference/pagination).
+	Cursor *CursorParam `form:"cursor,omitempty" json:"cursor,omitempty"`
+}
+
 // UpdateBlueprintJSONRequestBody defines body for UpdateBlueprint for application/json ContentType.
 type UpdateBlueprintJSONRequestBody = externalRef1.BlueprintPATCH
 
@@ -3453,6 +3481,12 @@ type UpdateSecretFilesForServiceJSONRequestBody = UpdateSecretFilesForServiceJSO
 
 // AddOrUpdateSecretFileJSONRequestBody defines body for AddOrUpdateSecretFile for application/json ContentType.
 type AddOrUpdateSecretFileJSONRequestBody AddOrUpdateSecretFileJSONBody
+
+// CreateWebhookJSONRequestBody defines body for CreateWebhook for application/json ContentType.
+type CreateWebhookJSONRequestBody = externalRef11.WebhookPOSTInput
+
+// UpdateWebhookJSONRequestBody defines body for UpdateWebhook for application/json ContentType.
+type UpdateWebhookJSONRequestBody = externalRef11.WebhookPATCHInput
 
 // AsEnvVarValue returns the union data inside the AddUpdateEnvVarInput as a EnvVarValue
 func (t AddUpdateEnvVarInput) AsEnvVarValue() (EnvVarValue, error) {

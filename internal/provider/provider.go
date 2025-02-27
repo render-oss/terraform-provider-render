@@ -13,6 +13,8 @@ import (
 	logstreamresource "terraform-provider-render/internal/provider/logstreams/resource"
 	projectdatasource "terraform-provider-render/internal/provider/project/datasource"
 	projectresource "terraform-provider-render/internal/provider/project/resource"
+	webhookdatasource "terraform-provider-render/internal/provider/webhook/datasource"
+	webhookresouce "terraform-provider-render/internal/provider/webhook/resource"
 
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/function"
@@ -352,6 +354,7 @@ func (p *renderProvider) DataSources(_ context.Context) []func() datasource.Data
 		registrycredentialdatasource.NewRegistryDataSource,
 		staticsitedatasource.NewStaticSiteSource,
 		webservicedatasource.NewWebServiceSource,
+		webhookdatasource.NewWebhookDataSource,
 	}
 }
 
@@ -372,6 +375,7 @@ func (p *renderProvider) Resources(_ context.Context) []func() resource.Resource
 		registrycredentialresource.NewRegistryCredentialResource,
 		staticsiteresource.NewStaticSiteResource,
 		webserviceresource.NewWebServiceResource,
+		webhookresouce.NewWebhookResource,
 	}
 }
 

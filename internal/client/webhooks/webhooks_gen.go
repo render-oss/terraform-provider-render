@@ -4,31 +4,64 @@
 package webhooks
 
 import (
-	externalRef5 "terraform-provider-render/internal/client/eventtypes"
+	"time"
+
+	externalRef4 "terraform-provider-render/internal/client/eventtypes"
 )
 
-// EventTypes The event types that will trigger the webhook
-type EventTypes = []externalRef5.EventType
+// EventFilter The event types that will trigger the webhook. An empty list means all event types will trigger the webhook.
+type EventFilter = []externalRef4.EventType
 
 // Webhook defines model for webhook.
 type Webhook struct {
 	Enabled bool `json:"enabled"`
 
-	// EventTypes The event types that will trigger the webhook
-	EventTypes EventTypes `json:"eventTypes"`
-	Id         string     `json:"id"`
-	Secret     string     `json:"secret"`
-	Url        string     `json:"url"`
+	// EventFilter The event types that will trigger the webhook. An empty list means all event types will trigger the webhook.
+	EventFilter EventFilter `json:"eventFilter"`
+	Id          string      `json:"id"`
+	Name        string      `json:"name"`
+	Secret      string      `json:"secret"`
+	Url         string      `json:"url"`
+}
+
+// WebhookEvent defines model for webhookEvent.
+type WebhookEvent struct {
+	// Error error is populated when an error occurs without a response such as a timeout
+	Error        *string   `json:"error,omitempty"`
+	EventId      string    `json:"eventId"`
+	ResponseBody *string   `json:"responseBody,omitempty"`
+	SentAt       time.Time `json:"sentAt"`
+	StatusCode   *int      `json:"statusCode,omitempty"`
+}
+
+// WebhookPATCHInput defines model for webhookPATCHInput.
+type WebhookPATCHInput struct {
+	Enabled *bool `json:"enabled,omitempty"`
+
+	// EventFilter The event types that will trigger the webhook. An empty list means all event types will trigger the webhook.
+	EventFilter *EventFilter `json:"eventFilter,omitempty"`
+	Name        *string      `json:"name,omitempty"`
+	Url         *string      `json:"url,omitempty"`
 }
 
 // WebhookPOSTInput defines model for webhookPOSTInput.
 type WebhookPOSTInput struct {
 	Enabled bool `json:"enabled"`
 
-	// EventTypes The event types that will trigger the webhook
-	EventTypes EventTypes `json:"eventTypes"`
+	// EventFilter The event types that will trigger the webhook. An empty list means all event types will trigger the webhook.
+	EventFilter EventFilter `json:"eventFilter"`
+	Name        string      `json:"name"`
 
 	// OwnerId The ID of the owner (team or personal user) whose resources should be returned
 	OwnerId string `json:"ownerId"`
 	Url     string `json:"url"`
 }
+
+// SentAfterParam defines model for sentAfterParam.
+type SentAfterParam = time.Time
+
+// SentBeforeParam defines model for sentBeforeParam.
+type SentBeforeParam = time.Time
+
+// WebhookIdParam defines model for webhookIdParam.
+type WebhookIdParam = string
