@@ -27,8 +27,14 @@ type Webhook struct {
 // WebhookEvent defines model for webhookEvent.
 type WebhookEvent struct {
 	// Error error is populated when an error occurs without a response such as a timeout
-	Error        *string   `json:"error,omitempty"`
-	EventId      string    `json:"eventId"`
+	Error *string `json:"error,omitempty"`
+
+	// EventId the id of the event that triggered the webhook
+	EventId   string                 `json:"eventId"`
+	EventType externalRef4.EventType `json:"eventType"`
+
+	// Id the id of the webhook event
+	Id           string    `json:"id"`
 	ResponseBody *string   `json:"responseBody,omitempty"`
 	SentAt       time.Time `json:"sentAt"`
 	StatusCode   *int      `json:"statusCode,omitempty"`

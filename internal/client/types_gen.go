@@ -1103,7 +1103,7 @@ type Plan string
 type Postgres struct {
 	CreatedAt time.Time `json:"createdAt"`
 
-	// DashboardUrl The URL to view the PostgreSQL instance in the Render Dashboard
+	// DashboardUrl The URL to view the Postgres instance in the Render Dashboard
 	DashboardUrl  string  `json:"dashboardUrl"`
 	DatabaseName  string  `json:"databaseName"`
 	DatabaseUser  string  `json:"databaseUser"`
@@ -1148,7 +1148,7 @@ type PostgresConnectionInfo struct {
 type PostgresDetail struct {
 	CreatedAt time.Time `json:"createdAt"`
 
-	// DashboardUrl The URL to view the PostgreSQL instance in the Render Dashboard
+	// DashboardUrl The URL to view the Postgres instance in the Render Dashboard
 	DashboardUrl  string  `json:"dashboardUrl"`
 	DatabaseName  string  `json:"databaseName"`
 	DatabaseUser  string  `json:"databaseUser"`
@@ -1997,6 +1997,18 @@ type WebServiceDetailsPOST struct {
 	Runtime ServiceRuntime `json:"runtime"`
 }
 
+// WebhookEventWithCursor defines model for webhookEventWithCursor.
+type WebhookEventWithCursor struct {
+	Cursor       Cursor                     `json:"cursor"`
+	WebhookEvent externalRef11.WebhookEvent `json:"webhookEvent"`
+}
+
+// WebhookWithCursor defines model for webhookWithCursor.
+type WebhookWithCursor struct {
+	Cursor  Cursor                `json:"cursor"`
+	Webhook externalRef11.Webhook `json:"webhook"`
+}
+
 // CreatedAfterParam defines model for createdAfterParam.
 type CreatedAfterParam = time.Time
 
@@ -2306,7 +2318,7 @@ type ListLogsParams struct {
 	// OwnerId The ID of the owner (team or personal user) whose resources should be returned
 	OwnerId string `form:"ownerId" json:"ownerId"`
 
-	// StartTime Epoch/Unix timestamp of end of time range to return. Defaults to `now() - 1 hour`.
+	// StartTime Epoch/Unix timestamp of start of time range to return. Defaults to `now() - 1 hour`.
 	StartTime *StartTimeParam `form:"startTime,omitempty" json:"startTime,omitempty"`
 
 	// EndTime Epoch/Unix timestamp of end of time range to return. Defaults to `now()`.
@@ -2373,7 +2385,7 @@ type SubscribeLogsParams struct {
 	// OwnerId The ID of the owner (team or personal user) whose resources should be returned
 	OwnerId string `form:"ownerId" json:"ownerId"`
 
-	// StartTime Epoch/Unix timestamp of end of time range to return. Defaults to `now() - 1 hour`.
+	// StartTime Epoch/Unix timestamp of start of time range to return. Defaults to `now() - 1 hour`.
 	StartTime *StartTimeParam `form:"startTime,omitempty" json:"startTime,omitempty"`
 
 	// EndTime Epoch/Unix timestamp of end of time range to return. Defaults to `now()`.
@@ -2422,7 +2434,7 @@ type ListLogsValuesParams struct {
 	// Label The label to query logs for
 	Label ListLogsValuesParamsLabel `form:"label" json:"label"`
 
-	// StartTime Epoch/Unix timestamp of end of time range to return. Defaults to `now() - 1 hour`.
+	// StartTime Epoch/Unix timestamp of start of time range to return. Defaults to `now() - 1 hour`.
 	StartTime *StartTimeParam `form:"startTime,omitempty" json:"startTime,omitempty"`
 
 	// EndTime Epoch/Unix timestamp of end of time range to return. Defaults to `now()`.
@@ -2477,7 +2489,7 @@ type ListMaintenanceParams struct {
 
 // GetActiveConnectionsParams defines parameters for GetActiveConnections.
 type GetActiveConnectionsParams struct {
-	// StartTime Epoch/Unix timestamp of end of time range to return. Defaults to `now() - 1 hour`.
+	// StartTime Epoch/Unix timestamp of start of time range to return. Defaults to `now() - 1 hour`.
 	StartTime *StartTimeParam `form:"startTime,omitempty" json:"startTime,omitempty"`
 
 	// EndTime Epoch/Unix timestamp of end of time range to return. Defaults to `now()`.
@@ -2492,7 +2504,7 @@ type GetActiveConnectionsParams struct {
 
 // GetBandwidthParams defines parameters for GetBandwidth.
 type GetBandwidthParams struct {
-	// StartTime Epoch/Unix timestamp of end of time range to return. Defaults to `now() - 1 hour`.
+	// StartTime Epoch/Unix timestamp of start of time range to return. Defaults to `now() - 1 hour`.
 	StartTime *StartTimeParam `form:"startTime,omitempty" json:"startTime,omitempty"`
 
 	// EndTime Epoch/Unix timestamp of end of time range to return. Defaults to `now()`.
@@ -2507,7 +2519,7 @@ type GetBandwidthParams struct {
 
 // GetCpuParams defines parameters for GetCpu.
 type GetCpuParams struct {
-	// StartTime Epoch/Unix timestamp of end of time range to return. Defaults to `now() - 1 hour`.
+	// StartTime Epoch/Unix timestamp of start of time range to return. Defaults to `now() - 1 hour`.
 	StartTime *StartTimeParam `form:"startTime,omitempty" json:"startTime,omitempty"`
 
 	// EndTime Epoch/Unix timestamp of end of time range to return. Defaults to `now()`.
@@ -2531,7 +2543,7 @@ type GetCpuParams struct {
 
 // GetCpuLimitParams defines parameters for GetCpuLimit.
 type GetCpuLimitParams struct {
-	// StartTime Epoch/Unix timestamp of end of time range to return. Defaults to `now() - 1 hour`.
+	// StartTime Epoch/Unix timestamp of start of time range to return. Defaults to `now() - 1 hour`.
 	StartTime *StartTimeParam `form:"startTime,omitempty" json:"startTime,omitempty"`
 
 	// EndTime Epoch/Unix timestamp of end of time range to return. Defaults to `now()`.
@@ -2552,7 +2564,7 @@ type GetCpuLimitParams struct {
 
 // GetCpuTargetParams defines parameters for GetCpuTarget.
 type GetCpuTargetParams struct {
-	// StartTime Epoch/Unix timestamp of end of time range to return. Defaults to `now() - 1 hour`.
+	// StartTime Epoch/Unix timestamp of start of time range to return. Defaults to `now() - 1 hour`.
 	StartTime *StartTimeParam `form:"startTime,omitempty" json:"startTime,omitempty"`
 
 	// EndTime Epoch/Unix timestamp of end of time range to return. Defaults to `now()`.
@@ -2573,7 +2585,7 @@ type GetCpuTargetParams struct {
 
 // GetDiskCapacityParams defines parameters for GetDiskCapacity.
 type GetDiskCapacityParams struct {
-	// StartTime Epoch/Unix timestamp of end of time range to return. Defaults to `now() - 1 hour`.
+	// StartTime Epoch/Unix timestamp of start of time range to return. Defaults to `now() - 1 hour`.
 	StartTime *StartTimeParam `form:"startTime,omitempty" json:"startTime,omitempty"`
 
 	// EndTime Epoch/Unix timestamp of end of time range to return. Defaults to `now()`.
@@ -2591,7 +2603,7 @@ type GetDiskCapacityParams struct {
 
 // GetDiskUsageParams defines parameters for GetDiskUsage.
 type GetDiskUsageParams struct {
-	// StartTime Epoch/Unix timestamp of end of time range to return. Defaults to `now() - 1 hour`.
+	// StartTime Epoch/Unix timestamp of start of time range to return. Defaults to `now() - 1 hour`.
 	StartTime *StartTimeParam `form:"startTime,omitempty" json:"startTime,omitempty"`
 
 	// EndTime Epoch/Unix timestamp of end of time range to return. Defaults to `now()`.
@@ -2609,7 +2621,7 @@ type GetDiskUsageParams struct {
 
 // ListApplicationFilterValuesParams defines parameters for ListApplicationFilterValues.
 type ListApplicationFilterValuesParams struct {
-	// StartTime Epoch/Unix timestamp of end of time range to return. Defaults to `now() - 1 hour`.
+	// StartTime Epoch/Unix timestamp of start of time range to return. Defaults to `now() - 1 hour`.
 	StartTime *StartTimeParam `form:"startTime,omitempty" json:"startTime,omitempty"`
 
 	// EndTime Epoch/Unix timestamp of end of time range to return. Defaults to `now()`.
@@ -2627,7 +2639,7 @@ type ListApplicationFilterValuesParams struct {
 
 // ListHttpFilterValuesParams defines parameters for ListHttpFilterValues.
 type ListHttpFilterValuesParams struct {
-	// StartTime Epoch/Unix timestamp of end of time range to return. Defaults to `now() - 1 hour`.
+	// StartTime Epoch/Unix timestamp of start of time range to return. Defaults to `now() - 1 hour`.
 	StartTime *StartTimeParam `form:"startTime,omitempty" json:"startTime,omitempty"`
 
 	// EndTime Epoch/Unix timestamp of end of time range to return. Defaults to `now()`.
@@ -2651,7 +2663,7 @@ type ListHttpFilterValuesParams struct {
 
 // ListPathFilterValuesParams defines parameters for ListPathFilterValues.
 type ListPathFilterValuesParams struct {
-	// StartTime Epoch/Unix timestamp of end of time range to return. Defaults to `now() - 1 hour`.
+	// StartTime Epoch/Unix timestamp of start of time range to return. Defaults to `now() - 1 hour`.
 	StartTime *StartTimeParam `form:"startTime,omitempty" json:"startTime,omitempty"`
 
 	// EndTime Epoch/Unix timestamp of end of time range to return. Defaults to `now()`.
@@ -2678,7 +2690,7 @@ type ListPathFilterValuesParams struct {
 
 // GetHttpLatencyParams defines parameters for GetHttpLatency.
 type GetHttpLatencyParams struct {
-	// StartTime Epoch/Unix timestamp of end of time range to return. Defaults to `now() - 1 hour`.
+	// StartTime Epoch/Unix timestamp of start of time range to return. Defaults to `now() - 1 hour`.
 	StartTime *StartTimeParam `form:"startTime,omitempty" json:"startTime,omitempty"`
 
 	// EndTime Epoch/Unix timestamp of end of time range to return. Defaults to `now()`.
@@ -2705,7 +2717,7 @@ type GetHttpLatencyParams struct {
 
 // GetHttpRequestsParams defines parameters for GetHttpRequests.
 type GetHttpRequestsParams struct {
-	// StartTime Epoch/Unix timestamp of end of time range to return. Defaults to `now() - 1 hour`.
+	// StartTime Epoch/Unix timestamp of start of time range to return. Defaults to `now() - 1 hour`.
 	StartTime *StartTimeParam `form:"startTime,omitempty" json:"startTime,omitempty"`
 
 	// EndTime Epoch/Unix timestamp of end of time range to return. Defaults to `now()`.
@@ -2732,7 +2744,7 @@ type GetHttpRequestsParams struct {
 
 // GetInstanceCountParams defines parameters for GetInstanceCount.
 type GetInstanceCountParams struct {
-	// StartTime Epoch/Unix timestamp of end of time range to return. Defaults to `now() - 1 hour`.
+	// StartTime Epoch/Unix timestamp of start of time range to return. Defaults to `now() - 1 hour`.
 	StartTime *StartTimeParam `form:"startTime,omitempty" json:"startTime,omitempty"`
 
 	// EndTime Epoch/Unix timestamp of end of time range to return. Defaults to `now()`.
@@ -2750,7 +2762,7 @@ type GetInstanceCountParams struct {
 
 // GetMemoryParams defines parameters for GetMemory.
 type GetMemoryParams struct {
-	// StartTime Epoch/Unix timestamp of end of time range to return. Defaults to `now() - 1 hour`.
+	// StartTime Epoch/Unix timestamp of start of time range to return. Defaults to `now() - 1 hour`.
 	StartTime *StartTimeParam `form:"startTime,omitempty" json:"startTime,omitempty"`
 
 	// EndTime Epoch/Unix timestamp of end of time range to return. Defaults to `now()`.
@@ -2771,7 +2783,7 @@ type GetMemoryParams struct {
 
 // GetMemoryLimitParams defines parameters for GetMemoryLimit.
 type GetMemoryLimitParams struct {
-	// StartTime Epoch/Unix timestamp of end of time range to return. Defaults to `now() - 1 hour`.
+	// StartTime Epoch/Unix timestamp of start of time range to return. Defaults to `now() - 1 hour`.
 	StartTime *StartTimeParam `form:"startTime,omitempty" json:"startTime,omitempty"`
 
 	// EndTime Epoch/Unix timestamp of end of time range to return. Defaults to `now()`.
@@ -2792,7 +2804,7 @@ type GetMemoryLimitParams struct {
 
 // GetMemoryTargetParams defines parameters for GetMemoryTarget.
 type GetMemoryTargetParams struct {
-	// StartTime Epoch/Unix timestamp of end of time range to return. Defaults to `now() - 1 hour`.
+	// StartTime Epoch/Unix timestamp of start of time range to return. Defaults to `now() - 1 hour`.
 	StartTime *StartTimeParam `form:"startTime,omitempty" json:"startTime,omitempty"`
 
 	// EndTime Epoch/Unix timestamp of end of time range to return. Defaults to `now()`.
@@ -2813,7 +2825,7 @@ type GetMemoryTargetParams struct {
 
 // GetReplicationLagParams defines parameters for GetReplicationLag.
 type GetReplicationLagParams struct {
-	// StartTime Epoch/Unix timestamp of end of time range to return. Defaults to `now() - 1 hour`.
+	// StartTime Epoch/Unix timestamp of start of time range to return. Defaults to `now() - 1 hour`.
 	StartTime *StartTimeParam `form:"startTime,omitempty" json:"startTime,omitempty"`
 
 	// EndTime Epoch/Unix timestamp of end of time range to return. Defaults to `now()`.
@@ -3189,7 +3201,7 @@ type ListEventsParams struct {
 	// EventType The type of event to filter to
 	EventType *EventTypeParam `form:"eventType,omitempty" json:"eventType,omitempty"`
 
-	// StartTime Epoch/Unix timestamp of end of time range to return. Defaults to `now() - 1 hour`.
+	// StartTime Epoch/Unix timestamp of start of time range to return. Defaults to `now() - 1 hour`.
 	StartTime *StartTimeParam `form:"startTime,omitempty" json:"startTime,omitempty"`
 
 	// EndTime Epoch/Unix timestamp of end of time range to return. Defaults to `now()`.
@@ -3388,6 +3400,9 @@ type UpdateResourceLogStreamJSONRequestBody = externalRef6.LogStreamResourceUpda
 
 // UpdateMaintenanceJSONRequestBody defines body for UpdateMaintenance for application/json ContentType.
 type UpdateMaintenanceJSONRequestBody = externalRef7.MaintenanceRunPATCH
+
+// UpsertOwnerMetricsStreamJSONRequestBody defines body for UpsertOwnerMetricsStream for application/json ContentType.
+type UpsertOwnerMetricsStreamJSONRequestBody = externalRef8.MetricsStreamInput
 
 // PatchServiceNotificationOverridesJSONRequestBody defines body for PatchServiceNotificationOverrides for application/json ContentType.
 type PatchServiceNotificationOverridesJSONRequestBody = externalRef9.NotificationServiceOverridePATCH
@@ -4218,22 +4233,22 @@ func (t *ServicePOST_ServiceDetails) UnmarshalJSON(b []byte) error {
 	return err
 }
 
-// AsExternalRef4EventType returns the union data inside the EventTypeParam as a externalRef4.EventType
-func (t EventTypeParam) AsExternalRef4EventType() (externalRef4.EventType, error) {
-	var body externalRef4.EventType
+// AsExternalRef4ServiceEventType returns the union data inside the EventTypeParam as a externalRef4.ServiceEventType
+func (t EventTypeParam) AsExternalRef4ServiceEventType() (externalRef4.ServiceEventType, error) {
+	var body externalRef4.ServiceEventType
 	err := json.Unmarshal(t.union, &body)
 	return body, err
 }
 
-// FromExternalRef4EventType overwrites any union data inside the EventTypeParam as the provided externalRef4.EventType
-func (t *EventTypeParam) FromExternalRef4EventType(v externalRef4.EventType) error {
+// FromExternalRef4ServiceEventType overwrites any union data inside the EventTypeParam as the provided externalRef4.ServiceEventType
+func (t *EventTypeParam) FromExternalRef4ServiceEventType(v externalRef4.ServiceEventType) error {
 	b, err := json.Marshal(v)
 	t.union = b
 	return err
 }
 
-// MergeExternalRef4EventType performs a merge with any union data inside the EventTypeParam, using the provided externalRef4.EventType
-func (t *EventTypeParam) MergeExternalRef4EventType(v externalRef4.EventType) error {
+// MergeExternalRef4ServiceEventType performs a merge with any union data inside the EventTypeParam, using the provided externalRef4.ServiceEventType
+func (t *EventTypeParam) MergeExternalRef4ServiceEventType(v externalRef4.ServiceEventType) error {
 	b, err := json.Marshal(v)
 	if err != nil {
 		return err

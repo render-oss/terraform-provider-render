@@ -16,6 +16,7 @@ import (
 	externalRef0 "terraform-provider-render/internal/client/autoscaling"
 	externalRef1 "terraform-provider-render/internal/client/blueprints"
 	externalRef2 "terraform-provider-render/internal/client/disks"
+	externalRef3 "terraform-provider-render/internal/client/events"
 	externalRef5 "terraform-provider-render/internal/client/jobs"
 	externalRef6 "terraform-provider-render/internal/client/logs"
 	externalRef7 "terraform-provider-render/internal/client/maintenance"
@@ -224,6 +225,9 @@ type ClientInterface interface {
 
 	AddResourcesToEnvironment(ctx context.Context, environmentId string, body AddResourcesToEnvironmentJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
 
+	// RetrieveEvent request
+	RetrieveEvent(ctx context.Context, eventId externalRef3.EventId, reqEditors ...RequestEditorFn) (*http.Response, error)
+
 	// ListKeyValue request
 	ListKeyValue(ctx context.Context, params *ListKeyValueParams, reqEditors ...RequestEditorFn) (*http.Response, error)
 
@@ -293,6 +297,17 @@ type ClientInterface interface {
 
 	// TriggerMaintenance request
 	TriggerMaintenance(ctx context.Context, maintenanceRunParam externalRef7.MaintenanceRunParam, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// DeleteOwnerMetricsStream request
+	DeleteOwnerMetricsStream(ctx context.Context, ownerId string, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// GetOwnerMetricsStream request
+	GetOwnerMetricsStream(ctx context.Context, ownerId string, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// UpsertOwnerMetricsStreamWithBody request with any body
+	UpsertOwnerMetricsStreamWithBody(ctx context.Context, ownerId string, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	UpsertOwnerMetricsStream(ctx context.Context, ownerId string, body UpsertOwnerMetricsStreamJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// GetActiveConnections request
 	GetActiveConnections(ctx context.Context, params *GetActiveConnectionsParams, reqEditors ...RequestEditorFn) (*http.Response, error)
@@ -389,14 +404,14 @@ type ClientInterface interface {
 
 	UpdatePostgres(ctx context.Context, postgresId string, body UpdatePostgresJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	// ListPostgresBackup request
-	ListPostgresBackup(ctx context.Context, postgresId string, reqEditors ...RequestEditorFn) (*http.Response, error)
-
-	// CreatePostgresBackup request
-	CreatePostgresBackup(ctx context.Context, postgresId string, reqEditors ...RequestEditorFn) (*http.Response, error)
-
 	// RetrievePostgresConnectionInfo request
 	RetrievePostgresConnectionInfo(ctx context.Context, postgresId string, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// ListPostgresExport request
+	ListPostgresExport(ctx context.Context, postgresId string, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// CreatePostgresExport request
+	CreatePostgresExport(ctx context.Context, postgresId string, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// FailoverPostgres request
 	FailoverPostgres(ctx context.Context, postgresId string, reqEditors ...RequestEditorFn) (*http.Response, error)
@@ -1237,6 +1252,18 @@ func (c *Client) AddResourcesToEnvironment(ctx context.Context, environmentId st
 	return c.Client.Do(req)
 }
 
+func (c *Client) RetrieveEvent(ctx context.Context, eventId externalRef3.EventId, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewRetrieveEventRequest(c.Server, eventId)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
 func (c *Client) ListKeyValue(ctx context.Context, params *ListKeyValueParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewListKeyValueRequest(c.Server, params)
 	if err != nil {
@@ -1527,6 +1554,54 @@ func (c *Client) UpdateMaintenance(ctx context.Context, maintenanceRunParam exte
 
 func (c *Client) TriggerMaintenance(ctx context.Context, maintenanceRunParam externalRef7.MaintenanceRunParam, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewTriggerMaintenanceRequest(c.Server, maintenanceRunParam)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) DeleteOwnerMetricsStream(ctx context.Context, ownerId string, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewDeleteOwnerMetricsStreamRequest(c.Server, ownerId)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) GetOwnerMetricsStream(ctx context.Context, ownerId string, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewGetOwnerMetricsStreamRequest(c.Server, ownerId)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) UpsertOwnerMetricsStreamWithBody(ctx context.Context, ownerId string, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewUpsertOwnerMetricsStreamRequestWithBody(c.Server, ownerId, contentType, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) UpsertOwnerMetricsStream(ctx context.Context, ownerId string, body UpsertOwnerMetricsStreamJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewUpsertOwnerMetricsStreamRequest(c.Server, ownerId, body)
 	if err != nil {
 		return nil, err
 	}
@@ -1933,32 +2008,32 @@ func (c *Client) UpdatePostgres(ctx context.Context, postgresId string, body Upd
 	return c.Client.Do(req)
 }
 
-func (c *Client) ListPostgresBackup(ctx context.Context, postgresId string, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewListPostgresBackupRequest(c.Server, postgresId)
-	if err != nil {
-		return nil, err
-	}
-	req = req.WithContext(ctx)
-	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
-		return nil, err
-	}
-	return c.Client.Do(req)
-}
-
-func (c *Client) CreatePostgresBackup(ctx context.Context, postgresId string, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewCreatePostgresBackupRequest(c.Server, postgresId)
-	if err != nil {
-		return nil, err
-	}
-	req = req.WithContext(ctx)
-	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
-		return nil, err
-	}
-	return c.Client.Do(req)
-}
-
 func (c *Client) RetrievePostgresConnectionInfo(ctx context.Context, postgresId string, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewRetrievePostgresConnectionInfoRequest(c.Server, postgresId)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) ListPostgresExport(ctx context.Context, postgresId string, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewListPostgresExportRequest(c.Server, postgresId)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) CreatePostgresExport(ctx context.Context, postgresId string, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewCreatePostgresExportRequest(c.Server, postgresId)
 	if err != nil {
 		return nil, err
 	}
@@ -5171,6 +5246,40 @@ func NewAddResourcesToEnvironmentRequestWithBody(server string, environmentId st
 	return req, nil
 }
 
+// NewRetrieveEventRequest generates requests for RetrieveEvent
+func NewRetrieveEventRequest(server string, eventId externalRef3.EventId) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithLocation("simple", false, "eventId", runtime.ParamLocationPath, eventId)
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/events/%s", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest("GET", queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	return req, nil
+}
+
 // NewListKeyValueRequest generates requests for ListKeyValue
 func NewListKeyValueRequest(server string, params *ListKeyValueParams) (*http.Request, error) {
 	var err error
@@ -6863,6 +6972,121 @@ func NewTriggerMaintenanceRequest(server string, maintenanceRunParam externalRef
 	if err != nil {
 		return nil, err
 	}
+
+	return req, nil
+}
+
+// NewDeleteOwnerMetricsStreamRequest generates requests for DeleteOwnerMetricsStream
+func NewDeleteOwnerMetricsStreamRequest(server string, ownerId string) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithLocation("simple", false, "ownerId", runtime.ParamLocationPath, ownerId)
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/metrics-stream/%s", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest("DELETE", queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	return req, nil
+}
+
+// NewGetOwnerMetricsStreamRequest generates requests for GetOwnerMetricsStream
+func NewGetOwnerMetricsStreamRequest(server string, ownerId string) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithLocation("simple", false, "ownerId", runtime.ParamLocationPath, ownerId)
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/metrics-stream/%s", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest("GET", queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	return req, nil
+}
+
+// NewUpsertOwnerMetricsStreamRequest calls the generic UpsertOwnerMetricsStream builder with application/json body
+func NewUpsertOwnerMetricsStreamRequest(server string, ownerId string, body UpsertOwnerMetricsStreamJSONRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	buf, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = bytes.NewReader(buf)
+	return NewUpsertOwnerMetricsStreamRequestWithBody(server, ownerId, "application/json", bodyReader)
+}
+
+// NewUpsertOwnerMetricsStreamRequestWithBody generates requests for UpsertOwnerMetricsStream with any type of body
+func NewUpsertOwnerMetricsStreamRequestWithBody(server string, ownerId string, contentType string, body io.Reader) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithLocation("simple", false, "ownerId", runtime.ParamLocationPath, ownerId)
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/metrics-stream/%s", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest("PUT", queryURL.String(), body)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Add("Content-Type", contentType)
 
 	return req, nil
 }
@@ -9798,74 +10022,6 @@ func NewUpdatePostgresRequestWithBody(server string, postgresId string, contentT
 	return req, nil
 }
 
-// NewListPostgresBackupRequest generates requests for ListPostgresBackup
-func NewListPostgresBackupRequest(server string, postgresId string) (*http.Request, error) {
-	var err error
-
-	var pathParam0 string
-
-	pathParam0, err = runtime.StyleParamWithLocation("simple", false, "postgresId", runtime.ParamLocationPath, postgresId)
-	if err != nil {
-		return nil, err
-	}
-
-	serverURL, err := url.Parse(server)
-	if err != nil {
-		return nil, err
-	}
-
-	operationPath := fmt.Sprintf("/postgres/%s/backup", pathParam0)
-	if operationPath[0] == '/' {
-		operationPath = "." + operationPath
-	}
-
-	queryURL, err := serverURL.Parse(operationPath)
-	if err != nil {
-		return nil, err
-	}
-
-	req, err := http.NewRequest("GET", queryURL.String(), nil)
-	if err != nil {
-		return nil, err
-	}
-
-	return req, nil
-}
-
-// NewCreatePostgresBackupRequest generates requests for CreatePostgresBackup
-func NewCreatePostgresBackupRequest(server string, postgresId string) (*http.Request, error) {
-	var err error
-
-	var pathParam0 string
-
-	pathParam0, err = runtime.StyleParamWithLocation("simple", false, "postgresId", runtime.ParamLocationPath, postgresId)
-	if err != nil {
-		return nil, err
-	}
-
-	serverURL, err := url.Parse(server)
-	if err != nil {
-		return nil, err
-	}
-
-	operationPath := fmt.Sprintf("/postgres/%s/backup", pathParam0)
-	if operationPath[0] == '/' {
-		operationPath = "." + operationPath
-	}
-
-	queryURL, err := serverURL.Parse(operationPath)
-	if err != nil {
-		return nil, err
-	}
-
-	req, err := http.NewRequest("POST", queryURL.String(), nil)
-	if err != nil {
-		return nil, err
-	}
-
-	return req, nil
-}
-
 // NewRetrievePostgresConnectionInfoRequest generates requests for RetrievePostgresConnectionInfo
 func NewRetrievePostgresConnectionInfoRequest(server string, postgresId string) (*http.Request, error) {
 	var err error
@@ -9893,6 +10049,74 @@ func NewRetrievePostgresConnectionInfoRequest(server string, postgresId string) 
 	}
 
 	req, err := http.NewRequest("GET", queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	return req, nil
+}
+
+// NewListPostgresExportRequest generates requests for ListPostgresExport
+func NewListPostgresExportRequest(server string, postgresId string) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithLocation("simple", false, "postgresId", runtime.ParamLocationPath, postgresId)
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/postgres/%s/export", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest("GET", queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	return req, nil
+}
+
+// NewCreatePostgresExportRequest generates requests for CreatePostgresExport
+func NewCreatePostgresExportRequest(server string, postgresId string) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithLocation("simple", false, "postgresId", runtime.ParamLocationPath, postgresId)
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/postgres/%s/export", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest("POST", queryURL.String(), nil)
 	if err != nil {
 		return nil, err
 	}
@@ -14900,6 +15124,9 @@ type ClientWithResponsesInterface interface {
 
 	AddResourcesToEnvironmentWithResponse(ctx context.Context, environmentId string, body AddResourcesToEnvironmentJSONRequestBody, reqEditors ...RequestEditorFn) (*AddResourcesToEnvironmentResponse, error)
 
+	// RetrieveEventWithResponse request
+	RetrieveEventWithResponse(ctx context.Context, eventId externalRef3.EventId, reqEditors ...RequestEditorFn) (*RetrieveEventResponse, error)
+
 	// ListKeyValueWithResponse request
 	ListKeyValueWithResponse(ctx context.Context, params *ListKeyValueParams, reqEditors ...RequestEditorFn) (*ListKeyValueResponse, error)
 
@@ -14969,6 +15196,17 @@ type ClientWithResponsesInterface interface {
 
 	// TriggerMaintenanceWithResponse request
 	TriggerMaintenanceWithResponse(ctx context.Context, maintenanceRunParam externalRef7.MaintenanceRunParam, reqEditors ...RequestEditorFn) (*TriggerMaintenanceResponse, error)
+
+	// DeleteOwnerMetricsStreamWithResponse request
+	DeleteOwnerMetricsStreamWithResponse(ctx context.Context, ownerId string, reqEditors ...RequestEditorFn) (*DeleteOwnerMetricsStreamResponse, error)
+
+	// GetOwnerMetricsStreamWithResponse request
+	GetOwnerMetricsStreamWithResponse(ctx context.Context, ownerId string, reqEditors ...RequestEditorFn) (*GetOwnerMetricsStreamResponse, error)
+
+	// UpsertOwnerMetricsStreamWithBodyWithResponse request with any body
+	UpsertOwnerMetricsStreamWithBodyWithResponse(ctx context.Context, ownerId string, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UpsertOwnerMetricsStreamResponse, error)
+
+	UpsertOwnerMetricsStreamWithResponse(ctx context.Context, ownerId string, body UpsertOwnerMetricsStreamJSONRequestBody, reqEditors ...RequestEditorFn) (*UpsertOwnerMetricsStreamResponse, error)
 
 	// GetActiveConnectionsWithResponse request
 	GetActiveConnectionsWithResponse(ctx context.Context, params *GetActiveConnectionsParams, reqEditors ...RequestEditorFn) (*GetActiveConnectionsResponse, error)
@@ -15065,14 +15303,14 @@ type ClientWithResponsesInterface interface {
 
 	UpdatePostgresWithResponse(ctx context.Context, postgresId string, body UpdatePostgresJSONRequestBody, reqEditors ...RequestEditorFn) (*UpdatePostgresResponse, error)
 
-	// ListPostgresBackupWithResponse request
-	ListPostgresBackupWithResponse(ctx context.Context, postgresId string, reqEditors ...RequestEditorFn) (*ListPostgresBackupResponse, error)
-
-	// CreatePostgresBackupWithResponse request
-	CreatePostgresBackupWithResponse(ctx context.Context, postgresId string, reqEditors ...RequestEditorFn) (*CreatePostgresBackupResponse, error)
-
 	// RetrievePostgresConnectionInfoWithResponse request
 	RetrievePostgresConnectionInfoWithResponse(ctx context.Context, postgresId string, reqEditors ...RequestEditorFn) (*RetrievePostgresConnectionInfoResponse, error)
+
+	// ListPostgresExportWithResponse request
+	ListPostgresExportWithResponse(ctx context.Context, postgresId string, reqEditors ...RequestEditorFn) (*ListPostgresExportResponse, error)
+
+	// CreatePostgresExportWithResponse request
+	CreatePostgresExportWithResponse(ctx context.Context, postgresId string, reqEditors ...RequestEditorFn) (*CreatePostgresExportResponse, error)
 
 	// FailoverPostgresWithResponse request
 	FailoverPostgresWithResponse(ctx context.Context, postgresId string, reqEditors ...RequestEditorFn) (*FailoverPostgresResponse, error)
@@ -16342,6 +16580,37 @@ func (r AddResourcesToEnvironmentResponse) StatusCode() int {
 	return 0
 }
 
+type RetrieveEventResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	JSON200      *externalRef3.Event
+	JSON400      *N400BadRequest
+	JSON401      *N401Unauthorized
+	JSON403      *N403Forbidden
+	JSON404      *N404NotFound
+	JSON406      *N406NotAcceptable
+	JSON410      *N410Gone
+	JSON429      *N429RateLimit
+	JSON500      *N500InternalServerError
+	JSON503      *N503ServiceUnavailable
+}
+
+// Status returns HTTPResponse.Status
+func (r RetrieveEventResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r RetrieveEventResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
 type ListKeyValueResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
@@ -16917,6 +17186,77 @@ func (r TriggerMaintenanceResponse) Status() string {
 
 // StatusCode returns HTTPResponse.StatusCode
 func (r TriggerMaintenanceResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+type DeleteOwnerMetricsStreamResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	JSON400      *N400BadRequest
+	JSON500      *N500InternalServerError
+}
+
+// Status returns HTTPResponse.Status
+func (r DeleteOwnerMetricsStreamResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r DeleteOwnerMetricsStreamResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+type GetOwnerMetricsStreamResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	JSON200      *externalRef8.GetMetricsStream200Response
+	JSON400      *N400BadRequest
+	JSON500      *N500InternalServerError
+}
+
+// Status returns HTTPResponse.Status
+func (r GetOwnerMetricsStreamResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r GetOwnerMetricsStreamResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+type UpsertOwnerMetricsStreamResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	JSON200      *externalRef8.MetricsStream
+	JSON400      *N400BadRequest
+	JSON500      *N500InternalServerError
+}
+
+// Status returns HTTPResponse.Status
+func (r UpsertOwnerMetricsStreamResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r UpsertOwnerMetricsStreamResponse) StatusCode() int {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.StatusCode
 	}
@@ -17663,64 +18003,6 @@ func (r UpdatePostgresResponse) StatusCode() int {
 	return 0
 }
 
-type ListPostgresBackupResponse struct {
-	Body         []byte
-	HTTPResponse *http.Response
-	JSON200      *[]externalRef10.PostgresBackup
-	JSON400      *N400BadRequest
-	JSON401      *N401Unauthorized
-	JSON404      *N404NotFound
-	JSON429      *N429RateLimit
-	JSON500      *N500InternalServerError
-	JSON503      *N503ServiceUnavailable
-}
-
-// Status returns HTTPResponse.Status
-func (r ListPostgresBackupResponse) Status() string {
-	if r.HTTPResponse != nil {
-		return r.HTTPResponse.Status
-	}
-	return http.StatusText(0)
-}
-
-// StatusCode returns HTTPResponse.StatusCode
-func (r ListPostgresBackupResponse) StatusCode() int {
-	if r.HTTPResponse != nil {
-		return r.HTTPResponse.StatusCode
-	}
-	return 0
-}
-
-type CreatePostgresBackupResponse struct {
-	Body         []byte
-	HTTPResponse *http.Response
-	JSON400      *N400BadRequest
-	JSON401      *N401Unauthorized
-	JSON403      *N403Forbidden
-	JSON404      *N404NotFound
-	JSON406      *N406NotAcceptable
-	JSON410      *N410Gone
-	JSON429      *N429RateLimit
-	JSON500      *N500InternalServerError
-	JSON503      *N503ServiceUnavailable
-}
-
-// Status returns HTTPResponse.Status
-func (r CreatePostgresBackupResponse) Status() string {
-	if r.HTTPResponse != nil {
-		return r.HTTPResponse.Status
-	}
-	return http.StatusText(0)
-}
-
-// StatusCode returns HTTPResponse.StatusCode
-func (r CreatePostgresBackupResponse) StatusCode() int {
-	if r.HTTPResponse != nil {
-		return r.HTTPResponse.StatusCode
-	}
-	return 0
-}
-
 type RetrievePostgresConnectionInfoResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
@@ -17743,6 +18025,64 @@ func (r RetrievePostgresConnectionInfoResponse) Status() string {
 
 // StatusCode returns HTTPResponse.StatusCode
 func (r RetrievePostgresConnectionInfoResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+type ListPostgresExportResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	JSON200      *[]externalRef10.PostgresExport
+	JSON400      *N400BadRequest
+	JSON401      *N401Unauthorized
+	JSON404      *N404NotFound
+	JSON429      *N429RateLimit
+	JSON500      *N500InternalServerError
+	JSON503      *N503ServiceUnavailable
+}
+
+// Status returns HTTPResponse.Status
+func (r ListPostgresExportResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r ListPostgresExportResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+type CreatePostgresExportResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	JSON400      *N400BadRequest
+	JSON401      *N401Unauthorized
+	JSON403      *N403Forbidden
+	JSON404      *N404NotFound
+	JSON406      *N406NotAcceptable
+	JSON410      *N410Gone
+	JSON429      *N429RateLimit
+	JSON500      *N500InternalServerError
+	JSON503      *N503ServiceUnavailable
+}
+
+// Status returns HTTPResponse.Status
+func (r CreatePostgresExportResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r CreatePostgresExportResponse) StatusCode() int {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.StatusCode
 	}
@@ -19933,7 +20273,7 @@ func (r GetUserResponse) StatusCode() int {
 type ListWebhooksResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
-	JSON200      *[]externalRef11.Webhook
+	JSON200      *[]WebhookWithCursor
 	JSON400      *N400BadRequest
 	JSON401      *N401Unauthorized
 	JSON404      *N404NotFound
@@ -20070,7 +20410,7 @@ func (r UpdateWebhookResponse) StatusCode() int {
 type ListWebhookEventsResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
-	JSON200      *[]externalRef11.WebhookEvent
+	JSON200      *[]WebhookEventWithCursor
 	JSON400      *N400BadRequest
 	JSON401      *N401Unauthorized
 	JSON404      *N404NotFound
@@ -20489,6 +20829,15 @@ func (c *ClientWithResponses) AddResourcesToEnvironmentWithResponse(ctx context.
 	return ParseAddResourcesToEnvironmentResponse(rsp)
 }
 
+// RetrieveEventWithResponse request returning *RetrieveEventResponse
+func (c *ClientWithResponses) RetrieveEventWithResponse(ctx context.Context, eventId externalRef3.EventId, reqEditors ...RequestEditorFn) (*RetrieveEventResponse, error) {
+	rsp, err := c.RetrieveEvent(ctx, eventId, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseRetrieveEventResponse(rsp)
+}
+
 // ListKeyValueWithResponse request returning *ListKeyValueResponse
 func (c *ClientWithResponses) ListKeyValueWithResponse(ctx context.Context, params *ListKeyValueParams, reqEditors ...RequestEditorFn) (*ListKeyValueResponse, error) {
 	rsp, err := c.ListKeyValue(ctx, params, reqEditors...)
@@ -20707,6 +21056,41 @@ func (c *ClientWithResponses) TriggerMaintenanceWithResponse(ctx context.Context
 		return nil, err
 	}
 	return ParseTriggerMaintenanceResponse(rsp)
+}
+
+// DeleteOwnerMetricsStreamWithResponse request returning *DeleteOwnerMetricsStreamResponse
+func (c *ClientWithResponses) DeleteOwnerMetricsStreamWithResponse(ctx context.Context, ownerId string, reqEditors ...RequestEditorFn) (*DeleteOwnerMetricsStreamResponse, error) {
+	rsp, err := c.DeleteOwnerMetricsStream(ctx, ownerId, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseDeleteOwnerMetricsStreamResponse(rsp)
+}
+
+// GetOwnerMetricsStreamWithResponse request returning *GetOwnerMetricsStreamResponse
+func (c *ClientWithResponses) GetOwnerMetricsStreamWithResponse(ctx context.Context, ownerId string, reqEditors ...RequestEditorFn) (*GetOwnerMetricsStreamResponse, error) {
+	rsp, err := c.GetOwnerMetricsStream(ctx, ownerId, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseGetOwnerMetricsStreamResponse(rsp)
+}
+
+// UpsertOwnerMetricsStreamWithBodyWithResponse request with arbitrary body returning *UpsertOwnerMetricsStreamResponse
+func (c *ClientWithResponses) UpsertOwnerMetricsStreamWithBodyWithResponse(ctx context.Context, ownerId string, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UpsertOwnerMetricsStreamResponse, error) {
+	rsp, err := c.UpsertOwnerMetricsStreamWithBody(ctx, ownerId, contentType, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseUpsertOwnerMetricsStreamResponse(rsp)
+}
+
+func (c *ClientWithResponses) UpsertOwnerMetricsStreamWithResponse(ctx context.Context, ownerId string, body UpsertOwnerMetricsStreamJSONRequestBody, reqEditors ...RequestEditorFn) (*UpsertOwnerMetricsStreamResponse, error) {
+	rsp, err := c.UpsertOwnerMetricsStream(ctx, ownerId, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseUpsertOwnerMetricsStreamResponse(rsp)
 }
 
 // GetActiveConnectionsWithResponse request returning *GetActiveConnectionsResponse
@@ -21002,24 +21386,6 @@ func (c *ClientWithResponses) UpdatePostgresWithResponse(ctx context.Context, po
 	return ParseUpdatePostgresResponse(rsp)
 }
 
-// ListPostgresBackupWithResponse request returning *ListPostgresBackupResponse
-func (c *ClientWithResponses) ListPostgresBackupWithResponse(ctx context.Context, postgresId string, reqEditors ...RequestEditorFn) (*ListPostgresBackupResponse, error) {
-	rsp, err := c.ListPostgresBackup(ctx, postgresId, reqEditors...)
-	if err != nil {
-		return nil, err
-	}
-	return ParseListPostgresBackupResponse(rsp)
-}
-
-// CreatePostgresBackupWithResponse request returning *CreatePostgresBackupResponse
-func (c *ClientWithResponses) CreatePostgresBackupWithResponse(ctx context.Context, postgresId string, reqEditors ...RequestEditorFn) (*CreatePostgresBackupResponse, error) {
-	rsp, err := c.CreatePostgresBackup(ctx, postgresId, reqEditors...)
-	if err != nil {
-		return nil, err
-	}
-	return ParseCreatePostgresBackupResponse(rsp)
-}
-
 // RetrievePostgresConnectionInfoWithResponse request returning *RetrievePostgresConnectionInfoResponse
 func (c *ClientWithResponses) RetrievePostgresConnectionInfoWithResponse(ctx context.Context, postgresId string, reqEditors ...RequestEditorFn) (*RetrievePostgresConnectionInfoResponse, error) {
 	rsp, err := c.RetrievePostgresConnectionInfo(ctx, postgresId, reqEditors...)
@@ -21027,6 +21393,24 @@ func (c *ClientWithResponses) RetrievePostgresConnectionInfoWithResponse(ctx con
 		return nil, err
 	}
 	return ParseRetrievePostgresConnectionInfoResponse(rsp)
+}
+
+// ListPostgresExportWithResponse request returning *ListPostgresExportResponse
+func (c *ClientWithResponses) ListPostgresExportWithResponse(ctx context.Context, postgresId string, reqEditors ...RequestEditorFn) (*ListPostgresExportResponse, error) {
+	rsp, err := c.ListPostgresExport(ctx, postgresId, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseListPostgresExportResponse(rsp)
+}
+
+// CreatePostgresExportWithResponse request returning *CreatePostgresExportResponse
+func (c *ClientWithResponses) CreatePostgresExportWithResponse(ctx context.Context, postgresId string, reqEditors ...RequestEditorFn) (*CreatePostgresExportResponse, error) {
+	rsp, err := c.CreatePostgresExport(ctx, postgresId, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseCreatePostgresExportResponse(rsp)
 }
 
 // FailoverPostgresWithResponse request returning *FailoverPostgresResponse
@@ -24412,6 +24796,95 @@ func ParseAddResourcesToEnvironmentResponse(rsp *http.Response) (*AddResourcesTo
 	return response, nil
 }
 
+// ParseRetrieveEventResponse parses an HTTP response from a RetrieveEventWithResponse call
+func ParseRetrieveEventResponse(rsp *http.Response) (*RetrieveEventResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &RetrieveEventResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest externalRef3.Event
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
+		var dest N400BadRequest
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON400 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest N401Unauthorized
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest N403Forbidden
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest N404NotFound
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON404 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 406:
+		var dest N406NotAcceptable
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON406 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 410:
+		var dest N410Gone
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON410 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 429:
+		var dest N429RateLimit
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON429 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 500:
+		var dest N500InternalServerError
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON500 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 503:
+		var dest N503ServiceUnavailable
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON503 = &dest
+
+	}
+
+	return response, nil
+}
+
 // ParseListKeyValueResponse parses an HTTP response from a ListKeyValueWithResponse call
 func ParseListKeyValueResponse(rsp *http.Response) (*ListKeyValueResponse, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
@@ -25919,6 +26392,119 @@ func ParseTriggerMaintenanceResponse(rsp *http.Response) (*TriggerMaintenanceRes
 	return response, nil
 }
 
+// ParseDeleteOwnerMetricsStreamResponse parses an HTTP response from a DeleteOwnerMetricsStreamWithResponse call
+func ParseDeleteOwnerMetricsStreamResponse(rsp *http.Response) (*DeleteOwnerMetricsStreamResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &DeleteOwnerMetricsStreamResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
+		var dest N400BadRequest
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON400 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 500:
+		var dest N500InternalServerError
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON500 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseGetOwnerMetricsStreamResponse parses an HTTP response from a GetOwnerMetricsStreamWithResponse call
+func ParseGetOwnerMetricsStreamResponse(rsp *http.Response) (*GetOwnerMetricsStreamResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &GetOwnerMetricsStreamResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest externalRef8.GetMetricsStream200Response
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
+		var dest N400BadRequest
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON400 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 500:
+		var dest N500InternalServerError
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON500 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseUpsertOwnerMetricsStreamResponse parses an HTTP response from a UpsertOwnerMetricsStreamWithResponse call
+func ParseUpsertOwnerMetricsStreamResponse(rsp *http.Response) (*UpsertOwnerMetricsStreamResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &UpsertOwnerMetricsStreamResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest externalRef8.MetricsStream
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
+		var dest N400BadRequest
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON400 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 500:
+		var dest N500InternalServerError
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON500 = &dest
+
+	}
+
+	return response, nil
+}
+
 // ParseGetActiveConnectionsResponse parses an HTTP response from a GetActiveConnectionsWithResponse call
 func ParseGetActiveConnectionsResponse(rsp *http.Response) (*GetActiveConnectionsResponse, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
@@ -27387,22 +27973,22 @@ func ParseUpdatePostgresResponse(rsp *http.Response) (*UpdatePostgresResponse, e
 	return response, nil
 }
 
-// ParseListPostgresBackupResponse parses an HTTP response from a ListPostgresBackupWithResponse call
-func ParseListPostgresBackupResponse(rsp *http.Response) (*ListPostgresBackupResponse, error) {
+// ParseRetrievePostgresConnectionInfoResponse parses an HTTP response from a RetrievePostgresConnectionInfoWithResponse call
+func ParseRetrievePostgresConnectionInfoResponse(rsp *http.Response) (*RetrievePostgresConnectionInfoResponse, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
 	defer func() { _ = rsp.Body.Close() }()
 	if err != nil {
 		return nil, err
 	}
 
-	response := &ListPostgresBackupResponse{
+	response := &RetrievePostgresConnectionInfoResponse{
 		Body:         bodyBytes,
 		HTTPResponse: rsp,
 	}
 
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
-		var dest []externalRef10.PostgresBackup
+		var dest PostgresConnectionInfo
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
@@ -27455,15 +28041,83 @@ func ParseListPostgresBackupResponse(rsp *http.Response) (*ListPostgresBackupRes
 	return response, nil
 }
 
-// ParseCreatePostgresBackupResponse parses an HTTP response from a CreatePostgresBackupWithResponse call
-func ParseCreatePostgresBackupResponse(rsp *http.Response) (*CreatePostgresBackupResponse, error) {
+// ParseListPostgresExportResponse parses an HTTP response from a ListPostgresExportWithResponse call
+func ParseListPostgresExportResponse(rsp *http.Response) (*ListPostgresExportResponse, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
 	defer func() { _ = rsp.Body.Close() }()
 	if err != nil {
 		return nil, err
 	}
 
-	response := &CreatePostgresBackupResponse{
+	response := &ListPostgresExportResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest []externalRef10.PostgresExport
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
+		var dest N400BadRequest
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON400 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest N401Unauthorized
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest N404NotFound
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON404 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 429:
+		var dest N429RateLimit
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON429 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 500:
+		var dest N500InternalServerError
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON500 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 503:
+		var dest N503ServiceUnavailable
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON503 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseCreatePostgresExportResponse parses an HTTP response from a CreatePostgresExportWithResponse call
+func ParseCreatePostgresExportResponse(rsp *http.Response) (*CreatePostgresExportResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &CreatePostgresExportResponse{
 		Body:         bodyBytes,
 		HTTPResponse: rsp,
 	}
@@ -27510,74 +28164,6 @@ func ParseCreatePostgresBackupResponse(rsp *http.Response) (*CreatePostgresBacku
 			return nil, err
 		}
 		response.JSON410 = &dest
-
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 429:
-		var dest N429RateLimit
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.JSON429 = &dest
-
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 500:
-		var dest N500InternalServerError
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.JSON500 = &dest
-
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 503:
-		var dest N503ServiceUnavailable
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.JSON503 = &dest
-
-	}
-
-	return response, nil
-}
-
-// ParseRetrievePostgresConnectionInfoResponse parses an HTTP response from a RetrievePostgresConnectionInfoWithResponse call
-func ParseRetrievePostgresConnectionInfoResponse(rsp *http.Response) (*RetrievePostgresConnectionInfoResponse, error) {
-	bodyBytes, err := io.ReadAll(rsp.Body)
-	defer func() { _ = rsp.Body.Close() }()
-	if err != nil {
-		return nil, err
-	}
-
-	response := &RetrievePostgresConnectionInfoResponse{
-		Body:         bodyBytes,
-		HTTPResponse: rsp,
-	}
-
-	switch {
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
-		var dest PostgresConnectionInfo
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.JSON200 = &dest
-
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
-		var dest N400BadRequest
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.JSON400 = &dest
-
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
-		var dest N401Unauthorized
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.JSON401 = &dest
-
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
-		var dest N404NotFound
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.JSON404 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 429:
 		var dest N429RateLimit
@@ -33391,7 +33977,7 @@ func ParseListWebhooksResponse(rsp *http.Response) (*ListWebhooksResponse, error
 
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
-		var dest []externalRef11.Webhook
+		var dest []WebhookWithCursor
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
@@ -33710,7 +34296,7 @@ func ParseListWebhookEventsResponse(rsp *http.Response) (*ListWebhookEventsRespo
 
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
-		var dest []externalRef11.WebhookEvent
+		var dest []WebhookEventWithCursor
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
