@@ -18,6 +18,7 @@ import (
 	externalRef8 "terraform-provider-render/internal/client/metrics"
 	externalRef9 "terraform-provider-render/internal/client/notifications"
 	externalRef10 "terraform-provider-render/internal/client/postgres"
+	externalRef11 "terraform-provider-render/internal/client/webhooks"
 
 	"github.com/oapi-codegen/runtime"
 )
@@ -898,27 +899,27 @@ type JobWithCursor struct {
 	Job    externalRef5.Job `json:"job"`
 }
 
-// KeyValue A Key / Value instance
+// KeyValue A Key Value instance
 type KeyValue struct {
-	// CreatedAt The creation time of the Key / Value instance
+	// CreatedAt The creation time of the Key Value instance
 	CreatedAt time.Time `json:"createdAt"`
 
-	// DashboardUrl The URL to view the Key / Value instance in the Render Dashboard
+	// DashboardUrl The URL to view the Key Value instance in the Render Dashboard
 	DashboardUrl string `json:"dashboardUrl"`
 
-	// EnvironmentId The ID of the environment the Key / Value instance is associated with
+	// EnvironmentId The ID of the environment the Key Value instance is associated with
 	EnvironmentId *string `json:"environmentId,omitempty"`
 
-	// Id The ID of the Key / Value instance
+	// Id The ID of the Key Value instance
 	Id string `json:"id"`
 
-	// IpAllowList The IP allow list for the Key / Value instance
+	// IpAllowList The IP allow list for the Key Value instance
 	IpAllowList []CidrBlockAndDescription `json:"ipAllowList"`
 
-	// Name The name of the Key / Value instance
+	// Name The name of the Key Value instance
 	Name string `json:"name"`
 
-	// Options Options for a Key / Value instance
+	// Options Options for a Key Value instance
 	Options KeyValueOptions `json:"options"`
 	Owner   Owner           `json:"owner"`
 	Plan    KeyValuePlan    `json:"plan"`
@@ -927,16 +928,16 @@ type KeyValue struct {
 	Region Region         `json:"region"`
 	Status DatabaseStatus `json:"status"`
 
-	// UpdatedAt The last updated time of the Key / Value instance
+	// UpdatedAt The last updated time of the Key Value instance
 	UpdatedAt time.Time `json:"updatedAt"`
 
-	// Version The version of Key / Value
+	// Version The version of Key Value
 	Version string `json:"version"`
 }
 
-// KeyValueConnectionInfo A Key / Value instance
+// KeyValueConnectionInfo A Key Value instance
 type KeyValueConnectionInfo struct {
-	// CliCommand The CLI (redis-cli or valkey-cli) command to connect to the Key / Value instance
+	// CliCommand The CLI (redis-cli or valkey-cli) command to connect to the Key Value instance
 	CliCommand string `json:"cliCommand"`
 
 	// ExternalConnectionString The connection string to use from outside Render
@@ -946,25 +947,25 @@ type KeyValueConnectionInfo struct {
 	InternalConnectionString string `json:"internalConnectionString"`
 }
 
-// KeyValueDetail A Key / Value instance
+// KeyValueDetail A Key Value instance
 type KeyValueDetail struct {
-	// CreatedAt The creation time of the Key / Value instance
+	// CreatedAt The creation time of the Key Value instance
 	CreatedAt time.Time `json:"createdAt"`
 
-	// EnvironmentId The ID of the environment the Key / Value instance is associated with
+	// EnvironmentId The ID of the environment the Key Value instance is associated with
 	EnvironmentId *string `json:"environmentId,omitempty"`
 
-	// Id The ID of the Key / Value instance
+	// Id The ID of the Key Value instance
 	Id string `json:"id"`
 
-	// IpAllowList The IP allow list for the Key / Value instance
+	// IpAllowList The IP allow list for the Key Value instance
 	IpAllowList []CidrBlockAndDescription    `json:"ipAllowList"`
 	Maintenance *externalRef7.MaintenanceRun `json:"maintenance,omitempty"`
 
-	// Name The name of the Key / Value instance
+	// Name The name of the Key Value instance
 	Name string `json:"name"`
 
-	// Options Options for a Key / Value instance
+	// Options Options for a Key Value instance
 	Options KeyValueOptions `json:"options"`
 	Owner   Owner           `json:"owner"`
 	Plan    KeyValuePlan    `json:"plan"`
@@ -973,46 +974,46 @@ type KeyValueDetail struct {
 	Region Region         `json:"region"`
 	Status DatabaseStatus `json:"status"`
 
-	// UpdatedAt The last updated time of the Key / Value instance
+	// UpdatedAt The last updated time of the Key Value instance
 	UpdatedAt time.Time `json:"updatedAt"`
 
-	// Version The version of Key / Value
+	// Version The version of Key Value
 	Version string `json:"version"`
 }
 
-// KeyValueOptions Options for a Key / Value instance
+// KeyValueOptions Options for a Key Value instance
 type KeyValueOptions struct {
 	MaxmemoryPolicy *string `json:"maxmemoryPolicy,omitempty"`
 }
 
-// KeyValuePATCHInput Input type for updating a Key / Value instance
+// KeyValuePATCHInput Input type for updating a Key Value instance
 type KeyValuePATCHInput struct {
 	IpAllowList *[]CidrBlockAndDescription `json:"ipAllowList,omitempty"`
 
-	// MaxmemoryPolicy The eviction policy for the Key / Value instance
+	// MaxmemoryPolicy The eviction policy for the Key Value instance
 	MaxmemoryPolicy *MaxmemoryPolicy `json:"maxmemoryPolicy,omitempty"`
 
-	// Name The name of the Key / Value instance
+	// Name The name of the Key Value instance
 	Name *string       `json:"name,omitempty"`
 	Plan *KeyValuePlan `json:"plan,omitempty"`
 }
 
-// KeyValuePOSTInput Input type for creating a Key / Value instance
+// KeyValuePOSTInput Input type for creating a Key Value instance
 type KeyValuePOSTInput struct {
 	EnvironmentId *string                    `json:"environmentId,omitempty"`
 	IpAllowList   *[]CidrBlockAndDescription `json:"ipAllowList,omitempty"`
 
-	// MaxmemoryPolicy The eviction policy for the Key / Value instance
+	// MaxmemoryPolicy The eviction policy for the Key Value instance
 	MaxmemoryPolicy *MaxmemoryPolicy `json:"maxmemoryPolicy,omitempty"`
 
-	// Name The name of the Key / Value instance
+	// Name The name of the Key Value instance
 	Name string `json:"name"`
 
-	// OwnerId The ID of the owner of the Key / Value instance
+	// OwnerId The ID of the owner of the Key Value instance
 	OwnerId string       `json:"ownerId"`
 	Plan    KeyValuePlan `json:"plan"`
 
-	// Region The region where the Key / Value instance is located
+	// Region The region where the Key Value instance is located
 	Region *string `json:"region,omitempty"`
 }
 
@@ -1023,7 +1024,7 @@ type KeyValuePlan string
 type KeyValueWithCursor struct {
 	Cursor Cursor `json:"cursor"`
 
-	// KeyValue A Key / Value instance
+	// KeyValue A Key Value instance
 	KeyValue KeyValue `json:"keyValue"`
 }
 
@@ -1038,7 +1039,7 @@ type MaintenanceMode struct {
 // MaxShutdownDelaySeconds The maximum amount of time (in seconds) that Render waits for your application process to exit gracefully after sending it a SIGTERM signal.
 type MaxShutdownDelaySeconds = int
 
-// MaxmemoryPolicy The eviction policy for the Key / Value instance
+// MaxmemoryPolicy The eviction policy for the Key Value instance
 type MaxmemoryPolicy string
 
 // NativeEnvironmentDetails defines model for nativeEnvironmentDetails.
@@ -1102,7 +1103,7 @@ type Plan string
 type Postgres struct {
 	CreatedAt time.Time `json:"createdAt"`
 
-	// DashboardUrl The URL to view the PostgreSQL instance in the Render Dashboard
+	// DashboardUrl The URL to view the Postgres instance in the Render Dashboard
 	DashboardUrl  string  `json:"dashboardUrl"`
 	DatabaseName  string  `json:"databaseName"`
 	DatabaseUser  string  `json:"databaseUser"`
@@ -1147,7 +1148,7 @@ type PostgresConnectionInfo struct {
 type PostgresDetail struct {
 	CreatedAt time.Time `json:"createdAt"`
 
-	// DashboardUrl The URL to view the PostgreSQL instance in the Render Dashboard
+	// DashboardUrl The URL to view the Postgres instance in the Render Dashboard
 	DashboardUrl  string  `json:"dashboardUrl"`
 	DatabaseName  string  `json:"databaseName"`
 	DatabaseUser  string  `json:"databaseUser"`
@@ -1509,7 +1510,7 @@ type RedisOptions struct {
 type RedisPATCHInput struct {
 	IpAllowList *[]CidrBlockAndDescription `json:"ipAllowList,omitempty"`
 
-	// MaxmemoryPolicy The eviction policy for the Key / Value instance
+	// MaxmemoryPolicy The eviction policy for the Key Value instance
 	MaxmemoryPolicy *MaxmemoryPolicy `json:"maxmemoryPolicy,omitempty"`
 
 	// Name The name of the Redis instance
@@ -1522,7 +1523,7 @@ type RedisPOSTInput struct {
 	EnvironmentId *string                    `json:"environmentId,omitempty"`
 	IpAllowList   *[]CidrBlockAndDescription `json:"ipAllowList,omitempty"`
 
-	// MaxmemoryPolicy The eviction policy for the Key / Value instance
+	// MaxmemoryPolicy The eviction policy for the Key Value instance
 	MaxmemoryPolicy *MaxmemoryPolicy `json:"maxmemoryPolicy,omitempty"`
 
 	// Name The name of the Redis instance
@@ -1996,6 +1997,18 @@ type WebServiceDetailsPOST struct {
 	Runtime ServiceRuntime `json:"runtime"`
 }
 
+// WebhookEventWithCursor defines model for webhookEventWithCursor.
+type WebhookEventWithCursor struct {
+	Cursor       Cursor                     `json:"cursor"`
+	WebhookEvent externalRef11.WebhookEvent `json:"webhookEvent"`
+}
+
+// WebhookWithCursor defines model for webhookWithCursor.
+type WebhookWithCursor struct {
+	Cursor  Cursor                `json:"cursor"`
+	Webhook externalRef11.Webhook `json:"webhook"`
+}
+
 // CreatedAfterParam defines model for createdAfterParam.
 type CreatedAfterParam = time.Time
 
@@ -2305,7 +2318,7 @@ type ListLogsParams struct {
 	// OwnerId The ID of the owner (team or personal user) whose resources should be returned
 	OwnerId string `form:"ownerId" json:"ownerId"`
 
-	// StartTime Epoch/Unix timestamp of end of time range to return. Defaults to `now() - 1 hour`.
+	// StartTime Epoch/Unix timestamp of start of time range to return. Defaults to `now() - 1 hour`.
 	StartTime *StartTimeParam `form:"startTime,omitempty" json:"startTime,omitempty"`
 
 	// EndTime Epoch/Unix timestamp of end of time range to return. Defaults to `now()`.
@@ -2372,7 +2385,7 @@ type SubscribeLogsParams struct {
 	// OwnerId The ID of the owner (team or personal user) whose resources should be returned
 	OwnerId string `form:"ownerId" json:"ownerId"`
 
-	// StartTime Epoch/Unix timestamp of end of time range to return. Defaults to `now() - 1 hour`.
+	// StartTime Epoch/Unix timestamp of start of time range to return. Defaults to `now() - 1 hour`.
 	StartTime *StartTimeParam `form:"startTime,omitempty" json:"startTime,omitempty"`
 
 	// EndTime Epoch/Unix timestamp of end of time range to return. Defaults to `now()`.
@@ -2421,7 +2434,7 @@ type ListLogsValuesParams struct {
 	// Label The label to query logs for
 	Label ListLogsValuesParamsLabel `form:"label" json:"label"`
 
-	// StartTime Epoch/Unix timestamp of end of time range to return. Defaults to `now() - 1 hour`.
+	// StartTime Epoch/Unix timestamp of start of time range to return. Defaults to `now() - 1 hour`.
 	StartTime *StartTimeParam `form:"startTime,omitempty" json:"startTime,omitempty"`
 
 	// EndTime Epoch/Unix timestamp of end of time range to return. Defaults to `now()`.
@@ -2476,7 +2489,7 @@ type ListMaintenanceParams struct {
 
 // GetActiveConnectionsParams defines parameters for GetActiveConnections.
 type GetActiveConnectionsParams struct {
-	// StartTime Epoch/Unix timestamp of end of time range to return. Defaults to `now() - 1 hour`.
+	// StartTime Epoch/Unix timestamp of start of time range to return. Defaults to `now() - 1 hour`.
 	StartTime *StartTimeParam `form:"startTime,omitempty" json:"startTime,omitempty"`
 
 	// EndTime Epoch/Unix timestamp of end of time range to return. Defaults to `now()`.
@@ -2491,7 +2504,7 @@ type GetActiveConnectionsParams struct {
 
 // GetBandwidthParams defines parameters for GetBandwidth.
 type GetBandwidthParams struct {
-	// StartTime Epoch/Unix timestamp of end of time range to return. Defaults to `now() - 1 hour`.
+	// StartTime Epoch/Unix timestamp of start of time range to return. Defaults to `now() - 1 hour`.
 	StartTime *StartTimeParam `form:"startTime,omitempty" json:"startTime,omitempty"`
 
 	// EndTime Epoch/Unix timestamp of end of time range to return. Defaults to `now()`.
@@ -2506,7 +2519,7 @@ type GetBandwidthParams struct {
 
 // GetCpuParams defines parameters for GetCpu.
 type GetCpuParams struct {
-	// StartTime Epoch/Unix timestamp of end of time range to return. Defaults to `now() - 1 hour`.
+	// StartTime Epoch/Unix timestamp of start of time range to return. Defaults to `now() - 1 hour`.
 	StartTime *StartTimeParam `form:"startTime,omitempty" json:"startTime,omitempty"`
 
 	// EndTime Epoch/Unix timestamp of end of time range to return. Defaults to `now()`.
@@ -2530,7 +2543,7 @@ type GetCpuParams struct {
 
 // GetCpuLimitParams defines parameters for GetCpuLimit.
 type GetCpuLimitParams struct {
-	// StartTime Epoch/Unix timestamp of end of time range to return. Defaults to `now() - 1 hour`.
+	// StartTime Epoch/Unix timestamp of start of time range to return. Defaults to `now() - 1 hour`.
 	StartTime *StartTimeParam `form:"startTime,omitempty" json:"startTime,omitempty"`
 
 	// EndTime Epoch/Unix timestamp of end of time range to return. Defaults to `now()`.
@@ -2551,7 +2564,7 @@ type GetCpuLimitParams struct {
 
 // GetCpuTargetParams defines parameters for GetCpuTarget.
 type GetCpuTargetParams struct {
-	// StartTime Epoch/Unix timestamp of end of time range to return. Defaults to `now() - 1 hour`.
+	// StartTime Epoch/Unix timestamp of start of time range to return. Defaults to `now() - 1 hour`.
 	StartTime *StartTimeParam `form:"startTime,omitempty" json:"startTime,omitempty"`
 
 	// EndTime Epoch/Unix timestamp of end of time range to return. Defaults to `now()`.
@@ -2572,7 +2585,7 @@ type GetCpuTargetParams struct {
 
 // GetDiskCapacityParams defines parameters for GetDiskCapacity.
 type GetDiskCapacityParams struct {
-	// StartTime Epoch/Unix timestamp of end of time range to return. Defaults to `now() - 1 hour`.
+	// StartTime Epoch/Unix timestamp of start of time range to return. Defaults to `now() - 1 hour`.
 	StartTime *StartTimeParam `form:"startTime,omitempty" json:"startTime,omitempty"`
 
 	// EndTime Epoch/Unix timestamp of end of time range to return. Defaults to `now()`.
@@ -2590,7 +2603,7 @@ type GetDiskCapacityParams struct {
 
 // GetDiskUsageParams defines parameters for GetDiskUsage.
 type GetDiskUsageParams struct {
-	// StartTime Epoch/Unix timestamp of end of time range to return. Defaults to `now() - 1 hour`.
+	// StartTime Epoch/Unix timestamp of start of time range to return. Defaults to `now() - 1 hour`.
 	StartTime *StartTimeParam `form:"startTime,omitempty" json:"startTime,omitempty"`
 
 	// EndTime Epoch/Unix timestamp of end of time range to return. Defaults to `now()`.
@@ -2608,7 +2621,7 @@ type GetDiskUsageParams struct {
 
 // ListApplicationFilterValuesParams defines parameters for ListApplicationFilterValues.
 type ListApplicationFilterValuesParams struct {
-	// StartTime Epoch/Unix timestamp of end of time range to return. Defaults to `now() - 1 hour`.
+	// StartTime Epoch/Unix timestamp of start of time range to return. Defaults to `now() - 1 hour`.
 	StartTime *StartTimeParam `form:"startTime,omitempty" json:"startTime,omitempty"`
 
 	// EndTime Epoch/Unix timestamp of end of time range to return. Defaults to `now()`.
@@ -2626,7 +2639,7 @@ type ListApplicationFilterValuesParams struct {
 
 // ListHttpFilterValuesParams defines parameters for ListHttpFilterValues.
 type ListHttpFilterValuesParams struct {
-	// StartTime Epoch/Unix timestamp of end of time range to return. Defaults to `now() - 1 hour`.
+	// StartTime Epoch/Unix timestamp of start of time range to return. Defaults to `now() - 1 hour`.
 	StartTime *StartTimeParam `form:"startTime,omitempty" json:"startTime,omitempty"`
 
 	// EndTime Epoch/Unix timestamp of end of time range to return. Defaults to `now()`.
@@ -2650,7 +2663,7 @@ type ListHttpFilterValuesParams struct {
 
 // ListPathFilterValuesParams defines parameters for ListPathFilterValues.
 type ListPathFilterValuesParams struct {
-	// StartTime Epoch/Unix timestamp of end of time range to return. Defaults to `now() - 1 hour`.
+	// StartTime Epoch/Unix timestamp of start of time range to return. Defaults to `now() - 1 hour`.
 	StartTime *StartTimeParam `form:"startTime,omitempty" json:"startTime,omitempty"`
 
 	// EndTime Epoch/Unix timestamp of end of time range to return. Defaults to `now()`.
@@ -2677,7 +2690,7 @@ type ListPathFilterValuesParams struct {
 
 // GetHttpLatencyParams defines parameters for GetHttpLatency.
 type GetHttpLatencyParams struct {
-	// StartTime Epoch/Unix timestamp of end of time range to return. Defaults to `now() - 1 hour`.
+	// StartTime Epoch/Unix timestamp of start of time range to return. Defaults to `now() - 1 hour`.
 	StartTime *StartTimeParam `form:"startTime,omitempty" json:"startTime,omitempty"`
 
 	// EndTime Epoch/Unix timestamp of end of time range to return. Defaults to `now()`.
@@ -2704,7 +2717,7 @@ type GetHttpLatencyParams struct {
 
 // GetHttpRequestsParams defines parameters for GetHttpRequests.
 type GetHttpRequestsParams struct {
-	// StartTime Epoch/Unix timestamp of end of time range to return. Defaults to `now() - 1 hour`.
+	// StartTime Epoch/Unix timestamp of start of time range to return. Defaults to `now() - 1 hour`.
 	StartTime *StartTimeParam `form:"startTime,omitempty" json:"startTime,omitempty"`
 
 	// EndTime Epoch/Unix timestamp of end of time range to return. Defaults to `now()`.
@@ -2731,7 +2744,7 @@ type GetHttpRequestsParams struct {
 
 // GetInstanceCountParams defines parameters for GetInstanceCount.
 type GetInstanceCountParams struct {
-	// StartTime Epoch/Unix timestamp of end of time range to return. Defaults to `now() - 1 hour`.
+	// StartTime Epoch/Unix timestamp of start of time range to return. Defaults to `now() - 1 hour`.
 	StartTime *StartTimeParam `form:"startTime,omitempty" json:"startTime,omitempty"`
 
 	// EndTime Epoch/Unix timestamp of end of time range to return. Defaults to `now()`.
@@ -2749,7 +2762,7 @@ type GetInstanceCountParams struct {
 
 // GetMemoryParams defines parameters for GetMemory.
 type GetMemoryParams struct {
-	// StartTime Epoch/Unix timestamp of end of time range to return. Defaults to `now() - 1 hour`.
+	// StartTime Epoch/Unix timestamp of start of time range to return. Defaults to `now() - 1 hour`.
 	StartTime *StartTimeParam `form:"startTime,omitempty" json:"startTime,omitempty"`
 
 	// EndTime Epoch/Unix timestamp of end of time range to return. Defaults to `now()`.
@@ -2770,7 +2783,7 @@ type GetMemoryParams struct {
 
 // GetMemoryLimitParams defines parameters for GetMemoryLimit.
 type GetMemoryLimitParams struct {
-	// StartTime Epoch/Unix timestamp of end of time range to return. Defaults to `now() - 1 hour`.
+	// StartTime Epoch/Unix timestamp of start of time range to return. Defaults to `now() - 1 hour`.
 	StartTime *StartTimeParam `form:"startTime,omitempty" json:"startTime,omitempty"`
 
 	// EndTime Epoch/Unix timestamp of end of time range to return. Defaults to `now()`.
@@ -2791,7 +2804,7 @@ type GetMemoryLimitParams struct {
 
 // GetMemoryTargetParams defines parameters for GetMemoryTarget.
 type GetMemoryTargetParams struct {
-	// StartTime Epoch/Unix timestamp of end of time range to return. Defaults to `now() - 1 hour`.
+	// StartTime Epoch/Unix timestamp of start of time range to return. Defaults to `now() - 1 hour`.
 	StartTime *StartTimeParam `form:"startTime,omitempty" json:"startTime,omitempty"`
 
 	// EndTime Epoch/Unix timestamp of end of time range to return. Defaults to `now()`.
@@ -2812,7 +2825,7 @@ type GetMemoryTargetParams struct {
 
 // GetReplicationLagParams defines parameters for GetReplicationLag.
 type GetReplicationLagParams struct {
-	// StartTime Epoch/Unix timestamp of end of time range to return. Defaults to `now() - 1 hour`.
+	// StartTime Epoch/Unix timestamp of start of time range to return. Defaults to `now() - 1 hour`.
 	StartTime *StartTimeParam `form:"startTime,omitempty" json:"startTime,omitempty"`
 
 	// EndTime Epoch/Unix timestamp of end of time range to return. Defaults to `now()`.
@@ -3188,7 +3201,7 @@ type ListEventsParams struct {
 	// EventType The type of event to filter to
 	EventType *EventTypeParam `form:"eventType,omitempty" json:"eventType,omitempty"`
 
-	// StartTime Epoch/Unix timestamp of end of time range to return. Defaults to `now() - 1 hour`.
+	// StartTime Epoch/Unix timestamp of start of time range to return. Defaults to `now() - 1 hour`.
 	StartTime *StartTimeParam `form:"startTime,omitempty" json:"startTime,omitempty"`
 
 	// EndTime Epoch/Unix timestamp of end of time range to return. Defaults to `now()`.
@@ -3313,6 +3326,33 @@ type AddOrUpdateSecretFileJSONBody struct {
 	Content *string `json:"content,omitempty"`
 }
 
+// ListWebhooksParams defines parameters for ListWebhooks.
+type ListWebhooksParams struct {
+	// Cursor The position in the result list to start from when fetching paginated results. For details, see [Pagination](https://api-docs.render.com/reference/pagination).
+	Cursor *CursorParam `form:"cursor,omitempty" json:"cursor,omitempty"`
+
+	// Limit The maximum number of items to return. For details, see [Pagination](https://api-docs.render.com/reference/pagination).
+	Limit *LimitParam `form:"limit,omitempty" json:"limit,omitempty"`
+
+	// OwnerId The ID of the owner (team or personal user) whose resources should be returned
+	OwnerId *OwnerIdParam `form:"ownerId,omitempty" json:"ownerId,omitempty"`
+}
+
+// ListWebhookEventsParams defines parameters for ListWebhookEvents.
+type ListWebhookEventsParams struct {
+	// SentBefore Filter events sent before this time (specified as an ISO 8601 timestamp)
+	SentBefore *externalRef11.SentBeforeParam `form:"sentBefore,omitempty" json:"sentBefore,omitempty"`
+
+	// SentAfter Filter for resources sent after a certain time (specified as an ISO 8601 timestamp)
+	SentAfter *externalRef11.SentAfterParam `form:"sentAfter,omitempty" json:"sentAfter,omitempty"`
+
+	// Limit The maximum number of items to return. For details, see [Pagination](https://api-docs.render.com/reference/pagination).
+	Limit *LimitParam `form:"limit,omitempty" json:"limit,omitempty"`
+
+	// Cursor The position in the result list to start from when fetching paginated results. For details, see [Pagination](https://api-docs.render.com/reference/pagination).
+	Cursor *CursorParam `form:"cursor,omitempty" json:"cursor,omitempty"`
+}
+
 // UpdateBlueprintJSONRequestBody defines body for UpdateBlueprint for application/json ContentType.
 type UpdateBlueprintJSONRequestBody = externalRef1.BlueprintPATCH
 
@@ -3360,6 +3400,9 @@ type UpdateResourceLogStreamJSONRequestBody = externalRef6.LogStreamResourceUpda
 
 // UpdateMaintenanceJSONRequestBody defines body for UpdateMaintenance for application/json ContentType.
 type UpdateMaintenanceJSONRequestBody = externalRef7.MaintenanceRunPATCH
+
+// UpsertOwnerMetricsStreamJSONRequestBody defines body for UpsertOwnerMetricsStream for application/json ContentType.
+type UpsertOwnerMetricsStreamJSONRequestBody = externalRef8.MetricsStreamInput
 
 // PatchServiceNotificationOverridesJSONRequestBody defines body for PatchServiceNotificationOverrides for application/json ContentType.
 type PatchServiceNotificationOverridesJSONRequestBody = externalRef9.NotificationServiceOverridePATCH
@@ -3453,6 +3496,12 @@ type UpdateSecretFilesForServiceJSONRequestBody = UpdateSecretFilesForServiceJSO
 
 // AddOrUpdateSecretFileJSONRequestBody defines body for AddOrUpdateSecretFile for application/json ContentType.
 type AddOrUpdateSecretFileJSONRequestBody AddOrUpdateSecretFileJSONBody
+
+// CreateWebhookJSONRequestBody defines body for CreateWebhook for application/json ContentType.
+type CreateWebhookJSONRequestBody = externalRef11.WebhookPOSTInput
+
+// UpdateWebhookJSONRequestBody defines body for UpdateWebhook for application/json ContentType.
+type UpdateWebhookJSONRequestBody = externalRef11.WebhookPATCHInput
 
 // AsEnvVarValue returns the union data inside the AddUpdateEnvVarInput as a EnvVarValue
 func (t AddUpdateEnvVarInput) AsEnvVarValue() (EnvVarValue, error) {
@@ -4184,22 +4233,22 @@ func (t *ServicePOST_ServiceDetails) UnmarshalJSON(b []byte) error {
 	return err
 }
 
-// AsExternalRef4EventType returns the union data inside the EventTypeParam as a externalRef4.EventType
-func (t EventTypeParam) AsExternalRef4EventType() (externalRef4.EventType, error) {
-	var body externalRef4.EventType
+// AsExternalRef4ServiceEventType returns the union data inside the EventTypeParam as a externalRef4.ServiceEventType
+func (t EventTypeParam) AsExternalRef4ServiceEventType() (externalRef4.ServiceEventType, error) {
+	var body externalRef4.ServiceEventType
 	err := json.Unmarshal(t.union, &body)
 	return body, err
 }
 
-// FromExternalRef4EventType overwrites any union data inside the EventTypeParam as the provided externalRef4.EventType
-func (t *EventTypeParam) FromExternalRef4EventType(v externalRef4.EventType) error {
+// FromExternalRef4ServiceEventType overwrites any union data inside the EventTypeParam as the provided externalRef4.ServiceEventType
+func (t *EventTypeParam) FromExternalRef4ServiceEventType(v externalRef4.ServiceEventType) error {
 	b, err := json.Marshal(v)
 	t.union = b
 	return err
 }
 
-// MergeExternalRef4EventType performs a merge with any union data inside the EventTypeParam, using the provided externalRef4.EventType
-func (t *EventTypeParam) MergeExternalRef4EventType(v externalRef4.EventType) error {
+// MergeExternalRef4ServiceEventType performs a merge with any union data inside the EventTypeParam, using the provided externalRef4.ServiceEventType
+func (t *EventTypeParam) MergeExternalRef4ServiceEventType(v externalRef4.ServiceEventType) error {
 	b, err := json.Marshal(v)
 	if err != nil {
 		return err

@@ -1,0 +1,174 @@
+---
+version: 2
+interactions:
+    - id: 0
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 133
+        transfer_encoding: []
+        trailer: {}
+        host: https://api.testing.render.com/v1
+        remote_addr: ""
+        request_uri: ""
+        body: '{"enabled":true,"eventFilter":null,"name":"test-tf-webhook","ownerId":"some-owner-id","url":"https://test-url.render.com"}'
+        form: {}
+        headers:
+            Authorization:
+                - some-api-key
+            Content-Type:
+                - application/json
+            User-Agent:
+                - terraform-provider-render/test
+        url: https://api.testing.render.com/v1/webhooks
+        method: POST
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: 141
+        uncompressed: false
+        body: |
+            {"enabled":true,"eventFilter":null,"id":"whk-cuqcf8vdrj4c70f1v5g0","name":"test-tf-webhook","secret":"","url":"https://test-url.render.com"}
+        headers:
+            Content-Length:
+                - "141"
+            Content-Type:
+                - application/json; charset=utf-8
+            Date:
+                - Tue, 18 Feb 2025 17:47:15 GMT
+            Ratelimit-Limit:
+                - "100"
+            Ratelimit-Remaining:
+                - "98"
+            Ratelimit-Reset:
+                - "44"
+            Referrer-Policy:
+                - same-origin
+            Render-Request-Id:
+                - api-664bfc759-f76dk/Byhm598gwJ-000072
+            Vary:
+                - Origin
+            X-Content-Type-Options:
+                - nosniff
+            X-Frame-Options:
+                - DENY
+            X-Xss-Protection:
+                - 1; mode=block
+        status: 201 Created
+        code: 201
+        duration: 244.31575ms
+    - id: 1
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 0
+        transfer_encoding: []
+        trailer: {}
+        host: https://api.testing.render.com/v1
+        remote_addr: ""
+        request_uri: ""
+        body: ""
+        form: {}
+        headers:
+            Authorization:
+                - some-api-key
+            User-Agent:
+                - terraform-provider-render/test
+        url: https://api.testing.render.com/v1/webhooks/whk-cuqcf8vdrj4c70f1v5g0
+        method: GET
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: 141
+        uncompressed: false
+        body: |
+            {"enabled":true,"eventFilter":null,"id":"whk-cuqcf8vdrj4c70f1v5g0","name":"test-tf-webhook","secret":"","url":"https://test-url.render.com"}
+        headers:
+            Content-Length:
+                - "141"
+            Content-Type:
+                - application/json; charset=utf-8
+            Date:
+                - Tue, 18 Feb 2025 17:47:15 GMT
+            Ratelimit-Limit:
+                - "400"
+            Ratelimit-Remaining:
+                - "399"
+            Ratelimit-Reset:
+                - "44"
+            Referrer-Policy:
+                - same-origin
+            Render-Request-Id:
+                - api-664bfc759-f76dk/Byhm598gwJ-000073
+            Vary:
+                - Origin
+            X-Content-Type-Options:
+                - nosniff
+            X-Frame-Options:
+                - DENY
+            X-Xss-Protection:
+                - 1; mode=block
+        status: 200 OK
+        code: 200
+        duration: 53.677167ms
+    - id: 2
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 0
+        transfer_encoding: []
+        trailer: {}
+        host: https://api.testing.render.com/v1
+        remote_addr: ""
+        request_uri: ""
+        body: ""
+        form: {}
+        headers:
+            Authorization:
+                - some-api-key
+            User-Agent:
+                - terraform-provider-render/test
+        url: https://api.testing.render.com/v1/webhooks/whk-cuqcf8vdrj4c70f1v5g0
+        method: DELETE
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: 0
+        uncompressed: false
+        body: ""
+        headers:
+            Date:
+                - Tue, 18 Feb 2025 17:47:15 GMT
+            Ratelimit-Limit:
+                - "100"
+            Ratelimit-Remaining:
+                - "97"
+            Ratelimit-Reset:
+                - "44"
+            Referrer-Policy:
+                - same-origin
+            Render-Request-Id:
+                - api-664bfc759-f76dk/Byhm598gwJ-000074
+            Vary:
+                - Origin
+            X-Content-Type-Options:
+                - nosniff
+            X-Frame-Options:
+                - DENY
+            X-Xss-Protection:
+                - 1; mode=block
+        status: 204 No Content
+        code: 204
+        duration: 62.592084ms
