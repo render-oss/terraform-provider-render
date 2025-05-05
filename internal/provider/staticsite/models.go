@@ -11,6 +11,7 @@ import (
 type StaticSiteModel struct {
 	Id                         types.String                  `tfsdk:"id"`
 	AutoDeploy                 types.Bool                    `tfsdk:"auto_deploy"`
+	AutoDeployTrigger          types.String                  `tfsdk:"auto_deploy_trigger"`
 	Branch                     types.String                  `tfsdk:"branch"`
 	BuildCommand               types.String                  `tfsdk:"build_command"`
 	BuildFilter                *common.BuildFilterModel      `tfsdk:"build_filter"`
@@ -51,6 +52,7 @@ func ModelForServiceResult(service *common.WrappedStaticSite, state StaticSiteMo
 	staticSitesModel := &StaticSiteModel{
 		Id:                   types.StringValue(service.Id),
 		AutoDeploy:           types.BoolValue(service.AutoDeploy == client.AutoDeployYes),
+		AutoDeployTrigger:    common.AutoDeployTriggerToString(service.AutoDeployTrigger),
 		BuildFilter:          common.BuildFilterModelForClient(service.BuildFilter),
 		CustomDomains:        common.CustomDomainClientsToCustomDomainModels(service.CustomDomains),
 		EnvironmentID:        types.StringPointerValue(service.EnvironmentId),

@@ -171,9 +171,22 @@ var PublishPath = schema.StringAttribute{
 var AutoDeploy = schema.BoolAttribute{
 	Computed:            true,
 	Optional:            true,
-	Default:             booldefault.StaticBool(true),
 	Description:         "Automatic deploy on every push to your repository, or changes to your service settings or environment.",
 	MarkdownDescription: "[Automatic deploy](https://render.com/docs/deploys#automatic-git-deploys) on every push to your repository, or changes to your service settings or environment.",
+}
+
+var AutoDeployTrigger = schema.StringAttribute{
+	Optional:            true,
+	Computed:            true,
+	Description:         "How autodeploys should behave. Must be one of `off`, `commit`, `checksPass`.",
+	MarkdownDescription: "How autodeploys should behave. Must be one of `off`, `commit`, `checksPass`.",
+	Validators: []validator.String{
+		stringvalidator.OneOf(
+			"off",
+			"commit",
+			"checksPass",
+		),
+	},
 }
 
 var BuildCommand = schema.StringAttribute{

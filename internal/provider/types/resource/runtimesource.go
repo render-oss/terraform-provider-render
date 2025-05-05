@@ -29,6 +29,7 @@ var DockerDetails = schema.SingleNestedAttribute{
 	MarkdownDescription: "Details for building and deploying a service [using a Dockerfile](https://render.com/docs/docker).",
 	Attributes: map[string]schema.Attribute{
 		"auto_deploy":  AutoDeploy,
+		"auto_deploy_trigger": AutoDeployTrigger,
 		"repo_url":     RepoURL,
 		"branch":       Branch,
 		"build_filter": BuildFilter,
@@ -55,6 +56,7 @@ var NativeRuntimeDetails = schema.SingleNestedAttribute{
 	Optional:            true,
 	Attributes: map[string]schema.Attribute{
 		"auto_deploy":   AutoDeploy,
+		"auto_deploy_trigger": AutoDeployTrigger,
 		"branch":        Branch,
 		"build_command": BuildCommand,
 		"build_filter":  BuildFilter,

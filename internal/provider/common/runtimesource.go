@@ -10,6 +10,7 @@ import (
 
 type NativeRuntimeModel struct {
 	AutoDeploy   types.Bool        `tfsdk:"auto_deploy"`
+	AutoDeployTrigger types.String `tfsdk:"auto_deploy_trigger"`
 	Branch       types.String      `tfsdk:"branch"`
 	BuildCommand types.String      `tfsdk:"build_command"`
 	BuildFilter  *BuildFilterModel `tfsdk:"build_filter"`
@@ -19,6 +20,7 @@ type NativeRuntimeModel struct {
 
 type DockerRuntimeSourceModel struct {
 	AutoDeploy           types.Bool        `tfsdk:"auto_deploy"`
+	AutoDeployTrigger types.String `tfsdk:"auto_deploy_trigger"`
 	BuildFilter          *BuildFilterModel `tfsdk:"build_filter"`
 	Context              types.String      `tfsdk:"context"`
 	DockerfilePath       types.String      `tfsdk:"dockerfile_path"`
@@ -185,14 +187,22 @@ func ImageURLForURLAndReference(url, tag, digest string) string {
 func applyNativeRuntimeSourceFieldsForCreate(runtime *NativeRuntimeModel, body *client.CreateServiceJSONRequestBody) {
 	body.Repo = runtime.RepoURL.ValueStringPointer()
 	body.Branch = runtime.Branch.ValueStringPointer()
-	body.AutoDeploy = From(AutoDeployBoolToClient(runtime.AutoDeploy.ValueBool()))
+	body.AutoDeploy = AutoDeployBoolToClient(runtime.AutoDeploy)
+	body.AutoDeployTrigger = StringToAutoDeployTrigger(runtime.AutoDeployTrigger)
+	if (body.AutoDeployTrigger != nil) {
+		body.AutoDeploy = nil
+	}
 	body.BuildFilter = ClientBuildFilterForModel(runtime.BuildFilter)
 }
 
 func applyDockerRuntimeSourceFieldsForCreate(runtime *DockerRuntimeSourceModel, body *client.CreateServiceJSONRequestBody) {
 	body.Repo = runtime.RepoURL.ValueStringPointer()
 	body.Branch = runtime.Branch.ValueStringPointer()
-	body.AutoDeploy = From(AutoDeployBoolToClient(runtime.AutoDeploy.ValueBool()))
+	body.AutoDeploy = AutoDeployBoolToClient(runtime.AutoDeploy)
+	body.AutoDeployTrigger = StringToAutoDeployTrigger(runtime.AutoDeployTrigger)
+	if (body.AutoDeployTrigger != nil) {
+		body.AutoDeploy = nil
+	}
 	body.BuildFilter = ClientBuildFilterForModel(runtime.BuildFilter)
 }
 
@@ -211,14 +221,22 @@ func applyImageRuntimeSourceFieldsForCreate(runtime *ImageRuntimeSourceModel, bo
 func applyNativeEnvRuntimeSourceFieldsForUpdate(runtimeSource *NativeRuntimeModel, body *client.UpdateServiceJSONRequestBody) {
 	body.Repo = runtimeSource.RepoURL.ValueStringPointer()
 	body.Branch = runtimeSource.Branch.ValueStringPointer()
-	body.AutoDeploy = From(AutoDeployBoolToClient(runtimeSource.AutoDeploy.ValueBool()))
+	body.AutoDeploy = AutoDeployBoolToClient(runtimeSource.AutoDeploy)
+	body.AutoDeployTrigger = StringToAutoDeployTrigger(runtimeSource.AutoDeployTrigger)
+	if (body.AutoDeployTrigger != nil) {
+		body.AutoDeploy = nil
+	}
 	body.BuildFilter = ClientBuildFilterForModel(runtimeSource.BuildFilter)
 }
 
 func applyDockerRuntimeSourceFieldsForUpdate(runtimeSource *DockerRuntimeSourceModel, updateServiceBody *client.UpdateServiceJSONRequestBody) {
-	updateServiceBody.AutoDeploy = From(AutoDeployBoolToClient(runtimeSource.AutoDeploy.ValueBool()))
+	updateServiceBody.AutoDeploy = AutoDeployBoolToClient(runtimeSource.AutoDeploy)
+	updateServiceBody.AutoDeployTrigger = StringToAutoDeployTrigger(runtimeSource.AutoDeployTrigger)
 	updateServiceBody.BuildFilter = ClientBuildFilterForModel(runtimeSource.BuildFilter)
 	updateServiceBody.Branch = runtimeSource.Branch.ValueStringPointer()
+	if (updateServiceBody.AutoDeployTrigger != nil) {
+		updateServiceBody.AutoDeploy = nil
+	}
 	updateServiceBody.Repo = runtimeSource.RepoURL.ValueStringPointer()
 
 }

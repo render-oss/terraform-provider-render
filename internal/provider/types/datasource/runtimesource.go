@@ -2,10 +2,10 @@ package datasource
 
 import (
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/booldefault"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringdefault"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
+	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 
 	commontypes "terraform-provider-render/internal/provider/common/types"
 	"terraform-provider-render/internal/provider/common/validators"
@@ -19,9 +19,22 @@ type DockerDetailsModel struct {
 
 var AutoDeploy = schema.BoolAttribute{
 	Computed:            true,
-	Default:             booldefault.StaticBool(true),
+	Optional:            true,
 	Description:         "Automatic deploy on every push to your repository, or changes to your service settings or environment.",
 	MarkdownDescription: "[Automatic deploy](https://render.com/docs/deploys#automatic-git-deploys) on every push to your repository, or changes to your service settings or environment.",
+}
+
+var AutoDeployTrigger = schema.StringAttribute{
+	Computed:            true,
+	Description:         "How autodeploys should behave. Must be one of `off`, `commit`, `checksPass`.",
+	MarkdownDescription: "How autodeploys should behave. Must be one of `off`, `commit`, `checksPass`.",
+	Validators: []validator.String{
+		stringvalidator.OneOf(
+			"off",
+			"commit",
+			"checksPass",
+		),
+	},
 }
 
 var DockerDetails = schema.SingleNestedAttribute{
@@ -29,6 +42,7 @@ var DockerDetails = schema.SingleNestedAttribute{
 	Description: "Details for building and deploying a Dockerfile.",
 	Attributes: map[string]schema.Attribute{
 		"auto_deploy":  AutoDeploy,
+		"auto_deploy_trigger": AutoDeployTrigger,
 		"repo_url":     RepoURL,
 		"branch":       Branch,
 		"build_filter": BuildFilter,
@@ -51,6 +65,7 @@ var NativeRuntimeDetails = schema.SingleNestedAttribute{
 	Computed: true,
 	Attributes: map[string]schema.Attribute{
 		"auto_deploy":   AutoDeploy,
+		"auto_deploy_trigger": AutoDeployTrigger,
 		"branch":        Branch,
 		"build_command": BuildCommand,
 		"build_filter":  BuildFilter,
