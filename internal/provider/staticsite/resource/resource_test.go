@@ -33,6 +33,7 @@ func TestStaticSiteResource(t *testing.T) {
 					resource.TestCheckResourceAttr(resourceName, "repo_url", "https://github.com/render-examples/create-react-app"),
 					resource.TestCheckResourceAttr(resourceName, "branch", "master"),
 					resource.TestCheckResourceAttr(resourceName, "auto_deploy", "true"),
+					resource.TestCheckResourceAttr(resourceName, "auto_deploy_trigger", "commit"),
 					resource.TestCheckResourceAttr(resourceName, "previews.generation", "automatic"),
 					resource.TestCheckResourceAttr(resourceName, "build_command", "npm run build"),
 					resource.TestCheckResourceAttr(resourceName, "publish_path", "dist"),
@@ -94,6 +95,9 @@ func TestStaticSiteResource(t *testing.T) {
 			{
 				ResourceName: resourceName,
 				ConfigFile:   config.StaticFile("./testdata/updated.tf"),
+				ConfigVariables: config.Variables{
+					"auto_deploy":                    config.BoolVariable(false),
+				},
 				ConfigPlanChecks: resource.ConfigPlanChecks{
 					PreApply: []plancheck.PlanCheck{
 						checks.ExpectNoReplace(),
@@ -105,6 +109,7 @@ func TestStaticSiteResource(t *testing.T) {
 					resource.TestCheckResourceAttr(resourceName, "repo_url", "https://github.com/render-examples/sveltekit-static"),
 					resource.TestCheckResourceAttr(resourceName, "branch", "main"),
 					resource.TestCheckResourceAttr(resourceName, "auto_deploy", "false"),
+					resource.TestCheckResourceAttr(resourceName, "auto_deploy_trigger", "off"),
 					resource.TestCheckResourceAttr(resourceName, "previews.generation", "off"),
 					resource.TestCheckResourceAttr(resourceName, "build_command", "npm install && npm run build"),
 					resource.TestCheckResourceAttr(resourceName, "publish_path", "build"),
@@ -145,6 +150,23 @@ func TestStaticSiteResource(t *testing.T) {
 			},
 			{
 				ResourceName: resourceName,
+				ConfigFile:   config.StaticFile("./testdata/updated.tf"),
+				ConfigVariables: config.Variables{
+					"auto_deploy_trigger":                   config.StringVariable("commit"),
+				},
+				ConfigPlanChecks: resource.ConfigPlanChecks{
+					PreApply: []plancheck.PlanCheck{
+						checks.ExpectNoReplace(),
+					},
+				},
+				Check: resource.ComposeAggregateTestCheckFunc(
+					resource.TestCheckResourceAttrWith(resourceName, "id", th.CheckIDPrefix("srv-")),
+					resource.TestCheckResourceAttr(resourceName, "auto_deploy", "true"),
+					resource.TestCheckResourceAttr(resourceName, "auto_deploy_trigger", "commit"),
+				),
+			},
+			{
+				ResourceName: resourceName,
 				ConfigFile:   config.StaticFile("./testdata/minimal.tf"),
 				ConfigPlanChecks: resource.ConfigPlanChecks{
 					PreApply: []plancheck.PlanCheck{
@@ -157,6 +179,7 @@ func TestStaticSiteResource(t *testing.T) {
 					resource.TestCheckResourceAttr(resourceName, "repo_url", "https://github.com/render-examples/sveltekit-static"),
 					resource.TestCheckResourceAttr(resourceName, "branch", "main"),
 					resource.TestCheckResourceAttr(resourceName, "auto_deploy", "false"),
+					resource.TestCheckResourceAttr(resourceName, "auto_deploy_trigger", "off"),
 					resource.TestCheckResourceAttr(resourceName, "previews.generation", "off"),
 					resource.TestCheckResourceAttr(resourceName, "build_command", "npm install && npm run build"),
 					resource.TestCheckResourceAttr(resourceName, "publish_path", "public"),
@@ -188,6 +211,7 @@ func TestStaticSiteResource(t *testing.T) {
 					resource.TestCheckResourceAttr(resourceName, "repo_url", "https://github.com/render-examples/sveltekit-static"),
 					resource.TestCheckResourceAttr(resourceName, "branch", "main"),
 					resource.TestCheckResourceAttr(resourceName, "auto_deploy", "false"),
+					resource.TestCheckResourceAttr(resourceName, "auto_deploy_trigger", "off"),
 					resource.TestCheckResourceAttr(resourceName, "previews.generation", "off"),
 					resource.TestCheckResourceAttr(resourceName, "build_command", "npm install && npm run build"),
 					resource.TestCheckResourceAttr(resourceName, "publish_path", "public"),
