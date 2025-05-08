@@ -2,10 +2,10 @@ package datasource
 
 import (
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/booldefault"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringdefault"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
-	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 
 	commontypes "terraform-provider-render/internal/provider/common/types"
 	"terraform-provider-render/internal/provider/common/validators"
@@ -19,22 +19,15 @@ type DockerDetailsModel struct {
 
 var AutoDeploy = schema.BoolAttribute{
 	Computed:            true,
-	Optional:            true,
+	Default:             booldefault.StaticBool(true),
 	Description:         "Automatic deploy on every push to your repository, or changes to your service settings or environment.",
 	MarkdownDescription: "[Automatic deploy](https://render.com/docs/deploys#automatic-git-deploys) on every push to your repository, or changes to your service settings or environment.",
 }
 
 var AutoDeployTrigger = schema.StringAttribute{
 	Computed:            true,
-	Description:         "How autodeploys should behave. Must be one of `off`, `commit`, `checksPass`.",
-	MarkdownDescription: "How autodeploys should behave. Must be one of `off`, `commit`, `checksPass`.",
-	Validators: []validator.String{
-		stringvalidator.OneOf(
-			"off",
-			"commit",
-			"checksPass",
-		),
-	},
+	Description:         "Sets the Automatic deploy behavior for a Git-based service.",
+	MarkdownDescription: "Sets the Automatic deploy behavior for a Git-based service.",
 }
 
 var DockerDetails = schema.SingleNestedAttribute{

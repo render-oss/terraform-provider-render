@@ -187,7 +187,7 @@ func ImageURLForURLAndReference(url, tag, digest string) string {
 func applyNativeRuntimeSourceFieldsForCreate(runtime *NativeRuntimeModel, body *client.CreateServiceJSONRequestBody) {
 	body.Repo = runtime.RepoURL.ValueStringPointer()
 	body.Branch = runtime.Branch.ValueStringPointer()
-	body.AutoDeploy = AutoDeployBoolToClient(runtime.AutoDeploy)
+	body.AutoDeploy = From(AutoDeployBoolToClient(runtime.AutoDeploy.ValueBool()))
 	body.AutoDeployTrigger = StringToAutoDeployTrigger(runtime.AutoDeployTrigger)
 	if (body.AutoDeployTrigger != nil) {
 		body.AutoDeploy = nil
@@ -198,7 +198,7 @@ func applyNativeRuntimeSourceFieldsForCreate(runtime *NativeRuntimeModel, body *
 func applyDockerRuntimeSourceFieldsForCreate(runtime *DockerRuntimeSourceModel, body *client.CreateServiceJSONRequestBody) {
 	body.Repo = runtime.RepoURL.ValueStringPointer()
 	body.Branch = runtime.Branch.ValueStringPointer()
-	body.AutoDeploy = AutoDeployBoolToClient(runtime.AutoDeploy)
+	body.AutoDeploy = From(AutoDeployBoolToClient(runtime.AutoDeploy.ValueBool()))
 	body.AutoDeployTrigger = StringToAutoDeployTrigger(runtime.AutoDeployTrigger)
 	if (body.AutoDeployTrigger != nil) {
 		body.AutoDeploy = nil
@@ -221,7 +221,7 @@ func applyImageRuntimeSourceFieldsForCreate(runtime *ImageRuntimeSourceModel, bo
 func applyNativeEnvRuntimeSourceFieldsForUpdate(runtimeSource *NativeRuntimeModel, body *client.UpdateServiceJSONRequestBody) {
 	body.Repo = runtimeSource.RepoURL.ValueStringPointer()
 	body.Branch = runtimeSource.Branch.ValueStringPointer()
-	body.AutoDeploy = AutoDeployBoolToClient(runtimeSource.AutoDeploy)
+	body.AutoDeploy = From(AutoDeployBoolToClient(runtimeSource.AutoDeploy.ValueBool()))
 	body.AutoDeployTrigger = StringToAutoDeployTrigger(runtimeSource.AutoDeployTrigger)
 	if (body.AutoDeployTrigger != nil) {
 		body.AutoDeploy = nil
@@ -230,10 +230,10 @@ func applyNativeEnvRuntimeSourceFieldsForUpdate(runtimeSource *NativeRuntimeMode
 }
 
 func applyDockerRuntimeSourceFieldsForUpdate(runtimeSource *DockerRuntimeSourceModel, updateServiceBody *client.UpdateServiceJSONRequestBody) {
-	updateServiceBody.AutoDeploy = AutoDeployBoolToClient(runtimeSource.AutoDeploy)
-	updateServiceBody.AutoDeployTrigger = StringToAutoDeployTrigger(runtimeSource.AutoDeployTrigger)
 	updateServiceBody.BuildFilter = ClientBuildFilterForModel(runtimeSource.BuildFilter)
 	updateServiceBody.Branch = runtimeSource.Branch.ValueStringPointer()
+	updateServiceBody.AutoDeploy = From(AutoDeployBoolToClient(runtimeSource.AutoDeploy.ValueBool()))
+	updateServiceBody.AutoDeployTrigger = StringToAutoDeployTrigger(runtimeSource.AutoDeployTrigger)
 	if (updateServiceBody.AutoDeployTrigger != nil) {
 		updateServiceBody.AutoDeploy = nil
 	}

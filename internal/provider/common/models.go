@@ -219,7 +219,6 @@ func NativeRuntimeSource(service *client.Service, env client.ServiceRuntime, env
 	}
 
 	nativeRuntime.BuildCommand = types.StringValue(nativeEnvDetails.BuildCommand)
-	fmt.Println("LIZARD NATIVE RUNTIME SOURCE", nativeRuntime.AutoDeploy, nativeRuntime.AutoDeployTrigger)
 
 	return nativeRuntime, nil
 }
@@ -237,7 +236,6 @@ func DockerRuntimeSource(service *client.Service, envDetails client.EnvSpecificD
 		Branch:         types.StringPointerValue(service.Branch),
 		BuildFilter:    BuildFilterModelForClient(service.BuildFilter),
 	}
-	fmt.Println("LIZARD DOCKER RUNTIME SOURCE")
 	// if autoDeployTrigger is set, we want to use those values as the truth
 	if (service.AutoDeployTrigger != nil) {
 		docker.AutoDeploy = types.BoolValue(AutoDeployTriggerToBool(*service.AutoDeployTrigger))

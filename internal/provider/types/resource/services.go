@@ -178,8 +178,8 @@ var AutoDeploy = schema.BoolAttribute{
 var AutoDeployTrigger = schema.StringAttribute{
 	Optional:            true,
 	Computed:            true,
-	Description:         "How autodeploys should behave. Must be one of `off`, `commit`, `checksPass`.",
-	MarkdownDescription: "How autodeploys should behave. Must be one of `off`, `commit`, `checksPass`.",
+	Description:         "Sets the Automatic deploy behavior for a Git-based service.",
+	MarkdownDescription: "Sets the Automatic deploy behavior for a Git-based service.",
 	Validators: []validator.String{
 		stringvalidator.OneOf(
 			"off",
