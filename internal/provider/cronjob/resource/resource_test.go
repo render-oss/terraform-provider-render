@@ -224,6 +224,66 @@ func TestCronJobNativeRuntimeResource(t *testing.T) {
 				ConfigFile:   config.StaticFile("./testdata/git_config.tf"),
 				ConfigVariables: config.Variables{
 					"repo_url":      config.StringVariable("https://github.com/render-examples/express-hello-world"),
+					"auto_deploy_trigger":   config.StringVariable("commit"),
+					"paths":         config.StringVariable("src/**"),
+					"build_command": config.StringVariable("npm install"),
+					"start_command": config.StringVariable("npm start"),
+				},
+				ConfigPlanChecks: resource.ConfigPlanChecks{
+					PreApply: []plancheck.PlanCheck{
+						checks.ExpectNoReplace(),
+					},
+				},
+				Check: resource.ComposeAggregateTestCheckFunc(
+					resource.TestCheckResourceAttr(resourceName, "runtime_source.native_runtime.repo_url", "https://github.com/render-examples/express-hello-world"),
+					resource.TestCheckResourceAttr(resourceName, "runtime_source.native_runtime.auto_deploy", "true"),
+					resource.TestCheckResourceAttr(resourceName, "runtime_source.native_runtime.auto_deploy_trigger", "commit"),
+					resource.TestCheckResourceAttr(resourceName, "runtime_source.native_runtime.build_filter.paths.0", "src/**"),
+					resource.TestCheckResourceAttr(resourceName, "runtime_source.native_runtime.build_command", "npm install"),
+					resource.TestCheckResourceAttr(resourceName, "start_command", "npm start"),
+				),
+			},
+			// Change values to update
+			{
+				ResourceName: resourceName,
+				ConfigFile:   config.StaticFile("./testdata/git_config.tf"),
+				ConfigVariables: config.Variables{
+					"repo_url":      config.StringVariable("https://github.com/render-examples/nextjs-hello-world"),
+					"auto_deploy_trigger":   config.StringVariable("off"),
+					"paths":         config.StringVariable("bld/**"),
+					"build_command": config.StringVariable("yarn; yarn build"),
+					"start_command": config.StringVariable("yarn start"),
+				},
+				ConfigPlanChecks: resource.ConfigPlanChecks{
+					PreApply: []plancheck.PlanCheck{
+						checks.ExpectNoReplace(),
+					},
+				},
+				Check: resource.ComposeAggregateTestCheckFunc(
+					resource.TestCheckResourceAttr(resourceName, "runtime_source.native_runtime.repo_url", "https://github.com/render-examples/nextjs-hello-world"),
+					resource.TestCheckResourceAttr(resourceName, "runtime_source.native_runtime.auto_deploy", "false"),
+					resource.TestCheckResourceAttr(resourceName, "runtime_source.native_runtime.auto_deploy_trigger", "off"),
+					resource.TestCheckResourceAttr(resourceName, "runtime_source.native_runtime.build_filter.paths.0", "bld/**"),
+					resource.TestCheckResourceAttr(resourceName, "runtime_source.native_runtime.build_command", "yarn; yarn build"),
+					resource.TestCheckResourceAttr(resourceName, "start_command", "yarn start"),
+				),
+			},
+		},
+	})
+}
+
+func TestCronJobNativeRuntimeResourceTrigger(t *testing.T) {
+	resourceName := "render_cron_job.cron_job"
+
+	resource.Test(t, resource.TestCase{
+		ProtoV6ProviderFactories: th.SetupRecordingProvider(t, "git_cassette"),
+		Steps: []resource.TestStep{
+			{
+				// Create with git repo
+				ResourceName: resourceName,
+				ConfigFile:   config.StaticFile("./testdata/git_config.tf"),
+				ConfigVariables: config.Variables{
+					"repo_url":      config.StringVariable("https://github.com/render-examples/express-hello-world"),
 					"auto_deploy":   config.BoolVariable(true),
 					"paths":         config.StringVariable("src/**"),
 					"build_command": config.StringVariable("npm install"),
@@ -237,6 +297,7 @@ func TestCronJobNativeRuntimeResource(t *testing.T) {
 				Check: resource.ComposeAggregateTestCheckFunc(
 					resource.TestCheckResourceAttr(resourceName, "runtime_source.native_runtime.repo_url", "https://github.com/render-examples/express-hello-world"),
 					resource.TestCheckResourceAttr(resourceName, "runtime_source.native_runtime.auto_deploy", "true"),
+					resource.TestCheckResourceAttr(resourceName, "runtime_source.native_runtime.auto_deploy_trigger", "commit"),
 					resource.TestCheckResourceAttr(resourceName, "runtime_source.native_runtime.build_filter.paths.0", "src/**"),
 					resource.TestCheckResourceAttr(resourceName, "runtime_source.native_runtime.build_command", "npm install"),
 					resource.TestCheckResourceAttr(resourceName, "start_command", "npm start"),
@@ -261,6 +322,7 @@ func TestCronJobNativeRuntimeResource(t *testing.T) {
 				Check: resource.ComposeAggregateTestCheckFunc(
 					resource.TestCheckResourceAttr(resourceName, "runtime_source.native_runtime.repo_url", "https://github.com/render-examples/nextjs-hello-world"),
 					resource.TestCheckResourceAttr(resourceName, "runtime_source.native_runtime.auto_deploy", "false"),
+					resource.TestCheckResourceAttr(resourceName, "runtime_source.native_runtime.auto_deploy_trigger", "off"),
 					resource.TestCheckResourceAttr(resourceName, "runtime_source.native_runtime.build_filter.paths.0", "bld/**"),
 					resource.TestCheckResourceAttr(resourceName, "runtime_source.native_runtime.build_command", "yarn; yarn build"),
 					resource.TestCheckResourceAttr(resourceName, "start_command", "yarn start"),
