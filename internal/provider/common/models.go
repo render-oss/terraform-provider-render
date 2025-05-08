@@ -202,7 +202,7 @@ func NativeRuntimeSource(service *client.Service, env client.ServiceRuntime, env
 		nativeRuntime.RepoURL = types.StringValue(*service.Repo)
 	}
 	// if autoDeployTrigger is set, we want to use those values as the truth
-	if (service.AutoDeployTrigger != nil) {
+	if service.AutoDeployTrigger != nil {
 		nativeRuntime.AutoDeploy = types.BoolValue(AutoDeployTriggerToBool(*service.AutoDeployTrigger))
 		nativeRuntime.AutoDeployTrigger = AutoDeployTriggerToString(service.AutoDeployTrigger)
 	} else {
@@ -237,7 +237,7 @@ func DockerRuntimeSource(service *client.Service, envDetails client.EnvSpecificD
 		BuildFilter:    BuildFilterModelForClient(service.BuildFilter),
 	}
 	// if autoDeployTrigger is set, we want to use those values as the truth
-	if (service.AutoDeployTrigger != nil) {
+	if service.AutoDeployTrigger != nil {
 		docker.AutoDeploy = types.BoolValue(AutoDeployTriggerToBool(*service.AutoDeployTrigger))
 		docker.AutoDeployTrigger = AutoDeployTriggerToString(service.AutoDeployTrigger)
 	} else {

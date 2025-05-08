@@ -63,7 +63,7 @@ func updateServiceGitRepoDeployConfigForCreate(plan staticsite.StaticSiteModel, 
 	body.RootDir = plan.RootDirectory.ValueStringPointer()
 	body.AutoDeploy = common.From(common.AutoDeployBoolToClient(plan.AutoDeploy.ValueBool()))
 	body.AutoDeployTrigger = common.StringToAutoDeployTrigger(plan.AutoDeployTrigger)
-	if (body.AutoDeployTrigger != nil) {
+	if body.AutoDeployTrigger != nil {
 		body.AutoDeploy = nil
 	}
 	body.BuildFilter = common.ClientBuildFilterForModel(plan.BuildFilter)
