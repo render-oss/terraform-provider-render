@@ -26,6 +26,7 @@ Provides information about a Render Static Site.
 ### Read-Only
 
 - `auto_deploy` (Boolean) [Automatic deploy](https://render.com/docs/deploys#automatic-git-deploys) on every push to your repository, or changes to your service settings or environment.
+- `auto_deploy_trigger` (String) Sets the Automatic deploy behavior for a Git-based service.
 - `branch` (String) Branch to build
 - `build_command` (String) Command to build the service
 - `build_filter` (Attributes) Filter for files and paths to monitor for automatic deploys. Filter paths are absolute. If you've defined a root directory, you can still define paths outside of the root directory. (see [below for nested schema](#nestedatt--build_filter))
