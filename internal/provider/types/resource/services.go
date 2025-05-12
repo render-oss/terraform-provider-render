@@ -1,6 +1,7 @@
 package resource
 
 import (
+	"context"
 	"regexp"
 
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/objectdefault"
@@ -175,6 +176,37 @@ var AutoDeploy = schema.BoolAttribute{
 	MarkdownDescription: "[Automatic deploy](https://render.com/docs/deploys#automatic-git-deploys) on every push to your repository, or changes to your service settings or environment.",
 }
 
+type autoDeployTriggerDefaultModifier struct{}
+
+func (m autoDeployTriggerDefaultModifier) Description(_ context.Context) string {
+    return "Sets the Automatic deploy behavior for a Git-based service."
+}
+
+func (m autoDeployTriggerDefaultModifier) MarkdownDescription(_ context.Context) string {
+    return "Sets the Automatic deploy behavior for a Git-based service."
+}
+
+func (m autoDeployTriggerDefaultModifier) PlanModifyString(
+	ctx context.Context,
+	req planmodifier.StringRequest,
+	resp *planmodifier.StringResponse,
+) {
+    if !req.PlanValue.IsUnknown() {
+        return
+    }
+
+	if !req.ConfigValue.IsUnknown() && !req.ConfigValue.IsNull() {
+		return
+	}
+
+	var autoDeploy types.Bool
+	siblingPath := req.Path.ParentPath().AtName("auto_deploy")
+	req.Config.GetAttribute(ctx, siblingPath, &autoDeploy)
+	if autoDeploy.IsNull() || autoDeploy.IsUnknown() {
+		resp.PlanValue = types.StringValue("commit")
+	}
+}
+
 var AutoDeployTrigger = schema.StringAttribute{
 	Optional:            true,
 	Computed:            true,
@@ -186,6 +218,9 @@ var AutoDeployTrigger = schema.StringAttribute{
 			"commit",
 			"checksPass",
 		),
+	},
+	PlanModifiers: []planmodifier.String{
+		autoDeployTriggerDefaultModifier{},
 	},
 }
 
