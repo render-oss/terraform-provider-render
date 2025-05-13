@@ -30,8 +30,5 @@ func BoolToAutoDeployTriggerString(autoDeploy bool) types.String {
 }
 
 func AutoDeployTriggerToBool(trigger client.AutoDeployTrigger) bool {
-	if trigger == client.AutoDeployTriggerOff {
-		return false
-	}
-	return true
+	return trigger != client.AutoDeployTriggerOff
 }
