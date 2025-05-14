@@ -1171,9 +1171,11 @@ type PostgresDetailSuspended string
 
 // PostgresPATCHInput defines model for postgresPATCHInput.
 type PostgresPATCHInput struct {
-	// DatadogAPIKey The Datadog API key for the Datadog agent. Pass empty string to remove. Restarts Postgres on change.
+	// DatadogAPIKey The Datadog API key for the Datadog agent to monitor the database. Pass empty string to remove. Restarts Postgres on change.
 	DatadogAPIKey *string `json:"datadogAPIKey,omitempty"`
-	DatadogSite   *string `json:"datadogSite,omitempty"`
+
+	// DatadogSite Datadog region to use for monitoring the new database. Defaults to 'US1'.
+	DatadogSite *string `json:"datadogSite,omitempty"`
 
 	// DiskSizeGB The number of gigabytes of disk space to allocate for the database
 	DiskSizeGB             *int                         `json:"diskSizeGB,omitempty"`
@@ -1186,10 +1188,14 @@ type PostgresPATCHInput struct {
 
 // PostgresPOSTInput Input for creating a database
 type PostgresPOSTInput struct {
-	DatabaseName  *string `json:"databaseName,omitempty"`
-	DatabaseUser  *string `json:"databaseUser,omitempty"`
+	DatabaseName *string `json:"databaseName,omitempty"`
+	DatabaseUser *string `json:"databaseUser,omitempty"`
+
+	// DatadogAPIKey The Datadog API key for the Datadog agent to monitor the new database.
 	DatadogAPIKey *string `json:"datadogAPIKey,omitempty"`
-	DatadogSite   *string `json:"datadogSite,omitempty"`
+
+	// DatadogSite Datadog region to use for monitoring the new database. Defaults to 'US1'.
+	DatadogSite *string `json:"datadogSite,omitempty"`
 
 	// DiskSizeGB The number of gigabytes of disk space to allocate for the database
 	DiskSizeGB             *int                       `json:"diskSizeGB,omitempty"`
