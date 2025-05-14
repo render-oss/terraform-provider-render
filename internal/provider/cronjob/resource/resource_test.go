@@ -212,7 +212,7 @@ func TestCronJobNotificationsResource(t *testing.T) {
 	})
 }
 
-func TestCronJobNativeRuntimeResource(t *testing.T) {
+func TestCronJobNativeRuntimeResourceTrigger(t *testing.T) {
 	resourceName := "render_cron_job.cron_job"
 
 	resource.Test(t, resource.TestCase{
@@ -272,7 +272,7 @@ func TestCronJobNativeRuntimeResource(t *testing.T) {
 	})
 }
 
-func TestCronJobNativeRuntimeResourceTrigger(t *testing.T) {
+func TestCronJobNativeRuntimeResource(t *testing.T) {
 	resourceName := "render_cron_job.cron_job"
 
 	resource.Test(t, resource.TestCase{
