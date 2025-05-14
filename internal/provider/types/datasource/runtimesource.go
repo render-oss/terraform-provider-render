@@ -34,11 +34,11 @@ var DockerDetails = schema.SingleNestedAttribute{
 	Computed:    true,
 	Description: "Details for building and deploying a Dockerfile.",
 	Attributes: map[string]schema.Attribute{
-		"auto_deploy":  AutoDeploy,
+		"auto_deploy":         AutoDeploy,
 		"auto_deploy_trigger": AutoDeployTrigger,
-		"repo_url":     RepoURL,
-		"branch":       Branch,
-		"build_filter": BuildFilter,
+		"repo_url":            RepoURL,
+		"branch":              Branch,
+		"build_filter":        BuildFilter,
 		"context": schema.StringAttribute{
 			Computed:            true,
 			Description:         "Docker build context directory. This is relative to your repository root. Defaults to the root.",
@@ -57,13 +57,13 @@ var DockerDetails = schema.SingleNestedAttribute{
 var NativeRuntimeDetails = schema.SingleNestedAttribute{
 	Computed: true,
 	Attributes: map[string]schema.Attribute{
-		"auto_deploy":   AutoDeploy,
+		"auto_deploy":         AutoDeploy,
 		"auto_deploy_trigger": AutoDeployTrigger,
-		"branch":        Branch,
-		"build_command": BuildCommand,
-		"build_filter":  BuildFilter,
-		"repo_url":      RepoURL,
-		"runtime":       Runtime,
+		"branch":              Branch,
+		"build_command":       BuildCommand,
+		"build_filter":        BuildFilter,
+		"repo_url":            RepoURL,
+		"runtime":             Runtime,
 	},
 }
 

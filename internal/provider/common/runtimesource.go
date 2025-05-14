@@ -9,18 +9,18 @@ import (
 )
 
 type NativeRuntimeModel struct {
-	AutoDeploy   types.Bool        `tfsdk:"auto_deploy"`
-	AutoDeployTrigger types.String `tfsdk:"auto_deploy_trigger"`
-	Branch       types.String      `tfsdk:"branch"`
-	BuildCommand types.String      `tfsdk:"build_command"`
-	BuildFilter  *BuildFilterModel `tfsdk:"build_filter"`
-	RepoURL      types.String      `tfsdk:"repo_url"`
-	Runtime      types.String      `tfsdk:"runtime"`
+	AutoDeploy        types.Bool        `tfsdk:"auto_deploy"`
+	AutoDeployTrigger types.String      `tfsdk:"auto_deploy_trigger"`
+	Branch            types.String      `tfsdk:"branch"`
+	BuildCommand      types.String      `tfsdk:"build_command"`
+	BuildFilter       *BuildFilterModel `tfsdk:"build_filter"`
+	RepoURL           types.String      `tfsdk:"repo_url"`
+	Runtime           types.String      `tfsdk:"runtime"`
 }
 
 type DockerRuntimeSourceModel struct {
 	AutoDeploy           types.Bool        `tfsdk:"auto_deploy"`
-	AutoDeployTrigger types.String `tfsdk:"auto_deploy_trigger"`
+	AutoDeployTrigger    types.String      `tfsdk:"auto_deploy_trigger"`
 	BuildFilter          *BuildFilterModel `tfsdk:"build_filter"`
 	Context              types.String      `tfsdk:"context"`
 	DockerfilePath       types.String      `tfsdk:"dockerfile_path"`

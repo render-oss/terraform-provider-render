@@ -223,11 +223,11 @@ func TestCronJobNativeRuntimeResource(t *testing.T) {
 				ResourceName: resourceName,
 				ConfigFile:   config.StaticFile("./testdata/git_config.tf"),
 				ConfigVariables: config.Variables{
-					"repo_url":      config.StringVariable("https://github.com/render-examples/express-hello-world"),
-					"auto_deploy_trigger":   config.StringVariable("commit"),
-					"paths":         config.StringVariable("src/**"),
-					"build_command": config.StringVariable("npm install"),
-					"start_command": config.StringVariable("npm start"),
+					"repo_url":            config.StringVariable("https://github.com/render-examples/express-hello-world"),
+					"auto_deploy_trigger": config.StringVariable("commit"),
+					"paths":               config.StringVariable("src/**"),
+					"build_command":       config.StringVariable("npm install"),
+					"start_command":       config.StringVariable("npm start"),
 				},
 				ConfigPlanChecks: resource.ConfigPlanChecks{
 					PreApply: []plancheck.PlanCheck{
@@ -248,11 +248,11 @@ func TestCronJobNativeRuntimeResource(t *testing.T) {
 				ResourceName: resourceName,
 				ConfigFile:   config.StaticFile("./testdata/git_config.tf"),
 				ConfigVariables: config.Variables{
-					"repo_url":      config.StringVariable("https://github.com/render-examples/nextjs-hello-world"),
-					"auto_deploy_trigger":   config.StringVariable("off"),
-					"paths":         config.StringVariable("bld/**"),
-					"build_command": config.StringVariable("yarn; yarn build"),
-					"start_command": config.StringVariable("yarn start"),
+					"repo_url":            config.StringVariable("https://github.com/render-examples/nextjs-hello-world"),
+					"auto_deploy_trigger": config.StringVariable("off"),
+					"paths":               config.StringVariable("bld/**"),
+					"build_command":       config.StringVariable("yarn; yarn build"),
+					"start_command":       config.StringVariable("yarn start"),
 				},
 				ConfigPlanChecks: resource.ConfigPlanChecks{
 					PreApply: []plancheck.PlanCheck{

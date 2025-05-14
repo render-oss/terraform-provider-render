@@ -96,7 +96,7 @@ func TestStaticSiteResource(t *testing.T) {
 				ResourceName: resourceName,
 				ConfigFile:   config.StaticFile("./testdata/updated.tf"),
 				ConfigVariables: config.Variables{
-					"auto_deploy":                    config.BoolVariable(false),
+					"auto_deploy": config.BoolVariable(false),
 				},
 				ConfigPlanChecks: resource.ConfigPlanChecks{
 					PreApply: []plancheck.PlanCheck{
@@ -152,7 +152,7 @@ func TestStaticSiteResource(t *testing.T) {
 				ResourceName: resourceName,
 				ConfigFile:   config.StaticFile("./testdata/updated.tf"),
 				ConfigVariables: config.Variables{
-					"auto_deploy_trigger":                   config.StringVariable("commit"),
+					"auto_deploy_trigger": config.StringVariable("commit"),
 				},
 				ConfigPlanChecks: resource.ConfigPlanChecks{
 					PreApply: []plancheck.PlanCheck{

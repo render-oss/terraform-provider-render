@@ -207,7 +207,7 @@ func NativeRuntimeSource(service *client.Service, env client.ServiceRuntime, env
 		nativeRuntime.AutoDeployTrigger = AutoDeployTriggerToString(service.AutoDeployTrigger)
 	} else {
 		nativeRuntime.AutoDeploy = types.BoolValue(service.AutoDeploy == client.AutoDeployYes)
-		nativeRuntime.AutoDeployTrigger = BoolToAutoDeployTriggerString(nativeRuntime.AutoDeploy.ValueBool())	
+		nativeRuntime.AutoDeployTrigger = BoolToAutoDeployTriggerString(nativeRuntime.AutoDeploy.ValueBool())
 	}
 
 	nativeRuntime.Branch = types.StringPointerValue(service.Branch)
@@ -242,7 +242,7 @@ func DockerRuntimeSource(service *client.Service, envDetails client.EnvSpecificD
 		docker.AutoDeployTrigger = AutoDeployTriggerToString(service.AutoDeployTrigger)
 	} else {
 		docker.AutoDeploy = types.BoolValue(service.AutoDeploy == client.AutoDeployYes)
-		docker.AutoDeployTrigger = BoolToAutoDeployTriggerString(docker.AutoDeploy.ValueBool())	
+		docker.AutoDeployTrigger = BoolToAutoDeployTriggerString(docker.AutoDeploy.ValueBool())
 	}
 
 	if dockerDetails.RegistryCredential != nil {

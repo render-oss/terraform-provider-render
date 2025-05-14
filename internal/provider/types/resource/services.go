@@ -172,11 +172,11 @@ var PublishPath = schema.StringAttribute{
 type autoDeployTriggerDefaultModifier struct{}
 
 func (m autoDeployTriggerDefaultModifier) Description(_ context.Context) string {
-    return "Sets the Automatic deploy behavior for a Git-based service."
+	return "Sets the Automatic deploy behavior for a Git-based service."
 }
 
 func (m autoDeployTriggerDefaultModifier) MarkdownDescription(_ context.Context) string {
-    return "Sets the Automatic deploy behavior for a Git-based service."
+	return "Sets the Automatic deploy behavior for a Git-based service."
 }
 
 func (m autoDeployTriggerDefaultModifier) PlanModifyString(
@@ -233,16 +233,16 @@ func (m autoDeployModifier) PlanModifyBool(
 }
 
 func (m autoDeployModifier) Description(_ context.Context) string {
-    return "Automatic deploy on every push to your repository, or changes to your service settings or environment."
+	return "Automatic deploy on every push to your repository, or changes to your service settings or environment."
 }
 
 func (m autoDeployModifier) MarkdownDescription(_ context.Context) string {
-    return "[Automatic deploy](https://render.com/docs/deploys#automatic-git-deploys) on every push to your repository, or changes to your service settings or environment."
+	return "[Automatic deploy](https://render.com/docs/deploys#automatic-git-deploys) on every push to your repository, or changes to your service settings or environment."
 }
 
 var AutoDeploy = schema.BoolAttribute{
-	Computed:            true,
-	Optional:            true,
+	Computed: true,
+	Optional: true,
 	PlanModifiers: []planmodifier.Bool{
 		autoDeployModifier{},
 	},
