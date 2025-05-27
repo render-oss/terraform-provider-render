@@ -4,6 +4,12 @@ variable "repo_url" {
 
 variable "auto_deploy" {
   type = bool
+  default = null
+}
+
+variable "auto_deploy_trigger" {
+  type = string 
+  default = null
 }
 
 variable "paths" {
@@ -27,6 +33,7 @@ resource "render_private_service" "private" {
   runtime_source = {
     native_runtime = {
       auto_deploy   = var.auto_deploy
+      auto_deploy_trigger = var.auto_deploy_trigger
       branch        = "master"
       build_command = var.build_command
       build_filter  = var.paths != null ? {

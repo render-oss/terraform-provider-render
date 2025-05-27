@@ -113,12 +113,6 @@ type BuildEndedEvent struct {
 	Status int `json:"status"`
 }
 
-// BuildPlanChangedEvent defines model for buildPlanChangedEvent.
-type BuildPlanChangedEvent struct {
-	From string `json:"from"`
-	To   string `json:"to"`
-}
-
 // BuildStartedEvent defines model for buildStartedEvent.
 type BuildStartedEvent struct {
 	BuildId string             `json:"buildId"`
@@ -297,6 +291,12 @@ type OomKilled struct {
 	MemoryLimit string `json:"memoryLimit"`
 }
 
+// PipelineMinutesExhaustedEvent defines model for pipelineMinutesExhaustedEvent.
+type PipelineMinutesExhaustedEvent struct {
+	BuildId string             `json:"buildId"`
+	Trigger BuildDeployTrigger `json:"trigger"`
+}
+
 // PlanChangedEvent defines model for planChangedEvent.
 type PlanChangedEvent struct {
 	From string `json:"from"`
@@ -308,6 +308,9 @@ type PostgresAvailableEvent = map[string]interface{}
 
 // PostgresBackupCompletedEvent defines model for postgresBackupCompletedEvent.
 type PostgresBackupCompletedEvent = map[string]interface{}
+
+// PostgresBackupFailedEvent defines model for postgresBackupFailedEvent.
+type PostgresBackupFailedEvent = map[string]interface{}
 
 // PostgresBackupStartedEvent defines model for postgresBackupStartedEvent.
 type PostgresBackupStartedEvent = map[string]interface{}
@@ -343,11 +346,23 @@ type PostgresHaStatusChangedEvent struct {
 	ToStatus   string `json:"toStatus"`
 }
 
+// PostgresPITRCheckpointCompletedEvent defines model for postgresPITRCheckpointCompletedEvent.
+type PostgresPITRCheckpointCompletedEvent = map[string]interface{}
+
+// PostgresPITRCheckpointFailedEvent defines model for postgresPITRCheckpointFailedEvent.
+type PostgresPITRCheckpointFailedEvent = map[string]interface{}
+
+// PostgresPITRCheckpointStartedEvent defines model for postgresPITRCheckpointStartedEvent.
+type PostgresPITRCheckpointStartedEvent = map[string]interface{}
+
 // PostgresReadReplicasChangedEvent defines model for postgresReadReplicasChangedEvent.
 type PostgresReadReplicasChangedEvent struct {
 	FromReplicas int `json:"fromReplicas"`
 	ToReplicas   int `json:"toReplicas"`
 }
+
+// PostgresReplicaHalted defines model for postgresReplicaHalted.
+type PostgresReplicaHalted = map[string]interface{}
 
 // PostgresRestartedEvent defines model for postgresRestartedEvent.
 type PostgresRestartedEvent struct {
@@ -692,6 +707,32 @@ func (t *PostgresEventDetails) MergePostgresBackupCompletedEvent(v PostgresBacku
 	return err
 }
 
+// AsPostgresBackupFailedEvent returns the union data inside the PostgresEventDetails as a PostgresBackupFailedEvent
+func (t PostgresEventDetails) AsPostgresBackupFailedEvent() (PostgresBackupFailedEvent, error) {
+	var body PostgresBackupFailedEvent
+	err := json.Unmarshal(t.union, &body)
+	return body, err
+}
+
+// FromPostgresBackupFailedEvent overwrites any union data inside the PostgresEventDetails as the provided PostgresBackupFailedEvent
+func (t *PostgresEventDetails) FromPostgresBackupFailedEvent(v PostgresBackupFailedEvent) error {
+	b, err := json.Marshal(v)
+	t.union = b
+	return err
+}
+
+// MergePostgresBackupFailedEvent performs a merge with any union data inside the PostgresEventDetails, using the provided PostgresBackupFailedEvent
+func (t *PostgresEventDetails) MergePostgresBackupFailedEvent(v PostgresBackupFailedEvent) error {
+	b, err := json.Marshal(v)
+	if err != nil {
+		return err
+	}
+
+	merged, err := runtime.JSONMerge(t.union, b)
+	t.union = merged
+	return err
+}
+
 // AsPostgresBackupStartedEvent returns the union data inside the PostgresEventDetails as a PostgresBackupStartedEvent
 func (t PostgresEventDetails) AsPostgresBackupStartedEvent() (PostgresBackupStartedEvent, error) {
 	var body PostgresBackupStartedEvent
@@ -978,6 +1019,110 @@ func (t *PostgresEventDetails) MergePostgresUpgradeSucceededEvent(v PostgresUpgr
 	return err
 }
 
+// AsPostgresPITRCheckpointStartedEvent returns the union data inside the PostgresEventDetails as a PostgresPITRCheckpointStartedEvent
+func (t PostgresEventDetails) AsPostgresPITRCheckpointStartedEvent() (PostgresPITRCheckpointStartedEvent, error) {
+	var body PostgresPITRCheckpointStartedEvent
+	err := json.Unmarshal(t.union, &body)
+	return body, err
+}
+
+// FromPostgresPITRCheckpointStartedEvent overwrites any union data inside the PostgresEventDetails as the provided PostgresPITRCheckpointStartedEvent
+func (t *PostgresEventDetails) FromPostgresPITRCheckpointStartedEvent(v PostgresPITRCheckpointStartedEvent) error {
+	b, err := json.Marshal(v)
+	t.union = b
+	return err
+}
+
+// MergePostgresPITRCheckpointStartedEvent performs a merge with any union data inside the PostgresEventDetails, using the provided PostgresPITRCheckpointStartedEvent
+func (t *PostgresEventDetails) MergePostgresPITRCheckpointStartedEvent(v PostgresPITRCheckpointStartedEvent) error {
+	b, err := json.Marshal(v)
+	if err != nil {
+		return err
+	}
+
+	merged, err := runtime.JSONMerge(t.union, b)
+	t.union = merged
+	return err
+}
+
+// AsPostgresPITRCheckpointFailedEvent returns the union data inside the PostgresEventDetails as a PostgresPITRCheckpointFailedEvent
+func (t PostgresEventDetails) AsPostgresPITRCheckpointFailedEvent() (PostgresPITRCheckpointFailedEvent, error) {
+	var body PostgresPITRCheckpointFailedEvent
+	err := json.Unmarshal(t.union, &body)
+	return body, err
+}
+
+// FromPostgresPITRCheckpointFailedEvent overwrites any union data inside the PostgresEventDetails as the provided PostgresPITRCheckpointFailedEvent
+func (t *PostgresEventDetails) FromPostgresPITRCheckpointFailedEvent(v PostgresPITRCheckpointFailedEvent) error {
+	b, err := json.Marshal(v)
+	t.union = b
+	return err
+}
+
+// MergePostgresPITRCheckpointFailedEvent performs a merge with any union data inside the PostgresEventDetails, using the provided PostgresPITRCheckpointFailedEvent
+func (t *PostgresEventDetails) MergePostgresPITRCheckpointFailedEvent(v PostgresPITRCheckpointFailedEvent) error {
+	b, err := json.Marshal(v)
+	if err != nil {
+		return err
+	}
+
+	merged, err := runtime.JSONMerge(t.union, b)
+	t.union = merged
+	return err
+}
+
+// AsPostgresPITRCheckpointCompletedEvent returns the union data inside the PostgresEventDetails as a PostgresPITRCheckpointCompletedEvent
+func (t PostgresEventDetails) AsPostgresPITRCheckpointCompletedEvent() (PostgresPITRCheckpointCompletedEvent, error) {
+	var body PostgresPITRCheckpointCompletedEvent
+	err := json.Unmarshal(t.union, &body)
+	return body, err
+}
+
+// FromPostgresPITRCheckpointCompletedEvent overwrites any union data inside the PostgresEventDetails as the provided PostgresPITRCheckpointCompletedEvent
+func (t *PostgresEventDetails) FromPostgresPITRCheckpointCompletedEvent(v PostgresPITRCheckpointCompletedEvent) error {
+	b, err := json.Marshal(v)
+	t.union = b
+	return err
+}
+
+// MergePostgresPITRCheckpointCompletedEvent performs a merge with any union data inside the PostgresEventDetails, using the provided PostgresPITRCheckpointCompletedEvent
+func (t *PostgresEventDetails) MergePostgresPITRCheckpointCompletedEvent(v PostgresPITRCheckpointCompletedEvent) error {
+	b, err := json.Marshal(v)
+	if err != nil {
+		return err
+	}
+
+	merged, err := runtime.JSONMerge(t.union, b)
+	t.union = merged
+	return err
+}
+
+// AsPostgresReplicaHalted returns the union data inside the PostgresEventDetails as a PostgresReplicaHalted
+func (t PostgresEventDetails) AsPostgresReplicaHalted() (PostgresReplicaHalted, error) {
+	var body PostgresReplicaHalted
+	err := json.Unmarshal(t.union, &body)
+	return body, err
+}
+
+// FromPostgresReplicaHalted overwrites any union data inside the PostgresEventDetails as the provided PostgresReplicaHalted
+func (t *PostgresEventDetails) FromPostgresReplicaHalted(v PostgresReplicaHalted) error {
+	b, err := json.Marshal(v)
+	t.union = b
+	return err
+}
+
+// MergePostgresReplicaHalted performs a merge with any union data inside the PostgresEventDetails, using the provided PostgresReplicaHalted
+func (t *PostgresEventDetails) MergePostgresReplicaHalted(v PostgresReplicaHalted) error {
+	b, err := json.Marshal(v)
+	if err != nil {
+		return err
+	}
+
+	merged, err := runtime.JSONMerge(t.union, b)
+	t.union = merged
+	return err
+}
+
 func (t PostgresEventDetails) MarshalJSON() ([]byte, error) {
 	b, err := t.union.MarshalJSON()
 	return b, err
@@ -1108,32 +1253,6 @@ func (t *ServiceEventDetails) FromBuildEndedEvent(v BuildEndedEvent) error {
 
 // MergeBuildEndedEvent performs a merge with any union data inside the ServiceEventDetails, using the provided BuildEndedEvent
 func (t *ServiceEventDetails) MergeBuildEndedEvent(v BuildEndedEvent) error {
-	b, err := json.Marshal(v)
-	if err != nil {
-		return err
-	}
-
-	merged, err := runtime.JSONMerge(t.union, b)
-	t.union = merged
-	return err
-}
-
-// AsBuildPlanChangedEvent returns the union data inside the ServiceEventDetails as a BuildPlanChangedEvent
-func (t ServiceEventDetails) AsBuildPlanChangedEvent() (BuildPlanChangedEvent, error) {
-	var body BuildPlanChangedEvent
-	err := json.Unmarshal(t.union, &body)
-	return body, err
-}
-
-// FromBuildPlanChangedEvent overwrites any union data inside the ServiceEventDetails as the provided BuildPlanChangedEvent
-func (t *ServiceEventDetails) FromBuildPlanChangedEvent(v BuildPlanChangedEvent) error {
-	b, err := json.Marshal(v)
-	t.union = b
-	return err
-}
-
-// MergeBuildPlanChangedEvent performs a merge with any union data inside the ServiceEventDetails, using the provided BuildPlanChangedEvent
-func (t *ServiceEventDetails) MergeBuildPlanChangedEvent(v BuildPlanChangedEvent) error {
 	b, err := json.Marshal(v)
 	if err != nil {
 		return err
@@ -1602,6 +1721,32 @@ func (t *ServiceEventDetails) FromMaintenanceStartedEvent(v MaintenanceStartedEv
 
 // MergeMaintenanceStartedEvent performs a merge with any union data inside the ServiceEventDetails, using the provided MaintenanceStartedEvent
 func (t *ServiceEventDetails) MergeMaintenanceStartedEvent(v MaintenanceStartedEvent) error {
+	b, err := json.Marshal(v)
+	if err != nil {
+		return err
+	}
+
+	merged, err := runtime.JSONMerge(t.union, b)
+	t.union = merged
+	return err
+}
+
+// AsPipelineMinutesExhaustedEvent returns the union data inside the ServiceEventDetails as a PipelineMinutesExhaustedEvent
+func (t ServiceEventDetails) AsPipelineMinutesExhaustedEvent() (PipelineMinutesExhaustedEvent, error) {
+	var body PipelineMinutesExhaustedEvent
+	err := json.Unmarshal(t.union, &body)
+	return body, err
+}
+
+// FromPipelineMinutesExhaustedEvent overwrites any union data inside the ServiceEventDetails as the provided PipelineMinutesExhaustedEvent
+func (t *ServiceEventDetails) FromPipelineMinutesExhaustedEvent(v PipelineMinutesExhaustedEvent) error {
+	b, err := json.Marshal(v)
+	t.union = b
+	return err
+}
+
+// MergePipelineMinutesExhaustedEvent performs a merge with any union data inside the ServiceEventDetails, using the provided PipelineMinutesExhaustedEvent
+func (t *ServiceEventDetails) MergePipelineMinutesExhaustedEvent(v PipelineMinutesExhaustedEvent) error {
 	b, err := json.Marshal(v)
 	if err != nil {
 		return err

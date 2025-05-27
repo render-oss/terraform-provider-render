@@ -12,6 +12,16 @@ resource "render_project" "first"  {
   }
 }
 
+variable "auto_deploy" {
+  type = bool
+  default = null
+}
+
+variable "auto_deploy_trigger" {
+  type = string
+  default = null
+}
+
 resource "render_static_site" "example" {
   name          = "updated-static-site"
   repo_url      = "https://github.com/render-examples/sveltekit-static"
@@ -20,7 +30,8 @@ resource "render_static_site" "example" {
 
   branch         = "main"
   publish_path   = "build"
-  auto_deploy    = false
+  auto_deploy    = var.auto_deploy
+  auto_deploy_trigger = var.auto_deploy_trigger
 
   build_filter = {
     paths = [

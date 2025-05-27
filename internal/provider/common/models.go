@@ -201,8 +201,15 @@ func NativeRuntimeSource(service *client.Service, env client.ServiceRuntime, env
 	if service.Repo != nil {
 		nativeRuntime.RepoURL = types.StringValue(*service.Repo)
 	}
+	// if autoDeployTrigger is set, we want to use those values as the truth
+	if service.AutoDeployTrigger != nil {
+		nativeRuntime.AutoDeploy = types.BoolValue(AutoDeployTriggerToBool(*service.AutoDeployTrigger))
+		nativeRuntime.AutoDeployTrigger = AutoDeployTriggerToString(service.AutoDeployTrigger)
+	} else {
+		nativeRuntime.AutoDeploy = types.BoolValue(service.AutoDeploy == client.AutoDeployYes)
+		nativeRuntime.AutoDeployTrigger = BoolToAutoDeployTriggerString(nativeRuntime.AutoDeploy.ValueBool())
+	}
 
-	nativeRuntime.AutoDeploy = types.BoolValue(service.AutoDeploy == client.AutoDeployYes)
 	nativeRuntime.Branch = types.StringPointerValue(service.Branch)
 	nativeRuntime.BuildFilter = BuildFilterModelForClient(service.BuildFilter)
 	nativeRuntime.Runtime = types.StringValue(string(env))
@@ -223,12 +230,19 @@ func DockerRuntimeSource(service *client.Service, envDetails client.EnvSpecificD
 	}
 
 	docker := &DockerRuntimeSourceModel{
-		AutoDeploy:     types.BoolValue(service.AutoDeploy == client.AutoDeployYes),
 		Context:        types.StringValue(dockerDetails.DockerContext),
 		DockerfilePath: types.StringValue(dockerDetails.DockerfilePath),
 		RepoURL:        types.StringPointerValue(service.Repo),
 		Branch:         types.StringPointerValue(service.Branch),
 		BuildFilter:    BuildFilterModelForClient(service.BuildFilter),
+	}
+	// if autoDeployTrigger is set, we want to use those values as the truth
+	if service.AutoDeployTrigger != nil {
+		docker.AutoDeploy = types.BoolValue(AutoDeployTriggerToBool(*service.AutoDeployTrigger))
+		docker.AutoDeployTrigger = AutoDeployTriggerToString(service.AutoDeployTrigger)
+	} else {
+		docker.AutoDeploy = types.BoolValue(service.AutoDeploy == client.AutoDeployYes)
+		docker.AutoDeployTrigger = BoolToAutoDeployTriggerString(docker.AutoDeploy.ValueBool())
 	}
 
 	if dockerDetails.RegistryCredential != nil {

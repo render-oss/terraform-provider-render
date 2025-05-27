@@ -127,6 +127,7 @@ Required:
 Optional:
 
 - `auto_deploy` (Boolean) [Automatic deploy](https://render.com/docs/deploys#automatic-git-deploys) on every push to your repository, or changes to your service settings or environment.
+- `auto_deploy_trigger` (String) Sets the Automatic deploy behavior for a Git-based service.
 - `build_filter` (Attributes) Apply [build filters](https://render.com/docs/monorepo-support#build-filters) to configure which changes in your git repository trigger automatic deploys. If you've defined a root directory, you can still define paths outside of the root directory. (see [below for nested schema](#nestedatt--runtime_source--docker--build_filter))
 - `context` (String) [Docker build context directory.](https://docs.docker.com/reference/dockerfile/#usage) This is relative to your repository root. Defaults to the root.
 - `dockerfile_path` (String) Path to your Dockerfile relative to the repository root. This is not relative to your Docker build context. Example: `./subdir/Dockerfile.`
@@ -169,6 +170,7 @@ Required:
 Optional:
 
 - `auto_deploy` (Boolean) [Automatic deploy](https://render.com/docs/deploys#automatic-git-deploys) on every push to your repository, or changes to your service settings or environment.
+- `auto_deploy_trigger` (String) Sets the Automatic deploy behavior for a Git-based service.
 - `build_filter` (Attributes) Apply [build filters](https://render.com/docs/monorepo-support#build-filters) to configure which changes in your git repository trigger automatic deploys. If you've defined a root directory, you can still define paths outside of the root directory. (see [below for nested schema](#nestedatt--runtime_source--native_runtime--build_filter))
 
 <a id="nestedatt--runtime_source--native_runtime--build_filter"></a>

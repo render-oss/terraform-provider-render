@@ -1,6 +1,7 @@
 package resource
 
 import (
+	"context"
 	"regexp"
 
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/objectdefault"
@@ -168,10 +169,83 @@ var PublishPath = schema.StringAttribute{
 	Description: "Path to the directory that contains the build artifacts to publish for a static site. Defaults to public/.",
 }
 
-var AutoDeploy = schema.BoolAttribute{
-	Computed:            true,
+type autoDeployTriggerDefaultModifier struct{}
+
+func (m autoDeployTriggerDefaultModifier) Description(_ context.Context) string {
+	return "Sets the Automatic deploy behavior for a Git-based service."
+}
+
+func (m autoDeployTriggerDefaultModifier) MarkdownDescription(_ context.Context) string {
+	return "Sets the Automatic deploy behavior for a Git-based service."
+}
+
+func (m autoDeployTriggerDefaultModifier) PlanModifyString(
+	ctx context.Context,
+	req planmodifier.StringRequest,
+	resp *planmodifier.StringResponse,
+) {
+	if !req.ConfigValue.IsUnknown() && !req.ConfigValue.IsNull() {
+		return
+	}
+
+	var autoDeploy types.Bool
+	siblingPath := req.Path.ParentPath().AtName("auto_deploy")
+	req.Config.GetAttribute(ctx, siblingPath, &autoDeploy)
+	if autoDeploy.IsNull() || autoDeploy.IsUnknown() {
+		resp.PlanValue = types.StringValue("commit")
+	}
+}
+
+var AutoDeployTrigger = schema.StringAttribute{
 	Optional:            true,
-	Default:             booldefault.StaticBool(true),
+	Computed:            true,
+	Description:         "Sets the Automatic deploy behavior for a Git-based service.",
+	MarkdownDescription: "Sets the Automatic deploy behavior for a Git-based service.",
+	Validators: []validator.String{
+		stringvalidator.OneOf(
+			"off",
+			"commit",
+			"checksPass",
+		),
+	},
+	PlanModifiers: []planmodifier.String{
+		autoDeployTriggerDefaultModifier{},
+	},
+}
+
+type autoDeployModifier struct{}
+
+func (m autoDeployModifier) PlanModifyBool(
+	ctx context.Context,
+	req planmodifier.BoolRequest,
+	resp *planmodifier.BoolResponse,
+) {
+	if !req.ConfigValue.IsUnknown() && !req.ConfigValue.IsNull() {
+		return
+	}
+
+	var autoDeployTrigger types.String
+	siblingPath := req.Path.ParentPath().AtName("auto_deploy_trigger")
+	req.Config.GetAttribute(ctx, siblingPath, &autoDeployTrigger)
+	if autoDeployTrigger.IsNull() || autoDeployTrigger.IsUnknown() {
+		resp.PlanValue = types.BoolValue(true)
+	}
+}
+
+func (m autoDeployModifier) Description(_ context.Context) string {
+	return "Automatic deploy on every push to your repository, or changes to your service settings or environment."
+}
+
+func (m autoDeployModifier) MarkdownDescription(_ context.Context) string {
+	return "[Automatic deploy](https://render.com/docs/deploys#automatic-git-deploys) on every push to your repository, or changes to your service settings or environment."
+}
+
+var AutoDeploy = schema.BoolAttribute{
+	Computed: true,
+	Optional: true,
+	PlanModifiers: []planmodifier.Bool{
+		autoDeployModifier{},
+	},
 	Description:         "Automatic deploy on every push to your repository, or changes to your service settings or environment.",
 	MarkdownDescription: "[Automatic deploy](https://render.com/docs/deploys#automatic-git-deploys) on every push to your repository, or changes to your service settings or environment.",
 }

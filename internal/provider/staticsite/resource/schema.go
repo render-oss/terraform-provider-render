@@ -14,6 +14,7 @@ func Schema(ctx context.Context) schema.Schema {
 		Attributes: map[string]schema.Attribute{
 			"id":                            resource.ServiceID,
 			"auto_deploy":                   resource.AutoDeploy,
+			"auto_deploy_trigger":           resource.AutoDeployTrigger,
 			"branch":                        resource.Branch,
 			"build_command":                 resource.BuildCommand,
 			"build_filter":                  resource.BuildFilter,

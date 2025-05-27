@@ -385,6 +385,9 @@ type ClientInterface interface {
 	// RetrieveOwner request
 	RetrieveOwner(ctx context.Context, ownerId string, reqEditors ...RequestEditorFn) (*http.Response, error)
 
+	// RetrieveOwnerMembers request
+	RetrieveOwnerMembers(ctx context.Context, ownerId string, reqEditors ...RequestEditorFn) (*http.Response, error)
+
 	// ListPostgres request
 	ListPostgres(ctx context.Context, params *ListPostgresParams, reqEditors ...RequestEditorFn) (*http.Response, error)
 
@@ -492,25 +495,6 @@ type ClientInterface interface {
 	UpdateRegistryCredentialWithBody(ctx context.Context, registryCredentialId string, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	UpdateRegistryCredential(ctx context.Context, registryCredentialId string, body UpdateRegistryCredentialJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
-
-	// ListServiceLinks request
-	ListServiceLinks(ctx context.Context, params *ListServiceLinksParams, reqEditors ...RequestEditorFn) (*http.Response, error)
-
-	// CreateServiceLinkWithBody request with any body
-	CreateServiceLinkWithBody(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
-
-	CreateServiceLink(ctx context.Context, body CreateServiceLinkJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
-
-	// DeleteServiceLink request
-	DeleteServiceLink(ctx context.Context, serviceLinkId string, reqEditors ...RequestEditorFn) (*http.Response, error)
-
-	// RetrieveServiceLink request
-	RetrieveServiceLink(ctx context.Context, serviceLinkId string, reqEditors ...RequestEditorFn) (*http.Response, error)
-
-	// UpdateServiceLinkWithBody request with any body
-	UpdateServiceLinkWithBody(ctx context.Context, serviceLinkId string, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
-
-	UpdateServiceLink(ctx context.Context, serviceLinkId string, body UpdateServiceLinkJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// ListServices request
 	ListServices(ctx context.Context, params *ListServicesParams, reqEditors ...RequestEditorFn) (*http.Response, error)
@@ -1924,6 +1908,18 @@ func (c *Client) RetrieveOwner(ctx context.Context, ownerId string, reqEditors .
 	return c.Client.Do(req)
 }
 
+func (c *Client) RetrieveOwnerMembers(ctx context.Context, ownerId string, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewRetrieveOwnerMembersRequest(c.Server, ownerId)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
 func (c *Client) ListPostgres(ctx context.Context, params *ListPostgresParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewListPostgresRequest(c.Server, params)
 	if err != nil {
@@ -2382,90 +2378,6 @@ func (c *Client) UpdateRegistryCredentialWithBody(ctx context.Context, registryC
 
 func (c *Client) UpdateRegistryCredential(ctx context.Context, registryCredentialId string, body UpdateRegistryCredentialJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewUpdateRegistryCredentialRequest(c.Server, registryCredentialId, body)
-	if err != nil {
-		return nil, err
-	}
-	req = req.WithContext(ctx)
-	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
-		return nil, err
-	}
-	return c.Client.Do(req)
-}
-
-func (c *Client) ListServiceLinks(ctx context.Context, params *ListServiceLinksParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewListServiceLinksRequest(c.Server, params)
-	if err != nil {
-		return nil, err
-	}
-	req = req.WithContext(ctx)
-	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
-		return nil, err
-	}
-	return c.Client.Do(req)
-}
-
-func (c *Client) CreateServiceLinkWithBody(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewCreateServiceLinkRequestWithBody(c.Server, contentType, body)
-	if err != nil {
-		return nil, err
-	}
-	req = req.WithContext(ctx)
-	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
-		return nil, err
-	}
-	return c.Client.Do(req)
-}
-
-func (c *Client) CreateServiceLink(ctx context.Context, body CreateServiceLinkJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewCreateServiceLinkRequest(c.Server, body)
-	if err != nil {
-		return nil, err
-	}
-	req = req.WithContext(ctx)
-	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
-		return nil, err
-	}
-	return c.Client.Do(req)
-}
-
-func (c *Client) DeleteServiceLink(ctx context.Context, serviceLinkId string, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewDeleteServiceLinkRequest(c.Server, serviceLinkId)
-	if err != nil {
-		return nil, err
-	}
-	req = req.WithContext(ctx)
-	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
-		return nil, err
-	}
-	return c.Client.Do(req)
-}
-
-func (c *Client) RetrieveServiceLink(ctx context.Context, serviceLinkId string, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewRetrieveServiceLinkRequest(c.Server, serviceLinkId)
-	if err != nil {
-		return nil, err
-	}
-	req = req.WithContext(ctx)
-	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
-		return nil, err
-	}
-	return c.Client.Do(req)
-}
-
-func (c *Client) UpdateServiceLinkWithBody(ctx context.Context, serviceLinkId string, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewUpdateServiceLinkRequestWithBody(c.Server, serviceLinkId, contentType, body)
-	if err != nil {
-		return nil, err
-	}
-	req = req.WithContext(ctx)
-	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
-		return nil, err
-	}
-	return c.Client.Do(req)
-}
-
-func (c *Client) UpdateServiceLink(ctx context.Context, serviceLinkId string, body UpdateServiceLinkJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewUpdateServiceLinkRequest(c.Server, serviceLinkId, body)
 	if err != nil {
 		return nil, err
 	}
@@ -9642,6 +9554,40 @@ func NewRetrieveOwnerRequest(server string, ownerId string) (*http.Request, erro
 	return req, nil
 }
 
+// NewRetrieveOwnerMembersRequest generates requests for RetrieveOwnerMembers
+func NewRetrieveOwnerMembersRequest(server string, ownerId string) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithLocation("simple", false, "ownerId", runtime.ParamLocationPath, ownerId)
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/owners/%s/members", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest("GET", queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	return req, nil
+}
+
 // NewListPostgresRequest generates requests for ListPostgres
 func NewListPostgresRequest(server string, params *ListPostgresParams) (*http.Request, error) {
 	var err error
@@ -11387,338 +11333,6 @@ func NewUpdateRegistryCredentialRequestWithBody(server string, registryCredentia
 	return req, nil
 }
 
-// NewListServiceLinksRequest generates requests for ListServiceLinks
-func NewListServiceLinksRequest(server string, params *ListServiceLinksParams) (*http.Request, error) {
-	var err error
-
-	serverURL, err := url.Parse(server)
-	if err != nil {
-		return nil, err
-	}
-
-	operationPath := fmt.Sprintf("/service-links")
-	if operationPath[0] == '/' {
-		operationPath = "." + operationPath
-	}
-
-	queryURL, err := serverURL.Parse(operationPath)
-	if err != nil {
-		return nil, err
-	}
-
-	if params != nil {
-		queryValues := queryURL.Query()
-
-		if params.LinkSourceId != nil {
-
-			if queryFrag, err := runtime.StyleParamWithLocation("form", false, "linkSourceId", runtime.ParamLocationQuery, *params.LinkSourceId); err != nil {
-				return nil, err
-			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
-				return nil, err
-			} else {
-				for k, v := range parsed {
-					for _, v2 := range v {
-						queryValues.Add(k, v2)
-					}
-				}
-			}
-
-		}
-
-		if params.LinkDestinationId != nil {
-
-			if queryFrag, err := runtime.StyleParamWithLocation("form", false, "linkDestinationId", runtime.ParamLocationQuery, *params.LinkDestinationId); err != nil {
-				return nil, err
-			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
-				return nil, err
-			} else {
-				for k, v := range parsed {
-					for _, v2 := range v {
-						queryValues.Add(k, v2)
-					}
-				}
-			}
-
-		}
-
-		if params.CreatedBefore != nil {
-
-			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "createdBefore", runtime.ParamLocationQuery, *params.CreatedBefore); err != nil {
-				return nil, err
-			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
-				return nil, err
-			} else {
-				for k, v := range parsed {
-					for _, v2 := range v {
-						queryValues.Add(k, v2)
-					}
-				}
-			}
-
-		}
-
-		if params.CreatedAfter != nil {
-
-			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "createdAfter", runtime.ParamLocationQuery, *params.CreatedAfter); err != nil {
-				return nil, err
-			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
-				return nil, err
-			} else {
-				for k, v := range parsed {
-					for _, v2 := range v {
-						queryValues.Add(k, v2)
-					}
-				}
-			}
-
-		}
-
-		if params.UpdatedBefore != nil {
-
-			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "updatedBefore", runtime.ParamLocationQuery, *params.UpdatedBefore); err != nil {
-				return nil, err
-			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
-				return nil, err
-			} else {
-				for k, v := range parsed {
-					for _, v2 := range v {
-						queryValues.Add(k, v2)
-					}
-				}
-			}
-
-		}
-
-		if params.UpdatedAfter != nil {
-
-			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "updatedAfter", runtime.ParamLocationQuery, *params.UpdatedAfter); err != nil {
-				return nil, err
-			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
-				return nil, err
-			} else {
-				for k, v := range parsed {
-					for _, v2 := range v {
-						queryValues.Add(k, v2)
-					}
-				}
-			}
-
-		}
-
-		if params.OwnerId != nil {
-
-			if queryFrag, err := runtime.StyleParamWithLocation("form", false, "ownerId", runtime.ParamLocationQuery, *params.OwnerId); err != nil {
-				return nil, err
-			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
-				return nil, err
-			} else {
-				for k, v := range parsed {
-					for _, v2 := range v {
-						queryValues.Add(k, v2)
-					}
-				}
-			}
-
-		}
-
-		if params.Cursor != nil {
-
-			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "cursor", runtime.ParamLocationQuery, *params.Cursor); err != nil {
-				return nil, err
-			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
-				return nil, err
-			} else {
-				for k, v := range parsed {
-					for _, v2 := range v {
-						queryValues.Add(k, v2)
-					}
-				}
-			}
-
-		}
-
-		if params.Limit != nil {
-
-			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "limit", runtime.ParamLocationQuery, *params.Limit); err != nil {
-				return nil, err
-			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
-				return nil, err
-			} else {
-				for k, v := range parsed {
-					for _, v2 := range v {
-						queryValues.Add(k, v2)
-					}
-				}
-			}
-
-		}
-
-		queryURL.RawQuery = queryValues.Encode()
-	}
-
-	req, err := http.NewRequest("GET", queryURL.String(), nil)
-	if err != nil {
-		return nil, err
-	}
-
-	return req, nil
-}
-
-// NewCreateServiceLinkRequest calls the generic CreateServiceLink builder with application/json body
-func NewCreateServiceLinkRequest(server string, body CreateServiceLinkJSONRequestBody) (*http.Request, error) {
-	var bodyReader io.Reader
-	buf, err := json.Marshal(body)
-	if err != nil {
-		return nil, err
-	}
-	bodyReader = bytes.NewReader(buf)
-	return NewCreateServiceLinkRequestWithBody(server, "application/json", bodyReader)
-}
-
-// NewCreateServiceLinkRequestWithBody generates requests for CreateServiceLink with any type of body
-func NewCreateServiceLinkRequestWithBody(server string, contentType string, body io.Reader) (*http.Request, error) {
-	var err error
-
-	serverURL, err := url.Parse(server)
-	if err != nil {
-		return nil, err
-	}
-
-	operationPath := fmt.Sprintf("/service-links")
-	if operationPath[0] == '/' {
-		operationPath = "." + operationPath
-	}
-
-	queryURL, err := serverURL.Parse(operationPath)
-	if err != nil {
-		return nil, err
-	}
-
-	req, err := http.NewRequest("POST", queryURL.String(), body)
-	if err != nil {
-		return nil, err
-	}
-
-	req.Header.Add("Content-Type", contentType)
-
-	return req, nil
-}
-
-// NewDeleteServiceLinkRequest generates requests for DeleteServiceLink
-func NewDeleteServiceLinkRequest(server string, serviceLinkId string) (*http.Request, error) {
-	var err error
-
-	var pathParam0 string
-
-	pathParam0, err = runtime.StyleParamWithLocation("simple", false, "serviceLinkId", runtime.ParamLocationPath, serviceLinkId)
-	if err != nil {
-		return nil, err
-	}
-
-	serverURL, err := url.Parse(server)
-	if err != nil {
-		return nil, err
-	}
-
-	operationPath := fmt.Sprintf("/service-links/%s", pathParam0)
-	if operationPath[0] == '/' {
-		operationPath = "." + operationPath
-	}
-
-	queryURL, err := serverURL.Parse(operationPath)
-	if err != nil {
-		return nil, err
-	}
-
-	req, err := http.NewRequest("DELETE", queryURL.String(), nil)
-	if err != nil {
-		return nil, err
-	}
-
-	return req, nil
-}
-
-// NewRetrieveServiceLinkRequest generates requests for RetrieveServiceLink
-func NewRetrieveServiceLinkRequest(server string, serviceLinkId string) (*http.Request, error) {
-	var err error
-
-	var pathParam0 string
-
-	pathParam0, err = runtime.StyleParamWithLocation("simple", false, "serviceLinkId", runtime.ParamLocationPath, serviceLinkId)
-	if err != nil {
-		return nil, err
-	}
-
-	serverURL, err := url.Parse(server)
-	if err != nil {
-		return nil, err
-	}
-
-	operationPath := fmt.Sprintf("/service-links/%s", pathParam0)
-	if operationPath[0] == '/' {
-		operationPath = "." + operationPath
-	}
-
-	queryURL, err := serverURL.Parse(operationPath)
-	if err != nil {
-		return nil, err
-	}
-
-	req, err := http.NewRequest("GET", queryURL.String(), nil)
-	if err != nil {
-		return nil, err
-	}
-
-	return req, nil
-}
-
-// NewUpdateServiceLinkRequest calls the generic UpdateServiceLink builder with application/json body
-func NewUpdateServiceLinkRequest(server string, serviceLinkId string, body UpdateServiceLinkJSONRequestBody) (*http.Request, error) {
-	var bodyReader io.Reader
-	buf, err := json.Marshal(body)
-	if err != nil {
-		return nil, err
-	}
-	bodyReader = bytes.NewReader(buf)
-	return NewUpdateServiceLinkRequestWithBody(server, serviceLinkId, "application/json", bodyReader)
-}
-
-// NewUpdateServiceLinkRequestWithBody generates requests for UpdateServiceLink with any type of body
-func NewUpdateServiceLinkRequestWithBody(server string, serviceLinkId string, contentType string, body io.Reader) (*http.Request, error) {
-	var err error
-
-	var pathParam0 string
-
-	pathParam0, err = runtime.StyleParamWithLocation("simple", false, "serviceLinkId", runtime.ParamLocationPath, serviceLinkId)
-	if err != nil {
-		return nil, err
-	}
-
-	serverURL, err := url.Parse(server)
-	if err != nil {
-		return nil, err
-	}
-
-	operationPath := fmt.Sprintf("/service-links/%s", pathParam0)
-	if operationPath[0] == '/' {
-		operationPath = "." + operationPath
-	}
-
-	queryURL, err := serverURL.Parse(operationPath)
-	if err != nil {
-		return nil, err
-	}
-
-	req, err := http.NewRequest("PATCH", queryURL.String(), body)
-	if err != nil {
-		return nil, err
-	}
-
-	req.Header.Add("Content-Type", contentType)
-
-	return req, nil
-}
-
 // NewListServicesRequest generates requests for ListServices
 func NewListServicesRequest(server string, params *ListServicesParams) (*http.Request, error) {
 	var err error
@@ -13131,9 +12745,9 @@ func NewListEventsRequest(server string, serviceId ServiceIdParam, params *ListE
 	if params != nil {
 		queryValues := queryURL.Query()
 
-		if params.EventType != nil {
+		if params.Type != nil {
 
-			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "eventType", runtime.ParamLocationQuery, *params.EventType); err != nil {
+			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "type", runtime.ParamLocationQuery, *params.Type); err != nil {
 				return nil, err
 			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
 				return nil, err
@@ -15284,6 +14898,9 @@ type ClientWithResponsesInterface interface {
 	// RetrieveOwnerWithResponse request
 	RetrieveOwnerWithResponse(ctx context.Context, ownerId string, reqEditors ...RequestEditorFn) (*RetrieveOwnerResponse, error)
 
+	// RetrieveOwnerMembersWithResponse request
+	RetrieveOwnerMembersWithResponse(ctx context.Context, ownerId string, reqEditors ...RequestEditorFn) (*RetrieveOwnerMembersResponse, error)
+
 	// ListPostgresWithResponse request
 	ListPostgresWithResponse(ctx context.Context, params *ListPostgresParams, reqEditors ...RequestEditorFn) (*ListPostgresResponse, error)
 
@@ -15391,25 +15008,6 @@ type ClientWithResponsesInterface interface {
 	UpdateRegistryCredentialWithBodyWithResponse(ctx context.Context, registryCredentialId string, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UpdateRegistryCredentialResponse, error)
 
 	UpdateRegistryCredentialWithResponse(ctx context.Context, registryCredentialId string, body UpdateRegistryCredentialJSONRequestBody, reqEditors ...RequestEditorFn) (*UpdateRegistryCredentialResponse, error)
-
-	// ListServiceLinksWithResponse request
-	ListServiceLinksWithResponse(ctx context.Context, params *ListServiceLinksParams, reqEditors ...RequestEditorFn) (*ListServiceLinksResponse, error)
-
-	// CreateServiceLinkWithBodyWithResponse request with any body
-	CreateServiceLinkWithBodyWithResponse(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateServiceLinkResponse, error)
-
-	CreateServiceLinkWithResponse(ctx context.Context, body CreateServiceLinkJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateServiceLinkResponse, error)
-
-	// DeleteServiceLinkWithResponse request
-	DeleteServiceLinkWithResponse(ctx context.Context, serviceLinkId string, reqEditors ...RequestEditorFn) (*DeleteServiceLinkResponse, error)
-
-	// RetrieveServiceLinkWithResponse request
-	RetrieveServiceLinkWithResponse(ctx context.Context, serviceLinkId string, reqEditors ...RequestEditorFn) (*RetrieveServiceLinkResponse, error)
-
-	// UpdateServiceLinkWithBodyWithResponse request with any body
-	UpdateServiceLinkWithBodyWithResponse(ctx context.Context, serviceLinkId string, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UpdateServiceLinkResponse, error)
-
-	UpdateServiceLinkWithResponse(ctx context.Context, serviceLinkId string, body UpdateServiceLinkJSONRequestBody, reqEditors ...RequestEditorFn) (*UpdateServiceLinkResponse, error)
 
 	// ListServicesWithResponse request
 	ListServicesWithResponse(ctx context.Context, params *ListServicesParams, reqEditors ...RequestEditorFn) (*ListServicesResponse, error)
@@ -17862,6 +17460,35 @@ func (r RetrieveOwnerResponse) StatusCode() int {
 	return 0
 }
 
+type RetrieveOwnerMembersResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	JSON200      *TeamMembers
+	JSON401      *N401Unauthorized
+	JSON404      *N404NotFound
+	JSON406      *N406NotAcceptable
+	JSON410      *N410Gone
+	JSON429      *N429RateLimit
+	JSON500      *N500InternalServerError
+	JSON503      *N503ServiceUnavailable
+}
+
+// Status returns HTTPResponse.Status
+func (r RetrieveOwnerMembersResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r RetrieveOwnerMembersResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
 type ListPostgresResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
@@ -18719,145 +18346,6 @@ func (r UpdateRegistryCredentialResponse) Status() string {
 
 // StatusCode returns HTTPResponse.StatusCode
 func (r UpdateRegistryCredentialResponse) StatusCode() int {
-	if r.HTTPResponse != nil {
-		return r.HTTPResponse.StatusCode
-	}
-	return 0
-}
-
-type ListServiceLinksResponse struct {
-	Body         []byte
-	HTTPResponse *http.Response
-	JSON200      *[]ServiceLinkWithCursor
-	JSON400      *N400BadRequest
-	JSON401      *N401Unauthorized
-	JSON404      *N404NotFound
-	JSON429      *N429RateLimit
-	JSON500      *N500InternalServerError
-	JSON503      *N503ServiceUnavailable
-}
-
-// Status returns HTTPResponse.Status
-func (r ListServiceLinksResponse) Status() string {
-	if r.HTTPResponse != nil {
-		return r.HTTPResponse.Status
-	}
-	return http.StatusText(0)
-}
-
-// StatusCode returns HTTPResponse.StatusCode
-func (r ListServiceLinksResponse) StatusCode() int {
-	if r.HTTPResponse != nil {
-		return r.HTTPResponse.StatusCode
-	}
-	return 0
-}
-
-type CreateServiceLinkResponse struct {
-	Body         []byte
-	HTTPResponse *http.Response
-	JSON201      *ServiceLink
-	JSON400      *N400BadRequest
-	JSON401      *N401Unauthorized
-	JSON404      *N404NotFound
-	JSON429      *N429RateLimit
-	JSON500      *N500InternalServerError
-	JSON503      *N503ServiceUnavailable
-}
-
-// Status returns HTTPResponse.Status
-func (r CreateServiceLinkResponse) Status() string {
-	if r.HTTPResponse != nil {
-		return r.HTTPResponse.Status
-	}
-	return http.StatusText(0)
-}
-
-// StatusCode returns HTTPResponse.StatusCode
-func (r CreateServiceLinkResponse) StatusCode() int {
-	if r.HTTPResponse != nil {
-		return r.HTTPResponse.StatusCode
-	}
-	return 0
-}
-
-type DeleteServiceLinkResponse struct {
-	Body         []byte
-	HTTPResponse *http.Response
-	JSON400      *N400BadRequest
-	JSON401      *N401Unauthorized
-	JSON404      *N404NotFound
-	JSON429      *N429RateLimit
-	JSON500      *N500InternalServerError
-	JSON503      *N503ServiceUnavailable
-}
-
-// Status returns HTTPResponse.Status
-func (r DeleteServiceLinkResponse) Status() string {
-	if r.HTTPResponse != nil {
-		return r.HTTPResponse.Status
-	}
-	return http.StatusText(0)
-}
-
-// StatusCode returns HTTPResponse.StatusCode
-func (r DeleteServiceLinkResponse) StatusCode() int {
-	if r.HTTPResponse != nil {
-		return r.HTTPResponse.StatusCode
-	}
-	return 0
-}
-
-type RetrieveServiceLinkResponse struct {
-	Body         []byte
-	HTTPResponse *http.Response
-	JSON200      *ServiceLink
-	JSON400      *N400BadRequest
-	JSON401      *N401Unauthorized
-	JSON404      *N404NotFound
-	JSON429      *N429RateLimit
-	JSON500      *N500InternalServerError
-	JSON503      *N503ServiceUnavailable
-}
-
-// Status returns HTTPResponse.Status
-func (r RetrieveServiceLinkResponse) Status() string {
-	if r.HTTPResponse != nil {
-		return r.HTTPResponse.Status
-	}
-	return http.StatusText(0)
-}
-
-// StatusCode returns HTTPResponse.StatusCode
-func (r RetrieveServiceLinkResponse) StatusCode() int {
-	if r.HTTPResponse != nil {
-		return r.HTTPResponse.StatusCode
-	}
-	return 0
-}
-
-type UpdateServiceLinkResponse struct {
-	Body         []byte
-	HTTPResponse *http.Response
-	JSON200      *ServiceLink
-	JSON400      *N400BadRequest
-	JSON401      *N401Unauthorized
-	JSON404      *N404NotFound
-	JSON429      *N429RateLimit
-	JSON500      *N500InternalServerError
-	JSON503      *N503ServiceUnavailable
-}
-
-// Status returns HTTPResponse.Status
-func (r UpdateServiceLinkResponse) Status() string {
-	if r.HTTPResponse != nil {
-		return r.HTTPResponse.Status
-	}
-	return http.StatusText(0)
-}
-
-// StatusCode returns HTTPResponse.StatusCode
-func (r UpdateServiceLinkResponse) StatusCode() int {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.StatusCode
 	}
@@ -21325,6 +20813,15 @@ func (c *ClientWithResponses) RetrieveOwnerWithResponse(ctx context.Context, own
 	return ParseRetrieveOwnerResponse(rsp)
 }
 
+// RetrieveOwnerMembersWithResponse request returning *RetrieveOwnerMembersResponse
+func (c *ClientWithResponses) RetrieveOwnerMembersWithResponse(ctx context.Context, ownerId string, reqEditors ...RequestEditorFn) (*RetrieveOwnerMembersResponse, error) {
+	rsp, err := c.RetrieveOwnerMembers(ctx, ownerId, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseRetrieveOwnerMembersResponse(rsp)
+}
+
 // ListPostgresWithResponse request returning *ListPostgresResponse
 func (c *ClientWithResponses) ListPostgresWithResponse(ctx context.Context, params *ListPostgresParams, reqEditors ...RequestEditorFn) (*ListPostgresResponse, error) {
 	rsp, err := c.ListPostgres(ctx, params, reqEditors...)
@@ -21665,67 +21162,6 @@ func (c *ClientWithResponses) UpdateRegistryCredentialWithResponse(ctx context.C
 		return nil, err
 	}
 	return ParseUpdateRegistryCredentialResponse(rsp)
-}
-
-// ListServiceLinksWithResponse request returning *ListServiceLinksResponse
-func (c *ClientWithResponses) ListServiceLinksWithResponse(ctx context.Context, params *ListServiceLinksParams, reqEditors ...RequestEditorFn) (*ListServiceLinksResponse, error) {
-	rsp, err := c.ListServiceLinks(ctx, params, reqEditors...)
-	if err != nil {
-		return nil, err
-	}
-	return ParseListServiceLinksResponse(rsp)
-}
-
-// CreateServiceLinkWithBodyWithResponse request with arbitrary body returning *CreateServiceLinkResponse
-func (c *ClientWithResponses) CreateServiceLinkWithBodyWithResponse(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateServiceLinkResponse, error) {
-	rsp, err := c.CreateServiceLinkWithBody(ctx, contentType, body, reqEditors...)
-	if err != nil {
-		return nil, err
-	}
-	return ParseCreateServiceLinkResponse(rsp)
-}
-
-func (c *ClientWithResponses) CreateServiceLinkWithResponse(ctx context.Context, body CreateServiceLinkJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateServiceLinkResponse, error) {
-	rsp, err := c.CreateServiceLink(ctx, body, reqEditors...)
-	if err != nil {
-		return nil, err
-	}
-	return ParseCreateServiceLinkResponse(rsp)
-}
-
-// DeleteServiceLinkWithResponse request returning *DeleteServiceLinkResponse
-func (c *ClientWithResponses) DeleteServiceLinkWithResponse(ctx context.Context, serviceLinkId string, reqEditors ...RequestEditorFn) (*DeleteServiceLinkResponse, error) {
-	rsp, err := c.DeleteServiceLink(ctx, serviceLinkId, reqEditors...)
-	if err != nil {
-		return nil, err
-	}
-	return ParseDeleteServiceLinkResponse(rsp)
-}
-
-// RetrieveServiceLinkWithResponse request returning *RetrieveServiceLinkResponse
-func (c *ClientWithResponses) RetrieveServiceLinkWithResponse(ctx context.Context, serviceLinkId string, reqEditors ...RequestEditorFn) (*RetrieveServiceLinkResponse, error) {
-	rsp, err := c.RetrieveServiceLink(ctx, serviceLinkId, reqEditors...)
-	if err != nil {
-		return nil, err
-	}
-	return ParseRetrieveServiceLinkResponse(rsp)
-}
-
-// UpdateServiceLinkWithBodyWithResponse request with arbitrary body returning *UpdateServiceLinkResponse
-func (c *ClientWithResponses) UpdateServiceLinkWithBodyWithResponse(ctx context.Context, serviceLinkId string, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UpdateServiceLinkResponse, error) {
-	rsp, err := c.UpdateServiceLinkWithBody(ctx, serviceLinkId, contentType, body, reqEditors...)
-	if err != nil {
-		return nil, err
-	}
-	return ParseUpdateServiceLinkResponse(rsp)
-}
-
-func (c *ClientWithResponses) UpdateServiceLinkWithResponse(ctx context.Context, serviceLinkId string, body UpdateServiceLinkJSONRequestBody, reqEditors ...RequestEditorFn) (*UpdateServiceLinkResponse, error) {
-	rsp, err := c.UpdateServiceLink(ctx, serviceLinkId, body, reqEditors...)
-	if err != nil {
-		return nil, err
-	}
-	return ParseUpdateServiceLinkResponse(rsp)
 }
 
 // ListServicesWithResponse request returning *ListServicesResponse
@@ -27626,6 +27062,81 @@ func ParseRetrieveOwnerResponse(rsp *http.Response) (*RetrieveOwnerResponse, err
 	return response, nil
 }
 
+// ParseRetrieveOwnerMembersResponse parses an HTTP response from a RetrieveOwnerMembersWithResponse call
+func ParseRetrieveOwnerMembersResponse(rsp *http.Response) (*RetrieveOwnerMembersResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &RetrieveOwnerMembersResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest TeamMembers
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest N401Unauthorized
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest N404NotFound
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON404 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 406:
+		var dest N406NotAcceptable
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON406 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 410:
+		var dest N410Gone
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON410 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 429:
+		var dest N429RateLimit
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON429 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 500:
+		var dest N500InternalServerError
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON500 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 503:
+		var dest N503ServiceUnavailable
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON503 = &dest
+
+	}
+
+	return response, nil
+}
+
 // ParseListPostgresResponse parses an HTTP response from a ListPostgresWithResponse call
 func ParseListPostgresResponse(rsp *http.Response) (*ListPostgresResponse, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
@@ -29800,339 +29311,6 @@ func ParseUpdateRegistryCredentialResponse(rsp *http.Response) (*UpdateRegistryC
 			return nil, err
 		}
 		response.JSON410 = &dest
-
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 429:
-		var dest N429RateLimit
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.JSON429 = &dest
-
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 500:
-		var dest N500InternalServerError
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.JSON500 = &dest
-
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 503:
-		var dest N503ServiceUnavailable
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.JSON503 = &dest
-
-	}
-
-	return response, nil
-}
-
-// ParseListServiceLinksResponse parses an HTTP response from a ListServiceLinksWithResponse call
-func ParseListServiceLinksResponse(rsp *http.Response) (*ListServiceLinksResponse, error) {
-	bodyBytes, err := io.ReadAll(rsp.Body)
-	defer func() { _ = rsp.Body.Close() }()
-	if err != nil {
-		return nil, err
-	}
-
-	response := &ListServiceLinksResponse{
-		Body:         bodyBytes,
-		HTTPResponse: rsp,
-	}
-
-	switch {
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
-		var dest []ServiceLinkWithCursor
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.JSON200 = &dest
-
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
-		var dest N400BadRequest
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.JSON400 = &dest
-
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
-		var dest N401Unauthorized
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.JSON401 = &dest
-
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
-		var dest N404NotFound
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.JSON404 = &dest
-
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 429:
-		var dest N429RateLimit
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.JSON429 = &dest
-
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 500:
-		var dest N500InternalServerError
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.JSON500 = &dest
-
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 503:
-		var dest N503ServiceUnavailable
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.JSON503 = &dest
-
-	}
-
-	return response, nil
-}
-
-// ParseCreateServiceLinkResponse parses an HTTP response from a CreateServiceLinkWithResponse call
-func ParseCreateServiceLinkResponse(rsp *http.Response) (*CreateServiceLinkResponse, error) {
-	bodyBytes, err := io.ReadAll(rsp.Body)
-	defer func() { _ = rsp.Body.Close() }()
-	if err != nil {
-		return nil, err
-	}
-
-	response := &CreateServiceLinkResponse{
-		Body:         bodyBytes,
-		HTTPResponse: rsp,
-	}
-
-	switch {
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 201:
-		var dest ServiceLink
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.JSON201 = &dest
-
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
-		var dest N400BadRequest
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.JSON400 = &dest
-
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
-		var dest N401Unauthorized
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.JSON401 = &dest
-
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
-		var dest N404NotFound
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.JSON404 = &dest
-
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 429:
-		var dest N429RateLimit
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.JSON429 = &dest
-
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 500:
-		var dest N500InternalServerError
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.JSON500 = &dest
-
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 503:
-		var dest N503ServiceUnavailable
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.JSON503 = &dest
-
-	}
-
-	return response, nil
-}
-
-// ParseDeleteServiceLinkResponse parses an HTTP response from a DeleteServiceLinkWithResponse call
-func ParseDeleteServiceLinkResponse(rsp *http.Response) (*DeleteServiceLinkResponse, error) {
-	bodyBytes, err := io.ReadAll(rsp.Body)
-	defer func() { _ = rsp.Body.Close() }()
-	if err != nil {
-		return nil, err
-	}
-
-	response := &DeleteServiceLinkResponse{
-		Body:         bodyBytes,
-		HTTPResponse: rsp,
-	}
-
-	switch {
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
-		var dest N400BadRequest
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.JSON400 = &dest
-
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
-		var dest N401Unauthorized
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.JSON401 = &dest
-
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
-		var dest N404NotFound
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.JSON404 = &dest
-
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 429:
-		var dest N429RateLimit
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.JSON429 = &dest
-
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 500:
-		var dest N500InternalServerError
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.JSON500 = &dest
-
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 503:
-		var dest N503ServiceUnavailable
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.JSON503 = &dest
-
-	}
-
-	return response, nil
-}
-
-// ParseRetrieveServiceLinkResponse parses an HTTP response from a RetrieveServiceLinkWithResponse call
-func ParseRetrieveServiceLinkResponse(rsp *http.Response) (*RetrieveServiceLinkResponse, error) {
-	bodyBytes, err := io.ReadAll(rsp.Body)
-	defer func() { _ = rsp.Body.Close() }()
-	if err != nil {
-		return nil, err
-	}
-
-	response := &RetrieveServiceLinkResponse{
-		Body:         bodyBytes,
-		HTTPResponse: rsp,
-	}
-
-	switch {
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
-		var dest ServiceLink
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.JSON200 = &dest
-
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
-		var dest N400BadRequest
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.JSON400 = &dest
-
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
-		var dest N401Unauthorized
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.JSON401 = &dest
-
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
-		var dest N404NotFound
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.JSON404 = &dest
-
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 429:
-		var dest N429RateLimit
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.JSON429 = &dest
-
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 500:
-		var dest N500InternalServerError
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.JSON500 = &dest
-
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 503:
-		var dest N503ServiceUnavailable
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.JSON503 = &dest
-
-	}
-
-	return response, nil
-}
-
-// ParseUpdateServiceLinkResponse parses an HTTP response from a UpdateServiceLinkWithResponse call
-func ParseUpdateServiceLinkResponse(rsp *http.Response) (*UpdateServiceLinkResponse, error) {
-	bodyBytes, err := io.ReadAll(rsp.Body)
-	defer func() { _ = rsp.Body.Close() }()
-	if err != nil {
-		return nil, err
-	}
-
-	response := &UpdateServiceLinkResponse{
-		Body:         bodyBytes,
-		HTTPResponse: rsp,
-	}
-
-	switch {
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
-		var dest ServiceLink
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.JSON200 = &dest
-
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
-		var dest N400BadRequest
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.JSON400 = &dest
-
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
-		var dest N401Unauthorized
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.JSON401 = &dest
-
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
-		var dest N404NotFound
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.JSON404 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 429:
 		var dest N429RateLimit

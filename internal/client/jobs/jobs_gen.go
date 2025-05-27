@@ -11,6 +11,8 @@ import (
 const (
 	Canceled  JobStatus = "canceled"
 	Failed    JobStatus = "failed"
+	Pending   JobStatus = "pending"
+	Running   JobStatus = "running"
 	Succeeded JobStatus = "succeeded"
 )
 

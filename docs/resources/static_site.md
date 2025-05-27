@@ -107,6 +107,7 @@ resource "render_static_site" "example" {
 ### Optional
 
 - `auto_deploy` (Boolean) [Automatic deploy](https://render.com/docs/deploys#automatic-git-deploys) on every push to your repository, or changes to your service settings or environment.
+- `auto_deploy_trigger` (String) Sets the Automatic deploy behavior for a Git-based service.
 - `build_filter` (Attributes) Apply [build filters](https://render.com/docs/monorepo-support#build-filters) to configure which changes in your git repository trigger automatic deploys. If you've defined a root directory, you can still define paths outside of the root directory. (see [below for nested schema](#nestedatt--build_filter))
 - `custom_domains` (Attributes Set) Custom domains to associate with the service. (see [below for nested schema](#nestedatt--custom_domains))
 - `env_vars` (Attributes Map) Map of environment variable names to their values. (see [below for nested schema](#nestedatt--env_vars))

@@ -24,14 +24,21 @@ var AutoDeploy = schema.BoolAttribute{
 	MarkdownDescription: "[Automatic deploy](https://render.com/docs/deploys#automatic-git-deploys) on every push to your repository, or changes to your service settings or environment.",
 }
 
+var AutoDeployTrigger = schema.StringAttribute{
+	Computed:            true,
+	Description:         "Sets the Automatic deploy behavior for a Git-based service.",
+	MarkdownDescription: "Sets the Automatic deploy behavior for a Git-based service.",
+}
+
 var DockerDetails = schema.SingleNestedAttribute{
 	Computed:    true,
 	Description: "Details for building and deploying a Dockerfile.",
 	Attributes: map[string]schema.Attribute{
-		"auto_deploy":  AutoDeploy,
-		"repo_url":     RepoURL,
-		"branch":       Branch,
-		"build_filter": BuildFilter,
+		"auto_deploy":         AutoDeploy,
+		"auto_deploy_trigger": AutoDeployTrigger,
+		"repo_url":            RepoURL,
+		"branch":              Branch,
+		"build_filter":        BuildFilter,
 		"context": schema.StringAttribute{
 			Computed:            true,
 			Description:         "Docker build context directory. This is relative to your repository root. Defaults to the root.",
@@ -50,12 +57,13 @@ var DockerDetails = schema.SingleNestedAttribute{
 var NativeRuntimeDetails = schema.SingleNestedAttribute{
 	Computed: true,
 	Attributes: map[string]schema.Attribute{
-		"auto_deploy":   AutoDeploy,
-		"branch":        Branch,
-		"build_command": BuildCommand,
-		"build_filter":  BuildFilter,
-		"repo_url":      RepoURL,
-		"runtime":       Runtime,
+		"auto_deploy":         AutoDeploy,
+		"auto_deploy_trigger": AutoDeployTrigger,
+		"branch":              Branch,
+		"build_command":       BuildCommand,
+		"build_filter":        BuildFilter,
+		"repo_url":            RepoURL,
+		"runtime":             Runtime,
 	},
 }
 
