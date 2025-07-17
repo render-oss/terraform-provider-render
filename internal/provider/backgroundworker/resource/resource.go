@@ -94,7 +94,7 @@ func (r *backgroundWorkerResource) Create(ctx context.Context, req resource.Crea
 	service, err := common.GetWrappedServiceByName(ctx, r.client, r.ownerID, plan.Name.ValueString(), client.BackgroundWorker)
 	if err != nil {
 		resp.Diagnostics.AddError(
-			"Error creating web service", "Could not find service, unexpected error: "+err.Error(),
+			"Error creating background worker", "Could not find service, unexpected error: "+err.Error(),
 		)
 		return
 	}
