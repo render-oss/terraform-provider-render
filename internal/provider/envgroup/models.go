@@ -1,6 +1,8 @@
 package envgroup
 
 import (
+	"github.com/hashicorp/terraform-plugin-framework/attr"
+	"github.com/hashicorp/terraform-plugin-framework/diag"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 
 	"terraform-provider-render/internal/client"
@@ -27,17 +29,29 @@ func ModelFromClient(envGroup *client.EnvGroup, planEnvVars map[string]common.En
 
 type EnvGroupLinkModel struct {
 	EnvGroupId types.String `tfsdk:"env_group_id"`
-	ServiceIds []string     `tfsdk:"service_ids"`
+	ServiceIds types.Set    `tfsdk:"service_ids"`
 }
 
-func LinkModelFromClient(envGroup *client.EnvGroup) EnvGroupLinkModel {
-	var serviceIds []string
+func LinkModelFromClient(envGroup *client.EnvGroup) (EnvGroupLinkModel, diag.Diagnostics) {
+	// Use a map to deduplicate service IDs before creating the Set
+	seen := make(map[string]bool)
+	var serviceIdElements []attr.Value
+
 	for _, link := range envGroup.ServiceLinks {
-		serviceIds = append(serviceIds, link.Id)
+		if !seen[link.Id] {
+			seen[link.Id] = true
+			serviceIdElements = append(serviceIdElements, types.StringValue(link.Id))
+		}
+	}
+
+	serviceIdsSet, diags := types.SetValue(types.StringType, serviceIdElements)
+	if diags.HasError() {
+		// failure is pretty unlikely here, but handle it gracefully just in case
+		serviceIdsSet = types.SetNull(types.StringType)
 	}
 
 	return EnvGroupLinkModel{
 		EnvGroupId: types.StringValue(envGroup.Id),
-		ServiceIds: serviceIds,
-	}
+		ServiceIds: serviceIdsSet,
+	}, diags
 }

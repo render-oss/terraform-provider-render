@@ -41,8 +41,8 @@ func TestEnvGroupLinkResource(t *testing.T) {
 					resource.TestCheckResourceAttr(resourceName, "env_group_id", "some-id"),
 
 					resource.TestCheckResourceAttr(resourceName, "service_ids.#", "2"),
-					resource.TestCheckResourceAttr(resourceName, "service_ids.0", "service1"),
-					resource.TestCheckResourceAttr(resourceName, "service_ids.1", "service2"),
+					resource.TestCheckTypeSetElemAttr(resourceName, "service_ids.*", "service1"),
+					resource.TestCheckTypeSetElemAttr(resourceName, "service_ids.*", "service2"),
 				),
 			},
 			{
@@ -56,8 +56,8 @@ func TestEnvGroupLinkResource(t *testing.T) {
 					resource.TestCheckResourceAttr(resourceName, "env_group_id", "some-id"),
 
 					resource.TestCheckResourceAttr(resourceName, "service_ids.#", "2"),
-					resource.TestCheckResourceAttr(resourceName, "service_ids.0", "service1"),
-					resource.TestCheckResourceAttr(resourceName, "service_ids.1", "service-new"),
+					resource.TestCheckTypeSetElemAttr(resourceName, "service_ids.*", "service1"),
+					resource.TestCheckTypeSetElemAttr(resourceName, "service_ids.*", "service-new"),
 				),
 			},
 		},
@@ -78,6 +78,65 @@ func TestEnvGroupLinkResource(t *testing.T) {
 						}
 					`,
 					ExpectError: regexp.MustCompile(`import the existing service link before adding a new service`),
+				},
+			},
+		})
+	})
+	t.Run("ServiceIdsOrderingAndDuplicates", func(t *testing.T) {
+		fakeServer := envGroupLinkServer(t, "order-test-id")
+
+		resourceName := "render_env_group_link.order_test"
+
+		resource.Test(t, resource.TestCase{
+			ProtoV6ProviderFactories: map[string]func() (tfprotov6.ProviderServer, error){
+				"render": providerserver.NewProtocol6WithError(provider.New("test", provider.WithHost(fakeServer.URL))()),
+			},
+			Steps: []resource.TestStep{
+				{
+					// First apply with service1, service2 order
+					Config: providerCfg + `
+						resource "render_env_group_link" "order_test" {
+							env_group_id = "order-test-id"
+							service_ids  = ["service1", "service2", "service2"]
+						}
+					`,
+					Check: resource.ComposeAggregateTestCheckFunc(
+						resource.TestCheckResourceAttr(resourceName, "env_group_id", "order-test-id"),
+						resource.TestCheckResourceAttr(resourceName, "service_ids.#", "2"),
+						resource.TestCheckTypeSetElemAttr(resourceName, "service_ids.*", "service1"),
+						resource.TestCheckTypeSetElemAttr(resourceName, "service_ids.*", "service2"),
+					),
+				},
+				{
+					// Update with reversed order - should not cause inconsistent result error
+					Config: providerCfg + `
+						resource "render_env_group_link" "order_test" {
+							env_group_id = "order-test-id"  
+							service_ids  = ["service2", "service1"]
+						}
+					`,
+					Check: resource.ComposeAggregateTestCheckFunc(
+						resource.TestCheckResourceAttr(resourceName, "env_group_id", "order-test-id"),
+						resource.TestCheckResourceAttr(resourceName, "service_ids.#", "2"),
+						resource.TestCheckTypeSetElemAttr(resourceName, "service_ids.*", "service1"),
+						resource.TestCheckTypeSetElemAttr(resourceName, "service_ids.*", "service2"),
+					),
+				},
+				{
+					// Add a third service with mixed ordering
+					Config: providerCfg + `
+						resource "render_env_group_link" "order_test" {
+							env_group_id = "order-test-id"
+							service_ids  = ["service3", "service1", "service2", "service3"]  
+						}
+					`,
+					Check: resource.ComposeAggregateTestCheckFunc(
+						resource.TestCheckResourceAttr(resourceName, "env_group_id", "order-test-id"),
+						resource.TestCheckResourceAttr(resourceName, "service_ids.#", "3"),
+						resource.TestCheckTypeSetElemAttr(resourceName, "service_ids.*", "service1"),
+						resource.TestCheckTypeSetElemAttr(resourceName, "service_ids.*", "service2"),
+						resource.TestCheckTypeSetElemAttr(resourceName, "service_ids.*", "service3"),
+					),
 				},
 			},
 		})

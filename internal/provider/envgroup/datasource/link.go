@@ -68,5 +68,10 @@ func (d *envGroupLinkDataSource) Read(ctx context.Context, req datasource.ReadRe
 		return
 	}
 
-	resp.State.Set(ctx, envgroup.LinkModelFromClient(&envGroupLink))
+	model, modelDiags := envgroup.LinkModelFromClient(&envGroupLink)
+	resp.Diagnostics.Append(modelDiags...)
+	if resp.Diagnostics.HasError() {
+		return
+	}
+	resp.State.Set(ctx, model)
 }

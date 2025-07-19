@@ -50,7 +50,7 @@ resource "render_env_group_link" "envgroup_links" {
 ### Required
 
 - `env_group_id` (String) Unique identifier for the environment group
-- `service_ids` (List of String) List of service ids linked to the environment group
+- `service_ids` (Set of String) Set of service ids linked to the environment group
 
 ## Import
 
