@@ -38,11 +38,11 @@ func EnvGroupLinkDataSourceSchema(ctx context.Context) schema.Schema {
 				Description:         "Unique identifier for the environment group",
 				MarkdownDescription: "Unique identifier for the environment group",
 			},
-			"service_ids": schema.ListAttribute{
+			"service_ids": schema.SetAttribute{
 				ElementType:         types.StringType,
 				Computed:            true,
-				Description:         "List of service ids linked to the environment group",
-				MarkdownDescription: "List of service ids linked to the environment group",
+				Description:         "Set of service ids linked to the environment group",
+				MarkdownDescription: "Set of service ids linked to the environment group",
 			},
 		},
 	}

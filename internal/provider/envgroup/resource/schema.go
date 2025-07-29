@@ -3,7 +3,7 @@ package resource
 import (
 	"context"
 
-	"github.com/hashicorp/terraform-plugin-framework-validators/listvalidator"
+	"github.com/hashicorp/terraform-plugin-framework-validators/setvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
@@ -41,13 +41,13 @@ func EnvGroupLinkResourceSchema(ctx context.Context) schema.Schema {
 				Description:         "Unique identifier for the environment group",
 				MarkdownDescription: "Unique identifier for the environment group",
 			},
-			"service_ids": schema.ListAttribute{
+			"service_ids": schema.SetAttribute{
 				ElementType:         types.StringType,
 				Required:            true,
-				Description:         "List of service ids linked to the environment group",
-				MarkdownDescription: "List of service ids linked to the environment group",
-				Validators: []validator.List{
-					listvalidator.SizeAtLeast(1),
+				Description:         "Set of service ids linked to the environment group",
+				MarkdownDescription: "Set of service ids linked to the environment group",
+				Validators: []validator.Set{
+					setvalidator.SizeAtLeast(1),
 				},
 			},
 		},

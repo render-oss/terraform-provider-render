@@ -8,6 +8,7 @@ import (
 
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
+	"github.com/hashicorp/terraform-plugin-framework/types"
 
 	"terraform-provider-render/internal/client"
 	"terraform-provider-render/internal/provider/common"
@@ -72,8 +73,9 @@ func (r *envGroupLinkResource) Create(ctx context.Context, req resource.CreateRe
 	// Attempting to create a service link for an env group that already exists and is linked to another service
 	// will result in an inconsistent state error. The user should instead import the existing env group link and
 	// update it. We check to see if the service link already exists and contains a service ID not in the plan.
+	planServiceIds := setToStringSlice(plan.ServiceIds)
 	for _, id := range existingEnvGroup.ServiceLinks {
-		if !slices.Contains(plan.ServiceIds, id.Id) {
+		if !slices.Contains(planServiceIds, id.Id) {
 			resp.Diagnostics.AddError(
 				fmt.Sprintf("service link already exists for %s", existingEnvGroup.Id),
 				"import the existing service link before adding a new service")
@@ -81,14 +83,19 @@ func (r *envGroupLinkResource) Create(ctx context.Context, req resource.CreateRe
 		}
 	}
 
-	envGroup, err := r.linkServices(ctx, plan.EnvGroupId.ValueString(), plan.ServiceIds)
+	envGroup, err := r.linkServices(ctx, plan.EnvGroupId.ValueString(), planServiceIds)
 	if err != nil {
 		resp.Diagnostics.AddError("Unable to add service to environment group", err.Error())
 		return
 	}
 
 	// Set state to fully populated data
-	diags = resp.State.Set(ctx, envgroup.LinkModelFromClient(&envGroup))
+	model, modelDiags := envgroup.LinkModelFromClient(&envGroup)
+	resp.Diagnostics.Append(modelDiags...)
+	if resp.Diagnostics.HasError() {
+		return
+	}
+	diags = resp.State.Set(ctx, model)
 	resp.Diagnostics.Append(diags...)
 }
 
@@ -108,7 +115,12 @@ func (r *envGroupLinkResource) Read(ctx context.Context, req resource.ReadReques
 	}
 
 	// Set refreshed state
-	diags = resp.State.Set(ctx, envgroup.LinkModelFromClient(envGroup))
+	model, modelDiags := envgroup.LinkModelFromClient(envGroup)
+	resp.Diagnostics.Append(modelDiags...)
+	if resp.Diagnostics.HasError() {
+		return
+	}
+	diags = resp.State.Set(ctx, model)
 	resp.Diagnostics.Append(diags...)
 }
 
@@ -141,15 +153,18 @@ func (r *envGroupLinkResource) Update(ctx context.Context, req resource.UpdateRe
 		return
 	}
 
+	planServiceIds := setToStringSlice(plan.ServiceIds)
+	stateServiceIds := setToStringSlice(state.ServiceIds)
+
 	var toCreate, toDelete []string
-	for _, id := range plan.ServiceIds {
-		if !slices.Contains(state.ServiceIds, id) {
+	for _, id := range planServiceIds {
+		if !slices.Contains(stateServiceIds, id) {
 			toCreate = append(toCreate, id)
 		}
 	}
 
-	for _, id := range state.ServiceIds {
-		if !slices.Contains(plan.ServiceIds, id) {
+	for _, id := range stateServiceIds {
+		if !slices.Contains(planServiceIds, id) {
 			toDelete = append(toDelete, id)
 		}
 	}
@@ -173,7 +188,12 @@ func (r *envGroupLinkResource) Update(ctx context.Context, req resource.UpdateRe
 	}
 
 	// Set state to fully populated data
-	diags = resp.State.Set(ctx, envgroup.LinkModelFromClient(envGroup))
+	model, modelDiags := envgroup.LinkModelFromClient(envGroup)
+	resp.Diagnostics.Append(modelDiags...)
+	if resp.Diagnostics.HasError() {
+		return
+	}
+	diags = resp.State.Set(ctx, model)
 	resp.Diagnostics.Append(diags...)
 }
 
@@ -212,7 +232,8 @@ func (r *envGroupLinkResource) Delete(ctx context.Context, req resource.DeleteRe
 		return
 	}
 
-	err := r.unlinkServices(ctx, state.EnvGroupId.ValueString(), state.ServiceIds)
+	stateServiceIds := setToStringSlice(state.ServiceIds)
+	err := r.unlinkServices(ctx, state.EnvGroupId.ValueString(), stateServiceIds)
 	if err != nil {
 		resp.Diagnostics.AddError("Unable to remove service from environment group", err.Error())
 		return
@@ -222,4 +243,15 @@ func (r *envGroupLinkResource) Delete(ctx context.Context, req resource.DeleteRe
 func (r *envGroupLinkResource) ImportState(ctx context.Context, req resource.ImportStateRequest, resp *resource.ImportStateResponse) {
 	// Retrieve import ID and save to id attribute
 	resource.ImportStatePassthroughID(ctx, path.Root("env_group_id"), req, resp)
+}
+
+// Helper function to convert types.Set to []string
+func setToStringSlice(set types.Set) []string {
+	result := make([]string, 0, len(set.Elements()))
+	for _, elem := range set.Elements() {
+		if strVal, ok := elem.(types.String); ok {
+			result = append(result, strVal.ValueString())
+		}
+	}
+	return result
 }
