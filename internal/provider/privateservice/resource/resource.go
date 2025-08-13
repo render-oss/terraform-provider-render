@@ -98,7 +98,7 @@ func (r *privateServiceResource) Create(ctx context.Context, req resource.Create
 	service, err := common.GetWrappedServiceByName(ctx, r.client, r.ownerID, plan.Name.ValueString(), client.PrivateService)
 	if err != nil {
 		resp.Diagnostics.AddError(
-			"Error creating web service", "Could not find service, unexpected error: "+err.Error(),
+			"Error creating private service", "Could not find service, unexpected error: "+err.Error(),
 		)
 		return
 	}
@@ -106,7 +106,7 @@ func (r *privateServiceResource) Create(ctx context.Context, req resource.Create
 	model, err := privateservice.ModelForServiceResult(service, plan, resp.Diagnostics)
 	if err != nil {
 		resp.Diagnostics.AddError(
-			"Error creating web service", "Could not create web service, unexpected error: "+err.Error(),
+			"Error creating private service", "Could not create private service, unexpected error: "+err.Error(),
 		)
 		return
 	}
