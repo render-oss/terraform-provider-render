@@ -194,6 +194,7 @@ const (
 	N14 PostgresVersion = "14"
 	N15 PostgresVersion = "15"
 	N16 PostgresVersion = "16"
+	N17 PostgresVersion = "17"
 )
 
 // Defines values for PreviewsGeneration.
