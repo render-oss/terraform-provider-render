@@ -168,7 +168,8 @@ func AutoscalingRequest(am *AutoscalingModel) (*autoscaling.AutoscalingConfig, e
 
 func RuntimeSourceFromClient(service *client.Service, env client.ServiceRuntime, envDetails client.EnvSpecificDetails) (*RuntimeSourceModel, error) {
 	runtimeSource := &RuntimeSourceModel{}
-	if env == client.ServiceRuntimeImage {
+	switch env {
+	case client.ServiceRuntimeImage:
 		imageRuntime, err := ImageRuntimeSource(service, envDetails)
 		if err != nil {
 			return nil, err
@@ -176,14 +177,14 @@ func RuntimeSourceFromClient(service *client.Service, env client.ServiceRuntime,
 
 		runtimeSource.Image = imageRuntime
 
-	} else if env == client.ServiceRuntimeDocker {
+	case client.ServiceRuntimeDocker:
 		dockerRuntime, err := DockerRuntimeSource(service, envDetails)
 		if err != nil {
 			return nil, err
 		}
 
 		runtimeSource.Docker = dockerRuntime
-	} else {
+	default:
 		nativeRuntime, err := NativeRuntimeSource(service, env, envDetails)
 		if err != nil {
 			return nil, err

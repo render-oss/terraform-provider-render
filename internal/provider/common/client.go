@@ -130,7 +130,7 @@ func do(f func() (*http.Response, error)) (*http.Response, error) {
 			return nil, fmt.Errorf("bad request")
 		}
 
-		return nil, fmt.Errorf(*badRequest.Message)
+		return nil, fmt.Errorf("%s", *badRequest.Message)
 	}
 
 	if resp.StatusCode == http.StatusNotFound {
@@ -144,7 +144,7 @@ func do(f func() (*http.Response, error)) (*http.Response, error) {
 			return nil, fmt.Errorf("received %d", resp.StatusCode)
 		}
 
-		return nil, fmt.Errorf(*clientError.Message)
+		return nil, fmt.Errorf("%s", *clientError.Message)
 	}
 
 	if resp.StatusCode < 200 || resp.StatusCode > 299 {
