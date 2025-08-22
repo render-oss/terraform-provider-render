@@ -25,7 +25,7 @@ func StaticResponse(body any) http.HandlerFunc {
 			res, err := json.Marshal(body)
 			if err != nil {
 				resp.WriteHeader(http.StatusInternalServerError)
-				_, _ = resp.Write([]byte(fmt.Sprintf(`{"error": "%s"}`, err)))
+				_, _ = fmt.Fprintf(resp, `{"error": "%s"}`, err)
 			}
 
 			_, _ = resp.Write(res)

@@ -147,7 +147,7 @@ func TestUpdateService(t *testing.T) {
 		assert.Equal(t, "updated-env-var", (*wrapped.EnvVars)[0].EnvVar.Key)
 		assert.Equal(t, "updated-secret-file", (*wrapped.SecretFiles)[0].SecretFile.Name)
 
-		details, err := wrapped.Service.ServiceDetails.AsWebServiceDetails()
+		details, err := wrapped.ServiceDetails.AsWebServiceDetails()
 		require.NoError(t, err)
 
 		require.NotNil(t, details.Disk)

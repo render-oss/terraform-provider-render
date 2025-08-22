@@ -6,9 +6,10 @@ import (
 	"testing"
 	"time"
 
+	"terraform-provider-render/internal/provider"
+
 	"github.com/stretchr/testify/require"
 	"golang.org/x/time/rate"
-	"terraform-provider-render/internal/provider"
 )
 
 func TestNewRateLimitHTTPClient(t *testing.T) {
@@ -72,11 +73,12 @@ func TestNewRateLimitHTTPClient(t *testing.T) {
 		var sleepCallCount int
 		fakeSleep := func(d time.Duration) {
 			sleepCallCount++
-			if sleepCallCount == 1 {
+			switch sleepCallCount {
+			case 1:
 				require.Equal(t, 10*time.Second, d)
-			} else if sleepCallCount == 2 {
+			case 2:
 				require.Equal(t, 1*time.Second, d)
-			} else {
+			default:
 				require.Fail(t, "unexpected call to sleep")
 			}
 		}
