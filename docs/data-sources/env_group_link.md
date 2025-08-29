@@ -21,4 +21,4 @@ description: |-
 
 ### Read-Only
 
-- `service_ids` (List of String) List of service ids linked to the environment group
+- `service_ids` (Set of String) Set of service ids linked to the environment group
