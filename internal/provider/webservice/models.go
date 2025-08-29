@@ -12,6 +12,7 @@ type WebServiceModel struct {
 	Id                         types.String               `tfsdk:"id"`
 	Autoscaling                *common.AutoscalingModel   `tfsdk:"autoscaling"`
 	CustomDomains              []common.CustomDomainModel `tfsdk:"custom_domains"`
+	ActiveCustomDomains        types.Set                  `tfsdk:"active_custom_domains"`
 	RuntimeSource              *common.RuntimeSourceModel `tfsdk:"runtime_source"`
 	Disk                       *common.DiskModel          `tfsdk:"disk"`
 	EnvironmentID              types.String               `tfsdk:"environment_id"`
@@ -55,7 +56,8 @@ func ModelForServiceResult(service *common.WrappedService, plan WebServiceModel,
 
 	webServicesModel := &WebServiceModel{
 		Id:                         types.StringValue(service.Id),
-		CustomDomains:              common.CustomDomainClientsToCustomDomainModels(service.CustomDomains),
+		CustomDomains:              common.CustomDomainClientsToCustomDomainModelsNonRedirecting(service.CustomDomains),
+		ActiveCustomDomains:        common.CustomDomainSetFromClient(service.CustomDomains, diags),
 		EnvironmentID:              types.StringPointerValue(service.EnvironmentId),
 		HealthCheckPath:            types.StringValue(details.HealthCheckPath),
 		Name:                       types.StringValue(service.Name),

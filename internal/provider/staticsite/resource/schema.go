@@ -19,6 +19,7 @@ func Schema(ctx context.Context) schema.Schema {
 			"build_command":                 resource.BuildCommand,
 			"build_filter":                  resource.BuildFilter,
 			"custom_domains":                resource.CustomDomains,
+			"active_custom_domains":         resource.ActiveCustomDomains,
 			"environment_id":                resource.ResourceEnvironmentID,
 			"env_vars":                      resource.EnvVars,
 			"headers":                       resource.Headers,

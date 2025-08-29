@@ -25,6 +25,7 @@ Provides information about a Render Static Site.
 
 ### Read-Only
 
+- `active_custom_domains` (Attributes Set) All active custom domains associated with the service, including any auto-generated redirect domains. (see [below for nested schema](#nestedatt--active_custom_domains))
 - `auto_deploy` (Boolean) [Automatic deploy](https://render.com/docs/deploys#automatic-git-deploys) on every push to your repository, or changes to your service settings or environment.
 - `auto_deploy_trigger` (String) Sets the Automatic deploy behavior for a Git-based service.
 - `branch` (String) Branch to build
@@ -54,6 +55,18 @@ Required:
 Read-Only:
 
 - `domain_type` (String) Type of the custom domain. Either apex or subdomain
+- `name` (String) DNS record of the custom domain
+- `public_suffix` (String) Public suffix of the custom domain
+- `redirect_for_name` (String) DNS record of the custom domain to redirect to
+
+
+<a id="nestedatt--active_custom_domains"></a>
+### Nested Schema for `active_custom_domains`
+
+Read-Only:
+
+- `domain_type` (String) Type of the custom domain. Either apex or subdomain
+- `id` (String) Unique identifier for the custom domain
 - `name` (String) DNS record of the custom domain
 - `public_suffix` (String) Public suffix of the custom domain
 - `redirect_for_name` (String) DNS record of the custom domain to redirect to

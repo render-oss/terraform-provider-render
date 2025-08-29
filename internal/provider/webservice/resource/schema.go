@@ -2,6 +2,7 @@ package resource
 
 import (
 	"context"
+
 	"terraform-provider-render/internal/provider/types/resource"
 
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
@@ -14,6 +15,7 @@ func Schema(ctx context.Context) schema.Schema {
 			"id":                            resource.ServiceID,
 			"autoscaling":                   resource.Autoscaling,
 			"custom_domains":                resource.CustomDomains,
+			"active_custom_domains":         resource.ActiveCustomDomains,
 			"runtime_source":                resource.RuntimeSource,
 			"disk":                          resource.Disk,
 			"environment_id":                resource.ResourceEnvironmentID,

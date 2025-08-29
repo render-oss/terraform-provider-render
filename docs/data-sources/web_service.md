@@ -26,6 +26,7 @@ Provides information about a Render Web Service.
 
 ### Read-Only
 
+- `active_custom_domains` (Attributes Set) All active custom domains associated with the service, including any auto-generated redirect domains. (see [below for nested schema](#nestedatt--active_custom_domains))
 - `autoscaling` (Attributes) (see [below for nested schema](#nestedatt--autoscaling))
 - `disk` (Attributes) (see [below for nested schema](#nestedatt--disk))
 - `env_vars` (Attributes Map) Map of environment variable names to their values. (see [below for nested schema](#nestedatt--env_vars))
@@ -74,6 +75,18 @@ Optional:
 
 - `endpoint` (String) The endpoint to send logs to.
 - `token` (String, Sensitive) The token to use when sending logs.
+
+
+<a id="nestedatt--active_custom_domains"></a>
+### Nested Schema for `active_custom_domains`
+
+Read-Only:
+
+- `domain_type` (String) Type of the custom domain. Either apex or subdomain
+- `id` (String) Unique identifier for the custom domain
+- `name` (String) DNS record of the custom domain
+- `public_suffix` (String) Public suffix of the custom domain
+- `redirect_for_name` (String) DNS record of the custom domain to redirect to
 
 
 <a id="nestedatt--autoscaling"></a>
