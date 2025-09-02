@@ -96,6 +96,7 @@ resource "render_web_service" "web" {
 
 ### Read-Only
 
+- `active_custom_domains` (Attributes Set) All active custom domains associated with the service, including any auto-generated redirect domains. (see [below for nested schema](#nestedatt--active_custom_domains))
 - `id` (String) Unique identifier for the service
 - `slug` (String) Unique slug for the service
 - `url` (String) URL that the service is accessible from.
@@ -298,6 +299,18 @@ Optional:
 Required:
 
 - `content` (String, Sensitive) The content of the secret file.
+
+
+<a id="nestedatt--active_custom_domains"></a>
+### Nested Schema for `active_custom_domains`
+
+Read-Only:
+
+- `domain_type` (String) Type of the custom domain. Either apex or subdomain
+- `id` (String) Unique identifier for the custom domain
+- `name` (String) DNS record of the custom domain
+- `public_suffix` (String) Public suffix of the custom domain
+- `redirect_for_name` (String) DNS record of the custom domain to redirect to
 
 ## Import
 

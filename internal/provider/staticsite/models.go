@@ -17,6 +17,7 @@ type StaticSiteModel struct {
 	BuildFilter                *common.BuildFilterModel      `tfsdk:"build_filter"`
 	EnvironmentID              types.String                  `tfsdk:"environment_id"`
 	CustomDomains              []common.CustomDomainModel    `tfsdk:"custom_domains"`
+	ActiveCustomDomains        types.Set                     `tfsdk:"active_custom_domains"`
 	EnvVars                    map[string]common.EnvVarModel `tfsdk:"env_vars"`
 	Headers                    []common.HeaderModel          `tfsdk:"headers"`
 	Name                       types.String                  `tfsdk:"name"`
@@ -54,7 +55,8 @@ func ModelForServiceResult(service *common.WrappedStaticSite, state StaticSiteMo
 		AutoDeploy:           types.BoolValue(service.AutoDeploy == client.AutoDeployYes),
 		AutoDeployTrigger:    common.AutoDeployTriggerToString(service.AutoDeployTrigger),
 		BuildFilter:          common.BuildFilterModelForClient(service.BuildFilter),
-		CustomDomains:        common.CustomDomainClientsToCustomDomainModels(service.CustomDomains),
+		CustomDomains:        common.CustomDomainClientsToCustomDomainModelsNonRedirecting(service.CustomDomains),
+		ActiveCustomDomains:  common.CustomDomainSetFromClient(service.CustomDomains, diags),
 		EnvironmentID:        types.StringPointerValue(service.EnvironmentId),
 		Headers:              common.ClientHeadersToRouteModels(service.Headers),
 		Name:                 types.StringValue(service.Name),

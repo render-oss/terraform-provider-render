@@ -14,6 +14,7 @@ func Schema(ctx context.Context) schema.Schema {
 			"id":                            datasource.ServiceID,
 			"autoscaling":                   datasource.Autoscaling,
 			"custom_domains":                datasource.CustomDomains,
+			"active_custom_domains":         datasource.ActiveCustomDomains,
 			"runtime_source":                datasource.RuntimeSource,
 			"disk":                          datasource.Disk,
 			"environment_id":                datasource.ResourceEnvironmentID,
