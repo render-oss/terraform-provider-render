@@ -19,6 +19,7 @@ func UpdateServiceRequestFromModel(plan cronJob.CronJobModel, ownerID string) (c
 		Plan:               &servicePlan,
 		EnvSpecificDetails: envSpecificDetails,
 		Schedule:           plan.Schedule.ValueStringPointer(),
+		Runtime:            common.From(client.ServiceRuntime(plan.RuntimeSource.Runtime())),
 	}
 
 	serviceDetails := &client.ServicePATCH_ServiceDetails{}
