@@ -33,6 +33,7 @@ func UpdateServiceRequestFromModel(ctx context.Context, plan privateservice.Priv
 		Previews:                   common.PreviewsObjectToPreviews(ctx, plan.Previews),
 		PullRequestPreviewsEnabled: &pullRequestPreviewsEnabled,
 		MaxShutdownDelaySeconds:    common.ValueAsIntPointer(plan.MaxShutdownDelaySeconds),
+		Runtime:                    common.From(client.ServiceRuntime(plan.RuntimeSource.Runtime())),
 	}
 
 	serviceDetails := &client.ServicePATCH_ServiceDetails{}
