@@ -19,12 +19,103 @@ import (
 	externalRef9 "terraform-provider-render/internal/client/notifications"
 	externalRef10 "terraform-provider-render/internal/client/postgres"
 	externalRef11 "terraform-provider-render/internal/client/webhooks"
+	externalRef12 "terraform-provider-render/internal/client/workflows"
 
 	"github.com/oapi-codegen/runtime"
 )
 
 const (
 	BearerAuthScopes = "BearerAuth.Scopes"
+)
+
+// Defines values for AuditLogEvent.
+const (
+	AcceptOrgInviteEvent               AuditLogEvent = "AcceptOrgInviteEvent"
+	AcceptTeamInviteEvent              AuditLogEvent = "AcceptTeamInviteEvent"
+	AddOrgMemberEvent                  AuditLogEvent = "AddOrgMemberEvent"
+	ApplyBlueprintEvent                AuditLogEvent = "ApplyBlueprintEvent"
+	ChangeEnvironmentProtectionEvent   AuditLogEvent = "ChangeEnvironmentProtectionEvent"
+	ChangeOrg2FAEnforcementEvent       AuditLogEvent = "ChangeOrg2FAEnforcementEvent"
+	ChangeOrgAllowedLoginMethodsEvent  AuditLogEvent = "ChangeOrgAllowedLoginMethodsEvent"
+	ChangeOrgRoleEvent                 AuditLogEvent = "ChangeOrgRoleEvent"
+	ChangeTeam2FAEnforcementEvent      AuditLogEvent = "ChangeTeam2FAEnforcementEvent"
+	ChangeTeamAllowedLoginMethodsEvent AuditLogEvent = "ChangeTeamAllowedLoginMethodsEvent"
+	ChangeTeamMemberRoleEvent          AuditLogEvent = "ChangeTeamMemberRoleEvent"
+	ChangeWorkspaceDeployHandlingEvent AuditLogEvent = "ChangeWorkspaceDeployHandlingEvent"
+	ChangeWorkspacePrivacyEvent        AuditLogEvent = "ChangeWorkspacePrivacyEvent"
+	CreateCronJobEvent                 AuditLogEvent = "CreateCronJobEvent"
+	CreateEnvVarsEvent                 AuditLogEvent = "CreateEnvVarsEvent"
+	CreateEnvironmentEvent             AuditLogEvent = "CreateEnvironmentEvent"
+	CreateOrgDomainEvent               AuditLogEvent = "CreateOrgDomainEvent"
+	CreateOtelIntegrationEvent         AuditLogEvent = "CreateOtelIntegrationEvent"
+	CreatePostgresEvent                AuditLogEvent = "CreatePostgresEvent"
+	CreatePrivateLinkEvent             AuditLogEvent = "CreatePrivateLinkEvent"
+	CreateProjectEvent                 AuditLogEvent = "CreateProjectEvent"
+	CreateRedisEvent                   AuditLogEvent = "CreateRedisEvent"
+	CreateSSOConnectionEvent           AuditLogEvent = "CreateSSOConnectionEvent"
+	CreateServerDiskEvent              AuditLogEvent = "CreateServerDiskEvent"
+	CreateServerEvent                  AuditLogEvent = "CreateServerEvent"
+	CreateWebhookEvent                 AuditLogEvent = "CreateWebhookEvent"
+	CreateWorkspaceEvent               AuditLogEvent = "CreateWorkspaceEvent"
+	DeleteCronJobEvent                 AuditLogEvent = "DeleteCronJobEvent"
+	DeleteEnvGroupEvent                AuditLogEvent = "DeleteEnvGroupEvent"
+	DeleteEnvVarsEvent                 AuditLogEvent = "DeleteEnvVarsEvent"
+	DeleteEnvironmentEvent             AuditLogEvent = "DeleteEnvironmentEvent"
+	DeleteOrgDomainEvent               AuditLogEvent = "DeleteOrgDomainEvent"
+	DeleteOtelIntegrationEvent         AuditLogEvent = "DeleteOtelIntegrationEvent"
+	DeletePostgresEvent                AuditLogEvent = "DeletePostgresEvent"
+	DeletePrivateLinkEvent             AuditLogEvent = "DeletePrivateLinkEvent"
+	DeleteProjectEvent                 AuditLogEvent = "DeleteProjectEvent"
+	DeleteRedisEvent                   AuditLogEvent = "DeleteRedisEvent"
+	DeleteSSOConnectionEvent           AuditLogEvent = "DeleteSSOConnectionEvent"
+	DeleteServerDiskEvent              AuditLogEvent = "DeleteServerDiskEvent"
+	DeleteServerEvent                  AuditLogEvent = "DeleteServerEvent"
+	DeleteWebhookEvent                 AuditLogEvent = "DeleteWebhookEvent"
+	DeleteWorkspaceEvent               AuditLogEvent = "DeleteWorkspaceEvent"
+	DocumentDownloadEvent              AuditLogEvent = "DocumentDownloadEvent"
+	DownloadDatabaseBackupEvent        AuditLogEvent = "DownloadDatabaseBackupEvent"
+	EnableRedisInternalAuthEvent       AuditLogEvent = "EnableRedisInternalAuthEvent"
+	InviteToOrgEvent                   AuditLogEvent = "InviteToOrgEvent"
+	InviteToTeamEvent                  AuditLogEvent = "InviteToTeamEvent"
+	JoinTeamEvent                      AuditLogEvent = "JoinTeamEvent"
+	LoginEvent                         AuditLogEvent = "LoginEvent"
+	LogoutEvent                        AuditLogEvent = "LogoutEvent"
+	MaintenanceModeEnabledEvent        AuditLogEvent = "MaintenanceModeEnabledEvent"
+	MaintenanceModeURIUpdatedEvent     AuditLogEvent = "MaintenanceModeURIUpdatedEvent"
+	MoveEnvironmentResourceEvent       AuditLogEvent = "MoveEnvironmentResourceEvent"
+	ProvisionOrganizationSCIMToken     AuditLogEvent = "ProvisionOrganizationSCIMToken"
+	RemoveOrgMemberEvent               AuditLogEvent = "RemoveOrgMemberEvent"
+	RemoveUserFromTeamEvent            AuditLogEvent = "RemoveUserFromTeamEvent"
+	RestoreDiskSnapshotEvent           AuditLogEvent = "RestoreDiskSnapshotEvent"
+	ResumePostgresEvent                AuditLogEvent = "ResumePostgresEvent"
+	ResumeServiceEvent                 AuditLogEvent = "ResumeServiceEvent"
+	RevokeOrganizationSCIMToken        AuditLogEvent = "RevokeOrganizationSCIMToken"
+	SignNDAEvent                       AuditLogEvent = "SignNDAEvent"
+	StartShellEvent                    AuditLogEvent = "StartShellEvent"
+	SuspendPostgresEvent               AuditLogEvent = "SuspendPostgresEvent"
+	SuspendServiceEvent                AuditLogEvent = "SuspendServiceEvent"
+	UpdateEnvVarsEvent                 AuditLogEvent = "UpdateEnvVarsEvent"
+	UpdateIPAllowListEvent             AuditLogEvent = "UpdateIPAllowListEvent"
+	UpdateOtelIntegrationEvent         AuditLogEvent = "UpdateOtelIntegrationEvent"
+	UpdateSSOConnectionEvent           AuditLogEvent = "UpdateSSOConnectionEvent"
+	UpdateServiceNameEvent             AuditLogEvent = "UpdateServiceNameEvent"
+	UpdateWebhookEvent                 AuditLogEvent = "UpdateWebhookEvent"
+	VerifyOrgDomainEvent               AuditLogEvent = "VerifyOrgDomainEvent"
+	ViewConnectionInfoEvent            AuditLogEvent = "ViewConnectionInfoEvent"
+	ViewEnvVarValuesEvent              AuditLogEvent = "ViewEnvVarValuesEvent"
+)
+
+// Defines values for AuditLogStatus.
+const (
+	AuditLogStatusError   AuditLogStatus = "error"
+	AuditLogStatusSuccess AuditLogStatus = "success"
+)
+
+// Defines values for AuditLogActorType.
+const (
+	AuditLogActorTypeRestApi AuditLogActorType = "rest_api"
+	AuditLogActorTypeSystem  AuditLogActorType = "system"
+	AuditLogActorTypeUser    AuditLogActorType = "user"
 )
 
 // Defines values for AutoDeploy.
@@ -111,6 +202,7 @@ const (
 	DeployStatusLive                DeployStatus = "live"
 	DeployStatusPreDeployFailed     DeployStatus = "pre_deploy_failed"
 	DeployStatusPreDeployInProgress DeployStatus = "pre_deploy_in_progress"
+	DeployStatusQueued              DeployStatus = "queued"
 	DeployStatusUpdateFailed        DeployStatus = "update_failed"
 	DeployStatusUpdateInProgress    DeployStatus = "update_in_progress"
 )
@@ -244,6 +336,12 @@ const (
 	GOOGLEARTIFACT RegistryCredentialRegistry = "GOOGLE_ARTIFACT"
 )
 
+// Defines values for RenderSubdomainPolicy.
+const (
+	Disabled RenderSubdomainPolicy = "disabled"
+	Enabled  RenderSubdomainPolicy = "enabled"
+)
+
 // Defines values for RouteType.
 const (
 	RouteTypeRedirect RouteType = "redirect"
@@ -306,11 +404,13 @@ const (
 
 // Defines values for SuspenderType.
 const (
-	SuspenderTypeAdmin         SuspenderType = "admin"
-	SuspenderTypeBilling       SuspenderType = "billing"
-	SuspenderTypeParentService SuspenderType = "parent_service"
-	SuspenderTypeUnknown       SuspenderType = "unknown"
-	SuspenderTypeUser          SuspenderType = "user"
+	SuspenderTypeAdmin             SuspenderType = "admin"
+	SuspenderTypeBilling           SuspenderType = "billing"
+	SuspenderTypeHipaaEnablement   SuspenderType = "hipaa_enablement"
+	SuspenderTypeParentService     SuspenderType = "parent_service"
+	SuspenderTypeStuckCrashlooping SuspenderType = "stuck_crashlooping"
+	SuspenderTypeUnknown           SuspenderType = "unknown"
+	SuspenderTypeUser              SuspenderType = "user"
 )
 
 // Defines values for TeamMemberStatus.
@@ -368,6 +468,53 @@ const (
 // AddUpdateEnvVarInput defines model for addUpdateEnvVarInput.
 type AddUpdateEnvVarInput struct {
 	union json.RawMessage
+}
+
+// AuditLog defines model for auditLog.
+type AuditLog struct {
+	Actor AuditLogActor `json:"actor"`
+
+	// Event The type of event that occurred
+	Event AuditLogEvent `json:"event"`
+
+	// Id Unique identifier for the audit log entry
+	Id string `json:"id"`
+
+	// Metadata Additional context information about the event
+	Metadata map[string]string `json:"metadata"`
+
+	// Status The status of the event
+	Status AuditLogStatus `json:"status"`
+
+	// Timestamp When the event occurred (ISO 8601 format)
+	Timestamp time.Time `json:"timestamp"`
+}
+
+// AuditLogEvent The type of event that occurred
+type AuditLogEvent string
+
+// AuditLogStatus The status of the event
+type AuditLogStatus string
+
+// AuditLogActor defines model for auditLogActor.
+type AuditLogActor struct {
+	// Email Email address of the actor (if applicable)
+	Email *string `json:"email,omitempty"`
+
+	// Id Unique identifier of the actor (if applicable)
+	Id *string `json:"id,omitempty"`
+
+	// Type The type of actor that performed the action
+	Type AuditLogActorType `json:"type"`
+}
+
+// AuditLogActorType The type of actor that performed the action
+type AuditLogActorType string
+
+// AuditLogWithCursor defines model for auditLogWithCursor.
+type AuditLogWithCursor struct {
+	AuditLog AuditLog `json:"auditLog"`
+	Cursor   Cursor   `json:"cursor"`
 }
 
 // AutoDeploy defines model for autoDeploy.
@@ -464,7 +611,7 @@ type BackgroundWorkerDetailsPOST struct {
 	Runtime ServiceRuntime `json:"runtime"`
 }
 
-// BlueprintWithCursor A blueprint with a cursor
+// BlueprintWithCursor A Blueprint with a cursor
 type BlueprintWithCursor struct {
 	Blueprint externalRef1.Blueprint `json:"blueprint"`
 	Cursor    Cursor                 `json:"cursor"`
@@ -478,6 +625,11 @@ type BuildFilter struct {
 
 // BuildPlan defines model for buildPlan.
 type BuildPlan string
+
+// Cache defines model for cache.
+type Cache struct {
+	Profile string `json:"profile"`
+}
 
 // CidrBlockAndDescription defines model for cidrBlockAndDescription.
 type CidrBlockAndDescription struct {
@@ -614,6 +766,7 @@ type Deploy struct {
 		// Sha SHA that the image reference was resolved to when creating the deploy
 		Sha *string `json:"sha,omitempty"`
 	} `json:"image,omitempty"`
+	StartedAt *time.Time     `json:"startedAt,omitempty"`
 	Status    *DeployStatus  `json:"status,omitempty"`
 	Trigger   *DeployTrigger `json:"trigger,omitempty"`
 	UpdatedAt *time.Time     `json:"updatedAt,omitempty"`
@@ -785,10 +938,11 @@ type EnvVarWithCursor struct {
 
 // Environment defines model for environment.
 type Environment struct {
-	DatabasesIds []string `json:"databasesIds"`
-	EnvGroupIds  []string `json:"envGroupIds"`
-	Id           string   `json:"id"`
-	Name         string   `json:"name"`
+	DatabasesIds []string                   `json:"databasesIds"`
+	EnvGroupIds  []string                   `json:"envGroupIds"`
+	Id           string                     `json:"id"`
+	IpAllowList  *[]CidrBlockAndDescription `json:"ipAllowList,omitempty"`
+	Name         string                     `json:"name"`
 
 	// NetworkIsolationEnabled Indicates whether network connections across environments are allowed.
 	NetworkIsolationEnabled NetworkIsolationEnabled `json:"networkIsolationEnabled"`
@@ -802,7 +956,8 @@ type Environment struct {
 
 // EnvironmentPATCHInput defines model for environmentPATCHInput.
 type EnvironmentPATCHInput struct {
-	Name *string `json:"name,omitempty"`
+	IpAllowList *[]CidrBlockAndDescription `json:"ipAllowList,omitempty"`
+	Name        *string                    `json:"name,omitempty"`
 
 	// NetworkIsolationEnabled Indicates whether network connections across environments are allowed.
 	NetworkIsolationEnabled *NetworkIsolationEnabled `json:"networkIsolationEnabled,omitempty"`
@@ -813,7 +968,8 @@ type EnvironmentPATCHInput struct {
 
 // EnvironmentPOSTInput defines model for environmentPOSTInput.
 type EnvironmentPOSTInput struct {
-	Name string `json:"name"`
+	IpAllowList *[]CidrBlockAndDescription `json:"ipAllowList,omitempty"`
+	Name        string                     `json:"name"`
 
 	// NetworkIsolationEnabled Indicates whether network connections across environments are allowed.
 	NetworkIsolationEnabled *NetworkIsolationEnabled `json:"networkIsolationEnabled,omitempty"`
@@ -1020,7 +1176,7 @@ type KeyValueWithCursor struct {
 type MaintenanceMode struct {
 	Enabled bool `json:"enabled"`
 
-	// Uri The page to be served when [maintenance mode](https://docs.render.com/maintenance-mode) is enabled. When empty, the default maintenance mode page is served.
+	// Uri The page to be served when [maintenance mode](https://render.com/docs/maintenance-mode) is enabled. When empty, the default maintenance mode page is served.
 	Uri string `json:"uri"`
 }
 
@@ -1063,9 +1219,10 @@ type NotifySetting string
 
 // Owner defines model for owner.
 type Owner struct {
-	Email string `json:"email"`
-	Id    string `json:"id"`
-	Name  string `json:"name"`
+	Email       string                     `json:"email"`
+	Id          string                     `json:"id"`
+	IpAllowList *[]CidrBlockAndDescription `json:"ipAllowList,omitempty"`
+	Name        string                     `json:"name"`
 
 	// TwoFactorAuthEnabled Whether two-factor authentication is enabled for the owner. Only present if `type` is `user`.
 	TwoFactorAuthEnabled *bool     `json:"twoFactorAuthEnabled,omitempty"`
@@ -1575,6 +1732,9 @@ type RegistryCredentialSummary struct {
 	Name string `json:"name"`
 }
 
+// RenderSubdomainPolicy Controls whether render.com subdomains are available for the service
+type RenderSubdomainPolicy string
+
 // Resource defines model for resource.
 type Resource struct {
 	Id   string `json:"id"`
@@ -1711,6 +1871,12 @@ type ServiceEventWithCursor struct {
 	Event externalRef3.ServiceEvent `json:"event"`
 }
 
+// ServiceInstance defines model for serviceInstance.
+type ServiceInstance struct {
+	CreatedAt time.Time `json:"createdAt"`
+	Id        string    `json:"id"`
+}
+
 // ServiceList defines model for serviceList.
 type ServiceList = []ServiceWithCursor
 
@@ -1745,9 +1911,12 @@ type ServicePOST struct {
 	Branch      *string           `json:"branch,omitempty"`
 	BuildFilter *BuildFilter      `json:"buildFilter,omitempty"`
 	EnvVars     *EnvVarInputArray `json:"envVars,omitempty"`
-	Image       *Image            `json:"image,omitempty"`
-	Name        string            `json:"name"`
-	OwnerId     string            `json:"ownerId"`
+
+	// EnvironmentId The ID of the environment the service is associated with
+	EnvironmentId *string `json:"environmentId,omitempty"`
+	Image         *Image  `json:"image,omitempty"`
+	Name          string  `json:"name"`
+	OwnerId       string  `json:"ownerId"`
 
 	// Repo Do not include the branch in the repo string. You can instead supply a 'branch' parameter.
 	Repo           *string                     `json:"repo,omitempty"`
@@ -1789,34 +1958,43 @@ type SshAddress = string
 
 // StaticSiteDetails defines model for staticSiteDetails.
 type StaticSiteDetails struct {
-	BuildCommand string    `json:"buildCommand"`
-	BuildPlan    BuildPlan `json:"buildPlan"`
-	ParentServer *Resource `json:"parentServer,omitempty"`
-	Previews     *Previews `json:"previews,omitempty"`
-	PublishPath  string    `json:"publishPath"`
+	BuildCommand string                     `json:"buildCommand"`
+	BuildPlan    BuildPlan                  `json:"buildPlan"`
+	IpAllowList  *[]CidrBlockAndDescription `json:"ipAllowList,omitempty"`
+	ParentServer *Resource                  `json:"parentServer,omitempty"`
+	Previews     *Previews                  `json:"previews,omitempty"`
+	PublishPath  string                     `json:"publishPath"`
 
 	// PullRequestPreviewsEnabled This field has been deprecated. previews.generation should be used in its place.
 	// Deprecated:
 	PullRequestPreviewsEnabled *PullRequestPreviewsEnabled `json:"pullRequestPreviewsEnabled,omitempty"`
-	Url                        string                      `json:"url"`
+
+	// RenderSubdomainPolicy Controls whether render.com subdomains are available for the service
+	RenderSubdomainPolicy *RenderSubdomainPolicy `json:"renderSubdomainPolicy,omitempty"`
+	Url                   string                 `json:"url"`
 }
 
 // StaticSiteDetailsPATCH defines model for staticSiteDetailsPATCH.
 type StaticSiteDetailsPATCH struct {
-	BuildCommand *string   `json:"buildCommand,omitempty"`
-	Previews     *Previews `json:"previews,omitempty"`
-	PublishPath  *string   `json:"publishPath,omitempty"`
+	BuildCommand *string                    `json:"buildCommand,omitempty"`
+	IpAllowList  *[]CidrBlockAndDescription `json:"ipAllowList,omitempty"`
+	Previews     *Previews                  `json:"previews,omitempty"`
+	PublishPath  *string                    `json:"publishPath,omitempty"`
 
 	// PullRequestPreviewsEnabled This field has been deprecated. previews.generation should be used in its place.
 	// Deprecated:
 	PullRequestPreviewsEnabled *PullRequestPreviewsEnabled `json:"pullRequestPreviewsEnabled,omitempty"`
+
+	// RenderSubdomainPolicy Controls whether render.com subdomains are available for the service
+	RenderSubdomainPolicy *RenderSubdomainPolicy `json:"renderSubdomainPolicy,omitempty"`
 }
 
 // StaticSiteDetailsPOST defines model for staticSiteDetailsPOST.
 type StaticSiteDetailsPOST struct {
-	BuildCommand *string        `json:"buildCommand,omitempty"`
-	Headers      *[]HeaderInput `json:"headers,omitempty"`
-	Previews     *Previews      `json:"previews,omitempty"`
+	BuildCommand *string                    `json:"buildCommand,omitempty"`
+	Headers      *[]HeaderInput             `json:"headers,omitempty"`
+	IpAllowList  *[]CidrBlockAndDescription `json:"ipAllowList,omitempty"`
+	Previews     *Previews                  `json:"previews,omitempty"`
 
 	// PublishPath Defaults to "public"
 	PublishPath *string `json:"publishPath,omitempty"`
@@ -1824,13 +2002,16 @@ type StaticSiteDetailsPOST struct {
 	// PullRequestPreviewsEnabled This field has been deprecated. previews.generation should be used in its place.
 	// Deprecated:
 	PullRequestPreviewsEnabled *PullRequestPreviewsEnabled `json:"pullRequestPreviewsEnabled,omitempty"`
-	Routes                     *[]RoutePost                `json:"routes,omitempty"`
+
+	// RenderSubdomainPolicy Controls whether render.com subdomains are available for the service
+	RenderSubdomainPolicy *RenderSubdomainPolicy `json:"renderSubdomainPolicy,omitempty"`
+	Routes                *[]RoutePost           `json:"routes,omitempty"`
 }
 
 // SuspenderType defines model for suspenderType.
 type SuspenderType string
 
-// SyncWithCursor A blueprint sync with a cursor
+// SyncWithCursor A Blueprint sync with a cursor
 type SyncWithCursor struct {
 	Cursor Cursor            `json:"cursor"`
 	Sync   externalRef1.Sync `json:"sync"`
@@ -1862,14 +2043,16 @@ type User struct {
 type WebServiceDetails struct {
 	Autoscaling *externalRef0.AutoscalingConfig `json:"autoscaling,omitempty"`
 	BuildPlan   BuildPlan                       `json:"buildPlan"`
+	Cache       *Cache                          `json:"cache,omitempty"`
 	Disk        *externalRef2.Disk              `json:"disk,omitempty"`
 
 	// Env This field has been deprecated, runtime should be used in its place.
 	// Deprecated:
-	Env                ServiceEnv         `json:"env"`
-	EnvSpecificDetails EnvSpecificDetails `json:"envSpecificDetails"`
-	HealthCheckPath    string             `json:"healthCheckPath"`
-	MaintenanceMode    *MaintenanceMode   `json:"maintenanceMode,omitempty"`
+	Env                ServiceEnv                 `json:"env"`
+	EnvSpecificDetails EnvSpecificDetails         `json:"envSpecificDetails"`
+	HealthCheckPath    string                     `json:"healthCheckPath"`
+	IpAllowList        *[]CidrBlockAndDescription `json:"ipAllowList,omitempty"`
+	MaintenanceMode    *MaintenanceMode           `json:"maintenanceMode,omitempty"`
 
 	// MaxShutdownDelaySeconds The maximum amount of time (in seconds) that Render waits for your application process to exit gracefully after sending it a SIGTERM signal.
 	MaxShutdownDelaySeconds *MaxShutdownDelaySeconds `json:"maxShutdownDelaySeconds,omitempty"`
@@ -1890,6 +2073,9 @@ type WebServiceDetails struct {
 	// Region Defaults to "oregon"
 	Region Region `json:"region"`
 
+	// RenderSubdomainPolicy Controls whether render.com subdomains are available for the service
+	RenderSubdomainPolicy *RenderSubdomainPolicy `json:"renderSubdomainPolicy,omitempty"`
+
 	// Runtime Runtime
 	Runtime ServiceRuntime `json:"runtime"`
 
@@ -1900,9 +2086,11 @@ type WebServiceDetails struct {
 
 // WebServiceDetailsPATCH defines model for webServiceDetailsPATCH.
 type WebServiceDetailsPATCH struct {
-	EnvSpecificDetails *EnvSpecificDetailsPATCH `json:"envSpecificDetails,omitempty"`
-	HealthCheckPath    *string                  `json:"healthCheckPath,omitempty"`
-	MaintenanceMode    *MaintenanceMode         `json:"maintenanceMode,omitempty"`
+	Cache              *Cache                     `json:"cache,omitempty"`
+	EnvSpecificDetails *EnvSpecificDetailsPATCH   `json:"envSpecificDetails,omitempty"`
+	HealthCheckPath    *string                    `json:"healthCheckPath,omitempty"`
+	IpAllowList        *[]CidrBlockAndDescription `json:"ipAllowList,omitempty"`
+	MaintenanceMode    *MaintenanceMode           `json:"maintenanceMode,omitempty"`
 
 	// MaxShutdownDelaySeconds The maximum amount of time (in seconds) that Render waits for your application process to exit gracefully after sending it a SIGTERM signal.
 	MaxShutdownDelaySeconds *MaxShutdownDelaySeconds `json:"maxShutdownDelaySeconds,omitempty"`
@@ -1916,6 +2104,9 @@ type WebServiceDetailsPATCH struct {
 	// Deprecated:
 	PullRequestPreviewsEnabled *PullRequestPreviewsEnabled `json:"pullRequestPreviewsEnabled,omitempty"`
 
+	// RenderSubdomainPolicy Controls whether render.com subdomains are available for the service
+	RenderSubdomainPolicy *RenderSubdomainPolicy `json:"renderSubdomainPolicy,omitempty"`
+
 	// Runtime Runtime
 	Runtime *ServiceRuntime `json:"runtime,omitempty"`
 }
@@ -1927,10 +2118,11 @@ type WebServiceDetailsPOST struct {
 
 	// Env This field has been deprecated, runtime should be used in its place.
 	// Deprecated:
-	Env                *ServiceEnv             `json:"env,omitempty"`
-	EnvSpecificDetails *EnvSpecificDetailsPOST `json:"envSpecificDetails,omitempty"`
-	HealthCheckPath    *string                 `json:"healthCheckPath,omitempty"`
-	MaintenanceMode    *MaintenanceMode        `json:"maintenanceMode,omitempty"`
+	Env                *ServiceEnv                `json:"env,omitempty"`
+	EnvSpecificDetails *EnvSpecificDetailsPOST    `json:"envSpecificDetails,omitempty"`
+	HealthCheckPath    *string                    `json:"healthCheckPath,omitempty"`
+	IpAllowList        *[]CidrBlockAndDescription `json:"ipAllowList,omitempty"`
+	MaintenanceMode    *MaintenanceMode           `json:"maintenanceMode,omitempty"`
 
 	// MaxShutdownDelaySeconds The maximum amount of time (in seconds) that Render waits for your application process to exit gracefully after sending it a SIGTERM signal.
 	MaxShutdownDelaySeconds *MaxShutdownDelaySeconds `json:"maxShutdownDelaySeconds,omitempty"`
@@ -1950,6 +2142,9 @@ type WebServiceDetailsPOST struct {
 	// Region Defaults to "oregon"
 	Region *Region `json:"region,omitempty"`
 
+	// RenderSubdomainPolicy Controls whether render.com subdomains are available for the service
+	RenderSubdomainPolicy *RenderSubdomainPolicy `json:"renderSubdomainPolicy,omitempty"`
+
 	// Runtime Runtime
 	Runtime ServiceRuntime `json:"runtime"`
 }
@@ -1965,6 +2160,9 @@ type WebhookWithCursor struct {
 	Cursor  Cursor                `json:"cursor"`
 	Webhook externalRef11.Webhook `json:"webhook"`
 }
+
+// AuditLogLimitParam Defaults to 20
+type AuditLogLimitParam = int
 
 // CreatedAfterParam defines model for createdAfterParam.
 type CreatedAfterParam = time.Time
@@ -2054,6 +2252,9 @@ type UpdatedAfterParam = time.Time
 
 // UpdatedBeforeParam defines model for updatedBeforeParam.
 type UpdatedBeforeParam = time.Time
+
+// WorkflowIdParam defines model for workflowIdParam.
+type WorkflowIdParam = []string
 
 // N400BadRequest defines model for 400BadRequest.
 type N400BadRequest = Error
@@ -2285,25 +2486,37 @@ type ListLogsParams struct {
 	// Instance Filter logs by the instance they were emitted from. An instance is the id of a specific running server.
 	Instance *externalRef6.LogFilterInstance `form:"instance,omitempty" json:"instance,omitempty"`
 
-	// Host Filter request logs by their host. [Wildcards and regex](https://docs.render.com/logging#wildcards-and-regular-expressions) are supported.
+	// Host Filter request logs by their host. [Wildcards and regex](https://render.com/docs/logging#wildcards-and-regular-expressions) are supported.
 	Host *externalRef6.LogFilterHost `form:"host,omitempty" json:"host,omitempty"`
 
-	// StatusCode Filter request logs by their status code. [Wildcards and regex](https://docs.render.com/logging#wildcards-and-regular-expressions) are supported.
+	// StatusCode Filter request logs by their status code. [Wildcards and regex](https://render.com/docs/logging#wildcards-and-regular-expressions) are supported.
 	StatusCode *externalRef6.LogFilterStatusCode `form:"statusCode,omitempty" json:"statusCode,omitempty"`
 
-	// Method Filter request logs by their requests method. [Wildcards and regex](https://docs.render.com/logging#wildcards-and-regular-expressions) are supported.
+	// Method Filter request logs by their requests method. [Wildcards and regex](https://render.com/docs/logging#wildcards-and-regular-expressions) are supported.
 	Method *externalRef6.LogFilterMethod `form:"method,omitempty" json:"method,omitempty"`
 
-	// Level Filter logs by their severity level. [Wildcards and regex](https://docs.render.com/logging#wildcards-and-regular-expressions) are supported.
+	// WorkflowService Filter logs by their workflow service(s)
+	WorkflowService *externalRef6.LogFilterWorkflowService `form:"workflowService,omitempty" json:"workflowService,omitempty"`
+
+	// WorkflowVersion Filter logs by their workflow version(s)
+	WorkflowVersion *externalRef6.LogFilterWorkflowVersion `form:"workflowVersion,omitempty" json:"workflowVersion,omitempty"`
+
+	// Task Filter logs by their task(s)
+	Task *externalRef6.LogFilterTask `form:"task,omitempty" json:"task,omitempty"`
+
+	// TaskRun Filter logs by their task run id(s)
+	TaskRun *externalRef6.LogFilterTaskRun `form:"taskRun,omitempty" json:"taskRun,omitempty"`
+
+	// Level Filter logs by their severity level. [Wildcards and regex](https://render.com/docs/logging#wildcards-and-regular-expressions) are supported.
 	Level *externalRef6.LogFilterLevel `form:"level,omitempty" json:"level,omitempty"`
 
 	// Type Filter logs by their type. Types include `app` for application logs, `request` for request logs, and `build` for build logs. You can find the full set of types available for a query by using the `GET /logs/values` endpoint.
 	Type *externalRef6.LogFilterType `form:"type,omitempty" json:"type,omitempty"`
 
-	// Text Filter by the text of the logs. [Wildcards and regex](https://docs.render.com/logging#wildcards-and-regular-expressions) are supported.
+	// Text Filter by the text of the logs. [Wildcards and regex](https://render.com/docs/logging#wildcards-and-regular-expressions) are supported.
 	Text *externalRef6.LogFilterText `form:"text,omitempty" json:"text,omitempty"`
 
-	// Path Filter request logs by their path. [Wildcards and regex](https://docs.render.com/logging#wildcards-and-regular-expressions) are supported.
+	// Path Filter request logs by their path. [Wildcards and regex](https://render.com/docs/logging#wildcards-and-regular-expressions) are supported.
 	Path *externalRef6.LogFilterPath `form:"path,omitempty" json:"path,omitempty"`
 
 	// Limit The maximum number of items to return. For details, see [Pagination](https://api-docs.render.com/reference/pagination).
@@ -2352,25 +2565,37 @@ type SubscribeLogsParams struct {
 	// Instance Filter logs by the instance they were emitted from. An instance is the id of a specific running server.
 	Instance *externalRef6.LogFilterInstance `form:"instance,omitempty" json:"instance,omitempty"`
 
-	// Host Filter request logs by their host. [Wildcards and regex](https://docs.render.com/logging#wildcards-and-regular-expressions) are supported.
+	// Host Filter request logs by their host. [Wildcards and regex](https://render.com/docs/logging#wildcards-and-regular-expressions) are supported.
 	Host *externalRef6.LogFilterHost `form:"host,omitempty" json:"host,omitempty"`
 
-	// StatusCode Filter request logs by their status code. [Wildcards and regex](https://docs.render.com/logging#wildcards-and-regular-expressions) are supported.
+	// StatusCode Filter request logs by their status code. [Wildcards and regex](https://render.com/docs/logging#wildcards-and-regular-expressions) are supported.
 	StatusCode *externalRef6.LogFilterStatusCode `form:"statusCode,omitempty" json:"statusCode,omitempty"`
 
-	// Method Filter request logs by their requests method. [Wildcards and regex](https://docs.render.com/logging#wildcards-and-regular-expressions) are supported.
+	// Method Filter request logs by their requests method. [Wildcards and regex](https://render.com/docs/logging#wildcards-and-regular-expressions) are supported.
 	Method *externalRef6.LogFilterMethod `form:"method,omitempty" json:"method,omitempty"`
 
-	// Level Filter logs by their severity level. [Wildcards and regex](https://docs.render.com/logging#wildcards-and-regular-expressions) are supported.
+	// WorkflowService Filter logs by their workflow service(s)
+	WorkflowService *externalRef6.LogFilterWorkflowService `form:"workflowService,omitempty" json:"workflowService,omitempty"`
+
+	// WorkflowVersion Filter logs by their workflow version(s)
+	WorkflowVersion *externalRef6.LogFilterWorkflowVersion `form:"workflowVersion,omitempty" json:"workflowVersion,omitempty"`
+
+	// Task Filter logs by their task(s)
+	Task *externalRef6.LogFilterTask `form:"task,omitempty" json:"task,omitempty"`
+
+	// TaskRun Filter logs by their task run id(s)
+	TaskRun *externalRef6.LogFilterTaskRun `form:"taskRun,omitempty" json:"taskRun,omitempty"`
+
+	// Level Filter logs by their severity level. [Wildcards and regex](https://render.com/docs/logging#wildcards-and-regular-expressions) are supported.
 	Level *externalRef6.LogFilterLevel `form:"level,omitempty" json:"level,omitempty"`
 
 	// Type Filter logs by their type. Types include `app` for application logs, `request` for request logs, and `build` for build logs. You can find the full set of types available for a query by using the `GET /logs/values` endpoint.
 	Type *externalRef6.LogFilterType `form:"type,omitempty" json:"type,omitempty"`
 
-	// Text Filter by the text of the logs. [Wildcards and regex](https://docs.render.com/logging#wildcards-and-regular-expressions) are supported.
+	// Text Filter by the text of the logs. [Wildcards and regex](https://render.com/docs/logging#wildcards-and-regular-expressions) are supported.
 	Text *externalRef6.LogFilterText `form:"text,omitempty" json:"text,omitempty"`
 
-	// Path Filter request logs by their path. [Wildcards and regex](https://docs.render.com/logging#wildcards-and-regular-expressions) are supported.
+	// Path Filter request logs by their path. [Wildcards and regex](https://render.com/docs/logging#wildcards-and-regular-expressions) are supported.
 	Path *externalRef6.LogFilterPath `form:"path,omitempty" json:"path,omitempty"`
 
 	// Limit The maximum number of items to return. For details, see [Pagination](https://api-docs.render.com/reference/pagination).
@@ -2401,25 +2626,37 @@ type ListLogsValuesParams struct {
 	// Instance Filter logs by the instance they were emitted from. An instance is the id of a specific running server.
 	Instance *externalRef6.LogFilterInstance `form:"instance,omitempty" json:"instance,omitempty"`
 
-	// Host Filter request logs by their host. [Wildcards and regex](https://docs.render.com/logging#wildcards-and-regular-expressions) are supported.
+	// Host Filter request logs by their host. [Wildcards and regex](https://render.com/docs/logging#wildcards-and-regular-expressions) are supported.
 	Host *externalRef6.LogFilterHost `form:"host,omitempty" json:"host,omitempty"`
 
-	// StatusCode Filter request logs by their status code. [Wildcards and regex](https://docs.render.com/logging#wildcards-and-regular-expressions) are supported.
+	// StatusCode Filter request logs by their status code. [Wildcards and regex](https://render.com/docs/logging#wildcards-and-regular-expressions) are supported.
 	StatusCode *externalRef6.LogFilterStatusCode `form:"statusCode,omitempty" json:"statusCode,omitempty"`
 
-	// Method Filter request logs by their requests method. [Wildcards and regex](https://docs.render.com/logging#wildcards-and-regular-expressions) are supported.
+	// Method Filter request logs by their requests method. [Wildcards and regex](https://render.com/docs/logging#wildcards-and-regular-expressions) are supported.
 	Method *externalRef6.LogFilterMethod `form:"method,omitempty" json:"method,omitempty"`
 
-	// Level Filter logs by their severity level. [Wildcards and regex](https://docs.render.com/logging#wildcards-and-regular-expressions) are supported.
+	// WorkflowService Filter logs by their workflow service(s)
+	WorkflowService *externalRef6.LogFilterWorkflowService `form:"workflowService,omitempty" json:"workflowService,omitempty"`
+
+	// WorkflowVersion Filter logs by their workflow version(s)
+	WorkflowVersion *externalRef6.LogFilterWorkflowVersion `form:"workflowVersion,omitempty" json:"workflowVersion,omitempty"`
+
+	// Task Filter logs by their task(s)
+	Task *externalRef6.LogFilterTask `form:"task,omitempty" json:"task,omitempty"`
+
+	// TaskRun Filter logs by their task run id(s)
+	TaskRun *externalRef6.LogFilterTaskRun `form:"taskRun,omitempty" json:"taskRun,omitempty"`
+
+	// Level Filter logs by their severity level. [Wildcards and regex](https://render.com/docs/logging#wildcards-and-regular-expressions) are supported.
 	Level *externalRef6.LogFilterLevel `form:"level,omitempty" json:"level,omitempty"`
 
 	// Type Filter logs by their type. Types include `app` for application logs, `request` for request logs, and `build` for build logs. You can find the full set of types available for a query by using the `GET /logs/values` endpoint.
 	Type *externalRef6.LogFilterType `form:"type,omitempty" json:"type,omitempty"`
 
-	// Text Filter by the text of the logs. [Wildcards and regex](https://docs.render.com/logging#wildcards-and-regular-expressions) are supported.
+	// Text Filter by the text of the logs. [Wildcards and regex](https://render.com/docs/logging#wildcards-and-regular-expressions) are supported.
 	Text *externalRef6.LogFilterText `form:"text,omitempty" json:"text,omitempty"`
 
-	// Path Filter request logs by their path. [Wildcards and regex](https://docs.render.com/logging#wildcards-and-regular-expressions) are supported.
+	// Path Filter request logs by their path. [Wildcards and regex](https://render.com/docs/logging#wildcards-and-regular-expressions) are supported.
 	Path *externalRef6.LogFilterPath `form:"path,omitempty" json:"path,omitempty"`
 
 	// Limit The maximum number of items to return. For details, see [Pagination](https://api-docs.render.com/reference/pagination).
@@ -2455,6 +2692,21 @@ type GetActiveConnectionsParams struct {
 
 // GetBandwidthParams defines parameters for GetBandwidth.
 type GetBandwidthParams struct {
+	// StartTime Epoch/Unix timestamp of start of time range to return. Defaults to `now() - 1 hour`.
+	StartTime *StartTimeParam `form:"startTime,omitempty" json:"startTime,omitempty"`
+
+	// EndTime Epoch/Unix timestamp of end of time range to return. Defaults to `now()`.
+	EndTime *EndTimeParam `form:"endTime,omitempty" json:"endTime,omitempty"`
+
+	// Resource Service ID to query. When multiple service ids are provided, they are ORed together
+	Resource *externalRef8.ServiceResourceQueryParam `form:"resource,omitempty" json:"resource,omitempty"`
+
+	// Service This parameter is deprecated. Please use `resource` instead
+	Service *externalRef8.ServiceQueryParam `form:"service,omitempty" json:"service,omitempty"`
+}
+
+// GetBandwidthSourcesParams defines parameters for GetBandwidthSources.
+type GetBandwidthSourcesParams struct {
 	// StartTime Epoch/Unix timestamp of start of time range to return. Defaults to `now() - 1 hour`.
 	StartTime *StartTimeParam `form:"startTime,omitempty" json:"startTime,omitempty"`
 
@@ -2804,6 +3056,21 @@ type ListNotificationOverridesParams struct {
 	Limit *LimitParam `form:"limit,omitempty" json:"limit,omitempty"`
 }
 
+// ListOrganizationAuditLogsParams defines parameters for ListOrganizationAuditLogs.
+type ListOrganizationAuditLogsParams struct {
+	// StartTime Start time for filtering audit logs (ISO 8601 format)
+	StartTime *time.Time `form:"startTime,omitempty" json:"startTime,omitempty"`
+
+	// EndTime End time for filtering audit logs (ISO 8601 format)
+	EndTime *time.Time `form:"endTime,omitempty" json:"endTime,omitempty"`
+
+	// Cursor The position in the result list to start from when fetching paginated results. For details, see [Pagination](https://api-docs.render.com/reference/pagination).
+	Cursor *CursorParam `form:"cursor,omitempty" json:"cursor,omitempty"`
+
+	// Limit The maximum number of audit log items to return. For details, see [Pagination](https://api-docs.render.com/reference/pagination).
+	Limit *AuditLogLimitParam `form:"limit,omitempty" json:"limit,omitempty"`
+}
+
 // ListOwnersParams defines parameters for ListOwners.
 type ListOwnersParams struct {
 	// Name Only return workspaces with one of the provided names. Only exact matches are returned.
@@ -2817,6 +3084,21 @@ type ListOwnersParams struct {
 
 	// Limit The maximum number of items to return. For details, see [Pagination](https://api-docs.render.com/reference/pagination).
 	Limit *LimitParam `form:"limit,omitempty" json:"limit,omitempty"`
+}
+
+// ListOwnerAuditLogsParams defines parameters for ListOwnerAuditLogs.
+type ListOwnerAuditLogsParams struct {
+	// StartTime Start time for filtering audit logs (ISO 8601 format)
+	StartTime *time.Time `form:"startTime,omitempty" json:"startTime,omitempty"`
+
+	// EndTime End time for filtering audit logs (ISO 8601 format)
+	EndTime *time.Time `form:"endTime,omitempty" json:"endTime,omitempty"`
+
+	// Cursor The position in the result list to start from when fetching paginated results. For details, see [Pagination](https://api-docs.render.com/reference/pagination).
+	Cursor *CursorParam `form:"cursor,omitempty" json:"cursor,omitempty"`
+
+	// Limit The maximum number of audit log items to return. For details, see [Pagination](https://api-docs.render.com/reference/pagination).
+	Limit *AuditLogLimitParam `form:"limit,omitempty" json:"limit,omitempty"`
 }
 
 // ListPostgresParams defines parameters for ListPostgres.
@@ -3274,6 +3556,30 @@ type ListWebhookEventsParams struct {
 	Cursor *CursorParam `form:"cursor,omitempty" json:"cursor,omitempty"`
 }
 
+// ListWorkflowsParams defines parameters for ListWorkflows.
+type ListWorkflowsParams struct {
+	// OwnerId The ID of the workspaces to return resources for
+	OwnerId *OwnerIdParam `form:"ownerId,omitempty" json:"ownerId,omitempty"`
+
+	// WorkflowID The IDs of the workflows to return resources for
+	WorkflowID *WorkflowIdParam `form:"workflowID,omitempty" json:"workflowID,omitempty"`
+
+	// Cursor The position in the result list to start from when fetching paginated results. For details, see [Pagination](https://api-docs.render.com/reference/pagination).
+	Cursor *CursorParam `form:"cursor,omitempty" json:"cursor,omitempty"`
+
+	// Limit The maximum number of items to return. For details, see [Pagination](https://api-docs.render.com/reference/pagination).
+	Limit *LimitParam `form:"limit,omitempty" json:"limit,omitempty"`
+}
+
+// ListWorkflowVersionsParams defines parameters for ListWorkflowVersions.
+type ListWorkflowVersionsParams struct {
+	// Cursor The position in the result list to start from when fetching paginated results. For details, see [Pagination](https://api-docs.render.com/reference/pagination).
+	Cursor *CursorParam `form:"cursor,omitempty" json:"cursor,omitempty"`
+
+	// Limit The maximum number of items to return. For details, see [Pagination](https://api-docs.render.com/reference/pagination).
+	Limit *LimitParam `form:"limit,omitempty" json:"limit,omitempty"`
+}
+
 // UpdateBlueprintJSONRequestBody defines body for UpdateBlueprint for application/json ContentType.
 type UpdateBlueprintJSONRequestBody = externalRef1.BlueprintPATCH
 
@@ -3417,6 +3723,12 @@ type CreateWebhookJSONRequestBody = externalRef11.WebhookPOSTInput
 
 // UpdateWebhookJSONRequestBody defines body for UpdateWebhook for application/json ContentType.
 type UpdateWebhookJSONRequestBody = externalRef11.WebhookPATCHInput
+
+// CreateWorkflowJSONRequestBody defines body for CreateWorkflow for application/json ContentType.
+type CreateWorkflowJSONRequestBody = externalRef12.WorkflowCreate
+
+// UpdateWorkflowJSONRequestBody defines body for UpdateWorkflow for application/json ContentType.
+type UpdateWorkflowJSONRequestBody = externalRef12.WorkflowUpdate
 
 // AsEnvVarValue returns the union data inside the AddUpdateEnvVarInput as a EnvVarValue
 func (t AddUpdateEnvVarInput) AsEnvVarValue() (EnvVarValue, error) {

@@ -18,7 +18,7 @@ type Webhook struct {
 
 	// EventFilter The event types that will trigger the webhook. An empty list means all event types will trigger the webhook.
 	EventFilter EventFilter `json:"eventFilter"`
-	Id          string      `json:"id"`
+	Id          WebhookId   `json:"id"`
 	Name        string      `json:"name"`
 	Secret      string      `json:"secret"`
 	Url         string      `json:"url"`
@@ -39,6 +39,9 @@ type WebhookEvent struct {
 	SentAt       time.Time `json:"sentAt"`
 	StatusCode   *int      `json:"statusCode,omitempty"`
 }
+
+// WebhookId defines model for webhookId.
+type WebhookId = string
 
 // WebhookPATCHInput defines model for webhookPATCHInput.
 type WebhookPATCHInput struct {
@@ -70,4 +73,4 @@ type SentAfterParam = time.Time
 type SentBeforeParam = time.Time
 
 // WebhookIdParam defines model for webhookIdParam.
-type WebhookIdParam = string
+type WebhookIdParam = WebhookId
