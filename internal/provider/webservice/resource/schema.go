@@ -32,6 +32,7 @@ func Schema(ctx context.Context) schema.Schema {
 			"start_command":                 resource.StartCommand,
 			"url":                           resource.ServiceURL,
 			"maintenance_mode":              resource.MaintenanceMode,
+			"ip_allow_list":                 resource.IPAllowListOptional,
 			"max_shutdown_delay_seconds":    resource.MaxShutdownDelaySeconds,
 			"env_vars":                      resource.EnvVars,
 			"secret_files":                  resource.SecretFiles,

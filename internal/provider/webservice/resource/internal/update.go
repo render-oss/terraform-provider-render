@@ -7,7 +7,7 @@ import (
 	"terraform-provider-render/internal/provider/webservice"
 )
 
-func UpdateServiceRequestFromModel(ctx context.Context, plan webservice.WebServiceModel, ownerID string) (client.UpdateServiceJSONRequestBody, error) {
+func UpdateServiceRequestFromModel(ctx context.Context, plan webservice.WebServiceModel, state webservice.WebServiceModel, ownerID string) (client.UpdateServiceJSONRequestBody, error) {
 	envSpecificDetails, err := common.EnvSpecificDetailsForPATCH(plan.RuntimeSource, plan.StartCommand.ValueStringPointer())
 	if err != nil {
 		return client.UpdateServiceJSONRequestBody{}, err
@@ -25,6 +25,24 @@ func UpdateServiceRequestFromModel(ctx context.Context, plan webservice.WebServi
 		preDeployCommand = *plan.PreDeployCommand.ValueStringPointer()
 	}
 
+	// Handle IP allow list with state-aware logic:
+	// - In state but not in plan (null) -> send default (0.0.0.0/0) to revert to API default
+	// - Not in state and not in plan -> send nil (don't update)
+	// - In plan with empty list -> send empty array (block all)
+	// - In plan with values -> send those values
+	var ipAllowList *[]client.CidrBlockAndDescription
+	if !plan.IPAllowList.IsNull() && !plan.IPAllowList.IsUnknown() {
+		// Field is configured in plan
+		list, err := common.ClientFromIPAllowList(plan.IPAllowList)
+		if err != nil {
+			return client.UpdateServiceJSONRequestBody{}, err
+		}
+		ipAllowList = &list
+	} else if !state.IPAllowList.IsNull() {
+		// Field was in state but removed from plan -> revert to default (0.0.0.0/0 everywhere)
+		ipAllowList = &common.AllowAllCIDRList
+	}
+
 	webServiceDetails := client.WebServiceDetailsPATCH{
 		Plan:                       &servicePlan,
 		EnvSpecificDetails:         envSpecificDetails,
@@ -35,6 +53,7 @@ func UpdateServiceRequestFromModel(ctx context.Context, plan webservice.WebServi
 		MaintenanceMode:            common.ToClientMaintenanceMode(plan.MaintenanceMode),
 		MaxShutdownDelaySeconds:    common.ValueAsIntPointer(plan.MaxShutdownDelaySeconds),
 		Runtime:                    common.From(client.ServiceRuntime(plan.RuntimeSource.Runtime())),
+		IpAllowList:                ipAllowList,
 	}
 
 	serviceDetails := &client.ServicePATCH_ServiceDetails{}

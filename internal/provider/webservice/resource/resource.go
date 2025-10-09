@@ -182,7 +182,7 @@ func (r *webServiceResource) Update(ctx context.Context, req resource.UpdateRequ
 		return
 	}
 
-	serviceDetails, err := internal.UpdateServiceRequestFromModel(ctx, plan, r.ownerID)
+	serviceDetails, err := internal.UpdateServiceRequestFromModel(ctx, plan, state, r.ownerID)
 	if err != nil {
 		resp.Diagnostics.AddError(
 			"Error updating service",

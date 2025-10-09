@@ -19,6 +19,14 @@ var ipAllowListType = map[string]attr.Type{
 	DescriptionAttr: types.StringType,
 }
 
+// AllowAllCIDRList is the default IP allow list that allows all traffic
+var AllowAllCIDRList = []client.CidrBlockAndDescription{
+	{
+		CidrBlock:   "0.0.0.0/0",
+		Description: "everywhere",
+	},
+}
+
 func IPAllowListFromClient(c []client.CidrBlockAndDescription, diags diag.Diagnostics) types.Set {
 	objType := types.ObjectType{AttrTypes: ipAllowListType}
 

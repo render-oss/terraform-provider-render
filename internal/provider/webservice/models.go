@@ -30,6 +30,7 @@ type WebServiceModel struct {
 	Url                        types.String               `tfsdk:"url"`
 	MaxShutdownDelaySeconds    types.Int64                `tfsdk:"max_shutdown_delay_seconds"`
 	MaintenanceMode            types.Object               `tfsdk:"maintenance_mode"`
+	IPAllowList                types.Set                  `tfsdk:"ip_allow_list"`
 
 	EnvVars     map[string]common.EnvVarModel     `tfsdk:"env_vars"`
 	SecretFiles map[string]common.SecretFileModel `tfsdk:"secret_files"`
@@ -54,6 +55,13 @@ func ModelForServiceResult(service *common.WrappedService, plan WebServiceModel,
 		return nil, err
 	}
 
+	// Handle IP allow list: if not configured in plan (null), keep it null
+	// This prevents showing drift when API returns its default value
+	ipAllowList := plan.IPAllowList
+	if !plan.IPAllowList.IsNull() && details.IpAllowList != nil {
+		ipAllowList = common.IPAllowListFromClient(*details.IpAllowList, diags)
+	}
+
 	webServicesModel := &WebServiceModel{
 		Id:                         types.StringValue(service.Id),
 		CustomDomains:              common.CustomDomainClientsToCustomDomainModelsNonRedirecting(service.CustomDomains),
@@ -71,6 +79,7 @@ func ModelForServiceResult(service *common.WrappedService, plan WebServiceModel,
 		RootDirectory:              types.StringValue(service.RootDir),
 		Url:                        types.StringValue(details.Url),
 		MaxShutdownDelaySeconds:    common.IntPointerAsValue(details.MaxShutdownDelaySeconds),
+		IPAllowList:                ipAllowList,
 
 		MaintenanceMode:      common.MaintenanceModeFromClient(details.MaintenanceMode, diags),
 		Autoscaling:          common.AutoscalingFromClient(details.Autoscaling, diags),
