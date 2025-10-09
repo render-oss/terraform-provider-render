@@ -25,9 +25,20 @@ func CreateServiceRequestFromModel(ctx context.Context, ownerID string, plan sta
 		prPreviews = client.PullRequestPreviewsEnabledYes
 	}
 
+	// Handle IP allow list: omitted (null) -> send nil, otherwise send value
+	var ipAllowList *[]client.CidrBlockAndDescription
+	if !plan.IPAllowList.IsNull() && !plan.IPAllowList.IsUnknown() {
+		list, err := common.ClientFromIPAllowList(plan.IPAllowList)
+		if err != nil {
+			return client.CreateServiceJSONRequestBody{}, err
+		}
+		ipAllowList = &list
+	}
+
 	staticSiteDetails := client.StaticSiteDetailsPOST{
 		BuildCommand:               plan.BuildCommand.ValueStringPointer(),
 		Headers:                    common.From(common.ModelToClientHeaderInput(plan.Headers)),
+		IpAllowList:                ipAllowList,
 		PublishPath:                plan.PublishPath.ValueStringPointer(),
 		Previews:                   common.PreviewsObjectToPreviews(ctx, plan.Previews),
 		PullRequestPreviewsEnabled: &prPreviews,

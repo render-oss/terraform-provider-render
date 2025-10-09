@@ -23,6 +23,7 @@ func Schema(ctx context.Context) schema.Schema {
 			"environment_id":                resource.ResourceEnvironmentID,
 			"env_vars":                      resource.EnvVars,
 			"headers":                       resource.Headers,
+			"ip_allow_list":                 resource.IPAllowListOptional,
 			"name":                          resource.ServiceName,
 			"slug":                          resource.Slug,
 			"notification_override":         resource.NotificationOverride,

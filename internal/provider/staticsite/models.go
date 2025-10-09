@@ -20,6 +20,7 @@ type StaticSiteModel struct {
 	ActiveCustomDomains        types.Set                     `tfsdk:"active_custom_domains"`
 	EnvVars                    map[string]common.EnvVarModel `tfsdk:"env_vars"`
 	Headers                    []common.HeaderModel          `tfsdk:"headers"`
+	IPAllowList                types.Set                     `tfsdk:"ip_allow_list"`
 	Name                       types.String                  `tfsdk:"name"`
 	Slug                       types.String                  `tfsdk:"slug"`
 	NotificationOverride       types.Object                  `tfsdk:"notification_override"`
@@ -50,6 +51,13 @@ func ModelForServiceResult(service *common.WrappedStaticSite, state StaticSiteMo
 		routes = r
 	}
 
+	// Handle IP allow list: if not configured in state (null), keep it null
+	// This prevents showing drift when API returns its default value
+	ipAllowList := state.IPAllowList
+	if !state.IPAllowList.IsNull() && details.IpAllowList != nil {
+		ipAllowList = common.IPAllowListFromClient(*details.IpAllowList, diags)
+	}
+
 	staticSitesModel := &StaticSiteModel{
 		Id:                   types.StringValue(service.Id),
 		AutoDeploy:           types.BoolValue(service.AutoDeploy == client.AutoDeployYes),
@@ -59,6 +67,7 @@ func ModelForServiceResult(service *common.WrappedStaticSite, state StaticSiteMo
 		ActiveCustomDomains:  common.CustomDomainSetFromClient(service.CustomDomains, diags),
 		EnvironmentID:        types.StringPointerValue(service.EnvironmentId),
 		Headers:              common.ClientHeadersToRouteModels(service.Headers),
+		IPAllowList:          ipAllowList,
 		Name:                 types.StringValue(service.Name),
 		Slug:                 types.StringValue(service.Slug),
 		NotificationOverride: common.NotificationOverrideFromClient(service.NotificationOverride, diags),
