@@ -56,6 +56,7 @@ var Environment = schema.NestedAttributeObject{
 		"name":             EnvironmentName,
 		"protected_status": EnvironmentProtectedStatus,
 		"network_isolated": EnvironmentNetworkIsolated,
+		"ip_allow_list":    IPAllowListOptional,
 	},
 }
 

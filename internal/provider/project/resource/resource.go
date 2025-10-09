@@ -61,10 +61,22 @@ func (r *projectResource) Create(ctx context.Context, req resource.CreateRequest
 	var environmentInput []client.ProjectPOSTEnvironmentInput
 
 	for _, env := range plan.Environments {
+		// Handle IP allow list: omitted (null) -> send nil, otherwise send value
+		var ipAllowList *[]client.CidrBlockAndDescription
+		if !env.IPAllowList.IsNull() && !env.IPAllowList.IsUnknown() {
+			list, err := common.ClientFromIPAllowList(env.IPAllowList)
+			if err != nil {
+				resp.Diagnostics.AddError("unable to parse ip allow list", err.Error())
+				return
+			}
+			ipAllowList = &list
+		}
+
 		environmentInput = append(environmentInput, client.ProjectPOSTEnvironmentInput{
 			Name:                    env.Name.ValueString(),
 			ProtectedStatus:         common.From(project.ClientProtectedStatusFromModel(*env)),
 			NetworkIsolationEnabled: common.From(env.NetworkIsolated.ValueBool()),
+			IpAllowList:             ipAllowList,
 		})
 	}
 
@@ -104,7 +116,7 @@ func (r *projectResource) Create(ctx context.Context, req resource.CreateRequest
 		environments[key] = environment
 	}
 
-	projModel, err := project.ModelForProjectResult(&projectResp, environments)
+	projModel, err := project.ModelForProjectResult(&projectResp, environments, plan.Environments, resp.Diagnostics)
 	if err != nil {
 		resp.Diagnostics.AddError(
 			"Error creating project", "Could not create project, unexpected error: "+err.Error(),
@@ -188,18 +200,46 @@ func (r *projectResource) Update(ctx context.Context, req resource.UpdateRequest
 	_, both, inState := common.XORStringSlices(planKeys, stateKeys)
 	for key, env := range plan.Environments {
 		if slices.Contains(both, env.Id.ValueString()) {
-			// update an existing environment
+			// update an existing environment with state-aware IP allow list logic
+			var stateEnv *project.EnvironmentModel
+			for stateKey, sEnv := range state.Environments {
+				if sEnv.Id.ValueString() == env.Id.ValueString() {
+					stateEnv = sEnv
+					break
+				}
+			}
+
+			// Handle IP allow list with state-aware logic:
+			// - In state but not in plan (null) -> send default (0.0.0.0/0) to revert
+			// - Not in state and not in plan -> send nil (don't update)
+			// - In plan with empty list -> send empty array (block all)
+			// - In plan with values -> send those values
+			var ipAllowList *[]client.CidrBlockAndDescription
+			if !env.IPAllowList.IsNull() && !env.IPAllowList.IsUnknown() {
+				// Field is configured in plan
+				list, err := common.ClientFromIPAllowList(env.IPAllowList)
+				if err != nil {
+					resp.Diagnostics.AddError("unable to parse ip allow list", err.Error())
+					return
+				}
+				ipAllowList = &list
+			} else if stateEnv != nil && !stateEnv.IPAllowList.IsNull() {
+				// Field was in state but removed from plan -> revert to default
+				ipAllowList = &common.AllowAllCIDRList
+			}
+
 			envUpdate := client.EnvironmentPATCHInput{
 				Name:                    env.Name.ValueStringPointer(),
 				ProtectedStatus:         common.From(project.ClientProtectedStatusFromModel(*env)),
 				NetworkIsolationEnabled: common.From(env.NetworkIsolated.ValueBool()),
+				IpAllowList:             ipAllowList,
 			}
 
 			var environmentResponse client.Environment
 			err := common.Update(func() (*http.Response, error) {
 				return r.client.UpdateEnvironment(ctx, env.Id.ValueString(), envUpdate)
 			}, &environmentResponse)
-			environments[key] = common.From(project.ModelForEnvironmentResult(&environmentResponse))
+			environments[key] = common.From(project.ModelForEnvironmentResult(&environmentResponse, env, resp.Diagnostics))
 
 			if err != nil {
 				resp.Diagnostics.AddError(
@@ -209,18 +249,30 @@ func (r *projectResource) Update(ctx context.Context, req resource.UpdateRequest
 			}
 		} else {
 			// If the environment is not in the state, create it
+			// Handle IP allow list: omitted (null) -> send nil, otherwise send value
+			var ipAllowList *[]client.CidrBlockAndDescription
+			if !env.IPAllowList.IsNull() && !env.IPAllowList.IsUnknown() {
+				list, err := common.ClientFromIPAllowList(env.IPAllowList)
+				if err != nil {
+					resp.Diagnostics.AddError("unable to parse ip allow list", err.Error())
+					return
+				}
+				ipAllowList = &list
+			}
+
 			envCreate := client.EnvironmentPOSTInput{
 				ProjectId:               plan.Id.ValueString(),
 				Name:                    env.Name.ValueString(),
 				ProtectedStatus:         common.From(project.ClientProtectedStatusFromModel(*env)),
 				NetworkIsolationEnabled: common.From(env.NetworkIsolated.ValueBool()),
+				IpAllowList:             ipAllowList,
 			}
 
 			var environmentResponse client.Environment
 			err := common.Create(func() (*http.Response, error) {
 				return r.client.CreateEnvironment(ctx, envCreate)
 			}, &environmentResponse)
-			environments[key] = common.From(project.ModelForEnvironmentResult(&environmentResponse))
+			environments[key] = common.From(project.ModelForEnvironmentResult(&environmentResponse, env, resp.Diagnostics))
 
 			if err != nil {
 				resp.Diagnostics.AddError(
