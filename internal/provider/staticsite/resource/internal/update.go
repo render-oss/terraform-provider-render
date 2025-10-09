@@ -8,14 +8,33 @@ import (
 	"terraform-provider-render/internal/provider/staticsite"
 )
 
-func UpdateServiceRequestFromModel(ctx context.Context, plan staticsite.StaticSiteModel) (client.UpdateServiceJSONRequestBody, error) {
+func UpdateServiceRequestFromModel(ctx context.Context, plan staticsite.StaticSiteModel, state staticsite.StaticSiteModel) (client.UpdateServiceJSONRequestBody, error) {
 	prPreviewEnabled := client.PullRequestPreviewsEnabledNo
 	if plan.PullRequestPreviewsEnabled.ValueBool() {
 		prPreviewEnabled = client.PullRequestPreviewsEnabledYes
 	}
 
+	// Handle IP allow list with state-aware logic:
+	// - In state but not in plan (null) -> send default (0.0.0.0/0) to revert
+	// - Not in state and not in plan -> send nil (don't update)
+	// - In plan with empty list -> send empty array (block all)
+	// - In plan with values -> send those values
+	var ipAllowList *[]client.CidrBlockAndDescription
+	if !plan.IPAllowList.IsNull() && !plan.IPAllowList.IsUnknown() {
+		// Field is configured in plan
+		list, err := common.ClientFromIPAllowList(plan.IPAllowList)
+		if err != nil {
+			return client.UpdateServiceJSONRequestBody{}, err
+		}
+		ipAllowList = &list
+	} else if !state.IPAllowList.IsNull() {
+		// Field was in state but removed from plan -> revert to default (0.0.0.0/0 everywhere)
+		ipAllowList = &common.AllowAllCIDRList
+	}
+
 	var staticSiteDetails = client.StaticSiteDetailsPATCH{
 		BuildCommand:               plan.BuildCommand.ValueStringPointer(),
+		IpAllowList:                ipAllowList,
 		PublishPath:                plan.PublishPath.ValueStringPointer(),
 		Previews:                   common.PreviewsObjectToPreviews(ctx, plan.Previews),
 		PullRequestPreviewsEnabled: &prPreviewEnabled,
