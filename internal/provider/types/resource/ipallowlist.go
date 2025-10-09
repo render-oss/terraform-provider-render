@@ -1,9 +1,7 @@
 package resource
 
 import (
-	"github.com/hashicorp/terraform-plugin-framework-validators/setvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
-	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 )
 
 var IPAllowListItem = schema.NestedAttributeObject{
@@ -19,12 +17,19 @@ var IPAllowListItem = schema.NestedAttributeObject{
 	},
 }
 
+// IPAllowList is for datastores (postgres, redis, keyvalue) - always sends value to API
 var IPAllowList = schema.SetNestedAttribute{
 	NestedObject: IPAllowListItem,
 	Optional:     true,
 	Computed:     true,
 	Description:  "List of IP addresses that are allowed to connect to the instance. If no IP addresses are provided, only connections via the private network will be allowed.",
-	Validators: []validator.Set{
-		setvalidator.SizeAtLeast(1),
-	},
+}
+
+// IPAllowListOptional is for webservices - state-aware management
+// Omitted = don't manage (API default 0.0.0.0/0), Empty = block all, Values = allow those IPs
+// Removing after being set = revert to default (0.0.0.0/0)
+var IPAllowListOptional = schema.SetNestedAttribute{
+	NestedObject: IPAllowListItem,
+	Optional:     true,
+	Description:  "List of IP addresses that are allowed to connect to the web service. If omitted, the API default (0.0.0.0/0 - allow all) is used. If set to an empty list, all traffic is blocked. If removed after being set, it reverts to the default (0.0.0.0/0). This is an enterprise-only feature.",
 }

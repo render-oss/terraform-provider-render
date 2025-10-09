@@ -36,6 +36,20 @@ func CreateServiceRequestFromModel(ctx context.Context, ownerID string, plan web
 		return client.CreateServiceJSONRequestBody{}, err
 	}
 
+	// Handle IP allow list:
+	// - Omitted (null) -> send nil (API uses default 0.0.0.0/0)
+	// - Empty list -> send empty array (block all)
+	// - With values -> send those values
+	var ipAllowList *[]client.CidrBlockAndDescription
+	if !plan.IPAllowList.IsNull() && !plan.IPAllowList.IsUnknown() {
+		list, err := common.ClientFromIPAllowList(plan.IPAllowList)
+		if err != nil {
+			return client.CreateServiceJSONRequestBody{}, err
+		}
+		ipAllowList = &list
+	}
+	// If null/unknown, ipAllowList stays nil
+
 	webServiceDetails := client.WebServiceDetailsPOST{
 		Disk:                       common.DiskToClientCreate(plan.Disk),
 		Runtime:                    common.ToClientRuntime(plan.RuntimeSource.Runtime()),
@@ -50,6 +64,7 @@ func CreateServiceRequestFromModel(ctx context.Context, ownerID string, plan web
 		MaintenanceMode:            common.ToClientMaintenanceMode(plan.MaintenanceMode),
 		MaxShutdownDelaySeconds:    common.ValueAsIntPointer(plan.MaxShutdownDelaySeconds),
 		Autoscaling:                autoscaling,
+		IpAllowList:                ipAllowList,
 	}
 
 	serviceDetails := &client.ServicePOST_ServiceDetails{}
