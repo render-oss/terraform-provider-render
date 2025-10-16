@@ -202,7 +202,7 @@ func (r *projectResource) Update(ctx context.Context, req resource.UpdateRequest
 		if slices.Contains(both, env.Id.ValueString()) {
 			// update an existing environment with state-aware IP allow list logic
 			var stateEnv *project.EnvironmentModel
-			for stateKey, sEnv := range state.Environments {
+			for _, sEnv := range state.Environments {
 				if sEnv.Id.ValueString() == env.Id.ValueString() {
 					stateEnv = sEnv
 					break
