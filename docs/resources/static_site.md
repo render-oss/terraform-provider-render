@@ -113,6 +113,7 @@ resource "render_static_site" "example" {
 - `env_vars` (Attributes Map) Map of environment variable names to their values. (see [below for nested schema](#nestedatt--env_vars))
 - `environment_id` (String) ID of the [project environment](https://render.com/docs/projects) that the resource belongs to
 - `headers` (Attributes Set) List of [headers](https://render.com/docs/static-site-headers) to apply to requests for static sites (see [below for nested schema](#nestedatt--headers))
+- `ip_allow_list` (Attributes Set) List of IP addresses that are allowed to connect to the web service. If omitted, the API default (0.0.0.0/0 - allow all) is used. If set to an empty list, all traffic is blocked. If removed after being set, it reverts to the default (0.0.0.0/0). This is an enterprise-only feature. (see [below for nested schema](#nestedatt--ip_allow_list))
 - `notification_override` (Attributes) Configure the [notification settings](https://render.com/docs/notifications) for this service. These will override the global notification settings of the user or team. (see [below for nested schema](#nestedatt--notification_override))
 - `previews` (Attributes) [Pull request previews](https://render.com/docs/pull-request-previews#pull-request-previews-git-backed) settings (see [below for nested schema](#nestedatt--previews))
 - `publish_path` (String) Path to the directory that contains the build artifacts to publish for a static site. Defaults to public/.
@@ -168,6 +169,15 @@ Required:
 - `name` (String) Name of the header
 - `path` (String) Request paths to apply the header
 - `value` (String) Value of the header
+
+
+<a id="nestedatt--ip_allow_list"></a>
+### Nested Schema for `ip_allow_list`
+
+Required:
+
+- `cidr_block` (String) CIDR block that is allowed to connect to the Redis instance. (0.0.0.0/0 to allow traffic from all IPs)
+- `description` (String) Description of the IP address or range. This is used to help identify the IP address or range in the list.
 
 
 <a id="nestedatt--notification_override"></a>

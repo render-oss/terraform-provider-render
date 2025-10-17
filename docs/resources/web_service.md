@@ -82,6 +82,7 @@ resource "render_web_service" "web" {
 - `env_vars` (Attributes Map) Map of environment variable names to their values. (see [below for nested schema](#nestedatt--env_vars))
 - `environment_id` (String) ID of the [project environment](https://render.com/docs/projects) that the resource belongs to
 - `health_check_path` (String) If you're running a server, enter the path where your server will always return a 200 OK response. We use it to monitor your app and for [zero downtime deploys](https://render.com/docs/deploys#zero-downtime-deploys).
+- `ip_allow_list` (Attributes Set) List of IP addresses that are allowed to connect to the web service. If omitted, the API default (0.0.0.0/0 - allow all) is used. If set to an empty list, all traffic is blocked. If removed after being set, it reverts to the default (0.0.0.0/0). This is an enterprise-only feature. (see [below for nested schema](#nestedatt--ip_allow_list))
 - `log_stream_override` (Attributes) Configure the [log stream override settings](https://render.com/docs/log-streams#overriding-defaults) for this service. These will override the global log stream settings of the user or team. (see [below for nested schema](#nestedatt--log_stream_override))
 - `maintenance_mode` (Attributes) Maintenance mode settings for the service. (see [below for nested schema](#nestedatt--maintenance_mode))
 - `max_shutdown_delay_seconds` (Number) The maximum amount of time (in seconds) that Render waits for your application process to exit gracefully after sending it a SIGTERM signal before sending a SIGKILL signal.
@@ -252,6 +253,15 @@ Optional:
 
 - `generate_value` (Boolean) If true, Render will generate the variable value.
 - `value` (String, Sensitive)
+
+
+<a id="nestedatt--ip_allow_list"></a>
+### Nested Schema for `ip_allow_list`
+
+Required:
+
+- `cidr_block` (String) CIDR block that is allowed to connect to the Redis instance. (0.0.0.0/0 to allow traffic from all IPs)
+- `description` (String) Description of the IP address or range. This is used to help identify the IP address or range in the list.
 
 
 <a id="nestedatt--log_stream_override"></a>
