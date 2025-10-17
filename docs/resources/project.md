@@ -55,7 +55,16 @@ Required:
 Optional:
 
 - `id` (String) Unique identifier of the environment
+- `ip_allow_list` (Attributes Set) List of IP addresses that are allowed to connect to the web service. If omitted, the API default (0.0.0.0/0 - allow all) is used. If set to an empty list, all traffic is blocked. If removed after being set, it reverts to the default (0.0.0.0/0). This is an enterprise-only feature. (see [below for nested schema](#nestedatt--environments--ip_allow_list))
 - `network_isolated` (Boolean) Whether services within this environment are isolated from network requests from other environments
+
+<a id="nestedatt--environments--ip_allow_list"></a>
+### Nested Schema for `environments.ip_allow_list`
+
+Required:
+
+- `cidr_block` (String) CIDR block that is allowed to connect to the Redis instance. (0.0.0.0/0 to allow traffic from all IPs)
+- `description` (String) Description of the IP address or range. This is used to help identify the IP address or range in the list.
 
 ## Import
 
