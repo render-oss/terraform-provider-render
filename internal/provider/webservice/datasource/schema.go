@@ -32,6 +32,7 @@ func Schema(ctx context.Context) schema.Schema {
 			"url":                           datasource.ServiceURL,
 			"maintenance_mode":              datasource.MaintenanceMode,
 			"max_shutdown_delay_seconds":    datasource.MaxShutdownDelaySeconds,
+			"ip_allow_list":                 datasource.IPAllowList,
 			"env_vars":                      datasource.EnvVars,
 			"secret_files":                  datasource.SecretFiles,
 			"notification_override":         datasource.NotificationOverride,
