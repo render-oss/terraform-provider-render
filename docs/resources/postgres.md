@@ -34,7 +34,7 @@ resource "render_postgres" "example" {
 - `name` (String) Descriptive name for this postgres
 - `plan` (String) Plan to use for this postgres. Must be `free`, a basic plan (like `basic_256mb`), a pro plan (like `pro_4gb`), an accelerated plan (like `accelerated_16gb`), `starter`, `standard`, `pro`, `pro_plus`, or a custom plan
 - `region` (String) Region the postgres instance in
-- `version` (String) The Postgres version. Currently supported: `11`, `12`, `13`, `14`, `15`, `16`, and `17`
+- `version` (String) The Postgres version. Currently Supported: `11`, `12`, `13`, `14`, `15`, `16`, `17`, and  `18`
 
 ### Optional
 
