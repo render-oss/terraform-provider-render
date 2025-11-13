@@ -16,5 +16,6 @@ func ValidatePostgresVersion() validator.String {
 		string(client.N15),
 		string(client.N16),
 		string(client.N17),
+		string(client.N18),
 	)
 }
