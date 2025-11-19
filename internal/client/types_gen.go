@@ -1278,7 +1278,6 @@ type Postgres struct {
 	IpAllowList             []CidrBlockAndDescription   `json:"ipAllowList"`
 	Name                    string                      `json:"name"`
 	Owner                   Owner                       `json:"owner"`
-	ParameterOverrides      *PostgresParameterOverrides `json:"parameterOverrides,omitempty"`
 	Plan                    externalRef11.PostgresPlans `json:"plan"`
 	PrimaryPostgresID       *string                     `json:"primaryPostgresID,omitempty"`
 	ReadReplicas            ReadReplicas                `json:"readReplicas"`
@@ -1326,6 +1325,7 @@ type PostgresDetail struct {
 	Maintenance             *externalRef8.MaintenanceRun `json:"maintenance,omitempty"`
 	Name                    string                       `json:"name"`
 	Owner                   Owner                        `json:"owner"`
+	ParameterOverrides      *PostgresParameterOverrides  `json:"parameterOverrides,omitempty"`
 	Plan                    externalRef11.PostgresPlans  `json:"plan"`
 	PrimaryPostgresID       *string                      `json:"primaryPostgresID,omitempty"`
 	ReadReplicas            ReadReplicas                 `json:"readReplicas"`

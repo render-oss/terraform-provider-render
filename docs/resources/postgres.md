@@ -23,6 +23,20 @@ resource "render_postgres" "example" {
   database_user = "my_user"
 
   high_availability_enabled = true
+
+  # Optional: Override default PostgreSQL parameters
+  parameter_overrides = {
+    max_connections = "200"
+    shared_buffers  = "256MB"
+  }
+
+  # Optional: Configure read replicas with their own parameter overrides
+  read_replicas = [{
+    name = "read-replica"
+    parameter_overrides = {
+      max_connections = "150"
+    }
+  }]
 }
 ```
 
@@ -46,6 +60,7 @@ resource "render_postgres" "example" {
 - `high_availability_enabled` (Boolean) Whether high availability is enabled for this postgres
 - `ip_allow_list` (Attributes Set) List of IP addresses that are allowed to connect to the instance. If no IP addresses are provided, only connections via the private network will be allowed. (see [below for nested schema](#nestedatt--ip_allow_list))
 - `log_stream_override` (Attributes) Configure the [log stream override settings](https://render.com/docs/log-streams#overriding-defaults) for this service. These will override the global log stream settings of the user or team. (see [below for nested schema](#nestedatt--log_stream_override))
+- `parameter_overrides` (Map of String) Parameter overrides for the postgres instance.
 - `read_replicas` (Attributes Set) List of read replicas. (see [below for nested schema](#nestedatt--read_replicas))
 
 ### Read-Only
@@ -83,6 +98,10 @@ Optional:
 Required:
 
 - `name` (String) Name of the read replica.
+
+Optional:
+
+- `parameter_overrides` (Map of String) Parameter overrides for the read replica.
 
 Read-Only:
 

@@ -60,7 +60,7 @@ func (d *postgresDataSource) Read(ctx context.Context, req datasource.ReadReques
 		return
 	}
 
-	var pg client.Postgres
+	var pg client.PostgresDetail
 	err := common.Get(func() (*http.Response, error) {
 		return d.client.RetrievePostgres(ctx, plan.ID.ValueString())
 	}, &pg)

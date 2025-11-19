@@ -8,6 +8,7 @@ import (
 	"terraform-provider-render/internal/provider/types/resource"
 
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
+	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
 func PostgresDataSourceSchema(ctx context.Context) schema.Schema {
@@ -76,6 +77,12 @@ func PostgresDataSourceSchema(ctx context.Context) schema.Schema {
 							MarkdownDescription: "ID of the read replica.",
 							Computed:            true,
 						},
+						"parameter_overrides": schema.MapAttribute{
+							ElementType:         types.StringType,
+							Description:         "Parameter overrides for the read replica.",
+							MarkdownDescription: "Parameter overrides for the read replica.",
+							Computed:            true,
+						},
 					},
 				},
 				Computed:            true,
@@ -122,6 +129,12 @@ func PostgresDataSourceSchema(ctx context.Context) schema.Schema {
 			"version": schema.StringAttribute{
 				Description:         "The Postgres version",
 				MarkdownDescription: "The Postgres version",
+				Computed:            true,
+			},
+			"parameter_overrides": schema.MapAttribute{
+				ElementType:         types.StringType,
+				Description:         "Parameter overrides for the postgres instance.",
+				MarkdownDescription: "Parameter overrides for the postgres instance.",
 				Computed:            true,
 			},
 			"log_stream_override": resource.LogStreamOverride,

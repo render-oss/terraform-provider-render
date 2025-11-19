@@ -5,9 +5,11 @@ import (
 
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/boolplanmodifier"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/mapplanmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringplanmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
+	"github.com/hashicorp/terraform-plugin-framework/types"
 
 	commontypes "terraform-provider-render/internal/provider/common/types"
 	"terraform-provider-render/internal/provider/common/validators"
@@ -103,6 +105,15 @@ func PostgresResourceSchema(ctx context.Context) schema.Schema {
 							MarkdownDescription: "ID of the read replica.",
 							Computed:            true,
 						},
+						"parameter_overrides": schema.MapAttribute{
+							ElementType:         types.StringType,
+							Description:         "Parameter overrides for the read replica.",
+							MarkdownDescription: "Parameter overrides for the read replica.",
+							Optional:            true,
+							PlanModifiers: []planmodifier.Map{
+								mapplanmodifier.UseStateForUnknown(),
+							},
+						},
 					},
 				},
 				Optional:            true,
@@ -158,6 +169,15 @@ func PostgresResourceSchema(ctx context.Context) schema.Schema {
 				},
 				Validators: []validator.String{
 					ValidatePostgresVersion(),
+				},
+			},
+			"parameter_overrides": schema.MapAttribute{
+				ElementType:         types.StringType,
+				Description:         "Parameter overrides for the postgres instance.",
+				MarkdownDescription: "Parameter overrides for the postgres instance.",
+				Optional:            true,
+				PlanModifiers: []planmodifier.Map{
+					mapplanmodifier.UseStateForUnknown(),
 				},
 			},
 			"log_stream_override": resource.LogStreamOverride,

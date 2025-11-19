@@ -264,3 +264,96 @@ func TestAccPostgresIPAllowListResource(t *testing.T) {
 		},
 	})
 }
+
+func TestAccPostgresParameterOverridesResource(t *testing.T) {
+	resourceName := "render_postgres.test"
+	resource.Test(t, resource.TestCase{
+		ProtoV6ProviderFactories: th.SetupRecordingProvider(t, "postgres_parameter_overrides_cassette"),
+		Steps: []resource.TestStep{
+			{
+				// create with parameter overrides
+				ConfigFile: config.StaticFile("./testdata/parameter_overrides.tf"),
+				ConfigVariables: config.Variables{
+					"has_parameter_overrides": config.BoolVariable(true),
+					"has_replica":             config.BoolVariable(false),
+					"parameter_overrides": config.MapVariable(map[string]config.Variable{
+						"max_connections": config.StringVariable("100"),
+						"work_mem":        config.StringVariable("4MB"),
+					}),
+				},
+				ConfigPlanChecks: resource.ConfigPlanChecks{
+					PreApply: []plancheck.PlanCheck{
+						checks.ExpectNoReplace(),
+					},
+				},
+				Check: resource.ComposeAggregateTestCheckFunc(
+					resource.TestCheckResourceAttr(resourceName, "parameter_overrides.max_connections", "100"),
+					resource.TestCheckResourceAttr(resourceName, "parameter_overrides.work_mem", "4MB"),
+				),
+			},
+			{
+				// update parameter overrides
+				ConfigFile: config.StaticFile("./testdata/parameter_overrides.tf"),
+				ConfigVariables: config.Variables{
+					"has_parameter_overrides": config.BoolVariable(true),
+					"has_replica":             config.BoolVariable(false),
+					"parameter_overrides": config.MapVariable(map[string]config.Variable{
+						"max_connections": config.StringVariable("150"),
+						"shared_buffers":  config.StringVariable("128MB"),
+					}),
+				},
+				ConfigPlanChecks: resource.ConfigPlanChecks{
+					PreApply: []plancheck.PlanCheck{
+						checks.ExpectNoReplace(),
+					},
+				},
+				Check: resource.ComposeAggregateTestCheckFunc(
+					resource.TestCheckResourceAttr(resourceName, "parameter_overrides.max_connections", "150"),
+					resource.TestCheckResourceAttr(resourceName, "parameter_overrides.shared_buffers", "128MB"),
+					resource.TestCheckNoResourceAttr(resourceName, "parameter_overrides.work_mem"),
+				),
+			},
+			{
+				// clear parameter overrides (empty map)
+				ConfigFile: config.StaticFile("./testdata/parameter_overrides.tf"),
+				ConfigVariables: config.Variables{
+					"has_parameter_overrides": config.BoolVariable(true),
+					"has_replica":             config.BoolVariable(false),
+					"parameter_overrides":     config.MapVariable(map[string]config.Variable{}),
+				},
+				ConfigPlanChecks: resource.ConfigPlanChecks{
+					PreApply: []plancheck.PlanCheck{
+						checks.ExpectNoReplace(),
+					},
+				},
+				Check: resource.ComposeAggregateTestCheckFunc(
+					resource.TestCheckResourceAttr(resourceName, "parameter_overrides.%", "0"),
+				),
+			},
+			{
+				// test read replica with parameter overrides (using statement_timeout which doesn't require sync)
+				ConfigFile: config.StaticFile("./testdata/parameter_overrides.tf"),
+				ConfigVariables: config.Variables{
+					"has_parameter_overrides": config.BoolVariable(true),
+					"has_replica":             config.BoolVariable(true),
+					"parameter_overrides": config.MapVariable(map[string]config.Variable{
+						"max_connections": config.StringVariable("100"),
+					}),
+					"replica_parameter_overrides": config.MapVariable(map[string]config.Variable{
+						"statement_timeout": config.StringVariable("30000"),
+					}),
+				},
+				ConfigPlanChecks: resource.ConfigPlanChecks{
+					PreApply: []plancheck.PlanCheck{
+						checks.ExpectNoReplace(),
+					},
+				},
+				Check: resource.ComposeAggregateTestCheckFunc(
+					resource.TestCheckResourceAttr(resourceName, "parameter_overrides.max_connections", "100"),
+					resource.TestCheckResourceAttr(resourceName, "read_replicas.0.name", "read-replica"),
+					resource.TestCheckResourceAttr(resourceName, "read_replicas.0.parameter_overrides.statement_timeout", "30000"),
+				),
+			},
+		},
+	})
+}

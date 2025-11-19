@@ -66,7 +66,7 @@ func (r *postgresResource) Create(ctx context.Context, req resource.CreateReques
 		return
 	}
 
-	var pg client.Postgres
+	var pg client.PostgresDetail
 
 	ipAllowList, err := common.ClientFromIPAllowList(plan.IPAllowList)
 	if err != nil {
@@ -83,12 +83,13 @@ func (r *postgresResource) Create(ctx context.Context, req resource.CreateReques
 			EnvironmentId:          plan.EnvironmentID.ValueStringPointer(),
 			IpAllowList:            common.From(ipAllowList),
 			Plan:                   clientpostgres.PostgresPlans(plan.Plan.ValueString()),
-			ReadReplicas:           common.From(postgres.ReadReplicaInputFromModel(plan.ReadReplicas)),
+			ReadReplicas:           common.From(postgres.ReadReplicaInputFromModel(plan.ReadReplicas, resp.Diagnostics)),
 			Region:                 plan.Region.ValueStringPointer(),
 			Version:                client.PostgresVersion(plan.Version.ValueString()),
 			Name:                   plan.Name.ValueString(),
 			OwnerId:                r.ownerID,
 			DiskSizeGB:             common.ValueAsIntPointer(plan.DiskSizeGB),
+			ParameterOverrides:     postgres.ParameterOverridesToGoMap(plan.ParameterOverrides, resp.Diagnostics),
 		})
 	}, &pg)
 	if err != nil {
@@ -98,7 +99,7 @@ func (r *postgresResource) Create(ctx context.Context, req resource.CreateReques
 
 	// Poll for postgres to be ready
 	err = r.poller.Poll(ctx, func() (bool, error) {
-		var polledPG client.Postgres
+		var polledPG client.PostgresDetail
 		err := common.Get(func() (*http.Response, error) {
 			return r.client.RetrievePostgres(ctx, pg.Id)
 		}, &polledPG)
@@ -153,7 +154,7 @@ func (r *postgresResource) Read(ctx context.Context, req resource.ReadRequest, r
 		return
 	}
 
-	var pg client.Postgres
+	var pg client.PostgresDetail
 
 	err := common.Get(func() (*http.Response, error) {
 		return r.client.RetrievePostgres(ctx, id)
@@ -209,7 +210,18 @@ func (r *postgresResource) Update(ctx context.Context, req resource.UpdateReques
 		return
 	}
 
-	var pg client.Postgres
+	var parameterOverrides *client.PostgresParameterOverrides
+	if !plan.ParameterOverrides.Equal(state.ParameterOverrides) {
+		// If plan is null but state has value, user is removing overrides; send empty map to clear.
+		if plan.ParameterOverrides.IsNull() && !state.ParameterOverrides.IsNull() {
+			emptyMap := client.PostgresParameterOverrides{}
+			parameterOverrides = &emptyMap
+		} else {
+			parameterOverrides = postgres.ParameterOverridesToGoMap(plan.ParameterOverrides, resp.Diagnostics)
+		}
+	}
+
+	var pg client.PostgresDetail
 
 	err = common.Update(func() (*http.Response, error) {
 		return r.client.UpdatePostgres(ctx, plan.ID.ValueString(), client.PostgresPATCHInput{
@@ -218,8 +230,9 @@ func (r *postgresResource) Update(ctx context.Context, req resource.UpdateReques
 			Name:                   plan.Name.ValueStringPointer(),
 			Plan:                   common.From(clientpostgres.PostgresPlans(plan.Plan.ValueString())),
 			DatadogAPIKey:          plan.DatadogAPIKey.ValueStringPointer(),
-			ReadReplicas:           common.From(postgres.ReadReplicaInputFromModel(plan.ReadReplicas)),
+			ReadReplicas:           common.From(postgres.ReadReplicaInputFromModel(plan.ReadReplicas, resp.Diagnostics)),
 			DiskSizeGB:             common.ValueAsIntPointer(plan.DiskSizeGB),
+			ParameterOverrides:     parameterOverrides,
 		})
 	}, &pg)
 	if err != nil {
