@@ -15,6 +15,8 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/booldefault"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/int64planmodifier"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/objectplanmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringdefault"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringplanmodifier"
@@ -33,6 +35,9 @@ var ServiceID = schema.StringAttribute{
 var Slug = schema.StringAttribute{
 	Computed:    true,
 	Description: "Unique slug for the service",
+	PlanModifiers: []planmodifier.String{
+		stringplanmodifier.UseStateForUnknown(),
+	},
 }
 
 var ServiceName = schema.StringAttribute{
@@ -82,21 +87,33 @@ var KeyValueConnectionInfo = schema.SingleNestedAttribute{
 	MarkdownDescription: "Key Value connection info.",
 	Computed:            true,
 	Sensitive:           true,
+	PlanModifiers: []planmodifier.Object{
+		objectplanmodifier.UseStateForUnknown(),
+	},
 	Attributes: map[string]schema.Attribute{
 		"external_connection_string": schema.StringAttribute{
 			Description: "Connection string for external access. Use this to connect to the key value from outside of Render.",
 			Computed:    true,
 			Sensitive:   true,
+			PlanModifiers: []planmodifier.String{
+				stringplanmodifier.UseStateForUnknown(),
+			},
 		},
 		"internal_connection_string": schema.StringAttribute{
 			Description: "Connection string for internal access. Use this to connect to the key value from within the same Render region.",
 			Computed:    true,
 			Sensitive:   true,
+			PlanModifiers: []planmodifier.String{
+				stringplanmodifier.UseStateForUnknown(),
+			},
 		},
 		"cli_command": schema.StringAttribute{
 			Description: "Command to connect to the key value using a command line tool (redis-cli or valkey-cli).",
 			Computed:    true,
 			Sensitive:   true,
+			PlanModifiers: []planmodifier.String{
+				stringplanmodifier.UseStateForUnknown(),
+			},
 		},
 	},
 }
@@ -106,21 +123,33 @@ var RedisConnectionInfo = schema.SingleNestedAttribute{
 	MarkdownDescription: "Redis connection info.",
 	Computed:            true,
 	Sensitive:           true,
+	PlanModifiers: []planmodifier.Object{
+		objectplanmodifier.UseStateForUnknown(),
+	},
 	Attributes: map[string]schema.Attribute{
 		"external_connection_string": schema.StringAttribute{
 			Description: "Connection string for external access. Use this to connect to the redis from outside of Render.",
 			Computed:    true,
 			Sensitive:   true,
+			PlanModifiers: []planmodifier.String{
+				stringplanmodifier.UseStateForUnknown(),
+			},
 		},
 		"internal_connection_string": schema.StringAttribute{
 			Description: "Connection string for internal access. Use this to connect to the redis from within the same Render region.",
 			Computed:    true,
 			Sensitive:   true,
+			PlanModifiers: []planmodifier.String{
+				stringplanmodifier.UseStateForUnknown(),
+			},
 		},
 		"redis_cli_command": schema.StringAttribute{
 			Description: "Command to connect to the redis using the redis command line tool.",
 			Computed:    true,
 			Sensitive:   true,
+			PlanModifiers: []planmodifier.String{
+				stringplanmodifier.UseStateForUnknown(),
+			},
 		},
 	},
 }
@@ -151,6 +180,9 @@ var NumInstances = schema.Int64Attribute{
 	Description: "Number of replicas of the service to run. Defaults to 1 on service creation and current instance count on update. If you want to manage the service's instance count outside Terraform, leave num_instances unset.",
 	Validators: []validator.Int64{
 		int64validator.Between(1, 100),
+	},
+	PlanModifiers: []planmodifier.Int64{
+		int64planmodifier.UseStateForUnknown(),
 	},
 }
 
@@ -289,6 +321,9 @@ var MaxShutdownDelaySeconds = schema.Int64Attribute{
 	Validators: []validator.Int64{
 		int64validator.Between(1, 300),
 	},
+	PlanModifiers: []planmodifier.Int64{
+		int64planmodifier.UseStateForUnknown(),
+	},
 }
 
 var Branch = schema.StringAttribute{
@@ -307,6 +342,9 @@ var RootDirectory = schema.StringAttribute{
 	Optional:            true,
 	Description:         "When you specify a root directory, Render runs all your commands in the specified directory and ignores changes outside the directory. Defaults to the repository root.",
 	MarkdownDescription: "When you specify a [root directory](https://render.com/docs/monorepo-support#root-directory), Render runs all your commands in the specified directory and ignores changes outside the directory. Defaults to the repository root.",
+	PlanModifiers: []planmodifier.String{
+		stringplanmodifier.UseStateForUnknown(),
+	},
 }
 
 var Routes = schema.ListNestedAttribute{
@@ -412,6 +450,9 @@ var Previews = schema.SingleNestedAttribute{
 	Computed:            true,
 	Description:         "Pull request previews settings",
 	MarkdownDescription: "[Pull request previews](https://render.com/docs/pull-request-previews#pull-request-previews-git-backed) settings",
+	PlanModifiers: []planmodifier.Object{
+		objectplanmodifier.UseStateForUnknown(),
+	},
 	Attributes: map[string]schema.Attribute{
 		"generation": schema.StringAttribute{
 			Optional:            true,
@@ -419,6 +460,9 @@ var Previews = schema.SingleNestedAttribute{
 			Description:         "Generation mode for pull request previews. One of `off`, `manual`, or `automatic`. Defaults to `off`.",
 			MarkdownDescription: "Generation mode for [pull request previews](https://render.com/docs/pull-request-previews#pull-request-previews-git-backed). One of `off`, `manual`, or `automatic`. Defaults to `off`.",
 			Validators:          []validator.String{stringvalidator.OneOf("off", "manual", "automatic")},
+			PlanModifiers: []planmodifier.String{
+				stringplanmodifier.UseStateForUnknown(),
+			},
 		},
 	},
 }
