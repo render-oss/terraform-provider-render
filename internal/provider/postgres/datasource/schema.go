@@ -64,7 +64,7 @@ func PostgresDataSourceSchema(ctx context.Context) schema.Schema {
 				MarkdownDescription: "Region the postgres instance in",
 				Computed:            true,
 			},
-			"read_replicas": schema.SetNestedAttribute{
+			"read_replicas": schema.ListNestedAttribute{
 				NestedObject: schema.NestedAttributeObject{
 					Attributes: map[string]schema.Attribute{
 						"name": schema.StringAttribute{
@@ -83,6 +83,7 @@ func PostgresDataSourceSchema(ctx context.Context) schema.Schema {
 							MarkdownDescription: "Parameter overrides for the read replica.",
 							Computed:            true,
 						},
+						"log_stream_override": resource.LogStreamOverride,
 					},
 				},
 				Computed:            true,

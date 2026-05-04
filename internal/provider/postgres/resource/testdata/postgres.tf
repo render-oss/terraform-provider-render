@@ -35,6 +35,11 @@ variable "has_log_stream_setting" {
   type = bool
 }
 
+variable "has_replica_log_stream_setting" {
+  type    = bool
+  default = false
+}
+
 variable "disk_size_gb" {
   type = number
 }
@@ -73,6 +78,9 @@ resource "render_postgres" "test" {
   version = var.ver
   read_replicas = var.read_replica ? [{
     name = "read-replica"
+    log_stream_override = var.has_replica_log_stream_setting ? {
+      setting = "drop"
+    } : null
   }] : null
 
   log_stream_override = var.has_log_stream_setting ? {

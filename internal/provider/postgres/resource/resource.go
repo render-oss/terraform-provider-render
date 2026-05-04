@@ -135,8 +135,14 @@ func (r *postgresResource) Create(ctx context.Context, req resource.CreateReques
 		return
 	}
 
+	replicaLogStreams, err := postgres.UpdateReplicaLogStreamOverrides(ctx, r.client, pg.ReadReplicas, plan.ReadReplicas, nil)
+	if err != nil {
+		resp.Diagnostics.AddError("unable to create replica log stream overrides", err.Error())
+		return
+	}
+
 	// Set state to fully populated data
-	diags = resp.State.Set(ctx, postgres.ModelFromClient(&pg, &connectionInfo, logStreamOverrides, plan, resp.Diagnostics))
+	diags = resp.State.Set(ctx, postgres.ModelFromClient(&pg, &connectionInfo, logStreamOverrides, replicaLogStreams, plan, resp.Diagnostics))
 	resp.Diagnostics.Append(diags...)
 }
 
@@ -184,8 +190,14 @@ func (r *postgresResource) Read(ctx context.Context, req resource.ReadRequest, r
 		return
 	}
 
+	replicaLogStreams, err := postgres.GetReplicaLogStreamOverrides(ctx, r.client, pg.ReadReplicas)
+	if err != nil {
+		resp.Diagnostics.AddError("unable to get replica log stream overrides", err.Error())
+		return
+	}
+
 	// Set refreshed state
-	diags = resp.State.Set(ctx, postgres.ModelFromClient(&pg, &connectionInfo, logStreamOverrides, state, resp.Diagnostics))
+	diags = resp.State.Set(ctx, postgres.ModelFromClient(&pg, &connectionInfo, logStreamOverrides, replicaLogStreams, state, resp.Diagnostics))
 	resp.Diagnostics.Append(diags...)
 }
 
@@ -272,8 +284,14 @@ func (r *postgresResource) Update(ctx context.Context, req resource.UpdateReques
 		return
 	}
 
+	replicaLogStreams, err := postgres.UpdateReplicaLogStreamOverrides(ctx, r.client, pg.ReadReplicas, plan.ReadReplicas, state.ReadReplicas)
+	if err != nil {
+		resp.Diagnostics.AddError("unable to update replica log stream overrides", err.Error())
+		return
+	}
+
 	// Set state to fully populated data
-	diags = resp.State.Set(ctx, postgres.ModelFromClient(&pg, &connectionInfo, logStreamOverrides, plan, resp.Diagnostics))
+	diags = resp.State.Set(ctx, postgres.ModelFromClient(&pg, &connectionInfo, logStreamOverrides, replicaLogStreams, plan, resp.Diagnostics))
 	resp.Diagnostics.Append(diags...)
 }
 

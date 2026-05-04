@@ -35,8 +35,9 @@ description: |-
 - `high_availability_enabled` (Boolean) Whether high availability is enabled for this postgres
 - `ip_allow_list` (Attributes Set) List of IP addresses that are allowed to connect to the Redis instance. If no IP addresses are provided, only connections via the private network will be allowed. (see [below for nested schema](#nestedatt--ip_allow_list))
 - `name` (String) Descriptive name for this postgres
+- `parameter_overrides` (Map of String) Parameter overrides for the postgres instance.
 - `plan` (String) Plan to use for this postgres
-- `read_replicas` (Attributes Set) List of read replicas. (see [below for nested schema](#nestedatt--read_replicas))
+- `read_replicas` (Attributes List) List of read replicas. (see [below for nested schema](#nestedatt--read_replicas))
 - `region` (String) Region the postgres instance in
 - `role` (String) Whether this postgres is a primary or replica
 - `version` (String) The Postgres version
@@ -77,7 +78,24 @@ Read-Only:
 <a id="nestedatt--read_replicas"></a>
 ### Nested Schema for `read_replicas`
 
+Optional:
+
+- `log_stream_override` (Attributes) Configure the [log stream override settings](https://render.com/docs/log-streams#overriding-defaults) for this service. These will override the global log stream settings of the user or team. (see [below for nested schema](#nestedatt--read_replicas--log_stream_override))
+
 Read-Only:
 
 - `id` (String) ID of the read replica.
 - `name` (String) Name of the read replica.
+- `parameter_overrides` (Map of String) Parameter overrides for the read replica.
+
+<a id="nestedatt--read_replicas--log_stream_override"></a>
+### Nested Schema for `read_replicas.log_stream_override`
+
+Required:
+
+- `setting` (String) Whether to send or drop logs for this service. Must be one of `send` or `drop`.
+
+Optional:
+
+- `endpoint` (String) The endpoint to send logs to.
+- `token` (String, Sensitive) The token to use when sending logs.

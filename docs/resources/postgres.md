@@ -48,7 +48,7 @@ resource "render_postgres" "example" {
 - `name` (String) Descriptive name for this postgres
 - `plan` (String) Plan to use for this postgres. Must be `free`, a basic plan (like `basic_256mb`), a pro plan (like `pro_4gb`), an accelerated plan (like `accelerated_16gb`), `starter`, `standard`, `pro`, `pro_plus`, or a custom plan
 - `region` (String) Region the postgres instance in
-- `version` (String) The Postgres version. Currently Supported: `11`, `12`, `13`, `14`, `15`, `16`, `17`, and  `18`
+- `version` (String) The Postgres version. Currently supported: `11`, `12`, `13`, `14`, `15`, `16`, `17`, and `18`
 
 ### Optional
 
@@ -61,7 +61,7 @@ resource "render_postgres" "example" {
 - `ip_allow_list` (Attributes Set) List of IP addresses that are allowed to connect to the instance. If no IP addresses are provided, only connections via the private network will be allowed. (see [below for nested schema](#nestedatt--ip_allow_list))
 - `log_stream_override` (Attributes) Configure the [log stream override settings](https://render.com/docs/log-streams#overriding-defaults) for this service. These will override the global log stream settings of the user or team. (see [below for nested schema](#nestedatt--log_stream_override))
 - `parameter_overrides` (Map of String) Parameter overrides for the postgres instance.
-- `read_replicas` (Attributes Set) List of read replicas. (see [below for nested schema](#nestedatt--read_replicas))
+- `read_replicas` (Attributes List) List of read replicas. (see [below for nested schema](#nestedatt--read_replicas))
 
 ### Read-Only
 
@@ -101,11 +101,25 @@ Required:
 
 Optional:
 
+- `log_stream_override` (Attributes) Configure the [log stream override settings](https://render.com/docs/log-streams#overriding-defaults) for this service. These will override the global log stream settings of the user or team. (see [below for nested schema](#nestedatt--read_replicas--log_stream_override))
 - `parameter_overrides` (Map of String) Parameter overrides for the read replica.
 
 Read-Only:
 
 - `id` (String) ID of the read replica.
+
+<a id="nestedatt--read_replicas--log_stream_override"></a>
+### Nested Schema for `read_replicas.log_stream_override`
+
+Required:
+
+- `setting` (String) Whether to send or drop logs for this service. Must be one of `send` or `drop`.
+
+Optional:
+
+- `endpoint` (String) The endpoint to send logs to.
+- `token` (String, Sensitive) The token to use when sending logs.
+
 
 
 <a id="nestedatt--connection_info"></a>
