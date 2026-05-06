@@ -25,9 +25,16 @@ func LogStreamOverrideFromClient(client *logs.ResourceLogStreamSetting, plan typ
 		setting = *client.Setting
 	}
 
-	endpoint := ""
-	if client.Endpoint != nil {
-		endpoint = *client.Endpoint
+	// Map an absent / empty API endpoint to a null state value rather than the
+	// zero string. The API only includes `endpoint` when `setting=send` (per the
+	// OpenAPI spec at public-api-schema/src/logs.yaml: "Cannot be present if
+	// setting is drop"), and an empty endpoint isn't a meaningful state — it's
+	// "no endpoint configured". This null mapping is also what lets the replica
+	// schema (Optional `endpoint`, no Computed) match plan and state cleanly
+	// inside a SetNestedAttribute, since plan endpoint is null when omitted.
+	endpoint := types.StringNull()
+	if client.Endpoint != nil && *client.Endpoint != "" {
+		endpoint = types.StringValue(*client.Endpoint)
 	}
 
 	planAttrs := plan.Attributes()
@@ -44,7 +51,7 @@ func LogStreamOverrideFromClient(client *logs.ResourceLogStreamSetting, plan typ
 		logStreamTypes,
 		map[string]attr.Value{
 			"setting":  types.StringValue(string(setting)),
-			"endpoint": types.StringValue(endpoint),
+			"endpoint": endpoint,
 			"token":    token,
 		},
 	)

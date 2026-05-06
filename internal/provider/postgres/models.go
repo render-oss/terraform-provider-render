@@ -95,85 +95,39 @@ func ParameterOverridesToGoMap(m types.Map, diags diag.Diagnostics) *client.Post
 }
 
 func ReadReplicaFromClient(c client.ReadReplicas, existingReplicas []ReadReplica, replicaLogStreams map[string]*logs.ResourceLogStreamSetting, diags diag.Diagnostics) []ReadReplica {
-	// Index API replicas by name. read_replicas is a List on the TF side, but
-	// the API returns replicas in unspecified SQL order (see PGClusterReplicas
-	// in the api repo's pkg/models/postgresdb.go — no ORDER BY). Sorting the
-	// returned slice to match existingReplicas order keeps state aligned with
-	// the user's HCL order regardless of how the API sorts the response.
-
-	// Preserve the plan's null-vs-empty distinction. With ListNestedAttribute,
-	// TF treats null and [] as different; returning [] when the plan was null
-	// (or vice versa) produces an "inconsistent result after apply" error.
-	// existingReplicas reflects what the user wrote in HCL: nil for omitted /
-	// `= null`, non-nil-empty for an explicit `= []`.
-	if len(c) == 0 {
-		if existingReplicas == nil {
-			return nil
-		}
-		return []ReadReplica{}
-	}
-
-	apiByName := make(map[string]client.ReadReplica, len(c))
+	var res []ReadReplica
 	for _, item := range c {
-		apiByName[item.Name] = item
-	}
-
-	res := make([]ReadReplica, 0, len(c))
-	consumed := make(map[string]struct{}, len(c))
-
-	build := func(item client.ReadReplica, existing *ReadReplica) ReadReplica {
+		// Convert parameter overrides
 		paramOverrides := ParameterOverridesToMap(item.ParameterOverrides, diags)
+
+		// Find matching replica in the existing model so we can (a) preserve
+		// null-vs-empty for parameter_overrides, and (b) thread the LSO token
+		// through, since the API doesn't return tokens on GET.
+		var existingReplica *ReadReplica
+		for i, er := range existingReplicas {
+			if er.Name.ValueString() == item.Name || er.ID.ValueString() == item.Id {
+				existingReplica = &existingReplicas[i]
+				break
+			}
+		}
+
 		if item.ParameterOverrides == nil || len(*item.ParameterOverrides) == 0 {
-			if existing != nil && existing.ParameterOverrides.IsNull() {
+			if existingReplica != nil && existingReplica.ParameterOverrides.IsNull() {
 				paramOverrides = types.MapNull(types.StringType)
 			}
 		}
 
 		var existingLSO types.Object
-		if existing != nil {
-			existingLSO = existing.LogStreamOverride
+		if existingReplica != nil {
+			existingLSO = existingReplica.LogStreamOverride
 		}
 
-		return ReadReplica{
+		res = append(res, ReadReplica{
 			Name:               types.StringValue(item.Name),
 			ID:                 types.StringValue(item.Id),
 			ParameterOverrides: paramOverrides,
 			LogStreamOverride:  common.LogStreamOverrideFromClient(replicaLogStreams[item.Id], existingLSO, diags),
-		}
-	}
-
-	// First pass: emit replicas in existingReplicas order, matched by name.
-	// This preserves the user's HCL ordering across refresh cycles in the
-	// resource path (where existingReplicas is plan/state). It also makes
-	// the no-op for the datasource path, where existingReplicas is always
-	// nil because read_replicas is Computed-only there.
-	for i := range existingReplicas {
-		existing := &existingReplicas[i]
-		name := existing.Name.ValueString()
-		if name == "" {
-			continue
-		}
-		item, ok := apiByName[name]
-		if !ok {
-			continue
-		}
-		res = append(res, build(item, existing))
-		consumed[name] = struct{}{}
-	}
-
-	// Second pass: append any API replicas the first pass didn't match.
-	// In the datasource this is the only branch used (existingReplicas is
-	// nil → first pass emits nothing). In the resource it's reached only
-	// when the API returns a replica the existing model doesn't know about
-	// — e.g. drift introduced out-of-band. Calling build with existing=nil
-	// means token will be types.StringNull, which matches the datasource's
-	// established behavior on the top-level log_stream_override (the API
-	// doesn't return tokens, so we have nothing to surface).
-	for _, item := range c {
-		if _, done := consumed[item.Name]; done {
-			continue
-		}
-		res = append(res, build(item, nil))
+		})
 	}
 
 	return res

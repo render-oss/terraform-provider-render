@@ -92,7 +92,7 @@ func PostgresResourceSchema(ctx context.Context) schema.Schema {
 				},
 				Validators: []validator.String{resource.RegionValidator},
 			},
-			"read_replicas": schema.ListNestedAttribute{
+			"read_replicas": schema.SetNestedAttribute{
 				NestedObject: schema.NestedAttributeObject{
 					Attributes: map[string]schema.Attribute{
 						"name": schema.StringAttribute{
@@ -114,7 +114,7 @@ func PostgresResourceSchema(ctx context.Context) schema.Schema {
 								mapplanmodifier.UseStateForUnknown(),
 							},
 						},
-						"log_stream_override": resource.LogStreamOverride,
+						"log_stream_override": resource.ReplicaLogStreamOverride,
 					},
 				},
 				Optional:            true,

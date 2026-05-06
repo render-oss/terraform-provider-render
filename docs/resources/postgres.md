@@ -61,7 +61,7 @@ resource "render_postgres" "example" {
 - `ip_allow_list` (Attributes Set) List of IP addresses that are allowed to connect to the instance. If no IP addresses are provided, only connections via the private network will be allowed. (see [below for nested schema](#nestedatt--ip_allow_list))
 - `log_stream_override` (Attributes) Configure the [log stream override settings](https://render.com/docs/log-streams#overriding-defaults) for this service. These will override the global log stream settings of the user or team. (see [below for nested schema](#nestedatt--log_stream_override))
 - `parameter_overrides` (Map of String) Parameter overrides for the postgres instance.
-- `read_replicas` (Attributes List) List of read replicas. (see [below for nested schema](#nestedatt--read_replicas))
+- `read_replicas` (Attributes Set) List of read replicas. (see [below for nested schema](#nestedatt--read_replicas))
 
 ### Read-Only
 
@@ -101,7 +101,7 @@ Required:
 
 Optional:
 
-- `log_stream_override` (Attributes) Configure the [log stream override settings](https://render.com/docs/log-streams#overriding-defaults) for this service. These will override the global log stream settings of the user or team. (see [below for nested schema](#nestedatt--read_replicas--log_stream_override))
+- `log_stream_override` (Attributes) Configure the [log stream override settings](https://render.com/docs/log-streams#overriding-defaults) for this replica. These take precedence over the workspace's default log stream and any setting on the primary. (see [below for nested schema](#nestedatt--read_replicas--log_stream_override))
 - `parameter_overrides` (Map of String) Parameter overrides for the read replica.
 
 Read-Only:
@@ -113,7 +113,7 @@ Read-Only:
 
 Required:
 
-- `setting` (String) Whether to send or drop logs for this service. Must be one of `send` or `drop`.
+- `setting` (String) Whether to send or drop logs for this replica. Must be one of `send` or `drop`.
 
 Optional:
 
