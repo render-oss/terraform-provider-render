@@ -10,6 +10,7 @@ variable "database_user" {
   type = string
 }
 
+
 variable "high_availability_enabled" {
   type = bool
 }
@@ -27,8 +28,8 @@ variable "read_replica" {
 }
 
 variable "environment_name" {
-  type     = string
-  default  = null
+  type    = string
+  default = null
 }
 
 variable "has_log_stream_setting" {
@@ -46,36 +47,36 @@ variable "disk_size_gb" {
 
 locals {
   environment_map = {
-    "first" = render_project.first.environments
+    "first"  = render_project.first.environments
     "second" = render_project.second.environments
   }
 }
 
-resource "render_project" "first"  {
+resource "render_project" "first" {
   name = "first"
   environments = {
     "prod" : { name : "prod", protected_status : "protected" },
   }
 }
 
-resource "render_project" "second"  {
+resource "render_project" "second" {
   name = "second"
   environments = {
     "prod" : { name : "prod", protected_status : "protected" },
   }
   # Ensure there is always an order to creating these
-  depends_on = [    render_project.first  ]
+  depends_on = [render_project.first]
 }
 
 resource "render_postgres" "test" {
-  name = var.name
-  database_name = var.database_name
-  database_user = var.database_user
+  name                      = var.name
+  database_name             = var.database_name
+  database_user             = var.database_user
   high_availability_enabled = var.high_availability_enabled
-  plan = var.plan
-  disk_size_gb = var.disk_size_gb
-  region = "oregon"
-  version = var.ver
+  plan                      = var.plan
+  disk_size_gb              = var.disk_size_gb
+  region                    = "oregon"
+  version                   = var.ver
   read_replicas = var.read_replica ? [{
     name = "read-replica"
     log_stream_override = var.has_replica_log_stream_setting ? {
@@ -88,5 +89,5 @@ resource "render_postgres" "test" {
   } : null
 
   environment_id = var.environment_name != null ? local.environment_map[var.environment_name]["prod"].id : null
-  depends_on = [render_project.first, render_project.second]
+  depends_on     = [render_project.first, render_project.second]
 }

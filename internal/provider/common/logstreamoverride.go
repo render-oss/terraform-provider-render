@@ -3,10 +3,11 @@ package common
 import (
 	"fmt"
 
+	"terraform-provider-render/internal/client/logs"
+
 	"github.com/hashicorp/terraform-plugin-framework/attr"
 	"github.com/hashicorp/terraform-plugin-framework/diag"
 	"github.com/hashicorp/terraform-plugin-framework/types"
-	"terraform-provider-render/internal/client/logs"
 )
 
 var logStreamTypes = map[string]attr.Type{
@@ -25,13 +26,7 @@ func LogStreamOverrideFromClient(client *logs.ResourceLogStreamSetting, plan typ
 		setting = *client.Setting
 	}
 
-	// Map an absent / empty API endpoint to a null state value rather than the
-	// zero string. The API only includes `endpoint` when `setting=send` (per the
-	// OpenAPI spec at public-api-schema/src/logs.yaml: "Cannot be present if
-	// setting is drop"), and an empty endpoint isn't a meaningful state — it's
-	// "no endpoint configured". This null mapping is also what lets the replica
-	// schema (Optional `endpoint`, no Computed) match plan and state cleanly
-	// inside a SetNestedAttribute, since plan endpoint is null when omitted.
+	// endpoint being an empty string or null are functionally equivalent
 	endpoint := types.StringNull()
 	if client.Endpoint != nil && *client.Endpoint != "" {
 		endpoint = types.StringValue(*client.Endpoint)

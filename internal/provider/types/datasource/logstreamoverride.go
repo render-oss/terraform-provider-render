@@ -34,9 +34,6 @@ var LogStreamOverride = schema.SingleNestedAttribute{
 	Description: "Configure the [log stream override settings](https://render.com/docs/log-streams#overriding-defaults) for this service. These will override the global log stream settings of the user or team.",
 }
 
-// ReplicaLogStreamOverride is the read-only variant used inside the datasource
-// read_replicas SetNestedAttribute. All sub-attributes are Computed only since
-// users can't write attributes on a datasource.
 var ReplicaLogStreamOverride = schema.SingleNestedAttribute{
 	Attributes: map[string]schema.Attribute{
 		"setting": schema.StringAttribute{
