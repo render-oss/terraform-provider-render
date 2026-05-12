@@ -33,3 +33,26 @@ var LogStreamOverride = schema.SingleNestedAttribute{
 	Computed:    true,
 	Description: "Configure the [log stream override settings](https://render.com/docs/log-streams#overriding-defaults) for this service. These will override the global log stream settings of the user or team.",
 }
+
+var ReplicaLogStreamOverride = schema.SingleNestedAttribute{
+	Attributes: map[string]schema.Attribute{
+		"setting": schema.StringAttribute{
+			Computed:            true,
+			Description:         "Whether to send or drop logs for this replica.",
+			MarkdownDescription: "Whether to send or drop logs for this replica.",
+		},
+		"endpoint": schema.StringAttribute{
+			Computed:            true,
+			Description:         "The endpoint logs are sent to.",
+			MarkdownDescription: "The endpoint logs are sent to.",
+		},
+		"token": schema.StringAttribute{
+			Computed:            true,
+			Sensitive:           true,
+			Description:         "The token used when sending logs.",
+			MarkdownDescription: "The token used when sending logs.",
+		},
+	},
+	Computed:    true,
+	Description: "The [log stream override settings](https://render.com/docs/log-streams#overriding-defaults) for this replica.",
+}

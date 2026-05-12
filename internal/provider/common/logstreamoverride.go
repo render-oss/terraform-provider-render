@@ -3,10 +3,11 @@ package common
 import (
 	"fmt"
 
+	"terraform-provider-render/internal/client/logs"
+
 	"github.com/hashicorp/terraform-plugin-framework/attr"
 	"github.com/hashicorp/terraform-plugin-framework/diag"
 	"github.com/hashicorp/terraform-plugin-framework/types"
-	"terraform-provider-render/internal/client/logs"
 )
 
 var logStreamTypes = map[string]attr.Type{
@@ -25,9 +26,10 @@ func LogStreamOverrideFromClient(client *logs.ResourceLogStreamSetting, plan typ
 		setting = *client.Setting
 	}
 
-	endpoint := ""
-	if client.Endpoint != nil {
-		endpoint = *client.Endpoint
+	// endpoint being an empty string or null are functionally equivalent
+	endpoint := types.StringNull()
+	if client.Endpoint != nil && *client.Endpoint != "" {
+		endpoint = types.StringValue(*client.Endpoint)
 	}
 
 	planAttrs := plan.Attributes()
@@ -44,7 +46,7 @@ func LogStreamOverrideFromClient(client *logs.ResourceLogStreamSetting, plan typ
 		logStreamTypes,
 		map[string]attr.Value{
 			"setting":  types.StringValue(string(setting)),
-			"endpoint": types.StringValue(endpoint),
+			"endpoint": endpoint,
 			"token":    token,
 		},
 	)

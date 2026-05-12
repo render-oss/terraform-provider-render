@@ -83,6 +83,7 @@ func PostgresDataSourceSchema(ctx context.Context) schema.Schema {
 							MarkdownDescription: "Parameter overrides for the read replica.",
 							Computed:            true,
 						},
+						"log_stream_override": datasource.ReplicaLogStreamOverride,
 					},
 				},
 				Computed:            true,

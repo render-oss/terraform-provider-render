@@ -174,6 +174,59 @@ func TestAccPostgresResource(t *testing.T) {
 				),
 			},
 			{
+				// Add a log stream override on the replica
+				ConfigFile: config.StaticFile("./testdata/postgres.tf"),
+				ConfigVariables: config.Variables{
+					"name":                           config.StringVariable("new-name"),
+					"database_name":                  config.StringVariable("db_name"),
+					"database_user":                  config.StringVariable("db_user"),
+					"high_availability_enabled":      config.BoolVariable(true),
+					"plan":                           config.StringVariable("pro_4gb"),
+					"ver":                            config.StringVariable("15"),
+					"read_replica":                   config.BoolVariable(true),
+					"environment_name":               config.StringVariable("second"),
+					"has_log_stream_setting":         config.BoolVariable(false),
+					"has_replica_log_stream_setting": config.BoolVariable(true),
+					"disk_size_gb":                   config.IntegerVariable(25),
+				},
+				ConfigPlanChecks: resource.ConfigPlanChecks{
+					PreApply: []plancheck.PlanCheck{
+						checks.ExpectNoReplace(),
+					},
+				},
+				Check: resource.ComposeAggregateTestCheckFunc(
+					resource.TestCheckResourceAttr(resourceName, "read_replicas.0.name", "read-replica"),
+					resource.TestCheckResourceAttr(resourceName, "read_replicas.0.log_stream_override.setting", "drop"),
+					resource.TestCheckNoResourceAttr(resourceName, "log_stream_override.setting"),
+				),
+			},
+			{
+				// Remove the replica's log stream override
+				ConfigFile: config.StaticFile("./testdata/postgres.tf"),
+				ConfigVariables: config.Variables{
+					"name":                           config.StringVariable("new-name"),
+					"database_name":                  config.StringVariable("db_name"),
+					"database_user":                  config.StringVariable("db_user"),
+					"high_availability_enabled":      config.BoolVariable(true),
+					"plan":                           config.StringVariable("pro_4gb"),
+					"ver":                            config.StringVariable("15"),
+					"read_replica":                   config.BoolVariable(true),
+					"environment_name":               config.StringVariable("second"),
+					"has_log_stream_setting":         config.BoolVariable(false),
+					"has_replica_log_stream_setting": config.BoolVariable(false),
+					"disk_size_gb":                   config.IntegerVariable(25),
+				},
+				ConfigPlanChecks: resource.ConfigPlanChecks{
+					PreApply: []plancheck.PlanCheck{
+						checks.ExpectNoReplace(),
+					},
+				},
+				Check: resource.ComposeAggregateTestCheckFunc(
+					resource.TestCheckResourceAttr(resourceName, "read_replicas.0.name", "read-replica"),
+					resource.TestCheckNoResourceAttr(resourceName, "read_replicas.0.log_stream_override.setting"),
+				),
+			},
+			{
 				// Update fields that require replacement
 				ConfigFile: config.StaticFile("./testdata/postgres.tf"),
 				ConfigVariables: config.Variables{

@@ -114,6 +114,7 @@ func PostgresResourceSchema(ctx context.Context) schema.Schema {
 								mapplanmodifier.UseStateForUnknown(),
 							},
 						},
+						"log_stream_override": resource.ReplicaLogStreamOverride,
 					},
 				},
 				Optional:            true,
@@ -161,8 +162,8 @@ func PostgresResourceSchema(ctx context.Context) schema.Schema {
 				},
 			},
 			"version": schema.StringAttribute{
-				Description:         "The Postgres version. Currently supported: `11`, `12`, `13`, `14`, `15`, `16`, and `17`",
-				MarkdownDescription: "The Postgres version. Currently supported: `11`, `12`, `13`, `14`, `15`, `16`, and `17`",
+				Description:         "The Postgres version. Currently supported: `11`, `12`, `13`, `14`, `15`, `16`, `17`, and `18`",
+				MarkdownDescription: "The Postgres version. Currently supported: `11`, `12`, `13`, `14`, `15`, `16`, `17`, and `18`",
 				Required:            true,
 				PlanModifiers: []planmodifier.String{
 					stringplanmodifier.RequiresReplace(),

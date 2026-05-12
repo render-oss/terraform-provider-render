@@ -36,11 +36,15 @@ func TestAccPostgresDataSource(t *testing.T) {
 					}),
 					resource.TestCheckResourceAttr(resourceName, "database_user", "test_user"),
 					resource.TestCheckResourceAttr(resourceName, "high_availability_enabled", "false"),
-					resource.TestCheckResourceAttr(resourceName, "plan", "basic_256mb"),
+					resource.TestCheckResourceAttr(resourceName, "plan", "pro_4gb"),
 					resource.TestCheckResourceAttr(resourceName, "disk_size_gb", "20"),
 					resource.TestCheckResourceAttr(resourceName, "region", "oregon"),
 					resource.TestCheckResourceAttr(resourceName, "role", "primary"),
 					resource.TestCheckResourceAttr(resourceName, "version", "16"),
+
+					resource.TestCheckResourceAttr(resourceName, "log_stream_override.setting", "drop"),
+					resource.TestCheckResourceAttr(resourceName, "read_replicas.0.name", "read-replica"),
+					resource.TestCheckResourceAttr(resourceName, "read_replicas.0.log_stream_override.setting", "drop"),
 
 					resource.TestCheckResourceAttrWith(resourceName, "connection_info.password", func(value string) error {
 						if len(value) != 32 {

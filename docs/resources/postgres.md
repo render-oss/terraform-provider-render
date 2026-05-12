@@ -48,7 +48,7 @@ resource "render_postgres" "example" {
 - `name` (String) Descriptive name for this postgres
 - `plan` (String) Plan to use for this postgres. Must be `free`, a basic plan (like `basic_256mb`), a pro plan (like `pro_4gb`), an accelerated plan (like `accelerated_16gb`), `starter`, `standard`, `pro`, `pro_plus`, or a custom plan
 - `region` (String) Region the postgres instance in
-- `version` (String) The Postgres version. Currently Supported: `11`, `12`, `13`, `14`, `15`, `16`, `17`, and  `18`
+- `version` (String) The Postgres version. Currently supported: `11`, `12`, `13`, `14`, `15`, `16`, `17`, and `18`
 
 ### Optional
 
@@ -101,11 +101,25 @@ Required:
 
 Optional:
 
+- `log_stream_override` (Attributes) Configure the [log stream override settings](https://render.com/docs/log-streams#overriding-defaults) for this replica. These take precedence over the workspace's default log stream and any setting on the primary. (see [below for nested schema](#nestedatt--read_replicas--log_stream_override))
 - `parameter_overrides` (Map of String) Parameter overrides for the read replica.
 
 Read-Only:
 
 - `id` (String) ID of the read replica.
+
+<a id="nestedatt--read_replicas--log_stream_override"></a>
+### Nested Schema for `read_replicas.log_stream_override`
+
+Required:
+
+- `setting` (String) Whether to send or drop logs for this replica. Must be one of `send` or `drop`.
+
+Optional:
+
+- `endpoint` (String) The endpoint to send logs to.
+- `token` (String, Sensitive) The token to use when sending logs.
+
 
 
 <a id="nestedatt--connection_info"></a>

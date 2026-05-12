@@ -39,6 +39,7 @@ type ReadReplica struct {
 	Name               types.String `tfsdk:"name"`
 	ID                 types.String `tfsdk:"id"`
 	ParameterOverrides types.Map    `tfsdk:"parameter_overrides"`
+	LogStreamOverride  types.Object `tfsdk:"log_stream_override"`
 }
 
 type ConnectionInfo struct {
@@ -93,29 +94,39 @@ func ParameterOverridesToGoMap(m types.Map, diags diag.Diagnostics) *client.Post
 	return &goMap
 }
 
-func ReadReplicaFromClient(c client.ReadReplicas, existingReplicas []ReadReplica, diags diag.Diagnostics) []ReadReplica {
+func ReadReplicaFromClient(c client.ReadReplicas, existingReplicas []ReadReplica, replicaLogStreams map[string]*logs.ResourceLogStreamSetting, diags diag.Diagnostics) []ReadReplica {
 	var res []ReadReplica
 	for _, item := range c {
 		// Convert parameter overrides
 		paramOverrides := ParameterOverridesToMap(item.ParameterOverrides, diags)
 
-		// Find matching replica in existing model to preserve null vs empty map
-		if item.ParameterOverrides == nil || len(*item.ParameterOverrides) == 0 {
-			// API returned empty - check if existing model had null
-			for _, existingReplica := range existingReplicas {
-				if existingReplica.Name.ValueString() == item.Name || existingReplica.ID.ValueString() == item.Id {
-					if existingReplica.ParameterOverrides.IsNull() {
-						paramOverrides = types.MapNull(types.StringType)
-					}
-					break
-				}
+		// Find matching replica in the existing model so we can (a) preserve
+		// null-vs-empty for parameter_overrides, and (b) thread the LSO token
+		// through, since the API doesn't return tokens on GET.
+		var existingReplica *ReadReplica
+		for i, er := range existingReplicas {
+			if er.Name.ValueString() == item.Name || er.ID.ValueString() == item.Id {
+				existingReplica = &existingReplicas[i]
+				break
 			}
+		}
+
+		if item.ParameterOverrides == nil || len(*item.ParameterOverrides) == 0 {
+			if existingReplica != nil && existingReplica.ParameterOverrides.IsNull() {
+				paramOverrides = types.MapNull(types.StringType)
+			}
+		}
+
+		var existingLSO types.Object
+		if existingReplica != nil {
+			existingLSO = existingReplica.LogStreamOverride
 		}
 
 		res = append(res, ReadReplica{
 			Name:               types.StringValue(item.Name),
 			ID:                 types.StringValue(item.Id),
 			ParameterOverrides: paramOverrides,
+			LogStreamOverride:  common.LogStreamOverrideFromClient(replicaLogStreams[item.Id], existingLSO, diags),
 		})
 	}
 
@@ -160,7 +171,7 @@ func connectionInfoFromClient(c *client.PostgresConnectionInfo, diags diag.Diagn
 	return objectValue
 }
 
-func ModelFromClient(postgres *client.PostgresDetail, connectionInfo *client.PostgresConnectionInfo, logStreamOverrides *logs.ResourceLogStreamSetting, existingModel PostgresModel, diags diag.Diagnostics) PostgresModel {
+func ModelFromClient(postgres *client.PostgresDetail, connectionInfo *client.PostgresConnectionInfo, logStreamOverrides *logs.ResourceLogStreamSetting, replicaLogStreams map[string]*logs.ResourceLogStreamSetting, existingModel PostgresModel, diags diag.Diagnostics) PostgresModel {
 	// Handle parameter_overrides: preserve null if it was null in existing model
 	parameterOverrides := ParameterOverridesToMap(postgres.ParameterOverrides, diags)
 	if existingModel.ParameterOverrides.IsNull() && (postgres.ParameterOverrides == nil || len(*postgres.ParameterOverrides) == 0) {
@@ -181,7 +192,7 @@ func ModelFromClient(postgres *client.PostgresDetail, connectionInfo *client.Pos
 		Region:                  types.StringValue(string(postgres.Region)),
 		Role:                    types.StringValue(string(postgres.Role)),
 		HighAvailabilityEnabled: types.BoolValue(postgres.HighAvailabilityEnabled),
-		ReadReplicas:            ReadReplicaFromClient(postgres.ReadReplicas, existingModel.ReadReplicas, diags),
+		ReadReplicas:            ReadReplicaFromClient(postgres.ReadReplicas, existingModel.ReadReplicas, replicaLogStreams, diags),
 		Version:                 types.StringValue(string(postgres.Version)),
 		ConnectionInfo:          connectionInfoFromClient(connectionInfo, diags),
 		LogStreamOverride:       common.LogStreamOverrideFromClient(logStreamOverrides, existingModel.LogStreamOverride, diags),
