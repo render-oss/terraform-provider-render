@@ -1,9 +1,8 @@
-# Before recording: replace the placeholder evm- ID below with a real
-# environment ID from the workspace used for the recording session.
-# The cassette will then capture that same ID and replay will match.
+# The evm- ID is the literal value captured during cassette recording;
+# don't change it without re-recording.
 resource "render_dedicated_ip" "example" {
   name            = "tf-acc-dsip-renamed"
   description     = "updated"
   region          = "oregon"
-  environment_ids = ["evm-replace-with-real-env-id"]
+  environment_ids = ["evm-d81pghf7f7vs73bocn1g"]
 }
