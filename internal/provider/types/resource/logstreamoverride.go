@@ -2,7 +2,10 @@ package resource
 
 import (
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
-	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/objectplanmodifier"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringplanmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 )
 
@@ -21,6 +24,9 @@ var LogStreamOverride = schema.SingleNestedAttribute{
 			Computed:            true,
 			Description:         "The endpoint to send logs to.",
 			MarkdownDescription: "The endpoint to send logs to.",
+			PlanModifiers: []planmodifier.String{
+				stringplanmodifier.UseStateForUnknown(),
+			},
 		},
 		"token": schema.StringAttribute{
 			Optional:            true,
@@ -32,6 +38,9 @@ var LogStreamOverride = schema.SingleNestedAttribute{
 	Optional:    true,
 	Computed:    true,
 	Description: "Configure the [log stream override settings](https://render.com/docs/log-streams#overriding-defaults) for this service. These will override the global log stream settings of the user or team.",
+	PlanModifiers: []planmodifier.Object{
+		objectplanmodifier.UseStateForUnknown(),
+	},
 }
 
 // ReplicaLogStreamOverride is the variant used inside a SetNestedAttribute (e.g.
