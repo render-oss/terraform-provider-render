@@ -30,6 +30,8 @@ import (
 	"terraform-provider-render/internal/provider/common"
 
 	backgroundwokrerresource "terraform-provider-render/internal/provider/backgroundworker/resource"
+	dedicatedipdatasource "terraform-provider-render/internal/provider/dedicatedip/datasource"
+	dedicatedipresource "terraform-provider-render/internal/provider/dedicatedip/resource"
 	envgroupresource "terraform-provider-render/internal/provider/envgroup/resource"
 	keyvalueresource "terraform-provider-render/internal/provider/keyvalue/resource"
 	notificationsdatasource "terraform-provider-render/internal/provider/notifications/datasource"
@@ -344,6 +346,7 @@ func (p *renderProvider) DataSources(_ context.Context) []func() datasource.Data
 	return []func() datasource.DataSource{
 		backgroundworkerdatasource.NewBackgroundWorkerSource,
 		cronjobdatasource.NewCronJobSource,
+		dedicatedipdatasource.NewDedicatedIPDataSource,
 		envgroupdatasource.NewEnvGroupDataSource,
 		envgroupdatasource.NewEnvGroupLinkDataSource,
 		keyvaluedatasource.NewKeyValueSource,
@@ -366,6 +369,7 @@ func (p *renderProvider) Resources(_ context.Context) []func() resource.Resource
 	return []func() resource.Resource{
 		backgroundwokrerresource.NewBackgroundWorkerResource,
 		cronjobresource.NewCronJobResource,
+		dedicatedipresource.NewDedicatedIPResource,
 		envgroupresource.NewEnvGroupResource,
 		envgroupresource.NewEnvGroupLinkResource,
 		keyvalueresource.NewKeyValueResource,
