@@ -7,6 +7,8 @@ import (
 	"encoding/json"
 	"time"
 
+	externalRef4 "terraform-provider-render/internal/client/envvar"
+
 	"github.com/oapi-codegen/runtime"
 )
 
@@ -224,10 +226,11 @@ type Workflow struct {
 // WorkflowCreate defines model for WorkflowCreate.
 type WorkflowCreate struct {
 	// AutoDeployTrigger Controls autodeploy behavior. "commit" deploys when a commit is pushed to the branch. "checksPass" waits for CI checks to pass before deploying. "off" disables autodeploy.
-	AutoDeployTrigger *AutoDeployTrigger `json:"autoDeployTrigger,omitempty"`
-	BuildConfig       BuildConfig        `json:"buildConfig"`
-	Name              string             `json:"name"`
-	OwnerId           string             `json:"ownerId"`
+	AutoDeployTrigger *AutoDeployTrigger             `json:"autoDeployTrigger,omitempty"`
+	BuildConfig       BuildConfig                    `json:"buildConfig"`
+	EnvVars           *externalRef4.EnvVarInputArray `json:"envVars,omitempty"`
+	Name              string                         `json:"name"`
+	OwnerId           string                         `json:"ownerId"`
 
 	// Region Defaults to "oregon"
 	Region Region `json:"region"`

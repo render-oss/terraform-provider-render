@@ -11,18 +11,18 @@ import (
 	externalRef1 "terraform-provider-render/internal/client/autoscaling"
 	externalRef2 "terraform-provider-render/internal/client/blueprints"
 	externalRef3 "terraform-provider-render/internal/client/disks"
-	externalRef4 "terraform-provider-render/internal/client/events"
-	externalRef6 "terraform-provider-render/internal/client/eventtypes"
-	externalRef7 "terraform-provider-render/internal/client/jobs"
-	externalRef8 "terraform-provider-render/internal/client/logs"
-	externalRef9 "terraform-provider-render/internal/client/maintenance"
-	externalRef10 "terraform-provider-render/internal/client/metrics"
-	externalRef11 "terraform-provider-render/internal/client/notifications"
-	externalRef12 "terraform-provider-render/internal/client/postgres"
-	externalRef13 "terraform-provider-render/internal/client/sandboxes"
-	externalRef14 "terraform-provider-render/internal/client/storage"
-	externalRef15 "terraform-provider-render/internal/client/webhooks"
-	externalRef16 "terraform-provider-render/internal/client/workflows"
+	externalRef5 "terraform-provider-render/internal/client/events"
+	externalRef7 "terraform-provider-render/internal/client/eventtypes"
+	externalRef8 "terraform-provider-render/internal/client/jobs"
+	externalRef9 "terraform-provider-render/internal/client/logs"
+	externalRef10 "terraform-provider-render/internal/client/maintenance"
+	externalRef11 "terraform-provider-render/internal/client/metrics"
+	externalRef12 "terraform-provider-render/internal/client/notifications"
+	externalRef13 "terraform-provider-render/internal/client/postgres"
+	externalRef14 "terraform-provider-render/internal/client/sandboxes"
+	externalRef15 "terraform-provider-render/internal/client/storage"
+	externalRef16 "terraform-provider-render/internal/client/webhooks"
+	externalRef17 "terraform-provider-render/internal/client/workflows"
 
 	"github.com/oapi-codegen/runtime"
 )
@@ -1169,7 +1169,7 @@ type InstanceId = string
 // JobWithCursor defines model for jobWithCursor.
 type JobWithCursor struct {
 	Cursor Cursor           `json:"cursor"`
-	Job    externalRef7.Job `json:"job"`
+	Job    externalRef8.Job `json:"job"`
 }
 
 // KeyValue A Key Value instance
@@ -1232,8 +1232,8 @@ type KeyValueDetail struct {
 	Id string `json:"id"`
 
 	// IpAllowList The IP allow list for the Key Value instance
-	IpAllowList []CidrBlockAndDescription    `json:"ipAllowList"`
-	Maintenance *externalRef9.MaintenanceRun `json:"maintenance,omitempty"`
+	IpAllowList []CidrBlockAndDescription     `json:"ipAllowList"`
+	Maintenance *externalRef10.MaintenanceRun `json:"maintenance,omitempty"`
 
 	// Name The name of the Key Value instance
 	Name string `json:"name"`
@@ -1349,7 +1349,7 @@ type NetworkIsolationEnabled = bool
 // NotificationOverrideWithCursor defines model for notificationOverrideWithCursor.
 type NotificationOverrideWithCursor struct {
 	Cursor   Cursor                             `json:"cursor"`
-	Override externalRef11.NotificationOverride `json:"override"`
+	Override externalRef12.NotificationOverride `json:"override"`
 }
 
 // NotifySetting defines model for notifySetting.
@@ -1404,7 +1404,7 @@ type Postgres struct {
 	IpAllowList             []CidrBlockAndDescription   `json:"ipAllowList"`
 	Name                    string                      `json:"name"`
 	Owner                   Owner                       `json:"owner"`
-	Plan                    externalRef12.PostgresPlans `json:"plan"`
+	Plan                    externalRef13.PostgresPlans `json:"plan"`
 	PrimaryPostgresID       *string                     `json:"primaryPostgresID,omitempty"`
 	ReadReplicas            ReadReplicas                `json:"readReplicas"`
 
@@ -1444,17 +1444,17 @@ type PostgresDetail struct {
 	EnvironmentId          *string `json:"environmentId,omitempty"`
 
 	// ExpiresAt The time at which the database will be expire. Applies to free tier databases only.
-	ExpiresAt               *time.Time                   `json:"expiresAt,omitempty"`
-	HighAvailabilityEnabled bool                         `json:"highAvailabilityEnabled"`
-	Id                      string                       `json:"id"`
-	IpAllowList             []CidrBlockAndDescription    `json:"ipAllowList"`
-	Maintenance             *externalRef9.MaintenanceRun `json:"maintenance,omitempty"`
-	Name                    string                       `json:"name"`
-	Owner                   Owner                        `json:"owner"`
-	ParameterOverrides      *PostgresParameterOverrides  `json:"parameterOverrides,omitempty"`
-	Plan                    externalRef12.PostgresPlans  `json:"plan"`
-	PrimaryPostgresID       *string                      `json:"primaryPostgresID,omitempty"`
-	ReadReplicas            ReadReplicas                 `json:"readReplicas"`
+	ExpiresAt               *time.Time                    `json:"expiresAt,omitempty"`
+	HighAvailabilityEnabled bool                          `json:"highAvailabilityEnabled"`
+	Id                      string                        `json:"id"`
+	IpAllowList             []CidrBlockAndDescription     `json:"ipAllowList"`
+	Maintenance             *externalRef10.MaintenanceRun `json:"maintenance,omitempty"`
+	Name                    string                        `json:"name"`
+	Owner                   Owner                         `json:"owner"`
+	ParameterOverrides      *PostgresParameterOverrides   `json:"parameterOverrides,omitempty"`
+	Plan                    externalRef13.PostgresPlans   `json:"plan"`
+	PrimaryPostgresID       *string                       `json:"primaryPostgresID,omitempty"`
+	ReadReplicas            ReadReplicas                  `json:"readReplicas"`
 
 	// Region Defaults to "oregon"
 	Region     Region                  `json:"region"`
@@ -1486,7 +1486,7 @@ type PostgresPATCHInput struct {
 	IpAllowList            *[]CidrBlockAndDescription   `json:"ipAllowList,omitempty"`
 	Name                   *string                      `json:"name,omitempty"`
 	ParameterOverrides     *PostgresParameterOverrides  `json:"parameterOverrides,omitempty"`
-	Plan                   *externalRef12.PostgresPlans `json:"plan,omitempty"`
+	Plan                   *externalRef13.PostgresPlans `json:"plan,omitempty"`
 	ReadReplicas           *ReadReplicasInput           `json:"readReplicas,omitempty"`
 }
 
@@ -1514,7 +1514,7 @@ type PostgresPOSTInput struct {
 	// OwnerId The ID of the workspace to create the database for
 	OwnerId            string                      `json:"ownerId"`
 	ParameterOverrides *PostgresParameterOverrides `json:"parameterOverrides,omitempty"`
-	Plan               externalRef12.PostgresPlans `json:"plan"`
+	Plan               externalRef13.PostgresPlans `json:"plan"`
 	ReadReplicas       *ReadReplicasInput          `json:"readReplicas,omitempty"`
 
 	// Region Defaults to "oregon"
@@ -1789,8 +1789,8 @@ type RedisDetail struct {
 	Id string `json:"id"`
 
 	// IpAllowList The IP allow list for the Redis instance
-	IpAllowList []CidrBlockAndDescription    `json:"ipAllowList"`
-	Maintenance *externalRef9.MaintenanceRun `json:"maintenance,omitempty"`
+	IpAllowList []CidrBlockAndDescription     `json:"ipAllowList"`
+	Maintenance *externalRef10.MaintenanceRun `json:"maintenance,omitempty"`
 
 	// Name The name of the Redis instance
 	Name string `json:"name"`
@@ -1952,7 +1952,7 @@ type RouteWithCursor struct {
 // SandboxWithCursor A sandbox with a cursor
 type SandboxWithCursor struct {
 	Cursor  Cursor                `json:"cursor"`
-	Sandbox externalRef13.Sandbox `json:"sandbox"`
+	Sandbox externalRef14.Sandbox `json:"sandbox"`
 }
 
 // SecretFile defines model for secretFile.
@@ -2039,7 +2039,7 @@ type ServiceEnv string
 
 // ServiceEventWithCursor A service event with a cursor
 type ServiceEventWithCursor struct {
-	Event externalRef4.ServiceEvent `json:"event"`
+	Event externalRef5.ServiceEvent `json:"event"`
 }
 
 // ServiceInstance defines model for serviceInstance.
@@ -2195,13 +2195,13 @@ type SyncWithCursor struct {
 // TaskRunWithCursor defines model for taskRunWithCursor.
 type TaskRunWithCursor struct {
 	Cursor  Cursor                `json:"cursor"`
-	TaskRun externalRef16.TaskRun `json:"taskRun"`
+	TaskRun externalRef17.TaskRun `json:"taskRun"`
 }
 
 // TaskWithCursor defines model for taskWithCursor.
 type TaskWithCursor struct {
 	Cursor Cursor             `json:"cursor"`
-	Task   externalRef16.Task `json:"task"`
+	Task   externalRef17.Task `json:"task"`
 }
 
 // TeamMember defines model for teamMember.
@@ -2344,25 +2344,25 @@ type WebServiceDetailsPOST struct {
 // WebhookEventWithCursor defines model for webhookEventWithCursor.
 type WebhookEventWithCursor struct {
 	Cursor       Cursor                     `json:"cursor"`
-	WebhookEvent externalRef15.WebhookEvent `json:"webhookEvent"`
+	WebhookEvent externalRef16.WebhookEvent `json:"webhookEvent"`
 }
 
 // WebhookWithCursor defines model for webhookWithCursor.
 type WebhookWithCursor struct {
 	Cursor  Cursor                `json:"cursor"`
-	Webhook externalRef15.Webhook `json:"webhook"`
+	Webhook externalRef16.Webhook `json:"webhook"`
 }
 
 // WorkflowVersionWithCursor defines model for workflowVersionWithCursor.
 type WorkflowVersionWithCursor struct {
 	Cursor          Cursor                        `json:"cursor"`
-	WorkflowVersion externalRef16.WorkflowVersion `json:"workflowVersion"`
+	WorkflowVersion externalRef17.WorkflowVersion `json:"workflowVersion"`
 }
 
 // WorkflowWithCursor defines model for workflowWithCursor.
 type WorkflowWithCursor struct {
 	Cursor   Cursor                 `json:"cursor"`
-	Workflow externalRef16.Workflow `json:"workflow"`
+	Workflow externalRef17.Workflow `json:"workflow"`
 }
 
 // AuditLogLimitParam Defaults to 20
@@ -2506,7 +2506,7 @@ type N503ServiceUnavailable = Error
 type Logs200Response struct {
 	// HasMore Ture if there are more logs to fetch
 	HasMore bool               `json:"hasMore"`
-	Logs    []externalRef8.Log `json:"logs"`
+	Logs    []externalRef9.Log `json:"logs"`
 
 	// NextEndTime The end time to use in the next query to fetch the next set of logs
 	NextEndTime time.Time `json:"nextEndTime"`
@@ -2725,40 +2725,40 @@ type ListLogsParams struct {
 
 	// Direction The direction to query logs for. Backward will return most recent logs first.
 	// Forward will start with the oldest logs in the time range.
-	Direction *externalRef8.DirectionParam `form:"direction,omitempty" json:"direction,omitempty"`
+	Direction *externalRef9.DirectionParam `form:"direction,omitempty" json:"direction,omitempty"`
 
 	// Resource Filter logs by their resource. A resource is the id of a server, cronjob, job, postgres, redis, or workflow.
-	Resource externalRef8.LogFilterResource `form:"resource" json:"resource"`
+	Resource externalRef9.LogFilterResource `form:"resource" json:"resource"`
 
 	// Instance Filter logs by the instance they were emitted from. An instance is the id of a specific running server.
-	Instance *externalRef8.LogFilterInstance `form:"instance,omitempty" json:"instance,omitempty"`
+	Instance *externalRef9.LogFilterInstance `form:"instance,omitempty" json:"instance,omitempty"`
 
 	// Host Filter request logs by their host. [Wildcards and regex](https://render.com/docs/logging#wildcards-and-regular-expressions) are supported.
-	Host *externalRef8.LogFilterHost `form:"host,omitempty" json:"host,omitempty"`
+	Host *externalRef9.LogFilterHost `form:"host,omitempty" json:"host,omitempty"`
 
 	// StatusCode Filter request logs by their status code. [Wildcards and regex](https://render.com/docs/logging#wildcards-and-regular-expressions) are supported.
-	StatusCode *externalRef8.LogFilterStatusCode `form:"statusCode,omitempty" json:"statusCode,omitempty"`
+	StatusCode *externalRef9.LogFilterStatusCode `form:"statusCode,omitempty" json:"statusCode,omitempty"`
 
 	// Method Filter request logs by their requests method. [Wildcards and regex](https://render.com/docs/logging#wildcards-and-regular-expressions) are supported.
-	Method *externalRef8.LogFilterMethod `form:"method,omitempty" json:"method,omitempty"`
+	Method *externalRef9.LogFilterMethod `form:"method,omitempty" json:"method,omitempty"`
 
 	// Task Filter logs by their task(s)
-	Task *externalRef8.LogFilterTask `form:"task,omitempty" json:"task,omitempty"`
+	Task *externalRef9.LogFilterTask `form:"task,omitempty" json:"task,omitempty"`
 
 	// TaskRun Filter logs by their task run id(s)
-	TaskRun *externalRef8.LogFilterTaskRun `form:"taskRun,omitempty" json:"taskRun,omitempty"`
+	TaskRun *externalRef9.LogFilterTaskRun `form:"taskRun,omitempty" json:"taskRun,omitempty"`
 
 	// Level Filter logs by their severity level. [Wildcards and regex](https://render.com/docs/logging#wildcards-and-regular-expressions) are supported.
-	Level *externalRef8.LogFilterLevel `form:"level,omitempty" json:"level,omitempty"`
+	Level *externalRef9.LogFilterLevel `form:"level,omitempty" json:"level,omitempty"`
 
 	// Type Filter logs by their type. Types include `app` for application logs, `request` for request logs, and `build` for build logs. You can find the full set of types available for a query by using the `GET /logs/values` endpoint.
-	Type *externalRef8.LogFilterType `form:"type,omitempty" json:"type,omitempty"`
+	Type *externalRef9.LogFilterType `form:"type,omitempty" json:"type,omitempty"`
 
 	// Text Filter by the text of the logs. [Wildcards and regex](https://render.com/docs/logging#wildcards-and-regular-expressions) are supported.
-	Text *externalRef8.LogFilterText `form:"text,omitempty" json:"text,omitempty"`
+	Text *externalRef9.LogFilterText `form:"text,omitempty" json:"text,omitempty"`
 
 	// Path Filter request logs by their path. [Wildcards and regex](https://render.com/docs/logging#wildcards-and-regular-expressions) are supported.
-	Path *externalRef8.LogFilterPath `form:"path,omitempty" json:"path,omitempty"`
+	Path *externalRef9.LogFilterPath `form:"path,omitempty" json:"path,omitempty"`
 
 	// Limit The maximum number of items to return. For details, see [Pagination](https://api-docs.render.com/reference/pagination).
 	Limit *LimitParam `form:"limit,omitempty" json:"limit,omitempty"`
@@ -2770,13 +2770,13 @@ type ListResourceLogStreamsParams struct {
 	OwnerId *OwnerIdParam `form:"ownerId,omitempty" json:"ownerId,omitempty"`
 
 	// LogStreamId Filter log streams by their id.
-	LogStreamId *externalRef8.LogStreamIdFilter `form:"logStreamId,omitempty" json:"logStreamId,omitempty"`
+	LogStreamId *externalRef9.LogStreamIdFilter `form:"logStreamId,omitempty" json:"logStreamId,omitempty"`
 
 	// ResourceId IDs of resources (server, cron job, postgres, or redis) to filter by
 	ResourceId *ResourceIdParam `form:"resourceId,omitempty" json:"resourceId,omitempty"`
 
 	// Setting Filter log streams by their setting.
-	Setting *externalRef8.LogStreamSettingFilter `form:"setting,omitempty" json:"setting,omitempty"`
+	Setting *externalRef9.LogStreamSettingFilter `form:"setting,omitempty" json:"setting,omitempty"`
 
 	// Cursor The position in the result list to start from when fetching paginated results. For details, see [Pagination](https://api-docs.render.com/reference/pagination).
 	Cursor *CursorParam `form:"cursor,omitempty" json:"cursor,omitempty"`
@@ -2798,40 +2798,40 @@ type SubscribeLogsParams struct {
 
 	// Direction The direction to query logs for. Backward will return most recent logs first.
 	// Forward will start with the oldest logs in the time range.
-	Direction *externalRef8.DirectionParam `form:"direction,omitempty" json:"direction,omitempty"`
+	Direction *externalRef9.DirectionParam `form:"direction,omitempty" json:"direction,omitempty"`
 
 	// Resource Filter logs by their resource. A resource is the id of a server, cronjob, job, postgres, redis, or workflow.
-	Resource externalRef8.LogFilterResource `form:"resource" json:"resource"`
+	Resource externalRef9.LogFilterResource `form:"resource" json:"resource"`
 
 	// Instance Filter logs by the instance they were emitted from. An instance is the id of a specific running server.
-	Instance *externalRef8.LogFilterInstance `form:"instance,omitempty" json:"instance,omitempty"`
+	Instance *externalRef9.LogFilterInstance `form:"instance,omitempty" json:"instance,omitempty"`
 
 	// Host Filter request logs by their host. [Wildcards and regex](https://render.com/docs/logging#wildcards-and-regular-expressions) are supported.
-	Host *externalRef8.LogFilterHost `form:"host,omitempty" json:"host,omitempty"`
+	Host *externalRef9.LogFilterHost `form:"host,omitempty" json:"host,omitempty"`
 
 	// StatusCode Filter request logs by their status code. [Wildcards and regex](https://render.com/docs/logging#wildcards-and-regular-expressions) are supported.
-	StatusCode *externalRef8.LogFilterStatusCode `form:"statusCode,omitempty" json:"statusCode,omitempty"`
+	StatusCode *externalRef9.LogFilterStatusCode `form:"statusCode,omitempty" json:"statusCode,omitempty"`
 
 	// Method Filter request logs by their requests method. [Wildcards and regex](https://render.com/docs/logging#wildcards-and-regular-expressions) are supported.
-	Method *externalRef8.LogFilterMethod `form:"method,omitempty" json:"method,omitempty"`
+	Method *externalRef9.LogFilterMethod `form:"method,omitempty" json:"method,omitempty"`
 
 	// Task Filter logs by their task(s)
-	Task *externalRef8.LogFilterTask `form:"task,omitempty" json:"task,omitempty"`
+	Task *externalRef9.LogFilterTask `form:"task,omitempty" json:"task,omitempty"`
 
 	// TaskRun Filter logs by their task run id(s)
-	TaskRun *externalRef8.LogFilterTaskRun `form:"taskRun,omitempty" json:"taskRun,omitempty"`
+	TaskRun *externalRef9.LogFilterTaskRun `form:"taskRun,omitempty" json:"taskRun,omitempty"`
 
 	// Level Filter logs by their severity level. [Wildcards and regex](https://render.com/docs/logging#wildcards-and-regular-expressions) are supported.
-	Level *externalRef8.LogFilterLevel `form:"level,omitempty" json:"level,omitempty"`
+	Level *externalRef9.LogFilterLevel `form:"level,omitempty" json:"level,omitempty"`
 
 	// Type Filter logs by their type. Types include `app` for application logs, `request` for request logs, and `build` for build logs. You can find the full set of types available for a query by using the `GET /logs/values` endpoint.
-	Type *externalRef8.LogFilterType `form:"type,omitempty" json:"type,omitempty"`
+	Type *externalRef9.LogFilterType `form:"type,omitempty" json:"type,omitempty"`
 
 	// Text Filter by the text of the logs. [Wildcards and regex](https://render.com/docs/logging#wildcards-and-regular-expressions) are supported.
-	Text *externalRef8.LogFilterText `form:"text,omitempty" json:"text,omitempty"`
+	Text *externalRef9.LogFilterText `form:"text,omitempty" json:"text,omitempty"`
 
 	// Path Filter request logs by their path. [Wildcards and regex](https://render.com/docs/logging#wildcards-and-regular-expressions) are supported.
-	Path *externalRef8.LogFilterPath `form:"path,omitempty" json:"path,omitempty"`
+	Path *externalRef9.LogFilterPath `form:"path,omitempty" json:"path,omitempty"`
 
 	// Limit The maximum number of items to return. For details, see [Pagination](https://api-docs.render.com/reference/pagination).
 	Limit *LimitParam `form:"limit,omitempty" json:"limit,omitempty"`
@@ -2853,40 +2853,40 @@ type ListLogsValuesParams struct {
 
 	// Direction The direction to query logs for. Backward will return most recent logs first.
 	// Forward will start with the oldest logs in the time range.
-	Direction *externalRef8.DirectionParam `form:"direction,omitempty" json:"direction,omitempty"`
+	Direction *externalRef9.DirectionParam `form:"direction,omitempty" json:"direction,omitempty"`
 
 	// Resource Filter logs by their resource. A resource is the id of a server, cronjob, job, postgres, redis, or workflow.
-	Resource externalRef8.LogFilterResource `form:"resource" json:"resource"`
+	Resource externalRef9.LogFilterResource `form:"resource" json:"resource"`
 
 	// Instance Filter logs by the instance they were emitted from. An instance is the id of a specific running server.
-	Instance *externalRef8.LogFilterInstance `form:"instance,omitempty" json:"instance,omitempty"`
+	Instance *externalRef9.LogFilterInstance `form:"instance,omitempty" json:"instance,omitempty"`
 
 	// Host Filter request logs by their host. [Wildcards and regex](https://render.com/docs/logging#wildcards-and-regular-expressions) are supported.
-	Host *externalRef8.LogFilterHost `form:"host,omitempty" json:"host,omitempty"`
+	Host *externalRef9.LogFilterHost `form:"host,omitempty" json:"host,omitempty"`
 
 	// StatusCode Filter request logs by their status code. [Wildcards and regex](https://render.com/docs/logging#wildcards-and-regular-expressions) are supported.
-	StatusCode *externalRef8.LogFilterStatusCode `form:"statusCode,omitempty" json:"statusCode,omitempty"`
+	StatusCode *externalRef9.LogFilterStatusCode `form:"statusCode,omitempty" json:"statusCode,omitempty"`
 
 	// Method Filter request logs by their requests method. [Wildcards and regex](https://render.com/docs/logging#wildcards-and-regular-expressions) are supported.
-	Method *externalRef8.LogFilterMethod `form:"method,omitempty" json:"method,omitempty"`
+	Method *externalRef9.LogFilterMethod `form:"method,omitempty" json:"method,omitempty"`
 
 	// Task Filter logs by their task(s)
-	Task *externalRef8.LogFilterTask `form:"task,omitempty" json:"task,omitempty"`
+	Task *externalRef9.LogFilterTask `form:"task,omitempty" json:"task,omitempty"`
 
 	// TaskRun Filter logs by their task run id(s)
-	TaskRun *externalRef8.LogFilterTaskRun `form:"taskRun,omitempty" json:"taskRun,omitempty"`
+	TaskRun *externalRef9.LogFilterTaskRun `form:"taskRun,omitempty" json:"taskRun,omitempty"`
 
 	// Level Filter logs by their severity level. [Wildcards and regex](https://render.com/docs/logging#wildcards-and-regular-expressions) are supported.
-	Level *externalRef8.LogFilterLevel `form:"level,omitempty" json:"level,omitempty"`
+	Level *externalRef9.LogFilterLevel `form:"level,omitempty" json:"level,omitempty"`
 
 	// Type Filter logs by their type. Types include `app` for application logs, `request` for request logs, and `build` for build logs. You can find the full set of types available for a query by using the `GET /logs/values` endpoint.
-	Type *externalRef8.LogFilterType `form:"type,omitempty" json:"type,omitempty"`
+	Type *externalRef9.LogFilterType `form:"type,omitempty" json:"type,omitempty"`
 
 	// Text Filter by the text of the logs. [Wildcards and regex](https://render.com/docs/logging#wildcards-and-regular-expressions) are supported.
-	Text *externalRef8.LogFilterText `form:"text,omitempty" json:"text,omitempty"`
+	Text *externalRef9.LogFilterText `form:"text,omitempty" json:"text,omitempty"`
 
 	// Path Filter request logs by their path. [Wildcards and regex](https://render.com/docs/logging#wildcards-and-regular-expressions) are supported.
-	Path *externalRef8.LogFilterPath `form:"path,omitempty" json:"path,omitempty"`
+	Path *externalRef9.LogFilterPath `form:"path,omitempty" json:"path,omitempty"`
 
 	// Limit The maximum number of items to return. For details, see [Pagination](https://api-docs.render.com/reference/pagination).
 	Limit *LimitParam `form:"limit,omitempty" json:"limit,omitempty"`
@@ -2897,11 +2897,11 @@ type ListLogsValuesParamsLabel string
 
 // ListMaintenanceParams defines parameters for ListMaintenance.
 type ListMaintenanceParams struct {
-	ResourceId *externalRef9.MaintenanceResourcesParam `form:"resourceId,omitempty" json:"resourceId,omitempty"`
+	ResourceId *externalRef10.MaintenanceResourcesParam `form:"resourceId,omitempty" json:"resourceId,omitempty"`
 
 	// OwnerId The ID of the workspaces to return resources for
-	OwnerId *OwnerIdParam                       `form:"ownerId,omitempty" json:"ownerId,omitempty"`
-	State   *externalRef9.MaintenanceStateParam `form:"state,omitempty" json:"state,omitempty"`
+	OwnerId *OwnerIdParam                        `form:"ownerId,omitempty" json:"ownerId,omitempty"`
+	State   *externalRef10.MaintenanceStateParam `form:"state,omitempty" json:"state,omitempty"`
 }
 
 // GetActiveConnectionsParams defines parameters for GetActiveConnections.
@@ -2913,10 +2913,10 @@ type GetActiveConnectionsParams struct {
 	EndTime *EndTimeParam `form:"endTime,omitempty" json:"endTime,omitempty"`
 
 	// ResolutionSeconds The resolution of the returned data
-	ResolutionSeconds *externalRef10.ResolutionParam `form:"resolutionSeconds,omitempty" json:"resolutionSeconds,omitempty"`
+	ResolutionSeconds *externalRef11.ResolutionParam `form:"resolutionSeconds,omitempty" json:"resolutionSeconds,omitempty"`
 
 	// Resource Resource ID to query. When multiple resource query params are provided, they are ORed together. Resources Postgres ids or Redis ids
-	Resource *externalRef10.DatastoreResourceQueryParam `form:"resource,omitempty" json:"resource,omitempty"`
+	Resource *externalRef11.DatastoreResourceQueryParam `form:"resource,omitempty" json:"resource,omitempty"`
 }
 
 // GetBandwidthParams defines parameters for GetBandwidth.
@@ -2928,10 +2928,10 @@ type GetBandwidthParams struct {
 	EndTime *EndTimeParam `form:"endTime,omitempty" json:"endTime,omitempty"`
 
 	// Resource Service ID to query. When multiple service ids are provided, they are ORed together
-	Resource *externalRef10.ServiceResourceQueryParam `form:"resource,omitempty" json:"resource,omitempty"`
+	Resource *externalRef11.ServiceResourceQueryParam `form:"resource,omitempty" json:"resource,omitempty"`
 
 	// Service This parameter is deprecated. Please use `resource` instead
-	Service *externalRef10.ServiceQueryParam `form:"service,omitempty" json:"service,omitempty"`
+	Service *externalRef11.ServiceQueryParam `form:"service,omitempty" json:"service,omitempty"`
 }
 
 // GetBandwidthSourcesParams defines parameters for GetBandwidthSources.
@@ -2943,10 +2943,10 @@ type GetBandwidthSourcesParams struct {
 	EndTime *EndTimeParam `form:"endTime,omitempty" json:"endTime,omitempty"`
 
 	// Resource Service ID to query. When multiple service ids are provided, they are ORed together
-	Resource *externalRef10.ServiceResourceQueryParam `form:"resource,omitempty" json:"resource,omitempty"`
+	Resource *externalRef11.ServiceResourceQueryParam `form:"resource,omitempty" json:"resource,omitempty"`
 
 	// Service This parameter is deprecated. Please use `resource` instead
-	Service *externalRef10.ServiceQueryParam `form:"service,omitempty" json:"service,omitempty"`
+	Service *externalRef11.ServiceQueryParam `form:"service,omitempty" json:"service,omitempty"`
 }
 
 // GetCpuParams defines parameters for GetCpu.
@@ -2958,19 +2958,19 @@ type GetCpuParams struct {
 	EndTime *EndTimeParam `form:"endTime,omitempty" json:"endTime,omitempty"`
 
 	// ResolutionSeconds The resolution of the returned data
-	ResolutionSeconds *externalRef10.ResolutionParam `form:"resolutionSeconds,omitempty" json:"resolutionSeconds,omitempty"`
+	ResolutionSeconds *externalRef11.ResolutionParam `form:"resolutionSeconds,omitempty" json:"resolutionSeconds,omitempty"`
 
 	// Resource Resource ID to query. When multiple resource query params are provided, they are ORed together. Resources can be service ids, Postgres ids, or Redis ids
-	Resource *externalRef10.ResourceQueryParam `form:"resource,omitempty" json:"resource,omitempty"`
+	Resource *externalRef11.ResourceQueryParam `form:"resource,omitempty" json:"resource,omitempty"`
 
 	// Service This parameter is deprecated. Please use `resource` instead
-	Service *externalRef10.ServiceQueryParam `form:"service,omitempty" json:"service,omitempty"`
+	Service *externalRef11.ServiceQueryParam `form:"service,omitempty" json:"service,omitempty"`
 
 	// Instance Instance ID to query. When multiple instance ID query params are provided, they are ORed together
-	Instance *externalRef10.InstanceQueryParam `form:"instance,omitempty" json:"instance,omitempty"`
+	Instance *externalRef11.InstanceQueryParam `form:"instance,omitempty" json:"instance,omitempty"`
 
 	// AggregationMethod The aggregation method to apply to multiple time series
-	AggregationMethod *externalRef10.ApplicationMetricAggregationMethod `form:"aggregationMethod,omitempty" json:"aggregationMethod,omitempty"`
+	AggregationMethod *externalRef11.ApplicationMetricAggregationMethod `form:"aggregationMethod,omitempty" json:"aggregationMethod,omitempty"`
 }
 
 // GetCpuLimitParams defines parameters for GetCpuLimit.
@@ -2982,16 +2982,16 @@ type GetCpuLimitParams struct {
 	EndTime *EndTimeParam `form:"endTime,omitempty" json:"endTime,omitempty"`
 
 	// ResolutionSeconds The resolution of the returned data
-	ResolutionSeconds *externalRef10.ResolutionParam `form:"resolutionSeconds,omitempty" json:"resolutionSeconds,omitempty"`
+	ResolutionSeconds *externalRef11.ResolutionParam `form:"resolutionSeconds,omitempty" json:"resolutionSeconds,omitempty"`
 
 	// Resource Resource ID to query. When multiple resource query params are provided, they are ORed together. Resources can be service ids, Postgres ids, or Redis ids
-	Resource *externalRef10.ResourceQueryParam `form:"resource,omitempty" json:"resource,omitempty"`
+	Resource *externalRef11.ResourceQueryParam `form:"resource,omitempty" json:"resource,omitempty"`
 
 	// Service This parameter is deprecated. Please use `resource` instead
-	Service *externalRef10.ServiceQueryParam `form:"service,omitempty" json:"service,omitempty"`
+	Service *externalRef11.ServiceQueryParam `form:"service,omitempty" json:"service,omitempty"`
 
 	// Instance Instance ID to query. When multiple instance ID query params are provided, they are ORed together
-	Instance *externalRef10.InstanceQueryParam `form:"instance,omitempty" json:"instance,omitempty"`
+	Instance *externalRef11.InstanceQueryParam `form:"instance,omitempty" json:"instance,omitempty"`
 }
 
 // GetCpuTargetParams defines parameters for GetCpuTarget.
@@ -3003,16 +3003,16 @@ type GetCpuTargetParams struct {
 	EndTime *EndTimeParam `form:"endTime,omitempty" json:"endTime,omitempty"`
 
 	// ResolutionSeconds The resolution of the returned data
-	ResolutionSeconds *externalRef10.ResolutionParam `form:"resolutionSeconds,omitempty" json:"resolutionSeconds,omitempty"`
+	ResolutionSeconds *externalRef11.ResolutionParam `form:"resolutionSeconds,omitempty" json:"resolutionSeconds,omitempty"`
 
 	// Resource Resource ID to query. When multiple resource query params are provided, they are ORed together. Resources can be service ids, Postgres ids, or Redis ids
-	Resource *externalRef10.ResourceQueryParam `form:"resource,omitempty" json:"resource,omitempty"`
+	Resource *externalRef11.ResourceQueryParam `form:"resource,omitempty" json:"resource,omitempty"`
 
 	// Service This parameter is deprecated. Please use `resource` instead
-	Service *externalRef10.ServiceQueryParam `form:"service,omitempty" json:"service,omitempty"`
+	Service *externalRef11.ServiceQueryParam `form:"service,omitempty" json:"service,omitempty"`
 
 	// Instance Instance ID to query. When multiple instance ID query params are provided, they are ORed together
-	Instance *externalRef10.InstanceQueryParam `form:"instance,omitempty" json:"instance,omitempty"`
+	Instance *externalRef11.InstanceQueryParam `form:"instance,omitempty" json:"instance,omitempty"`
 }
 
 // GetDiskCapacityParams defines parameters for GetDiskCapacity.
@@ -3024,13 +3024,13 @@ type GetDiskCapacityParams struct {
 	EndTime *EndTimeParam `form:"endTime,omitempty" json:"endTime,omitempty"`
 
 	// ResolutionSeconds The resolution of the returned data
-	ResolutionSeconds *externalRef10.ResolutionParam `form:"resolutionSeconds,omitempty" json:"resolutionSeconds,omitempty"`
+	ResolutionSeconds *externalRef11.ResolutionParam `form:"resolutionSeconds,omitempty" json:"resolutionSeconds,omitempty"`
 
 	// Resource Resource ID to query. When multiple resource query params are provided, they are ORed together. Resources can be service ids, Postgres ids, or Redis ids
-	Resource *externalRef10.ResourceQueryParam `form:"resource,omitempty" json:"resource,omitempty"`
+	Resource *externalRef11.ResourceQueryParam `form:"resource,omitempty" json:"resource,omitempty"`
 
 	// Service This parameter is deprecated. Please use `resource` instead
-	Service *externalRef10.ServiceQueryParam `form:"service,omitempty" json:"service,omitempty"`
+	Service *externalRef11.ServiceQueryParam `form:"service,omitempty" json:"service,omitempty"`
 }
 
 // GetDiskUsageParams defines parameters for GetDiskUsage.
@@ -3042,13 +3042,13 @@ type GetDiskUsageParams struct {
 	EndTime *EndTimeParam `form:"endTime,omitempty" json:"endTime,omitempty"`
 
 	// ResolutionSeconds The resolution of the returned data
-	ResolutionSeconds *externalRef10.ResolutionParam `form:"resolutionSeconds,omitempty" json:"resolutionSeconds,omitempty"`
+	ResolutionSeconds *externalRef11.ResolutionParam `form:"resolutionSeconds,omitempty" json:"resolutionSeconds,omitempty"`
 
 	// Resource Resource ID to query. When multiple resource query params are provided, they are ORed together. Resources can be service ids, Postgres ids, or Redis ids
-	Resource *externalRef10.ResourceQueryParam `form:"resource,omitempty" json:"resource,omitempty"`
+	Resource *externalRef11.ResourceQueryParam `form:"resource,omitempty" json:"resource,omitempty"`
 
 	// Service This parameter is deprecated. Please use `resource` instead
-	Service *externalRef10.ServiceQueryParam `form:"service,omitempty" json:"service,omitempty"`
+	Service *externalRef11.ServiceQueryParam `form:"service,omitempty" json:"service,omitempty"`
 }
 
 // ListApplicationFilterValuesParams defines parameters for ListApplicationFilterValues.
@@ -3060,13 +3060,13 @@ type ListApplicationFilterValuesParams struct {
 	EndTime *EndTimeParam `form:"endTime,omitempty" json:"endTime,omitempty"`
 
 	// ResolutionSeconds The resolution of the returned data
-	ResolutionSeconds *externalRef10.ResolutionParam `form:"resolutionSeconds,omitempty" json:"resolutionSeconds,omitempty"`
+	ResolutionSeconds *externalRef11.ResolutionParam `form:"resolutionSeconds,omitempty" json:"resolutionSeconds,omitempty"`
 
 	// Resource Service ID to query. When multiple service ids are provided, they are ORed together
-	Resource *externalRef10.ServiceResourceQueryParam `form:"resource,omitempty" json:"resource,omitempty"`
+	Resource *externalRef11.ServiceResourceQueryParam `form:"resource,omitempty" json:"resource,omitempty"`
 
 	// Service This parameter is deprecated. Please use `resource` instead
-	Service *externalRef10.ServiceQueryParam `form:"service,omitempty" json:"service,omitempty"`
+	Service *externalRef11.ServiceQueryParam `form:"service,omitempty" json:"service,omitempty"`
 }
 
 // ListHttpFilterValuesParams defines parameters for ListHttpFilterValues.
@@ -3078,19 +3078,19 @@ type ListHttpFilterValuesParams struct {
 	EndTime *EndTimeParam `form:"endTime,omitempty" json:"endTime,omitempty"`
 
 	// ResolutionSeconds The resolution of the returned data
-	ResolutionSeconds *externalRef10.ResolutionParam `form:"resolutionSeconds,omitempty" json:"resolutionSeconds,omitempty"`
+	ResolutionSeconds *externalRef11.ResolutionParam `form:"resolutionSeconds,omitempty" json:"resolutionSeconds,omitempty"`
 
 	// Resource Service ID to query. When multiple service ids are provided, they are ORed together
-	Resource *externalRef10.ServiceResourceQueryParam `form:"resource,omitempty" json:"resource,omitempty"`
+	Resource *externalRef11.ServiceResourceQueryParam `form:"resource,omitempty" json:"resource,omitempty"`
 
 	// Service This parameter is deprecated. Please use `resource` instead
-	Service *externalRef10.ServiceQueryParam `form:"service,omitempty" json:"service,omitempty"`
+	Service *externalRef11.ServiceQueryParam `form:"service,omitempty" json:"service,omitempty"`
 
 	// Host The hosts of HTTP requests to filter to. When multiple host query params are provided, they are ORed together
-	Host *externalRef10.HostQueryParam `form:"host,omitempty" json:"host,omitempty"`
+	Host *externalRef11.HostQueryParam `form:"host,omitempty" json:"host,omitempty"`
 
 	// StatusCode The status codes of HTTP requests to filter to. When multiple status code query params are provided, they are ORed together
-	StatusCode *externalRef10.HttpStatusCode `form:"statusCode,omitempty" json:"statusCode,omitempty"`
+	StatusCode *externalRef11.HttpStatusCode `form:"statusCode,omitempty" json:"statusCode,omitempty"`
 }
 
 // ListPathFilterValuesParams defines parameters for ListPathFilterValues.
@@ -3102,22 +3102,22 @@ type ListPathFilterValuesParams struct {
 	EndTime *EndTimeParam `form:"endTime,omitempty" json:"endTime,omitempty"`
 
 	// ResolutionSeconds The resolution of the returned data
-	ResolutionSeconds *externalRef10.ResolutionParam `form:"resolutionSeconds,omitempty" json:"resolutionSeconds,omitempty"`
+	ResolutionSeconds *externalRef11.ResolutionParam `form:"resolutionSeconds,omitempty" json:"resolutionSeconds,omitempty"`
 
 	// Resource Service ID to query. When multiple service ids are provided, they are ORed together
-	Resource *externalRef10.ServiceResourceQueryParam `form:"resource,omitempty" json:"resource,omitempty"`
+	Resource *externalRef11.ServiceResourceQueryParam `form:"resource,omitempty" json:"resource,omitempty"`
 
 	// Service This parameter is deprecated. Please use `resource` instead
-	Service *externalRef10.ServiceQueryParam `form:"service,omitempty" json:"service,omitempty"`
+	Service *externalRef11.ServiceQueryParam `form:"service,omitempty" json:"service,omitempty"`
 
 	// Host The hosts of HTTP requests to filter to. When multiple host query params are provided, they are ORed together
-	Host *externalRef10.HostQueryParam `form:"host,omitempty" json:"host,omitempty"`
+	Host *externalRef11.HostQueryParam `form:"host,omitempty" json:"host,omitempty"`
 
 	// StatusCode The status codes of HTTP requests to filter to. When multiple status code query params are provided, they are ORed together
-	StatusCode *externalRef10.HttpStatusCode `form:"statusCode,omitempty" json:"statusCode,omitempty"`
+	StatusCode *externalRef11.HttpStatusCode `form:"statusCode,omitempty" json:"statusCode,omitempty"`
 
 	// Path The paths of HTTP requests to filter to. When multiple path query params are provided, they are ORed together
-	Path *externalRef10.PathQueryParam `form:"path,omitempty" json:"path,omitempty"`
+	Path *externalRef11.PathQueryParam `form:"path,omitempty" json:"path,omitempty"`
 }
 
 // GetHttpLatencyParams defines parameters for GetHttpLatency.
@@ -3129,22 +3129,22 @@ type GetHttpLatencyParams struct {
 	EndTime *EndTimeParam `form:"endTime,omitempty" json:"endTime,omitempty"`
 
 	// ResolutionSeconds The resolution of the returned data
-	ResolutionSeconds *externalRef10.ResolutionParam `form:"resolutionSeconds,omitempty" json:"resolutionSeconds,omitempty"`
+	ResolutionSeconds *externalRef11.ResolutionParam `form:"resolutionSeconds,omitempty" json:"resolutionSeconds,omitempty"`
 
 	// Resource Service ID to query. When multiple service ids are provided, they are ORed together
-	Resource *externalRef10.ServiceResourceQueryParam `form:"resource,omitempty" json:"resource,omitempty"`
+	Resource *externalRef11.ServiceResourceQueryParam `form:"resource,omitempty" json:"resource,omitempty"`
 
 	// Service This parameter is deprecated. Please use `resource` instead
-	Service *externalRef10.ServiceQueryParam `form:"service,omitempty" json:"service,omitempty"`
+	Service *externalRef11.ServiceQueryParam `form:"service,omitempty" json:"service,omitempty"`
 
 	// Host The hosts of HTTP requests to filter to. When multiple host query params are provided, they are ORed together
-	Host *externalRef10.HostQueryParam `form:"host,omitempty" json:"host,omitempty"`
+	Host *externalRef11.HostQueryParam `form:"host,omitempty" json:"host,omitempty"`
 
 	// Path The paths of HTTP requests to filter to. When multiple path query params are provided, they are ORed together
-	Path *externalRef10.PathQueryParam `form:"path,omitempty" json:"path,omitempty"`
+	Path *externalRef11.PathQueryParam `form:"path,omitempty" json:"path,omitempty"`
 
 	// Quantile The quantile of latencies to fetch. When multiple quantile query params are provided, they are ORed together
-	Quantile *externalRef10.Quantile `form:"quantile,omitempty" json:"quantile,omitempty"`
+	Quantile *externalRef11.Quantile `form:"quantile,omitempty" json:"quantile,omitempty"`
 }
 
 // GetHttpRequestsParams defines parameters for GetHttpRequests.
@@ -3156,22 +3156,22 @@ type GetHttpRequestsParams struct {
 	EndTime *EndTimeParam `form:"endTime,omitempty" json:"endTime,omitempty"`
 
 	// ResolutionSeconds The resolution of the returned data
-	ResolutionSeconds *externalRef10.ResolutionParam `form:"resolutionSeconds,omitempty" json:"resolutionSeconds,omitempty"`
+	ResolutionSeconds *externalRef11.ResolutionParam `form:"resolutionSeconds,omitempty" json:"resolutionSeconds,omitempty"`
 
 	// Resource Service ID to query. When multiple service ids are provided, they are ORed together
-	Resource *externalRef10.ServiceResourceQueryParam `form:"resource,omitempty" json:"resource,omitempty"`
+	Resource *externalRef11.ServiceResourceQueryParam `form:"resource,omitempty" json:"resource,omitempty"`
 
 	// Service This parameter is deprecated. Please use `resource` instead
-	Service *externalRef10.ServiceQueryParam `form:"service,omitempty" json:"service,omitempty"`
+	Service *externalRef11.ServiceQueryParam `form:"service,omitempty" json:"service,omitempty"`
 
 	// Host The hosts of HTTP requests to filter to. When multiple host query params are provided, they are ORed together
-	Host *externalRef10.HostQueryParam `form:"host,omitempty" json:"host,omitempty"`
+	Host *externalRef11.HostQueryParam `form:"host,omitempty" json:"host,omitempty"`
 
 	// Path The paths of HTTP requests to filter to. When multiple path query params are provided, they are ORed together
-	Path *externalRef10.PathQueryParam `form:"path,omitempty" json:"path,omitempty"`
+	Path *externalRef11.PathQueryParam `form:"path,omitempty" json:"path,omitempty"`
 
 	// AggregateBy The field to aggregate by
-	AggregateBy *externalRef10.HttpAggregateBy `form:"aggregateBy,omitempty" json:"aggregateBy,omitempty"`
+	AggregateBy *externalRef11.HttpAggregateBy `form:"aggregateBy,omitempty" json:"aggregateBy,omitempty"`
 }
 
 // GetInstanceCountParams defines parameters for GetInstanceCount.
@@ -3183,13 +3183,13 @@ type GetInstanceCountParams struct {
 	EndTime *EndTimeParam `form:"endTime,omitempty" json:"endTime,omitempty"`
 
 	// ResolutionSeconds The resolution of the returned data
-	ResolutionSeconds *externalRef10.ResolutionParam `form:"resolutionSeconds,omitempty" json:"resolutionSeconds,omitempty"`
+	ResolutionSeconds *externalRef11.ResolutionParam `form:"resolutionSeconds,omitempty" json:"resolutionSeconds,omitempty"`
 
 	// Resource Resource ID to query. When multiple resource query params are provided, they are ORed together. Resources can be service ids, Postgres ids, or Redis ids
-	Resource *externalRef10.ResourceQueryParam `form:"resource,omitempty" json:"resource,omitempty"`
+	Resource *externalRef11.ResourceQueryParam `form:"resource,omitempty" json:"resource,omitempty"`
 
 	// Service This parameter is deprecated. Please use `resource` instead
-	Service *externalRef10.ServiceQueryParam `form:"service,omitempty" json:"service,omitempty"`
+	Service *externalRef11.ServiceQueryParam `form:"service,omitempty" json:"service,omitempty"`
 }
 
 // GetMemoryParams defines parameters for GetMemory.
@@ -3201,16 +3201,16 @@ type GetMemoryParams struct {
 	EndTime *EndTimeParam `form:"endTime,omitempty" json:"endTime,omitempty"`
 
 	// ResolutionSeconds The resolution of the returned data
-	ResolutionSeconds *externalRef10.ResolutionParam `form:"resolutionSeconds,omitempty" json:"resolutionSeconds,omitempty"`
+	ResolutionSeconds *externalRef11.ResolutionParam `form:"resolutionSeconds,omitempty" json:"resolutionSeconds,omitempty"`
 
 	// Resource Resource ID to query. When multiple resource query params are provided, they are ORed together. Resources can be service ids, Postgres ids, or Redis ids
-	Resource *externalRef10.ResourceQueryParam `form:"resource,omitempty" json:"resource,omitempty"`
+	Resource *externalRef11.ResourceQueryParam `form:"resource,omitempty" json:"resource,omitempty"`
 
 	// Service This parameter is deprecated. Please use `resource` instead
-	Service *externalRef10.ServiceQueryParam `form:"service,omitempty" json:"service,omitempty"`
+	Service *externalRef11.ServiceQueryParam `form:"service,omitempty" json:"service,omitempty"`
 
 	// Instance Instance ID to query. When multiple instance ID query params are provided, they are ORed together
-	Instance *externalRef10.InstanceQueryParam `form:"instance,omitempty" json:"instance,omitempty"`
+	Instance *externalRef11.InstanceQueryParam `form:"instance,omitempty" json:"instance,omitempty"`
 }
 
 // GetMemoryLimitParams defines parameters for GetMemoryLimit.
@@ -3222,16 +3222,16 @@ type GetMemoryLimitParams struct {
 	EndTime *EndTimeParam `form:"endTime,omitempty" json:"endTime,omitempty"`
 
 	// ResolutionSeconds The resolution of the returned data
-	ResolutionSeconds *externalRef10.ResolutionParam `form:"resolutionSeconds,omitempty" json:"resolutionSeconds,omitempty"`
+	ResolutionSeconds *externalRef11.ResolutionParam `form:"resolutionSeconds,omitempty" json:"resolutionSeconds,omitempty"`
 
 	// Resource Resource ID to query. When multiple resource query params are provided, they are ORed together. Resources can be service ids, Postgres ids, or Redis ids
-	Resource *externalRef10.ResourceQueryParam `form:"resource,omitempty" json:"resource,omitempty"`
+	Resource *externalRef11.ResourceQueryParam `form:"resource,omitempty" json:"resource,omitempty"`
 
 	// Service This parameter is deprecated. Please use `resource` instead
-	Service *externalRef10.ServiceQueryParam `form:"service,omitempty" json:"service,omitempty"`
+	Service *externalRef11.ServiceQueryParam `form:"service,omitempty" json:"service,omitempty"`
 
 	// Instance Instance ID to query. When multiple instance ID query params are provided, they are ORed together
-	Instance *externalRef10.InstanceQueryParam `form:"instance,omitempty" json:"instance,omitempty"`
+	Instance *externalRef11.InstanceQueryParam `form:"instance,omitempty" json:"instance,omitempty"`
 }
 
 // GetMemoryTargetParams defines parameters for GetMemoryTarget.
@@ -3243,16 +3243,16 @@ type GetMemoryTargetParams struct {
 	EndTime *EndTimeParam `form:"endTime,omitempty" json:"endTime,omitempty"`
 
 	// ResolutionSeconds The resolution of the returned data
-	ResolutionSeconds *externalRef10.ResolutionParam `form:"resolutionSeconds,omitempty" json:"resolutionSeconds,omitempty"`
+	ResolutionSeconds *externalRef11.ResolutionParam `form:"resolutionSeconds,omitempty" json:"resolutionSeconds,omitempty"`
 
 	// Resource Resource ID to query. When multiple resource query params are provided, they are ORed together. Resources can be service ids, Postgres ids, or Redis ids
-	Resource *externalRef10.ResourceQueryParam `form:"resource,omitempty" json:"resource,omitempty"`
+	Resource *externalRef11.ResourceQueryParam `form:"resource,omitempty" json:"resource,omitempty"`
 
 	// Service This parameter is deprecated. Please use `resource` instead
-	Service *externalRef10.ServiceQueryParam `form:"service,omitempty" json:"service,omitempty"`
+	Service *externalRef11.ServiceQueryParam `form:"service,omitempty" json:"service,omitempty"`
 
 	// Instance Instance ID to query. When multiple instance ID query params are provided, they are ORed together
-	Instance *externalRef10.InstanceQueryParam `form:"instance,omitempty" json:"instance,omitempty"`
+	Instance *externalRef11.InstanceQueryParam `form:"instance,omitempty" json:"instance,omitempty"`
 }
 
 // GetReplicationLagParams defines parameters for GetReplicationLag.
@@ -3264,10 +3264,10 @@ type GetReplicationLagParams struct {
 	EndTime *EndTimeParam `form:"endTime,omitempty" json:"endTime,omitempty"`
 
 	// ResolutionSeconds The resolution of the returned data
-	ResolutionSeconds *externalRef10.ResolutionParam `form:"resolutionSeconds,omitempty" json:"resolutionSeconds,omitempty"`
+	ResolutionSeconds *externalRef11.ResolutionParam `form:"resolutionSeconds,omitempty" json:"resolutionSeconds,omitempty"`
 
 	// Resource Postgres ID to query. When multiple resource query params are provided, they are ORed together
-	Resource *externalRef10.PostgresResourceQueryParam `form:"resource,omitempty" json:"resource,omitempty"`
+	Resource *externalRef11.PostgresResourceQueryParam `form:"resource,omitempty" json:"resource,omitempty"`
 }
 
 // GetTaskRunsCompletedParams defines parameters for GetTaskRunsCompleted.
@@ -3279,16 +3279,16 @@ type GetTaskRunsCompletedParams struct {
 	EndTime *EndTimeParam `form:"endTime,omitempty" json:"endTime,omitempty"`
 
 	// ResolutionSeconds The resolution of the returned data
-	ResolutionSeconds *externalRef10.ResolutionParam `form:"resolutionSeconds,omitempty" json:"resolutionSeconds,omitempty"`
+	ResolutionSeconds *externalRef11.ResolutionParam `form:"resolutionSeconds,omitempty" json:"resolutionSeconds,omitempty"`
 
 	// Resource Task ID to query. When multiple task IDs are provided, they are ORed together
-	Resource *externalRef10.TaskResourceQueryParam `form:"resource,omitempty" json:"resource,omitempty"`
+	Resource *externalRef11.TaskResourceQueryParam `form:"resource,omitempty" json:"resource,omitempty"`
 
 	// State The state of task runs to filter to. When multiple state query params are provided, they are ORed together
-	State *externalRef10.TaskStateQueryParam `form:"state,omitempty" json:"state,omitempty"`
+	State *externalRef11.TaskStateQueryParam `form:"state,omitempty" json:"state,omitempty"`
 
 	// AggregateBy The field to aggregate by
-	AggregateBy *externalRef10.TaskAggregateBy `form:"aggregateBy,omitempty" json:"aggregateBy,omitempty"`
+	AggregateBy *externalRef11.TaskAggregateBy `form:"aggregateBy,omitempty" json:"aggregateBy,omitempty"`
 }
 
 // GetTaskRunsQueuedParams defines parameters for GetTaskRunsQueued.
@@ -3300,10 +3300,10 @@ type GetTaskRunsQueuedParams struct {
 	EndTime *EndTimeParam `form:"endTime,omitempty" json:"endTime,omitempty"`
 
 	// ResolutionSeconds The resolution of the returned data
-	ResolutionSeconds *externalRef10.ResolutionParam `form:"resolutionSeconds,omitempty" json:"resolutionSeconds,omitempty"`
+	ResolutionSeconds *externalRef11.ResolutionParam `form:"resolutionSeconds,omitempty" json:"resolutionSeconds,omitempty"`
 
 	// Resource Task ID to query. When multiple task IDs are provided, they are ORed together
-	Resource *externalRef10.TaskResourceQueryParam `form:"resource,omitempty" json:"resource,omitempty"`
+	Resource *externalRef11.TaskResourceQueryParam `form:"resource,omitempty" json:"resource,omitempty"`
 }
 
 // ListNotificationOverridesParams defines parameters for ListNotificationOverrides.
@@ -3340,7 +3340,7 @@ type ListOrganizationAuditLogsParams struct {
 
 	// Direction The direction to query logs for. Backward will return most recent logs first.
 	// Forward will start with the oldest logs in the time range.
-	Direction *externalRef8.DirectionParam `form:"direction,omitempty" json:"direction,omitempty"`
+	Direction *externalRef9.DirectionParam `form:"direction,omitempty" json:"direction,omitempty"`
 
 	// Cursor The position in the result list to start from when fetching paginated results. For details, see [Pagination](https://api-docs.render.com/reference/pagination).
 	Cursor *CursorParam `form:"cursor,omitempty" json:"cursor,omitempty"`
@@ -3374,7 +3374,7 @@ type ListOwnerAuditLogsParams struct {
 
 	// Direction The direction to query logs for. Backward will return most recent logs first.
 	// Forward will start with the oldest logs in the time range.
-	Direction *externalRef8.DirectionParam `form:"direction,omitempty" json:"direction,omitempty"`
+	Direction *externalRef9.DirectionParam `form:"direction,omitempty" json:"direction,omitempty"`
 
 	// Cursor The position in the result list to start from when fetching paginated results. For details, see [Pagination](https://api-docs.render.com/reference/pagination).
 	Cursor *CursorParam `form:"cursor,omitempty" json:"cursor,omitempty"`
@@ -3557,7 +3557,7 @@ type ListSandboxesParams struct {
 	Limit *LimitParam `form:"limit,omitempty" json:"limit,omitempty"`
 
 	// Status Filter by sandbox status.
-	Status *[]externalRef13.SandboxStatus `form:"status,omitempty" json:"status,omitempty"`
+	Status *[]externalRef14.SandboxStatus `form:"status,omitempty" json:"status,omitempty"`
 }
 
 // DownloadSandboxFilesParams defines parameters for DownloadSandboxFiles.
@@ -3807,7 +3807,7 @@ type ListJobParams struct {
 	Limit *LimitParam `form:"limit,omitempty" json:"limit,omitempty"`
 
 	// Status Filter for the status of the job (`pending`, `running`, `succeeded`, `failed`, or `canceled`)
-	Status *[]externalRef7.JobStatus `form:"status,omitempty" json:"status,omitempty"`
+	Status *[]externalRef8.JobStatus `form:"status,omitempty" json:"status,omitempty"`
 
 	// CreatedBefore Filter for jobs created before a certain time (specified as an ISO 8601 timestamp)
 	CreatedBefore *time.Time `form:"createdBefore,omitempty" json:"createdBefore,omitempty"`
@@ -3895,19 +3895,19 @@ type ListTaskRunsParams struct {
 	Limit *LimitParam `form:"limit,omitempty" json:"limit,omitempty"`
 
 	// TaskSlug An array of task slugs in the format workflow-slug/task-name. An optional version can be appended (workflow-slug/task-name:version). If no version is provided, the latest version is used.
-	TaskSlug *externalRef16.TaskSlugFilterParam `form:"taskSlug,omitempty" json:"taskSlug,omitempty"`
+	TaskSlug *externalRef17.TaskSlugFilterParam `form:"taskSlug,omitempty" json:"taskSlug,omitempty"`
 
 	// RootTaskRunId An array of root task run IDs to filter on
-	RootTaskRunId *externalRef16.RootTaskRunIDFilterParam `form:"rootTaskRunId,omitempty" json:"rootTaskRunId,omitempty"`
+	RootTaskRunId *externalRef17.RootTaskRunIDFilterParam `form:"rootTaskRunId,omitempty" json:"rootTaskRunId,omitempty"`
 
 	// OwnerId The ID of the workspaces to return resources for
 	OwnerId *OwnerIdParam `form:"ownerId,omitempty" json:"ownerId,omitempty"`
 
 	// WorkflowVersionId An array of workflow version IDs
-	WorkflowVersionId *externalRef16.WorkflowVersionIDFilterParam `form:"workflowVersionId,omitempty" json:"workflowVersionId,omitempty"`
+	WorkflowVersionId *externalRef17.WorkflowVersionIDFilterParam `form:"workflowVersionId,omitempty" json:"workflowVersionId,omitempty"`
 
 	// WorkflowId An array of workflow IDs
-	WorkflowId *externalRef16.WorkflowIDFilterParam `form:"workflowId,omitempty" json:"workflowId,omitempty"`
+	WorkflowId *externalRef17.WorkflowIDFilterParam `form:"workflowId,omitempty" json:"workflowId,omitempty"`
 }
 
 // StreamTaskRunsEventsParams defines parameters for StreamTaskRunsEvents.
@@ -3934,13 +3934,13 @@ type ListTasksParams struct {
 	OwnerId *OwnerIdParam `form:"ownerId,omitempty" json:"ownerId,omitempty"`
 
 	// TaskSlug An array of task slugs in the format workflow-slug/task-name. An optional version can be appended (workflow-slug/task-name:version). If no version is provided, the latest version is used.
-	TaskSlug *externalRef16.TaskSlugFilterParam `form:"taskSlug,omitempty" json:"taskSlug,omitempty"`
+	TaskSlug *externalRef17.TaskSlugFilterParam `form:"taskSlug,omitempty" json:"taskSlug,omitempty"`
 
 	// WorkflowVersionId An array of workflow version IDs
-	WorkflowVersionId *externalRef16.WorkflowVersionIDFilterParam `form:"workflowVersionId,omitempty" json:"workflowVersionId,omitempty"`
+	WorkflowVersionId *externalRef17.WorkflowVersionIDFilterParam `form:"workflowVersionId,omitempty" json:"workflowVersionId,omitempty"`
 
 	// WorkflowId An array of workflow IDs
-	WorkflowId *externalRef16.WorkflowIDFilterParam `form:"workflowId,omitempty" json:"workflowId,omitempty"`
+	WorkflowId *externalRef17.WorkflowIDFilterParam `form:"workflowId,omitempty" json:"workflowId,omitempty"`
 }
 
 // ListWebhooksParams defines parameters for ListWebhooks.
@@ -3958,10 +3958,10 @@ type ListWebhooksParams struct {
 // ListWebhookEventsParams defines parameters for ListWebhookEvents.
 type ListWebhookEventsParams struct {
 	// SentBefore Filter events sent before this time (specified as an ISO 8601 timestamp)
-	SentBefore *externalRef15.SentBeforeParam `form:"sentBefore,omitempty" json:"sentBefore,omitempty"`
+	SentBefore *externalRef16.SentBeforeParam `form:"sentBefore,omitempty" json:"sentBefore,omitempty"`
 
 	// SentAfter Filter for resources sent after a certain time (specified as an ISO 8601 timestamp)
-	SentAfter *externalRef15.SentAfterParam `form:"sentAfter,omitempty" json:"sentAfter,omitempty"`
+	SentAfter *externalRef16.SentAfterParam `form:"sentAfter,omitempty" json:"sentAfter,omitempty"`
 
 	// Limit The maximum number of items to return. For details, see [Pagination](https://api-docs.render.com/reference/pagination).
 	Limit *LimitParam `form:"limit,omitempty" json:"limit,omitempty"`
@@ -4064,25 +4064,25 @@ type CreateKeyValueJSONRequestBody = KeyValuePOSTInput
 type UpdateKeyValueJSONRequestBody = KeyValuePATCHInput
 
 // UpdateOwnerLogStreamJSONRequestBody defines body for UpdateOwnerLogStream for application/json ContentType.
-type UpdateOwnerLogStreamJSONRequestBody = externalRef8.LogStreamOwnerUpdate
+type UpdateOwnerLogStreamJSONRequestBody = externalRef9.LogStreamOwnerUpdate
 
 // UpdateResourceLogStreamJSONRequestBody defines body for UpdateResourceLogStream for application/json ContentType.
-type UpdateResourceLogStreamJSONRequestBody = externalRef8.LogStreamResourceUpdate
+type UpdateResourceLogStreamJSONRequestBody = externalRef9.LogStreamResourceUpdate
 
 // UpdateMaintenanceJSONRequestBody defines body for UpdateMaintenance for application/json ContentType.
-type UpdateMaintenanceJSONRequestBody = externalRef9.MaintenanceRunPATCH
+type UpdateMaintenanceJSONRequestBody = externalRef10.MaintenanceRunPATCH
 
 // UpsertOwnerMetricsStreamJSONRequestBody defines body for UpsertOwnerMetricsStream for application/json ContentType.
-type UpsertOwnerMetricsStreamJSONRequestBody = externalRef10.MetricsStreamInput
+type UpsertOwnerMetricsStreamJSONRequestBody = externalRef11.MetricsStreamInput
 
 // PatchServiceNotificationOverridesJSONRequestBody defines body for PatchServiceNotificationOverrides for application/json ContentType.
-type PatchServiceNotificationOverridesJSONRequestBody = externalRef11.NotificationServiceOverridePATCH
+type PatchServiceNotificationOverridesJSONRequestBody = externalRef12.NotificationServiceOverridePATCH
 
 // PatchOwnerNotificationSettingsJSONRequestBody defines body for PatchOwnerNotificationSettings for application/json ContentType.
-type PatchOwnerNotificationSettingsJSONRequestBody = externalRef11.NotificationSettingPATCH
+type PatchOwnerNotificationSettingsJSONRequestBody = externalRef12.NotificationSettingPATCH
 
 // PutObjectJSONRequestBody defines body for PutObject for application/json ContentType.
-type PutObjectJSONRequestBody = externalRef14.PutObjectInput
+type PutObjectJSONRequestBody = externalRef15.PutObjectInput
 
 // UpdateWorkspaceMemberJSONRequestBody defines body for UpdateWorkspaceMember for application/json ContentType.
 type UpdateWorkspaceMemberJSONRequestBody UpdateWorkspaceMemberJSONBody
@@ -4094,10 +4094,10 @@ type CreatePostgresJSONRequestBody = PostgresPOSTInput
 type UpdatePostgresJSONRequestBody = PostgresPATCHInput
 
 // CreatePostgresUserJSONRequestBody defines body for CreatePostgresUser for application/json ContentType.
-type CreatePostgresUserJSONRequestBody = externalRef12.CredentialCreateInput
+type CreatePostgresUserJSONRequestBody = externalRef13.CredentialCreateInput
 
 // RecoverPostgresJSONRequestBody defines body for RecoverPostgres for application/json ContentType.
-type RecoverPostgresJSONRequestBody = externalRef12.RecoveryInput
+type RecoverPostgresJSONRequestBody = externalRef13.RecoveryInput
 
 // CreateProjectJSONRequestBody defines body for CreateProject for application/json ContentType.
 type CreateProjectJSONRequestBody = ProjectPOSTInput
@@ -4118,7 +4118,7 @@ type CreateRegistryCredentialJSONRequestBody CreateRegistryCredentialJSONBody
 type UpdateRegistryCredentialJSONRequestBody UpdateRegistryCredentialJSONBody
 
 // CreateSandboxJSONRequestBody defines body for CreateSandbox for application/json ContentType.
-type CreateSandboxJSONRequestBody = externalRef13.SandboxPOST
+type CreateSandboxJSONRequestBody = externalRef14.SandboxPOST
 
 // CreateServiceJSONRequestBody defines body for CreateService for application/json ContentType.
 type CreateServiceJSONRequestBody = ServicePOST
@@ -4178,22 +4178,22 @@ type UpdateSecretFilesForServiceJSONRequestBody = UpdateSecretFilesForServiceJSO
 type AddOrUpdateSecretFileJSONRequestBody AddOrUpdateSecretFileJSONBody
 
 // CreateTaskJSONRequestBody defines body for CreateTask for application/json ContentType.
-type CreateTaskJSONRequestBody = externalRef16.RunTask
+type CreateTaskJSONRequestBody = externalRef17.RunTask
 
 // CreateWebhookJSONRequestBody defines body for CreateWebhook for application/json ContentType.
-type CreateWebhookJSONRequestBody = externalRef15.WebhookPOSTInput
+type CreateWebhookJSONRequestBody = externalRef16.WebhookPOSTInput
 
 // UpdateWebhookJSONRequestBody defines body for UpdateWebhook for application/json ContentType.
-type UpdateWebhookJSONRequestBody = externalRef15.WebhookPATCHInput
+type UpdateWebhookJSONRequestBody = externalRef16.WebhookPATCHInput
 
 // CreateWorkflowJSONRequestBody defines body for CreateWorkflow for application/json ContentType.
-type CreateWorkflowJSONRequestBody = externalRef16.WorkflowCreate
+type CreateWorkflowJSONRequestBody = externalRef17.WorkflowCreate
 
 // UpdateWorkflowJSONRequestBody defines body for UpdateWorkflow for application/json ContentType.
-type UpdateWorkflowJSONRequestBody = externalRef16.WorkflowUpdate
+type UpdateWorkflowJSONRequestBody = externalRef17.WorkflowUpdate
 
 // CreateWorkflowVersionJSONRequestBody defines body for CreateWorkflowVersion for application/json ContentType.
-type CreateWorkflowVersionJSONRequestBody = externalRef16.CreateVersion
+type CreateWorkflowVersionJSONRequestBody = externalRef17.CreateVersion
 
 // AsEnvVarValue returns the union data inside the AddUpdateEnvVarInput as a EnvVarValue
 func (t AddUpdateEnvVarInput) AsEnvVarValue() (EnvVarValue, error) {
@@ -4925,22 +4925,22 @@ func (t *ServicePOST_ServiceDetails) UnmarshalJSON(b []byte) error {
 	return err
 }
 
-// AsExternalRef6ServiceEventType returns the union data inside the EventTypeParam as a externalRef6.ServiceEventType
-func (t EventTypeParam) AsExternalRef6ServiceEventType() (externalRef6.ServiceEventType, error) {
-	var body externalRef6.ServiceEventType
+// AsExternalRef7ServiceEventType returns the union data inside the EventTypeParam as a externalRef7.ServiceEventType
+func (t EventTypeParam) AsExternalRef7ServiceEventType() (externalRef7.ServiceEventType, error) {
+	var body externalRef7.ServiceEventType
 	err := json.Unmarshal(t.union, &body)
 	return body, err
 }
 
-// FromExternalRef6ServiceEventType overwrites any union data inside the EventTypeParam as the provided externalRef6.ServiceEventType
-func (t *EventTypeParam) FromExternalRef6ServiceEventType(v externalRef6.ServiceEventType) error {
+// FromExternalRef7ServiceEventType overwrites any union data inside the EventTypeParam as the provided externalRef7.ServiceEventType
+func (t *EventTypeParam) FromExternalRef7ServiceEventType(v externalRef7.ServiceEventType) error {
 	b, err := json.Marshal(v)
 	t.union = b
 	return err
 }
 
-// MergeExternalRef6ServiceEventType performs a merge with any union data inside the EventTypeParam, using the provided externalRef6.ServiceEventType
-func (t *EventTypeParam) MergeExternalRef6ServiceEventType(v externalRef6.ServiceEventType) error {
+// MergeExternalRef7ServiceEventType performs a merge with any union data inside the EventTypeParam, using the provided externalRef7.ServiceEventType
+func (t *EventTypeParam) MergeExternalRef7ServiceEventType(v externalRef7.ServiceEventType) error {
 	b, err := json.Marshal(v)
 	if err != nil {
 		return err

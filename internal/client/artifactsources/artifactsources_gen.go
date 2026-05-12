@@ -51,13 +51,13 @@ type ArtifactSourceGit struct {
 	Branch         *string `json:"branch,omitempty"`
 	BuildCommand   *string `json:"buildCommand,omitempty"`
 	DockerfilePath *string `json:"dockerfilePath,omitempty"`
-	EnvId          string  `json:"envId"`
 
 	// Region Defaults to "oregon"
 	Region               *ArtifactSourceGitRegion `json:"region,omitempty"`
 	RegistryCredentialId *string                  `json:"registryCredentialId,omitempty"`
 	RepoUrl              *string                  `json:"repoUrl,omitempty"`
 	RootDir              *string                  `json:"rootDir,omitempty"`
+	Runtime              string                   `json:"runtime"`
 }
 
 // ArtifactSourceGitRegion Defaults to "oregon"
@@ -79,13 +79,13 @@ type ArtifactSourcePATCHGit struct {
 	Branch         *string `json:"branch,omitempty"`
 	BuildCommand   *string `json:"buildCommand,omitempty"`
 	DockerfilePath *string `json:"dockerfilePath,omitempty"`
-	EnvId          *string `json:"envId,omitempty"`
 
 	// Region Region for the build. Honored only when this PATCH performs an image→build transition; rejected on a pure build patch (the cluster is pinned for an existing build), and must match the prior build region when switching back to build after time as an external image. Defaults to "oregon" for first-time builds.
 	Region               *ArtifactSourcePATCHGitRegion `json:"region,omitempty"`
 	RegistryCredentialId *string                       `json:"registryCredentialId,omitempty"`
 	RepoUrl              *string                       `json:"repoUrl,omitempty"`
 	RootDir              *string                       `json:"rootDir,omitempty"`
+	Runtime              *string                       `json:"runtime,omitempty"`
 }
 
 // ArtifactSourcePATCHGitRegion Region for the build. Honored only when this PATCH performs an image→build transition; rejected on a pure build patch (the cluster is pinned for an existing build), and must match the prior build region when switching back to build after time as an external image. Defaults to "oregon" for first-time builds.
