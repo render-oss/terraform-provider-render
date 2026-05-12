@@ -13,7 +13,7 @@ func UpdateServiceRequestFromModel(ctx context.Context, plan webservice.WebServi
 		return client.UpdateServiceJSONRequestBody{}, err
 	}
 
-	servicePlan := client.PaidPlan(plan.Plan.ValueString())
+	servicePlan := client.Plan(plan.Plan.ValueString())
 
 	pullRequestPreviewsEnabled := client.PullRequestPreviewsEnabledNo
 	if plan.PullRequestPreviewsEnabled.ValueBool() {

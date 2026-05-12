@@ -22,7 +22,7 @@ func CreateServiceRequestFromModel(ctx context.Context, ownerID string, plan web
 		numInstances = 1
 	}
 
-	servicePlan := client.PaidPlan(plan.Plan.ValueString())
+	servicePlan := client.Plan(plan.Plan.ValueString())
 
 	pullRequestPreviewsEnabled := client.PullRequestPreviewsEnabledNo
 	if plan.PullRequestPreviewsEnabled.ValueBool() {

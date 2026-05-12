@@ -6,11 +6,11 @@ package webhooks
 import (
 	"time"
 
-	externalRef5 "terraform-provider-render/internal/client/eventtypes"
+	externalRef6 "terraform-provider-render/internal/client/eventtypes"
 )
 
 // EventFilter The event types that will trigger the webhook. An empty list means all event types will trigger the webhook.
-type EventFilter = []externalRef5.EventType
+type EventFilter = []externalRef6.EventType
 
 // Webhook defines model for webhook.
 type Webhook struct {
@@ -31,7 +31,7 @@ type WebhookEvent struct {
 
 	// EventId the id of the event that triggered the webhook
 	EventId   string                 `json:"eventId"`
-	EventType externalRef5.EventType `json:"eventType"`
+	EventType externalRef6.EventType `json:"eventType"`
 
 	// Id the id of the webhook event
 	Id           string    `json:"id"`
