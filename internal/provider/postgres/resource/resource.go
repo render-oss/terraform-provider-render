@@ -84,7 +84,7 @@ func (r *postgresResource) Create(ctx context.Context, req resource.CreateReques
 			IpAllowList:            common.From(ipAllowList),
 			Plan:                   clientpostgres.PostgresPlans(plan.Plan.ValueString()),
 			ReadReplicas:           common.From(postgres.ReadReplicaInputFromModel(plan.ReadReplicas, resp.Diagnostics)),
-			Region:                 plan.Region.ValueStringPointer(),
+			Region:                 (*client.Region)(plan.Region.ValueStringPointer()),
 			Version:                client.PostgresVersion(plan.Version.ValueString()),
 			Name:                   plan.Name.ValueString(),
 			OwnerId:                r.ownerID,

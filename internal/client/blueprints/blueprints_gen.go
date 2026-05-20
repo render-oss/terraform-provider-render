@@ -5,6 +5,8 @@ package blueprints
 
 import (
 	"time"
+
+	openapi_types "github.com/oapi-codegen/runtime/types"
 )
 
 // Defines values for ResourceRefType.
@@ -49,18 +51,24 @@ type Blueprint struct {
 	Id       BlueprintId `json:"id"`
 	LastSync *time.Time  `json:"lastSync,omitempty"`
 	Name     string      `json:"name"`
-	Repo     string      `json:"repo"`
-	Status   Status      `json:"status"`
+
+	// Path Path to the Blueprint file in the repository
+	Path   BlueprintPath `json:"path"`
+	Repo   string        `json:"repo"`
+	Status Status        `json:"status"`
 }
 
 // BlueprintDetail defines model for blueprintDetail.
 type BlueprintDetail struct {
 	// AutoSync Automatically sync changes to render.yaml
-	AutoSync  AutoSync      `json:"autoSync"`
-	Branch    string        `json:"branch"`
-	Id        BlueprintId   `json:"id"`
-	LastSync  *time.Time    `json:"lastSync,omitempty"`
-	Name      string        `json:"name"`
+	AutoSync AutoSync    `json:"autoSync"`
+	Branch   string      `json:"branch"`
+	Id       BlueprintId `json:"id"`
+	LastSync *time.Time  `json:"lastSync,omitempty"`
+	Name     string      `json:"name"`
+
+	// Path Path to the Blueprint file in the repository
+	Path      BlueprintPath `json:"path"`
 	Repo      string        `json:"repo"`
 	Resources []ResourceRef `json:"resources"`
 	Status    Status        `json:"status"`
@@ -74,7 +82,13 @@ type BlueprintPATCH struct {
 	// AutoSync Automatically sync changes to render.yaml
 	AutoSync *AutoSync `json:"autoSync,omitempty"`
 	Name     *string   `json:"name,omitempty"`
+
+	// Path Path to the Blueprint file in the repository
+	Path *BlueprintPath `json:"path,omitempty"`
 }
+
+// BlueprintPath Path to the Blueprint file in the repository
+type BlueprintPath = string
 
 // CommitRef defines model for commitRef.
 type CommitRef struct {
@@ -110,3 +124,55 @@ type SyncId = string
 
 // SyncState defines model for syncState.
 type SyncState string
+
+// ValidateBlueprintRequest defines model for validateBlueprintRequest.
+type ValidateBlueprintRequest struct {
+	// File The render.yaml file to validate, as a binary file.
+	File openapi_types.File `json:"file"`
+
+	// OwnerId The ID of the workspace to validate against. Obtain your workspace ID from its Settings page in the Render Dashboard.
+	OwnerId string `json:"ownerId"`
+}
+
+// ValidateBlueprintResponse defines model for validateBlueprintResponse.
+type ValidateBlueprintResponse struct {
+	// Errors A list of validation errors. Only present if `valid` is `false`.
+	Errors *[]ValidationError     `json:"errors,omitempty"`
+	Plan   *ValidationPlanSummary `json:"plan,omitempty"`
+
+	// Valid If `true`, the Blueprint validated successfully. If `false`, at least one validation error occurred.
+	Valid bool `json:"valid"`
+}
+
+// ValidationError defines model for validationError.
+type ValidationError struct {
+	// Column The column number in the YAML file (1-indexed)
+	Column *int `json:"column,omitempty"`
+
+	// Error The error message
+	Error string `json:"error"`
+
+	// Line The line number in the YAML file (1-indexed)
+	Line *int `json:"line,omitempty"`
+
+	// Path The path to the field with the error (e.g., `services[0].plan`)
+	Path *string `json:"path,omitempty"`
+}
+
+// ValidationPlanSummary defines model for validationPlanSummary.
+type ValidationPlanSummary struct {
+	// Databases The names of Render Postgres databases that would be created as part of the Blueprint.
+	Databases *[]string `json:"databases,omitempty"`
+
+	// EnvGroups The names of environment groups that would be created as part of the Blueprint.
+	EnvGroups *[]string `json:"envGroups,omitempty"`
+
+	// KeyValue The names of Render Key Value instances that would be created as part of the Blueprint.
+	KeyValue *[]string `json:"keyValue,omitempty"`
+
+	// Services The names of services that would be created as part of the Blueprint.
+	Services *[]string `json:"services,omitempty"`
+
+	// TotalActions The total number of actions that would be performed by the Blueprint. In addition to created resources, this includes modifications to individual configuration fields.
+	TotalActions *int `json:"totalActions,omitempty"`
+}

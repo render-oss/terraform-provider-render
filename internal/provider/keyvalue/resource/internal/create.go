@@ -24,7 +24,7 @@ func CreateKeyValueRequestFromModel(ownerID string, plan keyvalue.KeyValueModel)
 		Name:            plan.Name.ValueString(),
 		OwnerId:         ownerID,
 		Plan:            client.KeyValuePlan(plan.Plan.ValueString()),
-		Region:          plan.Region.ValueStringPointer(),
+		Region:          (*client.Region)(plan.Region.ValueStringPointer()),
 	}
 
 	return createKeyValueBody, nil

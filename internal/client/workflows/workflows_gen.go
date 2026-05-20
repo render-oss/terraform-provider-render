@@ -4,7 +4,19 @@
 package workflows
 
 import (
+	"encoding/json"
 	"time"
+
+	externalRef4 "terraform-provider-render/internal/client/envvar"
+
+	"github.com/oapi-codegen/runtime"
+)
+
+// Defines values for AutoDeployTrigger.
+const (
+	ChecksPass AutoDeployTrigger = "checksPass"
+	Commit     AutoDeployTrigger = "commit"
+	Off        AutoDeployTrigger = "off"
 )
 
 // Defines values for Region.
@@ -30,8 +42,10 @@ const (
 	Canceled  TaskRunStatus = "canceled"
 	Completed TaskRunStatus = "completed"
 	Failed    TaskRunStatus = "failed"
+	Paused    TaskRunStatus = "paused"
 	Pending   TaskRunStatus = "pending"
 	Running   TaskRunStatus = "running"
+	Succeeded TaskRunStatus = "succeeded"
 )
 
 // Defines values for WorkflowVersionStatus.
@@ -43,6 +57,9 @@ const (
 	Registering        WorkflowVersionStatus = "registering"
 	RegistrationFailed WorkflowVersionStatus = "registration_failed"
 )
+
+// AutoDeployTrigger Controls autodeploy behavior. "commit" deploys when a commit is pushed to the branch. "checksPass" waits for CI checks to pass before deploying. "off" disables autodeploy.
+type AutoDeployTrigger string
 
 // BuildConfig defines model for BuildConfig.
 type BuildConfig struct {
@@ -94,10 +111,11 @@ type Region string
 
 // RunTask defines model for RunTask.
 type RunTask struct {
+	// Input Input data for a task. Can be either an array (for positional arguments) or an object (for named parameters).
 	Input TaskData `json:"input"`
 
-	// Task Either a task ID or a workflow slug with task name and optional version name. If a version is not provided, the latest version of the task will be used.
-	Task TaskIdentifier `json:"task"`
+	// Task A task slug in the format workflow-slug/task-name. An optional version can be appended (workflow-slug/task-name:version). If no version is provided, the latest version is used.
+	Task TaskSlug `json:"task"`
 }
 
 // Runtime The runtime environment for the workflow (e.g., node, python, etc.).
@@ -112,14 +130,40 @@ type Task struct {
 	WorkflowVersionId *string   `json:"workflowVersionId,omitempty"`
 }
 
-// TaskData defines model for TaskData.
-type TaskData = []interface{}
+// TaskAttempt defines model for TaskAttempt.
+type TaskAttempt struct {
+	CompletedAt *time.Time    `json:"completedAt,omitempty"`
+	EnqueuedAt  *time.Time    `json:"enqueuedAt,omitempty"`
+	StartedAt   time.Time     `json:"startedAt"`
+	Status      TaskRunStatus `json:"status"`
+}
 
-// TaskIdentifier Either a task ID or a workflow slug with task name and optional version name. If a version is not provided, the latest version of the task will be used.
-type TaskIdentifier = string
+// TaskAttemptDetails defines model for TaskAttemptDetails.
+type TaskAttemptDetails struct {
+	CompletedAt *time.Time `json:"completedAt,omitempty"`
+	EnqueuedAt  *time.Time `json:"enqueuedAt,omitempty"`
+
+	// Error Error message if the task attempt failed.
+	Error     *string        `json:"error,omitempty"`
+	Results   *TaskRunResult `json:"results,omitempty"`
+	StartedAt time.Time      `json:"startedAt"`
+	Status    TaskRunStatus  `json:"status"`
+}
+
+// TaskData Input data for a task. Can be either an array (for positional arguments) or an object (for named parameters).
+type TaskData struct {
+	union json.RawMessage
+}
+
+// TaskData0 Positional arguments passed to the task function
+type TaskData0 = []interface{}
+
+// TaskData1 Named parameters passed to the task function as keyword arguments
+type TaskData1 map[string]interface{}
 
 // TaskRun defines model for TaskRun.
 type TaskRun struct {
+	Attempts        []TaskAttempt `json:"attempts"`
 	CompletedAt     *time.Time    `json:"completedAt,omitempty"`
 	Id              string        `json:"id"`
 	ParentTaskRunId string        `json:"parentTaskRunId"`
@@ -132,11 +176,14 @@ type TaskRun struct {
 
 // TaskRunDetails defines model for TaskRunDetails.
 type TaskRunDetails struct {
-	CompletedAt *time.Time `json:"completedAt,omitempty"`
+	Attempts    []TaskAttemptDetails `json:"attempts"`
+	CompletedAt *time.Time           `json:"completedAt,omitempty"`
 
 	// Error Error message if the task run failed.
-	Error           *string       `json:"error,omitempty"`
-	Id              string        `json:"id"`
+	Error *string `json:"error,omitempty"`
+	Id    string  `json:"id"`
+
+	// Input Input data for a task. Can be either an array (for positional arguments) or an object (for named parameters).
 	Input           TaskData      `json:"input"`
 	ParentTaskRunId string        `json:"parentTaskRunId"`
 	Results         TaskRunResult `json:"results"`
@@ -153,21 +200,19 @@ type TaskRunResult = []interface{}
 // TaskRunStatus defines model for TaskRunStatus.
 type TaskRunStatus string
 
-// TaskSlug defines model for TaskSlug.
-type TaskSlug struct {
-	TaskName            string  `json:"taskName"`
-	Version             *string `json:"version,omitempty"`
-	WorkflowServiceSlug string  `json:"workflowServiceSlug"`
-}
+// TaskSlug A task slug in the format workflow-slug/task-name. An optional version can be appended (workflow-slug/task-name:version). If no version is provided, the latest version is used.
+type TaskSlug = string
 
 // Workflow defines model for Workflow.
 type Workflow struct {
-	BuildConfig   BuildConfig `json:"buildConfig"`
-	CreatedAt     time.Time   `json:"createdAt"`
-	EnvironmentId *string     `json:"environmentId,omitempty"`
-	Id            string      `json:"id"`
-	Name          string      `json:"name"`
-	OwnerId       string      `json:"ownerId"`
+	// AutoDeployTrigger Controls autodeploy behavior. "commit" deploys when a commit is pushed to the branch. "checksPass" waits for CI checks to pass before deploying. "off" disables autodeploy.
+	AutoDeployTrigger *AutoDeployTrigger `json:"autoDeployTrigger,omitempty"`
+	BuildConfig       BuildConfig        `json:"buildConfig"`
+	CreatedAt         time.Time          `json:"createdAt"`
+	EnvironmentId     *string            `json:"environmentId,omitempty"`
+	Id                string             `json:"id"`
+	Name              string             `json:"name"`
+	OwnerId           string             `json:"ownerId"`
 
 	// Region Defaults to "oregon"
 	Region Region `json:"region"`
@@ -180,9 +225,12 @@ type Workflow struct {
 
 // WorkflowCreate defines model for WorkflowCreate.
 type WorkflowCreate struct {
-	BuildConfig BuildConfig `json:"buildConfig"`
-	Name        string      `json:"name"`
-	OwnerId     string      `json:"ownerId"`
+	// AutoDeployTrigger Controls autodeploy behavior. "commit" deploys when a commit is pushed to the branch. "checksPass" waits for CI checks to pass before deploying. "off" disables autodeploy.
+	AutoDeployTrigger *AutoDeployTrigger             `json:"autoDeployTrigger,omitempty"`
+	BuildConfig       BuildConfig                    `json:"buildConfig"`
+	EnvVars           *externalRef4.EnvVarInputArray `json:"envVars,omitempty"`
+	Name              string                         `json:"name"`
+	OwnerId           string                         `json:"ownerId"`
 
 	// Region Defaults to "oregon"
 	Region Region `json:"region"`
@@ -193,8 +241,10 @@ type WorkflowCreate struct {
 
 // WorkflowUpdate defines model for WorkflowUpdate.
 type WorkflowUpdate struct {
-	BuildConfig *BuildConfig `json:"buildConfig,omitempty"`
-	Name        *string      `json:"name,omitempty"`
+	// AutoDeployTrigger Controls autodeploy behavior. "commit" deploys when a commit is pushed to the branch. "checksPass" waits for CI checks to pass before deploying. "off" disables autodeploy.
+	AutoDeployTrigger *AutoDeployTrigger `json:"autoDeployTrigger,omitempty"`
+	BuildConfig       *BuildConfig       `json:"buildConfig,omitempty"`
+	Name              *string            `json:"name,omitempty"`
 
 	// RunCommand The command to run the workflow
 	RunCommand *string `json:"runCommand,omitempty"`
@@ -218,11 +268,11 @@ type RootTaskRunIDFilterParam = []string
 // TaskIDParam defines model for TaskIDParam.
 type TaskIDParam = string
 
-// TaskIdFilterParam defines model for TaskIdFilterParam.
-type TaskIdFilterParam = []string
-
 // TaskRunIDParam defines model for TaskRunIDParam.
 type TaskRunIDParam = string
+
+// TaskSlugFilterParam defines model for TaskSlugFilterParam.
+type TaskSlugFilterParam = []string
 
 // WorkflowIDFilterParam defines model for WorkflowIDFilterParam.
 type WorkflowIDFilterParam = []string
@@ -235,3 +285,65 @@ type WorkflowVersionIDFilterParam = []string
 
 // WorkflowVersionIDParam defines model for WorkflowVersionIDParam.
 type WorkflowVersionIDParam = string
+
+// AsTaskData0 returns the union data inside the TaskData as a TaskData0
+func (t TaskData) AsTaskData0() (TaskData0, error) {
+	var body TaskData0
+	err := json.Unmarshal(t.union, &body)
+	return body, err
+}
+
+// FromTaskData0 overwrites any union data inside the TaskData as the provided TaskData0
+func (t *TaskData) FromTaskData0(v TaskData0) error {
+	b, err := json.Marshal(v)
+	t.union = b
+	return err
+}
+
+// MergeTaskData0 performs a merge with any union data inside the TaskData, using the provided TaskData0
+func (t *TaskData) MergeTaskData0(v TaskData0) error {
+	b, err := json.Marshal(v)
+	if err != nil {
+		return err
+	}
+
+	merged, err := runtime.JSONMerge(t.union, b)
+	t.union = merged
+	return err
+}
+
+// AsTaskData1 returns the union data inside the TaskData as a TaskData1
+func (t TaskData) AsTaskData1() (TaskData1, error) {
+	var body TaskData1
+	err := json.Unmarshal(t.union, &body)
+	return body, err
+}
+
+// FromTaskData1 overwrites any union data inside the TaskData as the provided TaskData1
+func (t *TaskData) FromTaskData1(v TaskData1) error {
+	b, err := json.Marshal(v)
+	t.union = b
+	return err
+}
+
+// MergeTaskData1 performs a merge with any union data inside the TaskData, using the provided TaskData1
+func (t *TaskData) MergeTaskData1(v TaskData1) error {
+	b, err := json.Marshal(v)
+	if err != nil {
+		return err
+	}
+
+	merged, err := runtime.JSONMerge(t.union, b)
+	t.union = merged
+	return err
+}
+
+func (t TaskData) MarshalJSON() ([]byte, error) {
+	b, err := t.union.MarshalJSON()
+	return b, err
+}
+
+func (t *TaskData) UnmarshalJSON(b []byte) error {
+	err := t.union.UnmarshalJSON(b)
+	return err
+}

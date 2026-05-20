@@ -24,7 +24,7 @@ func CreateRedisRequestFromModel(ownerID string, plan redis.RedisModel) (client.
 		Name:            plan.Name.ValueString(),
 		OwnerId:         ownerID,
 		Plan:            client.RedisPlan(plan.Plan.ValueString()),
-		Region:          plan.Region.ValueStringPointer(),
+		Region:          (*client.Region)(plan.Region.ValueStringPointer()),
 	}
 
 	return createRedisBody, nil
