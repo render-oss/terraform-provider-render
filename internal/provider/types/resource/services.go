@@ -342,9 +342,6 @@ var RootDirectory = schema.StringAttribute{
 	Optional:            true,
 	Description:         "When you specify a root directory, Render runs all your commands in the specified directory and ignores changes outside the directory. Defaults to the repository root.",
 	MarkdownDescription: "When you specify a [root directory](https://render.com/docs/monorepo-support#root-directory), Render runs all your commands in the specified directory and ignores changes outside the directory. Defaults to the repository root.",
-	PlanModifiers: []planmodifier.String{
-		stringplanmodifier.UseStateForUnknown(),
-	},
 }
 
 var Routes = schema.ListNestedAttribute{
