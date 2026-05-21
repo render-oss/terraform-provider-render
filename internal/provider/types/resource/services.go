@@ -321,9 +321,6 @@ var MaxShutdownDelaySeconds = schema.Int64Attribute{
 	Validators: []validator.Int64{
 		int64validator.Between(1, 300),
 	},
-	PlanModifiers: []planmodifier.Int64{
-		int64planmodifier.UseStateForUnknown(),
-	},
 }
 
 var Branch = schema.StringAttribute{
