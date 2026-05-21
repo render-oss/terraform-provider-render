@@ -177,7 +177,7 @@ var HealthCheckPath = schema.StringAttribute{
 var NumInstances = schema.Int64Attribute{
 	Optional:    true,
 	Computed:    true,
-	Description: "Number of replicas of the service to run. Defaults to 1 on service creation and current instance count on update. If you want to manage the service's instance count outside Terraform, leave num_instances unset.",
+	Description: "Number of replicas of the service to run. Defaults to 1 on service creation and current instance count on update. To hand instance count back to Render (for example, when enabling autoscaling), remove num_instances from your config and run `terraform state rm` for this attribute — simply unsetting num_instances will preserve the last-known value in state.",
 	Validators: []validator.Int64{
 		int64validator.Between(1, 100),
 	},
