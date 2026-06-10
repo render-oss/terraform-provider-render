@@ -15,6 +15,14 @@ var MaxMemoryPolicy = schema.StringAttribute{
 	},
 }
 
+var PersistenceMode = schema.StringAttribute{
+	Computed:    true,
+	Description: "The type of persistence to use for saving data",
+	Validators: []validator.String{
+		redis.ValidatePersistenceModeFunc(),
+	},
+}
+
 var RedisPlan = schema.StringAttribute{
 	Computed:    true,
 	Description: "Plan for the Redis instance",

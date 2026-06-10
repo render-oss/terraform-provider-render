@@ -17,6 +17,7 @@ func Schema(ctx context.Context) schema.Schema {
 			"environment_id":      datasource.ResourceEnvironmentID,
 			"ip_allow_list":       datasource.IPAllowList,
 			"max_memory_policy":   datasource.MaxMemoryPolicy,
+			"persistence_mode":    datasource.PersistenceMode,
 			"name":                datasource.ServiceName,
 			"plan":                datasource.RedisPlan,
 			"region":              datasource.Region,

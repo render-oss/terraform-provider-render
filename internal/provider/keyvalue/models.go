@@ -16,6 +16,7 @@ type KeyValueModel struct {
 	EnvironmentID     types.String `tfsdk:"environment_id"`
 	IPAllowList       types.Set    `tfsdk:"ip_allow_list"`
 	MaxMemoryPolicy   types.String `tfsdk:"max_memory_policy"`
+	PersistenceMode   types.String `tfsdk:"persistence_mode"`
 	Name              types.String `tfsdk:"name"`
 	Plan              types.String `tfsdk:"plan"`
 	Region            types.String `tfsdk:"region"`
@@ -54,6 +55,7 @@ func ModelForKeyValueResult(kv *client.KeyValue, plan *KeyValueModel, connection
 		EnvironmentID:     types.StringPointerValue(kv.EnvironmentId),
 		IPAllowList:       common.IPAllowListFromClient(kv.IpAllowList, diags),
 		MaxMemoryPolicy:   types.StringValue(*kv.Options.MaxmemoryPolicy),
+		PersistenceMode:   types.StringValue(string(*kv.Options.PersistenceMode)),
 		Name:              types.StringValue(kv.Name),
 		Plan:              types.StringValue(string(kv.Plan)),
 		Region:            types.StringValue(string(kv.Region)),

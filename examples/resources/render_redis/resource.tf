@@ -3,6 +3,7 @@ resource "render_redis" "example" {
   region            = "ohio"
   plan              = "starter"
   max_memory_policy = "noeviction"
+  persistence_mode  = "journal_snapshot"
 
   ip_allow_list = [
     {
