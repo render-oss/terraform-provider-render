@@ -17,6 +17,11 @@ func UpdateServiceRequestFromModel(plan keyvalue.KeyValueModel) (client.UpdateKe
 		maxMemoryPolicy = client.MaxmemoryPolicy(plan.MaxMemoryPolicy.ValueString())
 	}
 
+	var persistenceMode *client.PersistenceMode
+	if plan.PersistenceMode.ValueString() != "" {
+		persistenceMode = (*client.PersistenceMode)(plan.PersistenceMode.ValueStringPointer())
+	}
+
 	var keyValuePlan client.KeyValuePlan
 	if plan.Plan.ValueString() != "" {
 		keyValuePlan = client.KeyValuePlan(plan.Plan.ValueString())
@@ -25,6 +30,7 @@ func UpdateServiceRequestFromModel(plan keyvalue.KeyValueModel) (client.UpdateKe
 	updateKeyValueRequest := client.UpdateKeyValueJSONRequestBody{
 		IpAllowList:     &ipAllowList,
 		MaxmemoryPolicy: &maxMemoryPolicy,
+		PersistenceMode: persistenceMode,
 		Name:            plan.Name.ValueStringPointer(),
 		Plan:            &keyValuePlan,
 	}

@@ -29,6 +29,7 @@ func TestRedisResource(t *testing.T) {
 					"environment_name":       config.StringVariable("first"),
 					"has_allow_list":         config.BoolVariable(true),
 					"max_memory_policy":      config.StringVariable("allkeys_lfu"),
+					"persistence_mode":       config.StringVariable("journal_snapshot"),
 					"name":                   config.StringVariable("test-redis"),
 					"plan":                   config.StringVariable("starter"),
 					"has_log_stream_setting": config.BoolVariable(true),
@@ -44,6 +45,7 @@ func TestRedisResource(t *testing.T) {
 					resource.TestCheckResourceAttr(resourceName, "plan", "starter"),
 					resource.TestCheckResourceAttr(resourceName, "region", "oregon"),
 					resource.TestCheckResourceAttr(resourceName, "max_memory_policy", "allkeys_lfu"),
+					resource.TestCheckResourceAttr(resourceName, "persistence_mode", "journal_snapshot"),
 
 					resource.TestCheckResourceAttrWith(resourceName, "environment_id", func(value string) error {
 						if !strings.HasPrefix(value, "evm-") {
@@ -79,12 +81,15 @@ func TestRedisResource(t *testing.T) {
 					}),
 
 					resource.TestCheckResourceAttrWith(resourceName, "connection_info.redis_cli_command", func(value string) error {
-						if !regexp.MustCompile(`^ REDISCLI_AUTH=.{32} redis-cli --user red-[a-z0-9]+ -h .*-.*.com -p 637[7|9] --tls$`).MatchString(value) {
+						if !regexp.MustCompile(`^ REDISCLI_AUTH=.{32} valkey-cli --user red-[a-z0-9]+ -h .*-.*.com -p 637[7|9] --tls$`).MatchString(value) {
 							return fmt.Errorf("expected redis_cli_command: %s to match regex", value)
 						}
 
 						return nil
 					}),
+
+					// Check the default persistence mode of paid Redis
+					resource.TestCheckResourceAttr("render_redis.test-redis-paid", "persistence_mode", "journal_snapshot"),
 				),
 			},
 			{
@@ -98,6 +103,7 @@ func TestRedisResource(t *testing.T) {
 					"environment_name":       config.StringVariable("first"),
 					"has_allow_list":         config.BoolVariable(true),
 					"max_memory_policy":      config.StringVariable("allkeys_lfu"),
+					"persistence_mode":       config.StringVariable("journal_snapshot"),
 					"name":                   config.StringVariable("test-redis"),
 					"plan":                   config.StringVariable("starter"),
 					"has_log_stream_setting": config.BoolVariable(true),
@@ -111,6 +117,7 @@ func TestRedisResource(t *testing.T) {
 					"environment_name":       config.StringVariable("second"),
 					"has_allow_list":         config.BoolVariable(false),
 					"max_memory_policy":      config.StringVariable("noeviction"),
+					"persistence_mode":       config.StringVariable("snapshot"),
 					"name":                   config.StringVariable("test-redis-new"),
 					"plan":                   config.StringVariable("standard"),
 					"has_log_stream_setting": config.BoolVariable(false),
@@ -125,6 +132,7 @@ func TestRedisResource(t *testing.T) {
 					resource.TestCheckResourceAttr(resourceName, "plan", "standard"),
 					resource.TestCheckResourceAttr(resourceName, "region", "oregon"),
 					resource.TestCheckResourceAttr(resourceName, "max_memory_policy", "noeviction"),
+					resource.TestCheckResourceAttr(resourceName, "persistence_mode", "snapshot"),
 					resource.TestCheckNoResourceAttr(resourceName, "log_stream_override.setting"),
 
 					resource.TestCheckResourceAttrWith(resourceName, "environment_id", func(value string) error {
@@ -151,6 +159,7 @@ func TestRedisResource(t *testing.T) {
 					"environment_name":       config.StringVariable("second"),
 					"has_allow_list":         config.BoolVariable(true),
 					"max_memory_policy":      config.StringVariable("noeviction"),
+					"persistence_mode":       config.StringVariable("snapshot"),
 					"name":                   config.StringVariable("test-redis-new"),
 					"plan":                   config.StringVariable("standard"),
 					"has_log_stream_setting": config.BoolVariable(false),
@@ -166,6 +175,70 @@ func TestRedisResource(t *testing.T) {
 
 					resource.TestCheckResourceAttr(resourceName, "ip_allow_list.1.cidr_block", "2.0.0.0/8"),
 					resource.TestCheckResourceAttr(resourceName, "ip_allow_list.1.description", "test-2"),
+				),
+			},
+			// Test the upgrade path from free Redis to paid to make sure the default persistence mode behaves as expected
+			{
+				ResourceName: "render_redis.test-redis-upgrade",
+				ConfigFile:   config.StaticFile("./testdata/redis_upgrade.tf"),
+				ConfigVariables: config.Variables{
+					"plan": config.StringVariable("free"),
+				},
+				ConfigPlanChecks: resource.ConfigPlanChecks{
+					PreApply: []plancheck.PlanCheck{
+						checks.ExpectNoReplace(),
+					},
+				},
+				Check: resource.ComposeAggregateTestCheckFunc(
+					resource.TestCheckResourceAttr("render_redis.test-redis-upgrade", "persistence_mode", "off"),
+				),
+			},
+			{
+				ResourceName: "render_redis.test-redis-upgrade",
+				ConfigFile:   config.StaticFile("./testdata/redis_upgrade.tf"),
+				ConfigVariables: config.Variables{
+					"plan": config.StringVariable("starter"),
+				},
+				ConfigPlanChecks: resource.ConfigPlanChecks{
+					PreApply: []plancheck.PlanCheck{
+						checks.ExpectNoReplace(),
+					},
+				},
+				Check: resource.ComposeAggregateTestCheckFunc(
+					resource.TestCheckResourceAttr("render_redis.test-redis-upgrade", "persistence_mode", "journal_snapshot"),
+				),
+			},
+			// Test the upgrade path from free Redis to paid to make sure the specified persistence mode behaves as expected
+			{
+				ResourceName: "render_redis.test-redis-upgrade2",
+				ConfigFile:   config.StaticFile("./testdata/redis_upgrade2.tf"),
+				ConfigVariables: config.Variables{
+					"plan":             config.StringVariable("free"),
+					"persistence_mode": config.StringVariable("off"),
+				},
+				ConfigPlanChecks: resource.ConfigPlanChecks{
+					PreApply: []plancheck.PlanCheck{
+						checks.ExpectNoReplace(),
+					},
+				},
+				Check: resource.ComposeAggregateTestCheckFunc(
+					resource.TestCheckResourceAttr("render_redis.test-redis-upgrade2", "persistence_mode", "off"),
+				),
+			},
+			{
+				ResourceName: "render_redis.test-redis-upgrade2",
+				ConfigFile:   config.StaticFile("./testdata/redis_upgrade2.tf"),
+				ConfigVariables: config.Variables{
+					"plan":             config.StringVariable("starter"),
+					"persistence_mode": config.StringVariable("snapshot"),
+				},
+				ConfigPlanChecks: resource.ConfigPlanChecks{
+					PreApply: []plancheck.PlanCheck{
+						checks.ExpectNoReplace(),
+					},
+				},
+				Check: resource.ComposeAggregateTestCheckFunc(
+					resource.TestCheckResourceAttr("render_redis.test-redis-upgrade2", "persistence_mode", "snapshot"),
 				),
 			},
 		},

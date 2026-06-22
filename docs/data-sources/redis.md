@@ -30,6 +30,7 @@ Provides information about a Render Redis instance.
 - `ip_allow_list` (Attributes Set) List of IP addresses that are allowed to connect to the Redis instance. If no IP addresses are provided, only connections via the private network will be allowed. (see [below for nested schema](#nestedatt--ip_allow_list))
 - `max_memory_policy` (String) Policy for evicting keys when the maxmemory limit is reached
 - `name` (String) Name of the service
+- `persistence_mode` (String) The type of persistence to use for saving data
 - `plan` (String) Plan for the Redis instance
 - `region` (String) Region to deploy the service
 

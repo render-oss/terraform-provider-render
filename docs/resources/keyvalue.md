@@ -26,6 +26,7 @@ Provides a Render Key Value resource.
 - `environment_id` (String) ID of the [project environment](https://render.com/docs/projects) that the resource belongs to
 - `ip_allow_list` (Attributes Set) List of IP addresses that are allowed to connect to the instance. If no IP addresses are provided, only connections via the private network will be allowed. (see [below for nested schema](#nestedatt--ip_allow_list))
 - `log_stream_override` (Attributes) Configure the [log stream override settings](https://render.com/docs/log-streams#overriding-defaults) for this service. These will override the global log stream settings of the user or team. (see [below for nested schema](#nestedatt--log_stream_override))
+- `persistence_mode` (String) The type of persistence to use for saving data. Value values are `journal_snapshot`, `snapshot`, `off`.
 - `plan` (String) Plan for the Key Value instance. Must be one of `free`, `starter`, `standard`, `pro`, `pro_plus`, or a custom plan.
 
 ### Read-Only

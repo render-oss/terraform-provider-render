@@ -18,6 +18,16 @@ var MaxMemoryPolicy = schema.StringAttribute{
 	},
 }
 
+var PersistenceMode = schema.StringAttribute{
+	Optional:            true,
+	Computed:            true,
+	Description:         "The type of persistence to use for saving data. Value values are journal_snapshot, snapshot, off.",
+	MarkdownDescription: "The type of persistence to use for saving data. Value values are `journal_snapshot`, `snapshot`, `off`.",
+	Validators: []validator.String{
+		redis.ValidatePersistenceModeFunc(),
+	},
+}
+
 var RedisPlan = schema.StringAttribute{
 	Optional:            true,
 	Computed:            true,

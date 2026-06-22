@@ -17,10 +17,16 @@ func CreateRedisRequestFromModel(ownerID string, plan redis.RedisModel) (client.
 		maxMemoryPolicy = client.MaxmemoryPolicy(plan.MaxMemoryPolicy.ValueString())
 	}
 
+	var persistenceMode *client.PersistenceMode
+	if plan.PersistenceMode.ValueString() != "" {
+		persistenceMode = (*client.PersistenceMode)(plan.PersistenceMode.ValueStringPointer())
+	}
+
 	var createRedisBody = client.CreateRedisJSONRequestBody{
 		EnvironmentId:   plan.EnvironmentID.ValueStringPointer(),
 		IpAllowList:     &ipAllowList,
 		MaxmemoryPolicy: &maxMemoryPolicy,
+		PersistenceMode: persistenceMode,
 		Name:            plan.Name.ValueString(),
 		OwnerId:         ownerID,
 		Plan:            client.RedisPlan(plan.Plan.ValueString()),
