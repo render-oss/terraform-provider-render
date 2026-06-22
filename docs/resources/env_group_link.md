@@ -17,8 +17,7 @@ resource "render_web_service" "web" {
   name    = "web-service"
   plan    = "starter"
   region  = "ohio"
-  runtime = "image"
-  deploy_configuration = {
+  runtime_source = {
     image = {
       image_url = "docker.io/library/nginx",
       tag       = "latest",
