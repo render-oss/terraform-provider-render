@@ -1,16 +1,14 @@
 resource "render_cron_job" "cron-job-example" {
-  name               = "example-cron-job"
-  plan               = "starter"
-  region             = "ohio"
-  runtime            = "python"
-  schedule           = "30 2 * * *" // Run daily at 2:30 AM
-  start_command      = "echo 'cron job running'"
-  pre_deploy_command = "pip install -r requirements.txt"
+  name          = "example-cron-job"
+  plan          = "starter"
+  region        = "ohio"
+  schedule      = "30 2 * * *" // Run daily at 2:30 AM
+  start_command = "echo 'cron job running'"
 
   runtime_source = {
     native_runtime = {
       auto_deploy   = true
-      branch        = "master"
+      branch        = "main"
       build_command = "pip install -r requirements.txt"
       build_filter = {
         ignored_paths = ["cronjob/tests/**"]
