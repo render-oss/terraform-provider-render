@@ -22,6 +22,14 @@ func ValidateMaxMemoryPolicyFunc() validator.String {
 	)
 }
 
+func ValidatePersistenceModeFunc() validator.String {
+	return stringvalidator.OneOf(
+		string(client.PersistenceModeJournalSnapshot),
+		string(client.PersistenceModeSnapshot),
+		string(client.PersistenceModeOff),
+	)
+}
+
 func ValidateRedisPlanFunc() validator.String {
 	return stringvalidator.Any(
 		isNonCustomRedisPlanFunc(),

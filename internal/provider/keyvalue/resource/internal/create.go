@@ -17,10 +17,16 @@ func CreateKeyValueRequestFromModel(ownerID string, plan keyvalue.KeyValueModel)
 		maxMemoryPolicy = client.MaxmemoryPolicy(plan.MaxMemoryPolicy.ValueString())
 	}
 
+	var persistenceMode *client.PersistenceMode
+	if plan.PersistenceMode.ValueString() != "" {
+		persistenceMode = (*client.PersistenceMode)(plan.PersistenceMode.ValueStringPointer())
+	}
+
 	var createKeyValueBody = client.CreateKeyValueJSONRequestBody{
 		EnvironmentId:   plan.EnvironmentID.ValueStringPointer(),
 		IpAllowList:     &ipAllowList,
 		MaxmemoryPolicy: &maxMemoryPolicy,
+		PersistenceMode: persistenceMode,
 		Name:            plan.Name.ValueString(),
 		OwnerId:         ownerID,
 		Plan:            client.KeyValuePlan(plan.Plan.ValueString()),

@@ -16,6 +16,7 @@ func Schema(ctx context.Context) schema.Schema {
 			"environment_id":      resource.ResourceEnvironmentID,
 			"ip_allow_list":       resource.IPAllowList,
 			"max_memory_policy":   resource.MaxMemoryPolicy,
+			"persistence_mode":    resource.PersistenceMode,
 			"name":                resource.ServiceName,
 			"plan":                resource.KeyValuePlan,
 			"region":              resource.Region,

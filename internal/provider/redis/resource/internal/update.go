@@ -17,6 +17,11 @@ func UpdateServiceRequestFromModel(plan redis.RedisModel) (client.UpdateRedisJSO
 		maxMemoryPolicy = client.MaxmemoryPolicy(plan.MaxMemoryPolicy.ValueString())
 	}
 
+	var persistenceMode *client.PersistenceMode
+	if plan.PersistenceMode.ValueString() != "" {
+		persistenceMode = (*client.PersistenceMode)(plan.PersistenceMode.ValueStringPointer())
+	}
+
 	var redisPlan client.RedisPlan
 	if plan.Plan.ValueString() != "" {
 		redisPlan = client.RedisPlan(plan.Plan.ValueString())
@@ -25,6 +30,7 @@ func UpdateServiceRequestFromModel(plan redis.RedisModel) (client.UpdateRedisJSO
 	updateRedisRequest := client.UpdateRedisJSONRequestBody{
 		IpAllowList:     &ipAllowList,
 		MaxmemoryPolicy: &maxMemoryPolicy,
+		PersistenceMode: persistenceMode,
 		Name:            plan.Name.ValueStringPointer(),
 		Plan:            &redisPlan,
 	}

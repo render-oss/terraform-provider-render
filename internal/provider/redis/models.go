@@ -1,11 +1,12 @@
 package redis
 
 import (
+	"terraform-provider-render/internal/client/logs"
+	"terraform-provider-render/internal/provider/common"
+
 	"github.com/hashicorp/terraform-plugin-framework/attr"
 	"github.com/hashicorp/terraform-plugin-framework/diag"
 	"github.com/hashicorp/terraform-plugin-framework/types"
-	"terraform-provider-render/internal/client/logs"
-	"terraform-provider-render/internal/provider/common"
 
 	"terraform-provider-render/internal/client"
 )
@@ -15,6 +16,7 @@ type RedisModel struct {
 	EnvironmentID     types.String `tfsdk:"environment_id"`
 	IPAllowList       types.Set    `tfsdk:"ip_allow_list"`
 	MaxMemoryPolicy   types.String `tfsdk:"max_memory_policy"`
+	PersistenceMode   types.String `tfsdk:"persistence_mode"`
 	Name              types.String `tfsdk:"name"`
 	Plan              types.String `tfsdk:"plan"`
 	Region            types.String `tfsdk:"region"`
@@ -53,6 +55,7 @@ func ModelForRedisResult(redis *client.Redis, plan *RedisModel, connectionInfo *
 		EnvironmentID:     types.StringPointerValue(redis.EnvironmentId),
 		IPAllowList:       common.IPAllowListFromClient(redis.IpAllowList, diags),
 		MaxMemoryPolicy:   types.StringValue(*redis.Options.MaxmemoryPolicy),
+		PersistenceMode:   types.StringValue(string(*redis.Options.PersistenceMode)),
 		Name:              types.StringValue(redis.Name),
 		Plan:              types.StringValue(string(redis.Plan)),
 		Region:            types.StringValue(string(redis.Region)),

@@ -7,6 +7,9 @@ variable "has_allow_list" {
 variable "max_memory_policy" {
   type = string
 }
+variable "persistence_mode" {
+  type = string
+}
 variable "name" {
   type = string
 }
@@ -19,33 +22,34 @@ variable "has_log_stream_setting" {
 
 locals {
   environment_map = {
-    "first" = render_project.first.environments,
+    "first"  = render_project.first.environments,
     "second" = render_project.second.environments,
   }
 }
 
-resource "render_project" "first"  {
+resource "render_project" "first" {
   name = "first"
   environments = {
     "prod" : { name : "prod", protected_status : "protected" },
   }
 }
 
-resource "render_project" "second"  {
+resource "render_project" "second" {
   name = "second"
   environments = {
     "prod" : { name : "prod", protected_status : "protected" },
   }
   # Ensure there is always an order to creating these
-  depends_on = [    render_project.first  ]
+  depends_on = [render_project.first]
 }
 
 resource "render_redis" "test-redis" {
-  environment_id = var.environment_name != null ? local.environment_map[var.environment_name]["prod"].id : null
+  environment_id    = var.environment_name != null ? local.environment_map[var.environment_name]["prod"].id : null
   max_memory_policy = var.max_memory_policy
-  name = var.name
-  plan = var.plan
-  region = "oregon"
+  persistence_mode  = var.persistence_mode
+  name              = var.name
+  plan              = var.plan
+  region            = "oregon"
   ip_allow_list = var.has_allow_list ? [
     {
       cidr_block  = "1.1.1.1/32"
@@ -61,4 +65,11 @@ resource "render_redis" "test-redis" {
   } : null
 
   depends_on = [render_project.first, render_project.second]
+}
+
+resource "render_redis" "test-redis-paid" {
+  name              = "test-redis-paid"
+  plan              = "starter"
+  region            = "oregon"
+  max_memory_policy = "allkeys_lfu"
 }
