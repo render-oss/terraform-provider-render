@@ -24,6 +24,13 @@ func CreateServiceRequestFromModel(ctx context.Context, ownerID string, plan web
 
 	servicePlan := client.Plan(plan.Plan.ValueString())
 
+	// Maintenance mode can only be configured for non-free tier services, so omit it
+	// entirely on the free plan to avoid the API rejecting the request.
+	var maintenanceMode *client.MaintenanceMode
+	if servicePlan != client.PlanFree {
+		maintenanceMode = common.ToClientMaintenanceMode(plan.MaintenanceMode)
+	}
+
 	pullRequestPreviewsEnabled := client.PullRequestPreviewsEnabledNo
 	if plan.PullRequestPreviewsEnabled.ValueBool() {
 		pullRequestPreviewsEnabled = client.PullRequestPreviewsEnabledYes
@@ -61,7 +68,7 @@ func CreateServiceRequestFromModel(ctx context.Context, ownerID string, plan web
 		Previews:                   common.PreviewsObjectToPreviews(ctx, plan.Previews),
 		PullRequestPreviewsEnabled: &pullRequestPreviewsEnabled,
 		Region:                     &region,
-		MaintenanceMode:            common.ToClientMaintenanceMode(plan.MaintenanceMode),
+		MaintenanceMode:            maintenanceMode,
 		MaxShutdownDelaySeconds:    common.ValueAsIntPointer(plan.MaxShutdownDelaySeconds),
 		Autoscaling:                autoscaling,
 		IpAllowList:                ipAllowList,
