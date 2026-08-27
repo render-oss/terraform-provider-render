@@ -6,6 +6,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 
 	"terraform-provider-render/internal/client"
+	"terraform-provider-render/internal/provider/common"
 	"terraform-provider-render/internal/provider/redis"
 )
 
@@ -31,8 +32,8 @@ var PersistenceMode = schema.StringAttribute{
 var RedisPlan = schema.StringAttribute{
 	Optional:            true,
 	Computed:            true,
-	Description:         "Plan for the Redis instance. Must be one of free, starter, standard, pro, pro_plus, or a custom plan.",
-	MarkdownDescription: "Plan for the Redis instance. Must be one of `free`, `starter`, `standard`, `pro`, `pro_plus`, or a custom plan.",
+	Description:         "Plan for the Redis instance. Must be one of " + common.EnumList(client.RedisPlanValues(), client.RedisPlanCustom) + ", or a custom plan.",
+	MarkdownDescription: "Plan for the Redis instance. Must be one of " + common.EnumListMarkdown(client.RedisPlanValues(), client.RedisPlanCustom) + ", or a custom plan.",
 	Default:             stringdefault.StaticString(string(client.RedisPlanProPlus)),
 	Validators: []validator.String{
 		redis.ValidateRedisPlanFunc(),

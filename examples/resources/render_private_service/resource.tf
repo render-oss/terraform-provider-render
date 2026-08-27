@@ -1,6 +1,6 @@
 resource "render_private_service" "example" {
   name               = "my-private-service"
-  plan               = "starter"
+  plan               = "0.5c-512mb"
   region             = "ohio"
   start_command      = "npm start"
   pre_deploy_command = "npm run migrate"

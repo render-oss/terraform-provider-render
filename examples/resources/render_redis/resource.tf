@@ -1,7 +1,7 @@
 resource "render_redis" "example" {
   name              = "my-redis-instance"
   region            = "ohio"
-  plan              = "starter"
+  plan              = "256mb"
   max_memory_policy = "noeviction"
   persistence_mode  = "journal_snapshot"
 

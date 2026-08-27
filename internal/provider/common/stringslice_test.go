@@ -1,6 +1,7 @@
 package common_test
 
 import (
+	"regexp"
 	"testing"
 
 	"github.com/stretchr/testify/require"
@@ -45,4 +46,41 @@ func Test_XORStringSlices(t *testing.T) {
 		require.Equal(t, []string{"d"}, result2)
 		require.Equal(t, []string{"b", "c"}, both)
 	})
+}
+
+func Test_EnumList(t *testing.T) {
+	t.Parallel()
+
+	type plan string
+	values := []plan{"free", "starter", "custom", "1g"}
+
+	t.Run("renders a comma-separated list", func(t *testing.T) {
+		t.Parallel()
+		require.Equal(t, "free, starter, custom, 1g", common.EnumList(values))
+	})
+
+	t.Run("drops excluded values", func(t *testing.T) {
+		t.Parallel()
+		require.Equal(t, "free, starter, 1g", common.EnumList(values, "custom"))
+	})
+
+	t.Run("quotes values for markdown", func(t *testing.T) {
+		t.Parallel()
+		require.Equal(t, "`free`, `starter`, `1g`", common.EnumListMarkdown(values, "custom"))
+	})
+
+	t.Run("empty values render an empty list", func(t *testing.T) {
+		t.Parallel()
+		require.Equal(t, "", common.EnumList([]plan{}))
+	})
+}
+
+func Test_EnumValuesMatching(t *testing.T) {
+	t.Parallel()
+
+	type plan string
+	values := []plan{"free", "basic_256mb", "1c-4g", "pro_4gb", "128c-1024g"}
+	matched := common.EnumValuesMatching(values, regexp.MustCompile(`^[\d.]+c-\d+(mb|g)$`))
+
+	require.Equal(t, []plan{"1c-4g", "128c-1024g"}, matched)
 }

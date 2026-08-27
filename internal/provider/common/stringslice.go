@@ -1,18 +1,17 @@
 package common
 
-import "slices"
+import (
+	"regexp"
+	"slices"
+	"strings"
+)
 
-// EnumStrings converts generated enum values, such as client.RedisPlanValues(),
-// to plain strings. It lets validators derive their allowed values from the
-// OpenAPI schema instead of a hand-maintained list that goes stale whenever the
-// schema gains a value.
-func EnumStrings[T ~string](values []T) []string {
-	return EnumStringsExcept(values)
-}
-
-// EnumStringsExcept is EnumStrings without the excluded values. Plan validators
-// use it to drop enum members that are not valid inputs on their own, such as
-// the "custom" plan, whose real name is matched by pattern instead.
+// EnumStringsExcept converts generated enum values, such as
+// client.RedisPlanValues(), to plain strings, dropping the excluded ones. It
+// lets validators and descriptions derive their values from the OpenAPI schema
+// instead of a hand-maintained list. Exclusions cover enum members that are not
+// valid inputs on their own, such as the "custom" plan, whose real name is matched
+// by pattern instead.
 func EnumStringsExcept[T ~string](values []T, exclude ...T) []string {
 	strs := make([]string, 0, len(values))
 	for _, v := range values {
@@ -21,6 +20,39 @@ func EnumStringsExcept[T ~string](values []T, exclude ...T) []string {
 		}
 	}
 	return strs
+}
+
+// EnumValuesMatching returns the enum values matching re. Descriptions use it
+// to list one naming scheme's values while covering the rest as prose.
+func EnumValuesMatching[T ~string](values []T, re *regexp.Regexp) []T {
+	matched := make([]T, 0, len(values))
+	for _, v := range values {
+		if re.MatchString(string(v)) {
+			matched = append(matched, v)
+		}
+	}
+	return matched
+}
+
+// EnumList renders enum values as a comma-separated list for an attribute's
+// Description, such as "free, starter, standard".
+func EnumList[T ~string](values []T, exclude ...T) string {
+	return enumList(values, "", exclude)
+}
+
+// EnumListMarkdown is EnumList with each value in backticks, for an attribute's
+// MarkdownDescription.
+func EnumListMarkdown[T ~string](values []T, exclude ...T) string {
+	return enumList(values, "`", exclude)
+}
+
+func enumList[T ~string](values []T, quote string, exclude []T) string {
+	strs := EnumStringsExcept(values, exclude...)
+	for i, s := range strs {
+		strs[i] = quote + s + quote
+	}
+
+	return strings.Join(strs, ", ")
 }
 
 // XORStringSlices returns two slices, one with elements that are in slice1 but not in slice2, and the other with elements that are in slice2 but not in slice1.
