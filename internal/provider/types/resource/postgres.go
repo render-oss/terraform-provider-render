@@ -2,7 +2,9 @@ package resource
 
 import (
 	"regexp"
+
 	"terraform-provider-render/internal/client/postgres"
+	"terraform-provider-render/internal/provider/common"
 	providerpostgres "terraform-provider-render/internal/provider/postgres"
 
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
@@ -27,38 +29,11 @@ func ValidatePostgresPlanFunc() validator.String {
 }
 
 func isNonCustomPostgresPlanFunc() validator.String {
+	// A custom plan is named by its own identifier, matched by
+	// isCustomPostgresPlanFunc, so the literal "custom" enum member is not a
+	// plan a config can ask for.
 	return stringvalidator.OneOf(
-		string(postgres.Free),
-
-		string(postgres.Basic256mb),
-		string(postgres.Basic1gb),
-		string(postgres.Basic4gb),
-
-		string(postgres.Pro4gb),
-		string(postgres.Pro8gb),
-		string(postgres.Pro16gb),
-		string(postgres.Pro32gb),
-		string(postgres.Pro64gb),
-		string(postgres.Pro128gb),
-		string(postgres.Pro192gb),
-		string(postgres.Pro256gb),
-		string(postgres.Pro384gb),
-		string(postgres.Pro512gb),
-
-		string(postgres.Accelerated16gb),
-		string(postgres.Accelerated32gb),
-		string(postgres.Accelerated64gb),
-		string(postgres.Accelerated128gb),
-		string(postgres.Accelerated256gb),
-		string(postgres.Accelerated384gb),
-		string(postgres.Accelerated512gb),
-		string(postgres.Accelerated768gb),
-		string(postgres.Accelerated1024gb),
-
-		string(postgres.Starter),
-		string(postgres.Standard),
-		string(postgres.Pro),
-		string(postgres.ProPlus),
+		common.EnumStringsExcept(postgres.PostgresPlansValues(), postgres.Custom)...,
 	)
 }
 
