@@ -70,7 +70,7 @@ resource "render_web_service" "web" {
 ### Required
 
 - `name` (String) Name of the service
-- `plan` (String) Plan to use for the service. Must be one of `starter`, `standard`, `pro`, `pro_plus`, `pro_max`, `pro_ultra`, or a custom plan.
+- `plan` (String) Plan to use for the service. Must be one of `starter`, `standard`, `pro`, `pro_plus`, `pro_max`, `pro_ultra`, `0.5c-512mb`, `1c-2g`, `2c-4g`, `2c-8g`, `2c-16g`, `4c-8g`, `4c-16g`, `4c-32g`, `8c-16g`, `8c-32g`, `8c-64g`, `12c-24g`, `12c-48g`, `12c-96g`, or a custom plan.
 - `region` (String) [Region](https://render.com/docs/regions) to deploy the service. One of `frankfurt`, `ohio`, `oregon`, `singapore`, `virginia`.
 - `runtime_source` (Attributes) Source of the build artifacts or image that run your service. You must provide one of [native_runtime](https://render.com/docs/native-runtimes), [docker](https://render.com/docs/docker), or [image](https://render.com/docs/deploy-an-image). (see [below for nested schema](#nestedatt--runtime_source))
 
