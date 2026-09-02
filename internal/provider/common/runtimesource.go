@@ -2,6 +2,7 @@ package common
 
 import (
 	"fmt"
+	"strings"
 
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"terraform-provider-render/internal/client"
@@ -40,6 +41,54 @@ type RuntimeSourceModel struct {
 	Docker        *DockerRuntimeSourceModel `tfsdk:"docker"`
 	NativeRuntime *NativeRuntimeModel       `tfsdk:"native_runtime"`
 	Image         *ImageRuntimeSourceModel  `tfsdk:"image"`
+}
+
+type imageReference struct {
+	repository string
+	tag        string
+	digest     string
+}
+
+func parseImageReference(reference string) (imageReference, error) {
+	if reference == "" {
+		return imageReference{}, fmt.Errorf("image reference is empty")
+	}
+
+	if repository, digest, ok := strings.Cut(reference, "@"); ok {
+		if repository == "" || digest == "" {
+			return imageReference{}, fmt.Errorf("invalid digest image reference %q", reference)
+		}
+		return imageReference{
+			repository: repository,
+			digest:     digest,
+		}, nil
+	}
+
+	lastColon := strings.LastIndex(reference, ":")
+	lastSlash := strings.LastIndex(reference, "/")
+	if lastColon > lastSlash {
+		if lastColon == 0 || lastColon == len(reference)-1 {
+			return imageReference{}, fmt.Errorf("invalid tagged image reference %q", reference)
+		}
+		return imageReference{
+			repository: reference[:lastColon],
+			tag:        reference[lastColon+1:],
+		}, nil
+	}
+
+	return imageReference{repository: reference}, nil
+}
+
+func (r imageReference) String() string {
+	if r.digest != "" {
+		return fmt.Sprintf("%s@%s", r.repository, r.digest)
+	}
+
+	if r.tag != "" {
+		return fmt.Sprintf("%s:%s", r.repository, r.tag)
+	}
+
+	return r.repository
 }
 
 func (m *RuntimeSourceModel) Runtime() string {
@@ -173,15 +222,11 @@ func EnvSpecificDetailsForPATCH(runtimeSource *RuntimeSourceModel, startCommand 
 }
 
 func ImageURLForURLAndReference(url, tag, digest string) string {
-	if tag != "" {
-		return fmt.Sprintf("%s:%s", url, tag)
-	}
-
-	if digest != "" {
-		return fmt.Sprintf("%s@%s", url, digest)
-	}
-
-	return url
+	return imageReference{
+		repository: url,
+		tag:        tag,
+		digest:     digest,
+	}.String()
 }
 
 func applyAutoDeployForCreate(autoDeploy bool, autoDeployTrigger types.String, body *client.CreateServiceJSONRequestBody) {
