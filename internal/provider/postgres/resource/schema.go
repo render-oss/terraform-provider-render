@@ -6,6 +6,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/boolplanmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/mapplanmodifier"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/objectplanmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringplanmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
@@ -134,30 +135,45 @@ func PostgresResourceSchema(ctx context.Context) schema.Schema {
 				MarkdownDescription: "Database connection info.",
 				Computed:            true,
 				Sensitive:           true,
+				PlanModifiers: []planmodifier.Object{
+					objectplanmodifier.UseStateForUnknown(),
+				},
 				Attributes: map[string]schema.Attribute{
 					"password": schema.StringAttribute{
 						Description:         "Password for the postgres user.",
 						MarkdownDescription: "Password for the postgres user.",
 						Computed:            true,
 						Sensitive:           true,
+						PlanModifiers: []planmodifier.String{
+							stringplanmodifier.UseStateForUnknown(),
+						},
 					},
 					"external_connection_string": schema.StringAttribute{
 						Description:         "Connection string for external access. Use this to connect to the database from outside of Render.",
 						MarkdownDescription: "Connection string for external access. Use this to connect to the database from outside of Render.",
 						Computed:            true,
 						Sensitive:           true,
+						PlanModifiers: []planmodifier.String{
+							stringplanmodifier.UseStateForUnknown(),
+						},
 					},
 					"internal_connection_string": schema.StringAttribute{
 						Description:         "Connection string for internal access. Use this to connect to the database from within the same Render region.",
 						MarkdownDescription: "Connection string for internal access. Use this to connect to the database from within the same Render region.",
 						Computed:            true,
 						Sensitive:           true,
+						PlanModifiers: []planmodifier.String{
+							stringplanmodifier.UseStateForUnknown(),
+						},
 					},
 					"psql_command": schema.StringAttribute{
 						Description:         "Command to connect to the database using the `psql` command line tool.",
 						MarkdownDescription: "Command to connect to the database using the `psql` command line tool.",
 						Computed:            true,
 						Sensitive:           true,
+						PlanModifiers: []planmodifier.String{
+							stringplanmodifier.UseStateForUnknown(),
+						},
 					},
 				},
 			},
