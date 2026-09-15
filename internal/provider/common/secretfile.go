@@ -2,20 +2,21 @@ package common
 
 import (
 	"terraform-provider-render/internal/client"
+	"terraform-provider-render/internal/client/envvar"
 )
 
 type SecretFileModel struct {
 	Content string `tfsdk:"content"`
 }
 
-func SecretFilesToClient(sfs map[string]SecretFileModel) []client.SecretFileInput {
+func SecretFilesToClient(sfs map[string]SecretFileModel) []envvar.SecretFileInput {
 	if len(sfs) == 0 {
 		return nil
 	}
 
-	var res []client.SecretFileInput
+	var res []envvar.SecretFileInput
 	for k, v := range sfs {
-		res = append(res, client.SecretFileInput{
+		res = append(res, envvar.SecretFileInput{
 			Name:    k,
 			Content: v.Content,
 		})

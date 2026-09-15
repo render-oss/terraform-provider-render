@@ -1,6 +1,6 @@
 resource "render_cron_job" "cron-job-example" {
   name          = "example-cron-job"
-  plan          = "starter"
+  plan          = "0.5c-512mb"
   region        = "ohio"
   schedule      = "30 2 * * *" // Run daily at 2:30 AM
   start_command = "echo 'cron job running'"

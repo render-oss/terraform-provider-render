@@ -7,6 +7,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 
 	"terraform-provider-render/internal/client"
+	"terraform-provider-render/internal/provider/common"
 )
 
 func ValidateMaxMemoryPolicyFunc() validator.String {
@@ -37,13 +38,13 @@ func ValidateRedisPlanFunc() validator.String {
 	)
 }
 
+// isNonCustomRedisPlanFunc validates against the generated Redis plan values.
+//
+// A custom plan is named by its own identifier, matched by
+// isCustomRedisPlanFunc, so the literal "custom" enum member is excluded.
 func isNonCustomRedisPlanFunc() validator.String {
 	return stringvalidator.OneOf(
-		string(client.RedisPlanFree),
-		string(client.RedisPlanPro),
-		string(client.RedisPlanProPlus),
-		string(client.RedisPlanStandard),
-		string(client.RedisPlanStarter),
+		common.EnumStringsExcept(client.RedisPlanValues(), client.RedisPlanCustom)...,
 	)
 }
 

@@ -71,6 +71,38 @@ func TestUpdateServiceRequestFromModel_RuntimeNative(t *testing.T) {
 	assert.Equal(t, client.ServiceRuntimeNode, *privateServiceDetails.Runtime)
 }
 
+func TestUpdateServiceRequestFromModel_Plan(t *testing.T) {
+	ctx := context.Background()
+	ownerID := "owner-123"
+
+	// Test both plan name variants
+	for _, planName := range []string{"starter", "2c-4g"} {
+		t.Run(planName, func(t *testing.T) {
+			plan := privateservice.PrivateServiceModel{
+				Name: types.StringValue("test-service"),
+				Plan: types.StringValue(planName),
+				RuntimeSource: &common.RuntimeSourceModel{
+					NativeRuntime: &common.NativeRuntimeModel{
+						RepoURL: types.StringValue("https://github.com/test/repo"),
+						Runtime: types.StringValue("node"),
+					},
+				},
+				PullRequestPreviewsEnabled: types.BoolValue(false),
+				PreDeployCommand:           types.StringNull(),
+			}
+
+			req, err := UpdateServiceRequestFromModel(ctx, plan, ownerID)
+			require.NoError(t, err)
+
+			privateServiceDetails, err := req.ServiceDetails.AsPrivateServiceDetailsPATCH()
+			require.NoError(t, err)
+
+			require.NotNil(t, privateServiceDetails.Plan)
+			assert.Equal(t, client.PaidPlan(planName), *privateServiceDetails.Plan)
+		})
+	}
+}
+
 func TestUpdateServiceRequestFromModel_RuntimeDocker(t *testing.T) {
 	ctx := context.Background()
 	ownerID := "owner-123"

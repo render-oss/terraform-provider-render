@@ -1,10 +1,12 @@
 package testhelpers
 
 import (
+	"maps"
 	"net/http"
 	"net/url"
 	"os"
 	"regexp"
+	"slices"
 	"strings"
 	"testing"
 
@@ -23,6 +25,23 @@ func SetupRecordingProvider(t *testing.T, casetteName string) map[string]func() 
 }
 
 var emailRegex = regexp.MustCompile(`[a-z0-9._%+]+@[a-z0-9.]+\.[a-z]{2,4}`)
+
+func matchIgnoringQueryOrder(r *http.Request, i cassette.Request) bool {
+	if r.Method != i.Method {
+		return false
+	}
+
+	recorded, err := url.Parse(i.URL)
+	if err != nil {
+		return false
+	}
+
+	if r.URL.Scheme != recorded.Scheme || r.URL.Host != recorded.Host || r.URL.Path != recorded.Path {
+		return false
+	}
+
+	return maps.EqualFunc(r.URL.Query(), recorded.Query(), slices.Equal)
+}
 
 func scrubString(i *cassette.Interaction, from, to string) {
 	i.Request.URL = strings.ReplaceAll(i.Request.URL, from, to)
@@ -55,6 +74,13 @@ func SetupRecordingProviderConfigureWait(t *testing.T, casetteName string, waitF
 	t.Cleanup(func() {
 		require.NoError(t, r.Stop())
 	})
+
+	// go-vcr's DefaultMatcher compares URLs as strings, so it is sensitive to
+	// query parameter order. The generated client emits query parameters in
+	// schema declaration order, while cassettes recorded before that change
+	// carry them sorted by url.Values.Encode(). Compare parsed query values
+	// instead, so recordings stay valid across generator changes.
+	r.SetMatcher(matchIgnoringQueryOrder)
 
 	replaceAuthHeader := func(i *cassette.Interaction) error {
 		i.Request.Headers.Set("Authorization", "some-api-key")

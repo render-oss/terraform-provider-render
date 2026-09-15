@@ -6,6 +6,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 
 	"terraform-provider-render/internal/client"
+	"terraform-provider-render/internal/client/envvar"
 )
 
 type EnvVarModel struct {
@@ -13,12 +14,12 @@ type EnvVarModel struct {
 	GenerateValue types.Bool   `tfsdk:"generate_value"`
 }
 
-func EnvVarsToClient(evs map[string]EnvVarModel) (client.EnvVarInputArray, error) {
+func EnvVarsToClient(evs map[string]EnvVarModel) (envvar.EnvVarInputArray, error) {
 	if len(evs) == 0 {
 		return nil, nil
 	}
 
-	var res client.EnvVarInputArray
+	var res envvar.EnvVarInputArray
 	for k, v := range evs {
 		evItem, err := EnvVarToClient(k, v)
 		if err != nil {
@@ -31,11 +32,11 @@ func EnvVarsToClient(evs map[string]EnvVarModel) (client.EnvVarInputArray, error
 	return res, nil
 }
 
-func EnvVarToClient(k string, v EnvVarModel) (*client.EnvVarInput, error) {
-	evItem := &client.EnvVarInput{}
+func EnvVarToClient(k string, v EnvVarModel) (*envvar.EnvVarInput, error) {
+	evItem := &envvar.EnvVarInput{}
 
 	if !v.Value.IsNull() && !v.Value.IsUnknown() {
-		err := evItem.FromEnvVarKeyValue(client.EnvVarKeyValue{
+		err := evItem.FromEnvVarKeyValue(envvar.EnvVarKeyValue{
 			Key:   k,
 			Value: v.Value.ValueString(),
 		})
@@ -43,7 +44,7 @@ func EnvVarToClient(k string, v EnvVarModel) (*client.EnvVarInput, error) {
 			return nil, err
 		}
 	} else if v.GenerateValue.ValueBool() {
-		err := evItem.FromEnvVarKeyGenerateValue(client.EnvVarKeyGenerateValue{
+		err := evItem.FromEnvVarKeyGenerateValue(envvar.EnvVarKeyGenerateValue{
 			Key:           k,
 			GenerateValue: true,
 		})
