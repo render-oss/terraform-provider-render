@@ -290,5 +290,6 @@ func (r *webServiceResource) ConfigValidators(ctx context.Context) []resource.Co
 		resourcecommon.RuntimeSourceValidator,
 		resourcecommon.ImageTagOrDigestValidator,
 		resourcecommon.PreviewGenerationValidator,
+		maintenanceModeFreeTierValidator{},
 	}
 }
