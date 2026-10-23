@@ -2,7 +2,6 @@ package common
 
 import (
 	"fmt"
-	"strings"
 
 	"terraform-provider-render/internal/client"
 	"terraform-provider-render/internal/client/autoscaling"
@@ -255,26 +254,23 @@ func DockerRuntimeSource(service *client.Service, envDetails client.EnvSpecificD
 }
 
 func ImageRuntimeSource(service *client.Service, envDetails client.EnvSpecificDetails) (*ImageRuntimeSourceModel, error) {
-	var imageURL *string
-	var imageTag *string
-	var imageDigest *string
-
-	if service.ImagePath != nil && strings.Contains(*service.ImagePath, "@") {
-		imageParts := strings.Split(*service.ImagePath, "@")
-		imageURL = &imageParts[0]
-		imageDigest = &imageParts[1]
-	}
-
-	if service.ImagePath != nil && strings.Contains(*service.ImagePath, ":") {
-		imageParts := strings.Split(*service.ImagePath, ":")
-		imageURL = &imageParts[0]
-		imageTag = &imageParts[1]
-	}
-
 	image := &ImageRuntimeSourceModel{
-		ImageURL: commontypes.ImageURLStringValue{StringValue: types.StringPointerValue(imageURL)},
-		Tag:      types.StringPointerValue(imageTag),
-		Digest:   types.StringPointerValue(imageDigest),
+		ImageURL: commontypes.ImageURLStringValue{StringValue: types.StringNull()},
+		Tag:      types.StringNull(),
+		Digest:   types.StringNull(),
+	}
+	if service.ImagePath != nil {
+		reference, err := parseImageReference(*service.ImagePath)
+		if err != nil {
+			return nil, err
+		}
+		image.ImageURL = commontypes.ImageURLStringValue{StringValue: types.StringValue(reference.repository)}
+		if reference.tag != "" {
+			image.Tag = types.StringValue(reference.tag)
+		}
+		if reference.digest != "" {
+			image.Digest = types.StringValue(reference.digest)
+		}
 	}
 
 	if service.RegistryCredential != nil {
