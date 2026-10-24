@@ -15,6 +15,7 @@ import (
 
 	"terraform-provider-render/internal/client"
 	"terraform-provider-render/internal/client/disks"
+	"terraform-provider-render/internal/client/envvar"
 	"terraform-provider-render/internal/client/logs"
 	"terraform-provider-render/internal/client/notifications"
 )
@@ -503,8 +504,8 @@ type UpdateServiceReq struct {
 	ServiceID            string
 	Service              client.UpdateServiceJSONRequestBody
 	EnvironmentID        *EnvironmentIDStateAndPlan
-	EnvVars              client.EnvVarInputArray
-	SecretFiles          []client.SecretFileInput
+	EnvVars              envvar.EnvVarInputArray
+	SecretFiles          []envvar.SecretFileInput
 	CustomDomains        CustomDomainStateAndPlan
 	Disk                 *DiskStateAndPlan
 	InstanceCount        *int64
