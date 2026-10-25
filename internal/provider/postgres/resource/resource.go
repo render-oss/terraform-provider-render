@@ -233,6 +233,12 @@ func (r *postgresResource) Update(ctx context.Context, req resource.UpdateReques
 		}
 	}
 
+	readReplicas := postgres.ReadReplicaInputFromModel(plan.ReadReplicas, resp.Diagnostics)
+	if readReplicas == nil {
+		// An empty array removes replicas; JSON null leaves them unchanged.
+		readReplicas = []client.ReadReplicaInput{}
+	}
+
 	var pg client.PostgresDetail
 
 	err = common.Update(func() (*http.Response, error) {
@@ -242,7 +248,7 @@ func (r *postgresResource) Update(ctx context.Context, req resource.UpdateReques
 			Name:                   plan.Name.ValueStringPointer(),
 			Plan:                   common.From(clientpostgres.PostgresPlans(plan.Plan.ValueString())),
 			DatadogAPIKey:          plan.DatadogAPIKey.ValueStringPointer(),
-			ReadReplicas:           common.From(postgres.ReadReplicaInputFromModel(plan.ReadReplicas, resp.Diagnostics)),
+			ReadReplicas:           common.From(readReplicas),
 			DiskSizeGB:             common.ValueAsIntPointer(plan.DiskSizeGB),
 			ParameterOverrides:     parameterOverrides,
 		})
