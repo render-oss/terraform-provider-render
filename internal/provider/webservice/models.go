@@ -62,6 +62,16 @@ func ModelForServiceResult(service *common.WrappedService, plan WebServiceModel,
 		ipAllowList = common.IPAllowListFromClient(*details.IpAllowList, diags)
 	}
 
+	// The API omits maintenance_mode for free-tier services, which would otherwise be
+	// stored as null and conflict with the schema's default object, causing a perpetual
+	// diff. Unlike num_instances / ip_allow_list above (which key off the plan value), this
+	// attribute has a static schema default, so fall back to that default to keep state and
+	// the computed default in agreement.
+	maintenanceMode := common.DefaultMaintenanceMode()
+	if details.MaintenanceMode != nil {
+		maintenanceMode = common.MaintenanceModeFromClient(details.MaintenanceMode, diags)
+	}
+
 	webServicesModel := &WebServiceModel{
 		Id:                         types.StringValue(service.Id),
 		CustomDomains:              common.CustomDomainClientsToCustomDomainModelsNonRedirecting(service.CustomDomains),
@@ -81,7 +91,7 @@ func ModelForServiceResult(service *common.WrappedService, plan WebServiceModel,
 		MaxShutdownDelaySeconds:    common.IntPointerAsValue(details.MaxShutdownDelaySeconds),
 		IPAllowList:                ipAllowList,
 
-		MaintenanceMode:      common.MaintenanceModeFromClient(details.MaintenanceMode, diags),
+		MaintenanceMode:      maintenanceMode,
 		Autoscaling:          common.AutoscalingFromClient(details.Autoscaling, diags),
 		Disk:                 common.DiskToDiskModel(details.Disk),
 		EnvVars:              common.EnvVarsFromClientCursors(service.EnvVars, plan.EnvVars),

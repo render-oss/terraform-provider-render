@@ -15,6 +15,14 @@ func UpdateServiceRequestFromModel(ctx context.Context, plan webservice.WebServi
 
 	servicePlan := client.Plan(plan.Plan.ValueString())
 
+	// Maintenance mode can only be configured for non-free tier services. Sending it on
+	// a free-tier service (even the disabled default) makes the API reject the update, so
+	// omit it entirely on the free plan.
+	var maintenanceMode *client.MaintenanceMode
+	if servicePlan != client.PlanFree {
+		maintenanceMode = common.ToClientMaintenanceMode(plan.MaintenanceMode)
+	}
+
 	pullRequestPreviewsEnabled := client.PullRequestPreviewsEnabledNo
 	if plan.PullRequestPreviewsEnabled.ValueBool() {
 		pullRequestPreviewsEnabled = client.PullRequestPreviewsEnabledYes
@@ -50,7 +58,7 @@ func UpdateServiceRequestFromModel(ctx context.Context, plan webservice.WebServi
 		PreDeployCommand:           &preDeployCommand,
 		Previews:                   common.PreviewsObjectToPreviews(ctx, plan.Previews),
 		PullRequestPreviewsEnabled: &pullRequestPreviewsEnabled,
-		MaintenanceMode:            common.ToClientMaintenanceMode(plan.MaintenanceMode),
+		MaintenanceMode:            maintenanceMode,
 		MaxShutdownDelaySeconds:    common.ValueAsIntPointer(plan.MaxShutdownDelaySeconds),
 		Runtime:                    common.From(client.ServiceRuntime(plan.RuntimeSource.Runtime())),
 		IpAllowList:                ipAllowList,

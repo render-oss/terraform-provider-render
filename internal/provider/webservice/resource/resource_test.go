@@ -2,6 +2,7 @@ package resource_test
 
 import (
 	"fmt"
+	"regexp"
 	"strings"
 	"testing"
 
@@ -331,6 +332,82 @@ func TestEnvVarsResource(t *testing.T) {
 					resource.TestCheckNoResourceAttr(resourceName, "env_vars"),
 					resource.TestCheckNoResourceAttr(resourceName, "secret_files"),
 				),
+			},
+		},
+	})
+}
+
+// TestFreeTierMaintenanceMode is a regression test for issue #80. The Render API omits
+// maintenance_mode for free-tier services, which previously left the attribute null in
+// state and conflicted with its schema default, producing a perpetual diff. The cassette
+// models a free-tier service (plan "free", no maintenanceMode in any response), so each
+// step's implicit post-apply plan check asserts an empty plan and only passes because the
+// read path now falls back to the default instead of null.
+//
+// Note: go-vcr matches on method+URL only, so this test does not inspect the request
+// bodies and therefore does not by itself prove the create/update payloads omit
+// maintenance_mode on the free plan. That wire-level omission is covered by the unit tests
+// in create_test.go / update_test.go.
+func TestFreeTierMaintenanceMode(t *testing.T) {
+	resourceName := "render_web_service.service"
+
+	maintenanceModeDisabled := resource.ComposeAggregateTestCheckFunc(
+		resource.TestCheckResourceAttr(resourceName, "plan", "free"),
+		resource.TestCheckResourceAttr(resourceName, "maintenance_mode.enabled", "false"),
+		resource.TestCheckResourceAttr(resourceName, "maintenance_mode.uri", ""),
+	)
+
+	resource.Test(t, resource.TestCase{
+		ProtoV6ProviderFactories: th.SetupRecordingProvider(t, "maintenance_mode_free_cassette"),
+		Steps: []resource.TestStep{
+			// Create a free-tier service with no env vars.
+			{
+				ResourceName: resourceName,
+				ConfigFile:   config.StaticFile("./testdata/maintenance_mode_free.tf"),
+				ConfigVariables: config.Variables{
+					"env_var_count": config.IntegerVariable(0),
+				},
+				ConfigPlanChecks: resource.ConfigPlanChecks{
+					PreApply: []plancheck.PlanCheck{
+						checks.ExpectNoReplace(),
+					},
+				},
+				Check: maintenanceModeDisabled,
+			},
+			// Update the free-tier service (add an env var). Previously this failed because
+			// the provider always included maintenance_mode in the PATCH payload.
+			{
+				ResourceName: resourceName,
+				ConfigFile:   config.StaticFile("./testdata/maintenance_mode_free.tf"),
+				ConfigVariables: config.Variables{
+					"env_var_count": config.IntegerVariable(1),
+				},
+				ConfigPlanChecks: resource.ConfigPlanChecks{
+					PreApply: []plancheck.PlanCheck{
+						checks.ExpectNoReplace(),
+					},
+				},
+				Check: resource.ComposeAggregateTestCheckFunc(
+					maintenanceModeDisabled,
+					resource.TestCheckResourceAttr(resourceName, "env_vars.foo.value", "bar"),
+				),
+			},
+		},
+	})
+}
+
+// TestFreeTierMaintenanceModeRejectsEnabled covers the other half of issue #80: enabling
+// maintenance mode on a free-tier service is rejected at plan time with a clear message,
+// rather than being silently dropped and failing at apply. Validation runs before any API
+// call, so no cassette interactions are consumed.
+func TestFreeTierMaintenanceModeRejectsEnabled(t *testing.T) {
+	resource.Test(t, resource.TestCase{
+		ProtoV6ProviderFactories: th.SetupRecordingProvider(t, "maintenance_mode_free_cassette"),
+		Steps: []resource.TestStep{
+			{
+				ConfigFile:  config.StaticFile("./testdata/maintenance_mode_free_enabled.tf"),
+				PlanOnly:    true,
+				ExpectError: regexp.MustCompile("maintenance mode can only be configured for non-free tier services"),
 			},
 		},
 	})
