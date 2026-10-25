@@ -554,6 +554,10 @@ var scalableServiceTypes = []ServiceType{
 	ServiceTypeBackgroundWorker,
 }
 
+func shouldDeployAfterUpdate(explicitSkip bool, postUpdateServiceState client.ServiceSuspended) bool {
+	return !explicitSkip && postUpdateServiceState != client.ServiceSuspendedSuspended
+}
+
 func UpdateService(ctx context.Context, apiClient *client.ClientWithResponses, skipDeploy bool, req UpdateServiceReq, serviceType ServiceType) (*WrappedService, error) {
 	// must happen before updating the service so the instance count is reflected in the service response
 	if req.InstanceCount != nil && *req.InstanceCount > 0 && slices.Contains(scalableServiceTypes, serviceType) {
@@ -638,7 +642,7 @@ func UpdateService(ctx context.Context, apiClient *client.ClientWithResponses, s
 		}
 	}
 
-	if !skipDeploy {
+	if shouldDeployAfterUpdate(skipDeploy, service.Suspended) {
 		err = Create(func() (*http.Response, error) {
 			return apiClient.CreateDeploy(ctx, req.ServiceID, client.CreateDeployJSONRequestBody{})
 		}, nil)

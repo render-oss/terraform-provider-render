@@ -2,7 +2,9 @@ package common_test
 
 import (
 	"context"
+	"encoding/json"
 	"net/http"
+	"sync/atomic"
 	"testing"
 
 	"github.com/hashicorp/terraform-plugin-framework/types"
@@ -102,11 +104,13 @@ func TestGetWrappedService(t *testing.T) {
 
 func TestUpdateService(t *testing.T) {
 	t.Run("it updates the service", func(t *testing.T) {
-		var deployCalled bool
+		var deployCalls atomic.Int32
 
 		mockAPI := th.NewMockRenderAPI(map[string]http.HandlerFunc{
 			"/services/some-service-id": th.StaticResponse(&client.Service{
-				Id: "some-service-id", Name: "updated-service",
+				Id:        "some-service-id",
+				Name:      "updated-service",
+				Suspended: client.ServiceSuspendedNotSuspended,
 			}),
 			"/services/some-service-id/env-vars": th.StaticResponse([]client.EnvVarWithCursor{
 				{EnvVar: client.EnvVar{Key: "updated-env-var", Value: "val"}},
@@ -118,7 +122,7 @@ func TestUpdateService(t *testing.T) {
 			),
 			"/disks/some-disk-id": th.StaticResponse(disks.DiskDetails{Name: "updated-disk"}),
 			"/services/some-service-id/deploys": func(resp http.ResponseWriter, req *http.Request) {
-				deployCalled = true
+				deployCalls.Add(1)
 				resp.WriteHeader(http.StatusCreated)
 			},
 			"/services/some-service-id/scale": func(resp http.ResponseWriter, req *http.Request) {
@@ -126,6 +130,7 @@ func TestUpdateService(t *testing.T) {
 			},
 			"/notification-settings/overrides/services/some-service-id": th.StaticResponse(struct{}{}),
 		})
+		t.Cleanup(mockAPI.Close)
 
 		c, err := client.NewClientWithResponses(mockAPI.URL)
 		require.NoError(t, err)
@@ -153,14 +158,16 @@ func TestUpdateService(t *testing.T) {
 		require.NotNil(t, details.Disk)
 		assert.Equal(t, "updated-disk", details.Disk.Name)
 
-		assert.True(t, deployCalled, "it should deploy the service")
+		assert.EqualValues(t, 1, deployCalls.Load(), "an active service should deploy exactly once")
 	})
 	t.Run("it skips deploy when skip is set", func(t *testing.T) {
-		var deployCalled bool
+		var deployCalls atomic.Int32
 
 		mockAPI := th.NewMockRenderAPI(map[string]http.HandlerFunc{
 			"/services/some-service-id": th.StaticResponse(&client.Service{
-				Id: "some-service-id", Name: "updated-service",
+				Id:        "some-service-id",
+				Name:      "updated-service",
+				Suspended: client.ServiceSuspendedNotSuspended,
 			}),
 			"/services/some-service-id/env-vars": th.StaticResponse([]client.EnvVarWithCursor{
 				{EnvVar: client.EnvVar{Key: "updated-env-var", Value: "val"}},
@@ -172,7 +179,7 @@ func TestUpdateService(t *testing.T) {
 			),
 			"/disks/some-disk-id": th.StaticResponse(disks.DiskDetails{Name: "updated-disk"}),
 			"/services/some-service-id/deploys": func(resp http.ResponseWriter, req *http.Request) {
-				deployCalled = true
+				deployCalls.Add(1)
 				resp.WriteHeader(http.StatusCreated)
 			},
 			"/services/some-service-id/scale": func(resp http.ResponseWriter, req *http.Request) {
@@ -180,6 +187,7 @@ func TestUpdateService(t *testing.T) {
 			},
 			"/notification-settings/overrides/services/some-service-id": th.StaticResponse(struct{}{}),
 		})
+		t.Cleanup(mockAPI.Close)
 
 		c, err := client.NewClientWithResponses(mockAPI.URL)
 		require.NoError(t, err)
@@ -193,6 +201,147 @@ func TestUpdateService(t *testing.T) {
 		}, common.ServiceTypeWebService)
 		require.NoError(t, err)
 
-		assert.False(t, deployCalled, "it should not deploy the service")
+		assert.Zero(t, deployCalls.Load(), "an explicit skip should remain authoritative")
 	})
+	t.Run("it returns a deploy error for an active service", func(t *testing.T) {
+		const serviceID = "active-service-id"
+
+		var serviceUpdateCalls atomic.Int32
+		var envVarUpdateCalls atomic.Int32
+		var secretFileUpdateCalls atomic.Int32
+		var deployCalls atomic.Int32
+
+		mockAPI := th.NewMockRenderAPI(map[string]http.HandlerFunc{
+			"/services/" + serviceID: func(resp http.ResponseWriter, req *http.Request) {
+				serviceUpdateCalls.Add(1)
+				th.StaticResponse(&client.Service{
+					Id:        serviceID,
+					Name:      "updated-active-service",
+					Suspended: client.ServiceSuspendedNotSuspended,
+					Type:      client.BackgroundWorker,
+				})(resp, req)
+			},
+			"/services/" + serviceID + "/env-vars": func(resp http.ResponseWriter, req *http.Request) {
+				envVarUpdateCalls.Add(1)
+				th.StaticResponse([]client.EnvVarWithCursor{})(resp, req)
+			},
+			"/services/" + serviceID + "/secret-files": func(resp http.ResponseWriter, req *http.Request) {
+				secretFileUpdateCalls.Add(1)
+				th.StaticResponse([]client.SecretFileWithCursor{})(resp, req)
+			},
+			"/services/" + serviceID + "/deploys": func(resp http.ResponseWriter, req *http.Request) {
+				deployCalls.Add(1)
+				resp.WriteHeader(http.StatusInternalServerError)
+			},
+		})
+		t.Cleanup(mockAPI.Close)
+
+		c, err := client.NewClientWithResponses(mockAPI.URL)
+		require.NoError(t, err)
+
+		_, err = common.UpdateService(context.Background(), c, false, common.UpdateServiceReq{
+			ServiceID: serviceID,
+		}, common.ServiceTypeBackgroundWorker)
+		require.EqualError(t, err, "unable to deploy service: unexpected status code: 500")
+
+		assert.EqualValues(t, 1, serviceUpdateCalls.Load(), "the service mutation must not be retried")
+		assert.EqualValues(t, 1, envVarUpdateCalls.Load(), "the env-var mutation must not be retried")
+		assert.EqualValues(t, 1, secretFileUpdateCalls.Load(), "the secret-file mutation must not be retried")
+		assert.EqualValues(t, 1, deployCalls.Load(), "an active service should attempt exactly one deploy")
+	})
+}
+
+func TestUpdateService_SuspendedServiceSkipsDeployAndReturnsUpdatedState(t *testing.T) {
+	const serviceID = "suspended-service-id"
+
+	var serviceUpdateCalls atomic.Int32
+	var envVarUpdateCalls atomic.Int32
+	var secretFileUpdateCalls atomic.Int32
+	var deployCalls atomic.Int32
+
+	updatedName := "updated-suspended-service"
+	envVar := client.EnvVarInput{}
+	require.NoError(t, envVar.FromEnvVarKeyValue(client.EnvVarKeyValue{
+		Key:   "UPDATED_ENV_VAR",
+		Value: "updated-value",
+	}))
+
+	mockAPI := th.NewMockRenderAPI(map[string]http.HandlerFunc{
+		"/services/" + serviceID: func(resp http.ResponseWriter, req *http.Request) {
+			serviceUpdateCalls.Add(1)
+			assert.Equal(t, http.MethodPatch, req.Method)
+
+			var body client.UpdateServiceJSONRequestBody
+			if err := json.NewDecoder(req.Body).Decode(&body); err != nil {
+				t.Errorf("decode service update body: %v", err)
+				http.Error(resp, "invalid service update body", http.StatusBadRequest)
+				return
+			}
+			if body.Name == nil {
+				t.Error("service update omitted name")
+				http.Error(resp, "missing service name", http.StatusBadRequest)
+				return
+			}
+			assert.Equal(t, updatedName, *body.Name)
+
+			th.StaticResponse(&client.Service{
+				Id:        serviceID,
+				Name:      updatedName,
+				Suspended: client.ServiceSuspendedSuspended,
+				Type:      client.BackgroundWorker,
+			})(resp, req)
+		},
+		"/services/" + serviceID + "/env-vars": func(resp http.ResponseWriter, req *http.Request) {
+			envVarUpdateCalls.Add(1)
+			assert.Equal(t, http.MethodPut, req.Method)
+			th.StaticResponse([]client.EnvVarWithCursor{{
+				EnvVar: client.EnvVar{Key: "UPDATED_ENV_VAR", Value: "updated-value"},
+			}})(resp, req)
+		},
+		"/services/" + serviceID + "/secret-files": func(resp http.ResponseWriter, req *http.Request) {
+			secretFileUpdateCalls.Add(1)
+			assert.Equal(t, http.MethodPut, req.Method)
+			th.StaticResponse([]client.SecretFileWithCursor{{
+				SecretFile: client.SecretFile{Name: "updated-secret", Content: "updated-content"},
+			}})(resp, req)
+		},
+		"/services/" + serviceID + "/deploys": func(resp http.ResponseWriter, req *http.Request) {
+			deployCalls.Add(1)
+			assert.Equal(t, http.MethodPost, req.Method)
+			resp.WriteHeader(http.StatusBadRequest)
+			_, _ = resp.Write([]byte(`{"message":"cannot deploy suspended service"}`))
+		},
+	})
+	t.Cleanup(mockAPI.Close)
+
+	c, err := client.NewClientWithResponses(mockAPI.URL)
+	require.NoError(t, err)
+
+	wrapped, err := common.UpdateService(context.Background(), c, false, common.UpdateServiceReq{
+		ServiceID: serviceID,
+		Service: client.UpdateServiceJSONRequestBody{
+			Name: &updatedName,
+		},
+		EnvVars: []client.EnvVarInput{envVar},
+		SecretFiles: []client.SecretFileInput{{
+			Name:    "updated-secret",
+			Content: "updated-content",
+		}},
+	}, common.ServiceTypeBackgroundWorker)
+	require.NoError(t, err)
+	require.NotNil(t, wrapped)
+
+	assert.Equal(t, updatedName, wrapped.Name)
+	assert.Equal(t, client.ServiceSuspendedSuspended, wrapped.Suspended)
+	require.NotNil(t, wrapped.EnvVars)
+	require.Len(t, *wrapped.EnvVars, 1)
+	assert.Equal(t, "UPDATED_ENV_VAR", (*wrapped.EnvVars)[0].EnvVar.Key)
+	require.NotNil(t, wrapped.SecretFiles)
+	require.Len(t, *wrapped.SecretFiles, 1)
+	assert.Equal(t, "updated-secret", (*wrapped.SecretFiles)[0].SecretFile.Name)
+
+	assert.EqualValues(t, 1, serviceUpdateCalls.Load(), "the service mutation must not be retried")
+	assert.EqualValues(t, 1, envVarUpdateCalls.Load(), "the env-var mutation must not be retried")
+	assert.EqualValues(t, 1, secretFileUpdateCalls.Load(), "the secret-file mutation must not be retried")
+	assert.Zero(t, deployCalls.Load(), "a suspended service must not be deployed")
 }
