@@ -37,6 +37,10 @@ func Schema(ctx context.Context) schema.Schema {
 			"secret_files":                  datasource.SecretFiles,
 			"notification_override":         datasource.NotificationOverride,
 			"log_stream_override":           datasource.LogStreamOverride,
+			"render_subdomain_policy": schema.StringAttribute{
+				Computed:    true,
+				Description: "Availability of the default onrender.com subdomain: enabled or disabled.",
+			},
 		},
 	}
 }

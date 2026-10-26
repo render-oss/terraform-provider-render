@@ -53,6 +53,7 @@ func UpdateServiceRequestFromModel(ctx context.Context, plan webservice.WebServi
 		MaintenanceMode:            common.ToClientMaintenanceMode(plan.MaintenanceMode),
 		MaxShutdownDelaySeconds:    common.ValueAsIntPointer(plan.MaxShutdownDelaySeconds),
 		Runtime:                    common.From(client.ServiceRuntime(plan.RuntimeSource.Runtime())),
+		RenderSubdomainPolicy:      renderSubdomainPolicyFromModel(plan.RenderSubdomainPolicy),
 		IpAllowList:                ipAllowList,
 	}
 

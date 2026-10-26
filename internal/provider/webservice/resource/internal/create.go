@@ -2,6 +2,8 @@ package internal
 
 import (
 	"context"
+
+	"github.com/hashicorp/terraform-plugin-framework/types"
 	"terraform-provider-render/internal/client"
 	"terraform-provider-render/internal/provider/common"
 	"terraform-provider-render/internal/provider/webservice"
@@ -61,6 +63,7 @@ func CreateServiceRequestFromModel(ctx context.Context, ownerID string, plan web
 		Previews:                   common.PreviewsObjectToPreviews(ctx, plan.Previews),
 		PullRequestPreviewsEnabled: &pullRequestPreviewsEnabled,
 		Region:                     &region,
+		RenderSubdomainPolicy:      renderSubdomainPolicyFromModel(plan.RenderSubdomainPolicy),
 		MaintenanceMode:            common.ToClientMaintenanceMode(plan.MaintenanceMode),
 		MaxShutdownDelaySeconds:    common.ValueAsIntPointer(plan.MaxShutdownDelaySeconds),
 		Autoscaling:                autoscaling,
@@ -93,4 +96,11 @@ func CreateServiceRequestFromModel(ctx context.Context, ownerID string, plan web
 	}
 
 	return createServiceBody, nil
+}
+
+func renderSubdomainPolicyFromModel(policy types.String) *client.RenderSubdomainPolicy {
+	if policy.IsNull() || policy.IsUnknown() {
+		return nil
+	}
+	return common.From(client.RenderSubdomainPolicy(policy.ValueString()))
 }

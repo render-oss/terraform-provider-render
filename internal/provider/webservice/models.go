@@ -25,6 +25,7 @@ type WebServiceModel struct {
 	Previews                   types.Object               `tfsdk:"previews"`
 	PullRequestPreviewsEnabled types.Bool                 `tfsdk:"pull_request_previews_enabled"`
 	Region                     types.String               `tfsdk:"region"`
+	RenderSubdomainPolicy      types.String               `tfsdk:"render_subdomain_policy"`
 	RootDirectory              types.String               `tfsdk:"root_directory"`
 	StartCommand               types.String               `tfsdk:"start_command"`
 	Url                        types.String               `tfsdk:"url"`
@@ -76,6 +77,7 @@ func ModelForServiceResult(service *common.WrappedService, plan WebServiceModel,
 		Previews:                   common.PreviewsToPreviewsObject(details.Previews),
 		PullRequestPreviewsEnabled: types.BoolValue(details.PullRequestPreviewsEnabled != nil && *details.PullRequestPreviewsEnabled == client.PullRequestPreviewsEnabledYes),
 		Region:                     types.StringValue(string(details.Region)),
+		RenderSubdomainPolicy:      types.StringPointerValue((*string)(details.RenderSubdomainPolicy)),
 		RootDirectory:              types.StringValue(service.RootDir),
 		Url:                        types.StringValue(details.Url),
 		MaxShutdownDelaySeconds:    common.IntPointerAsValue(details.MaxShutdownDelaySeconds),

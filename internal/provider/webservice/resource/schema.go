@@ -3,6 +3,9 @@ package resource
 import (
 	"context"
 
+	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
+	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
+
 	"terraform-provider-render/internal/provider/types/resource"
 
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
@@ -38,6 +41,14 @@ func Schema(ctx context.Context) schema.Schema {
 			"secret_files":                  resource.SecretFiles,
 			"notification_override":         resource.NotificationOverride,
 			"log_stream_override":           resource.LogStreamOverride,
+			"render_subdomain_policy": schema.StringAttribute{
+				Optional:    true,
+				Computed:    true,
+				Description: "Controls availability of the default onrender.com subdomain. Must be enabled or disabled. When omitted, Render's setting is used and preserved.",
+				Validators: []validator.String{
+					stringvalidator.OneOf("enabled", "disabled"),
+				},
+			},
 		},
 	}
 }

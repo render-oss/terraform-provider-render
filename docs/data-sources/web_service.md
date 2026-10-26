@@ -43,6 +43,7 @@ Provides information about a Render Web Service.
 - `previews` (Attributes) [Pull request previews](https://render.com/docs/pull-request-previews#pull-request-previews-git-backed) settings (see [below for nested schema](#nestedatt--previews))
 - `pull_request_previews_enabled` (Boolean, Deprecated)
 - `region` (String) Region to deploy the service
+- `render_subdomain_policy` (String) Availability of the default onrender.com subdomain: enabled or disabled.
 - `root_directory` (String) Defaults to repository root. When you specify a root directory that is different from your repository root, Render runs all your commands in the specified directory and ignores changes outside the directory.
 - `runtime_source` (Attributes) Source of the build artifacts or image that run your service. (see [below for nested schema](#nestedatt--runtime_source))
 - `secret_files` (Attributes Map) A map of secret file paths to their contents. (see [below for nested schema](#nestedatt--secret_files))
