@@ -351,6 +351,13 @@ type serviceWithDeploy struct {
 }
 
 func CreateService(ctx context.Context, apiClient *client.ClientWithResponses, req CreateServiceReq) (*WrappedService, error) {
+	// Create the service directly in its environment. Adding it afterwards
+	// leaves it outside any project (listed as ungrouped) until that second
+	// request lands, and for good if the second request fails.
+	if req.EnvironmentID != nil {
+		req.Service.EnvironmentId = req.EnvironmentID
+	}
+
 	serviceResponse := serviceWithDeploy{}
 	err := Create(func() (*http.Response, error) {
 		return apiClient.CreateService(ctx, req.Service)
@@ -359,7 +366,9 @@ func CreateService(ctx context.Context, apiClient *client.ClientWithResponses, r
 		return nil, fmt.Errorf("could not create service: %w", err)
 	}
 
-	if req.EnvironmentID != nil {
+	if req.EnvironmentID != nil && ValueOrDefault(serviceResponse.Service.EnvironmentId, "") != *req.EnvironmentID {
+		// The create response did not place the service in the environment;
+		// add it in a separate request.
 		_, err = UpdateEnvironmentID(ctx, apiClient, serviceResponse.Service.Id, &EnvironmentIDStateAndPlan{Plan: req.EnvironmentID})
 		if err != nil {
 			return nil, fmt.Errorf("could not add service to environment: %w", err)
