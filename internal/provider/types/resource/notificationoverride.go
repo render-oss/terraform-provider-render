@@ -2,7 +2,10 @@ package resource
 
 import (
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
-	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/objectplanmodifier"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringplanmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 )
 
@@ -16,6 +19,9 @@ var NotificationOverride = schema.SingleNestedAttribute{
 			Validators: []validator.String{
 				stringvalidator.OneOf("default", "all", "failure", "none"),
 			},
+			PlanModifiers: []planmodifier.String{
+				stringplanmodifier.UseStateForUnknown(),
+			},
 		},
 		"preview_notifications_enabled": schema.StringAttribute{
 			Optional:            true,
@@ -25,9 +31,15 @@ var NotificationOverride = schema.SingleNestedAttribute{
 			Validators: []validator.String{
 				stringvalidator.OneOf("default", "true", "false"),
 			},
+			PlanModifiers: []planmodifier.String{
+				stringplanmodifier.UseStateForUnknown(),
+			},
 		},
 	},
 	Optional:    true,
 	Computed:    true,
 	Description: "Configure the [notification settings](https://render.com/docs/notifications) for this service. These will override the global notification settings of the user or team.",
+	PlanModifiers: []planmodifier.Object{
+		objectplanmodifier.UseStateForUnknown(),
+	},
 }
