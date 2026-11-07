@@ -132,11 +132,6 @@ func (r *registryCredentialResource) Read(ctx context.Context, req resource.Read
 	}
 
 	response, err := r.client.RetrieveRegistryCredentialWithResponse(ctx, state.Id.ValueString())
-	if common.IsNotFoundErr(err) {
-		common.EmitNotFoundWarning(state.Id.ValueString(), &diags)
-		resp.State.RemoveResource(ctx)
-		return
-	}
 	if err != nil {
 		resp.Diagnostics.AddError(
 			"Error getting registry credential",
@@ -145,15 +140,9 @@ func (r *registryCredentialResource) Read(ctx context.Context, req resource.Read
 		return
 	}
 
-	if response.StatusCode() == 404 {
-		state.Name = types.StringNull()
-		state.Username = types.StringNull()
-		state.Registry = types.StringNull()
-		state.Id = types.StringNull()
-
-		diags = resp.State.Set(ctx, &state)
-		resp.Diagnostics.Append(diags...)
-
+	if response.StatusCode() == http.StatusNotFound {
+		common.EmitNotFoundWarning(state.Id.ValueString(), &resp.Diagnostics)
+		resp.State.RemoveResource(ctx)
 		return
 	}
 
