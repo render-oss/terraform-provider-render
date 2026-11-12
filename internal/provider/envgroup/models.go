@@ -17,14 +17,27 @@ type EnvGroupModel struct {
 	SecretFiles   map[string]common.SecretFileModel `tfsdk:"secret_files"`
 }
 
-func ModelFromClient(envGroup *client.EnvGroup, planEnvVars map[string]common.EnvVarModel) EnvGroupModel {
+func ModelFromClient(envGroup *client.EnvGroup, planEnvVars map[string]common.EnvVarModel) (EnvGroupModel, diag.Diagnostics) {
+	var diags diag.Diagnostics
+	// Omitted collections mean the API did not return secret values. Authorized
+	// empty collections decode to non-nil slices and can safely refresh state.
+	if envGroup.EnvVars == nil || envGroup.SecretFiles == nil {
+		diags.AddError(
+			"Unable to read environment group secrets",
+			"The API did not return environment variable values or secret file contents. "+
+				"Terraform requires permission to read both to manage this environment group. "+
+				"Check the API key's permissions and the workspace role.",
+		)
+		return EnvGroupModel{}, diags
+	}
+
 	return EnvGroupModel{
 		Id:            types.StringValue(envGroup.Id),
 		Name:          types.StringValue(envGroup.Name),
 		EnvironmentID: types.StringPointerValue(envGroup.EnvironmentId),
 		EnvVars:       common.EnvVarsFromClient(&envGroup.EnvVars, planEnvVars),
 		SecretFiles:   common.SecretFilesFromClient(&envGroup.SecretFiles),
-	}
+	}, diags
 }
 
 type EnvGroupLinkModel struct {

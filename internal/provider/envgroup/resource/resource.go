@@ -85,8 +85,16 @@ func (r *envGroupResource) Create(ctx context.Context, req resource.CreateReques
 		return
 	}
 
+	model, modelDiags := envgroup.ModelFromClient(&envGroup, plan.EnvVars)
+	resp.Diagnostics.Append(modelDiags...)
+	if resp.Diagnostics.HasError() {
+		// The create succeeded, so retain its ID even if secret values are unavailable.
+		resp.Diagnostics.Append(resp.State.SetAttribute(ctx, path.Root("id"), envGroup.Id)...)
+		return
+	}
+
 	// Set state to fully populated data
-	diags = resp.State.Set(ctx, envgroup.ModelFromClient(&envGroup, plan.EnvVars))
+	diags = resp.State.Set(ctx, model)
 	resp.Diagnostics.Append(diags...)
 }
 
@@ -124,8 +132,14 @@ func (r *envGroupResource) Read(ctx context.Context, req resource.ReadRequest, r
 		return
 	}
 
+	model, modelDiags := envgroup.ModelFromClient(&envGroup, evs)
+	resp.Diagnostics.Append(modelDiags...)
+	if resp.Diagnostics.HasError() {
+		return
+	}
+
 	// Set refreshed state
-	diags = resp.State.Set(ctx, envgroup.ModelFromClient(&envGroup, evs))
+	diags = resp.State.Set(ctx, model)
 	resp.Diagnostics.Append(diags...)
 }
 
@@ -214,8 +228,14 @@ func (r *envGroupResource) Update(ctx context.Context, req resource.UpdateReques
 		}
 	}
 
+	model, modelDiags := envgroup.ModelFromClient(envGroup, nil)
+	resp.Diagnostics.Append(modelDiags...)
+	if resp.Diagnostics.HasError() {
+		return
+	}
+
 	// Set state to fully populated data
-	diags = resp.State.Set(ctx, envgroup.ModelFromClient(envGroup, nil))
+	diags = resp.State.Set(ctx, model)
 	resp.Diagnostics.Append(diags...)
 }
 
