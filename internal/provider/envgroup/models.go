@@ -1,6 +1,8 @@
 package envgroup
 
 import (
+	"fmt"
+
 	"github.com/hashicorp/terraform-plugin-framework/attr"
 	"github.com/hashicorp/terraform-plugin-framework/diag"
 	"github.com/hashicorp/terraform-plugin-framework/types"
@@ -17,11 +19,11 @@ type EnvGroupModel struct {
 	SecretFiles   map[string]common.SecretFileModel `tfsdk:"secret_files"`
 }
 
-func ModelFromClient(envGroup *client.EnvGroup, planEnvVars map[string]common.EnvVarModel) (EnvGroupModel, diag.Diagnostics) {
+// ModelFromClient preserves omitted secret collections from the plan or prior state.
+// Pass nil when there are no values to retain, as with a data source read.
+func ModelFromClient(envGroup *client.EnvGroup, existing *EnvGroupModel) (EnvGroupModel, diag.Diagnostics) {
 	var diags diag.Diagnostics
-	// Omitted collections mean the API did not return secret values. Authorized
-	// empty collections decode to non-nil slices and can safely refresh state.
-	if envGroup.EnvVars == nil || envGroup.SecretFiles == nil {
+	if existing == nil && (envGroup.EnvVars == nil || envGroup.SecretFiles == nil) {
 		diags.AddError(
 			"Unable to read environment group secrets",
 			"The API did not return environment variable values or secret file contents. "+
@@ -30,13 +32,34 @@ func ModelFromClient(envGroup *client.EnvGroup, planEnvVars map[string]common.En
 		)
 		return EnvGroupModel{}, diags
 	}
+	if existing == nil {
+		existing = &EnvGroupModel{}
+	}
+
+	envVars := existing.EnvVars
+	if envGroup.EnvVars != nil {
+		envVars = common.EnvVarsFromClient(&envGroup.EnvVars, existing.EnvVars)
+	} else {
+		for key, ev := range envVars {
+			if ev.Value.IsUnknown() || ev.Value.IsNull() {
+				diags.AddError(
+					"Unable to read generated environment variable",
+					fmt.Sprintf("The API omitted environment variable values, so Terraform cannot determine the generated value for %q. Grant permission to read environment group secrets to retrieve it.", key),
+				)
+			}
+		}
+	}
+	secretFiles := existing.SecretFiles
+	if envGroup.SecretFiles != nil {
+		secretFiles = common.SecretFilesFromClient(&envGroup.SecretFiles)
+	}
 
 	return EnvGroupModel{
 		Id:            types.StringValue(envGroup.Id),
 		Name:          types.StringValue(envGroup.Name),
 		EnvironmentID: types.StringPointerValue(envGroup.EnvironmentId),
-		EnvVars:       common.EnvVarsFromClient(&envGroup.EnvVars, planEnvVars),
-		SecretFiles:   common.SecretFilesFromClient(&envGroup.SecretFiles),
+		EnvVars:       envVars,
+		SecretFiles:   secretFiles,
 	}, diags
 }
 
