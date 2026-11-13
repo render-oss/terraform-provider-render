@@ -68,5 +68,11 @@ func (d *envGroupDataSource) Read(ctx context.Context, req datasource.ReadReques
 		return
 	}
 
-	resp.State.Set(ctx, envgroup.ModelFromClient(&envGroup, nil))
+	model, modelDiags := envgroup.ModelFromClient(&envGroup, nil)
+	resp.Diagnostics.Append(modelDiags...)
+	if resp.Diagnostics.HasError() {
+		return
+	}
+
+	resp.Diagnostics.Append(resp.State.Set(ctx, model)...)
 }
