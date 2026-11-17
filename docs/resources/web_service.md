@@ -91,6 +91,7 @@ resource "render_web_service" "web" {
 - `pre_deploy_command` (String) This command runs before starting your service. It is typically used for tasks like running a database migration or uploading assets to a CDN.
 - `previews` (Attributes) [Pull request previews](https://render.com/docs/pull-request-previews#pull-request-previews-git-backed) settings (see [below for nested schema](#nestedatt--previews))
 - `pull_request_previews_enabled` (Boolean, Deprecated) Enable [pull request previews](https://render.com/docs/pull-request-previews#pull-request-previews-git-backed) for the service.
+- `render_subdomain_policy` (String) Controls availability of the default onrender.com subdomain. Must be enabled or disabled. When omitted, Render's setting is used and preserved.
 - `root_directory` (String) When you specify a [root directory](https://render.com/docs/monorepo-support#root-directory), Render runs all your commands in the specified directory and ignores changes outside the directory. Defaults to the repository root.
 - `secret_files` (Attributes Map) A map of secret file paths to their contents. (see [below for nested schema](#nestedatt--secret_files))
 - `start_command` (String) Command to run the service. When using native runtimes, this will be used as the start command and is required. For [Docker](https://render.com/docs/docker) and [image-backed](https://render.com/docs/deploy-an-image) services, this will override the default Docker command for the image.
