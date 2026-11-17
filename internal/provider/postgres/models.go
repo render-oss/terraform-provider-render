@@ -96,6 +96,9 @@ func ParameterOverridesToGoMap(m types.Map, diags diag.Diagnostics) *client.Post
 
 func ReadReplicaFromClient(c client.ReadReplicas, existingReplicas []ReadReplica, replicaLogStreams map[string]*logs.ResourceLogStreamSetting, diags diag.Diagnostics) []ReadReplica {
 	var res []ReadReplica
+	if existingReplicas != nil {
+		res = make([]ReadReplica, 0, len(c))
+	}
 	for _, item := range c {
 		// Convert parameter overrides
 		paramOverrides := ParameterOverridesToMap(item.ParameterOverrides, diags)
