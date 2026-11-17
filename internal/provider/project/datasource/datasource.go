@@ -2,7 +2,9 @@ package datasource
 
 import (
 	"context"
+
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
+	"github.com/hashicorp/terraform-plugin-framework/types"
 
 	"terraform-provider-render/internal/client"
 	"terraform-provider-render/internal/provider/project"
@@ -21,6 +23,20 @@ func NewProjectDataSource() datasource.DataSource {
 type projectDataSource struct {
 	client  *client.ClientWithResponses
 	ownerID string
+}
+
+// The data source exposes a subset of the resource's environment attributes.
+type projectDataSourceModel struct {
+	Id           types.String                          `tfsdk:"id"`
+	Name         types.String                          `tfsdk:"name"`
+	Environments map[string]environmentDataSourceModel `tfsdk:"environments"`
+}
+
+type environmentDataSourceModel struct {
+	Id              types.String `tfsdk:"id"`
+	Name            types.String `tfsdk:"name"`
+	ProtectedStatus types.String `tfsdk:"protected_status"`
+	NetworkIsolated types.Bool   `tfsdk:"network_isolated"`
 }
 
 func (d *projectDataSource) Configure(_ context.Context, req datasource.ConfigureRequest, resp *datasource.ConfigureResponse) {
@@ -42,14 +58,14 @@ func (d *projectDataSource) Schema(ctx context.Context, _ datasource.SchemaReque
 }
 
 func (d *projectDataSource) Read(ctx context.Context, req datasource.ReadRequest, resp *datasource.ReadResponse) {
-	var proj project.ProjectModel
+	var proj projectDataSourceModel
 	diags := req.Config.Get(ctx, &proj)
 	resp.Diagnostics.Append(diags...)
 	if resp.Diagnostics.HasError() {
 		return
 	}
 
-	projectModel, err := project.Read(ctx, d.client, proj)
+	projectModel, err := project.Read(ctx, d.client, project.ProjectModel{Id: proj.Id})
 	if err != nil {
 		resp.Diagnostics.AddError(
 			"Error reading project", "Could not read project, unexpected error: "+err.Error(),
@@ -57,5 +73,16 @@ func (d *projectDataSource) Read(ctx context.Context, req datasource.ReadRequest
 		return
 	}
 
-	resp.State.Set(ctx, projectModel)
+	proj.Name = projectModel.Name
+	proj.Environments = make(map[string]environmentDataSourceModel, len(projectModel.Environments))
+	for key, env := range projectModel.Environments {
+		proj.Environments[key] = environmentDataSourceModel{
+			Id:              env.Id,
+			Name:            env.Name,
+			ProtectedStatus: env.ProtectedStatus,
+			NetworkIsolated: env.NetworkIsolated,
+		}
+	}
+	diags = resp.State.Set(ctx, &proj)
+	resp.Diagnostics.Append(diags...)
 }
