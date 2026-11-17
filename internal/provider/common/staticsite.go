@@ -6,6 +6,7 @@ import (
 	"net/http"
 
 	"terraform-provider-render/internal/client"
+	"terraform-provider-render/internal/client/envvar"
 	"terraform-provider-render/internal/client/notifications"
 )
 
@@ -23,7 +24,7 @@ type UpdateStaticSiteReq struct {
 	Service              client.UpdateServiceJSONRequestBody
 	CustomDomains        CustomDomainStateAndPlan
 	EnvironmentID        *EnvironmentIDStateAndPlan
-	EnvVars              client.EnvVarInputArray
+	EnvVars              envvar.EnvVarInputArray
 	Headers              []client.HeaderInput
 	NotificationOverride *notifications.NotificationServiceOverridePATCH
 	Routes               []client.RoutePut

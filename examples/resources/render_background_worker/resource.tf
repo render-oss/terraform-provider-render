@@ -1,6 +1,6 @@
 resource "render_background_worker" "git_example" {
   name   = "git-background-worker"
-  plan   = "starter"
+  plan   = "0.5c-512mb"
   region = "oregon"
 
   start_command      = "node app.js"

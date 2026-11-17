@@ -15,7 +15,7 @@ description: |-
 ```terraform
 resource "render_postgres" "example" {
   name    = "example-postgres-instance"
-  plan    = "pro_4gb"
+  plan    = "1c-4g"
   region  = "ohio"
   version = "17"
 
@@ -46,7 +46,7 @@ resource "render_postgres" "example" {
 ### Required
 
 - `name` (String) Descriptive name for this postgres
-- `plan` (String) Plan to use for this postgres. Must be `free`, a basic plan (like `basic_256mb`), a pro plan (like `pro_4gb`), an accelerated plan (like `accelerated_16gb`), `starter`, `standard`, `pro`, `pro_plus`, or a custom plan
+- `plan` (String) Plan to use for this postgres. Must be `free`, a basic plan (like `basic_256mb`), a pro plan (like `pro_4gb`), an accelerated plan (like `accelerated_16gb`), a custom plan, or one of: `0.1c-256mb`, `0.5c-1g`, `1c-2g`, `1c-4g`, `2c-4g`, `2c-8g`, `2c-16g`, `4c-16g`, `4c-32g`, `8c-32g`, `8c-64g`, `16c-64g`, `16c-128g`, `32c-128g`, `32c-256g`, `48c-192g`, `48c-384g`, `64c-256g`, `64c-512g`, `96c-384g`, `96c-768g`, `128c-512g`, `128c-1024g`
 - `region` (String) Region the postgres instance in
 - `version` (String) The Postgres version. Currently supported: `11`, `12`, `13`, `14`, `15`, `16`, `17`, and `18`
 

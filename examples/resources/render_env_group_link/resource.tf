@@ -1,7 +1,7 @@
 resource "render_web_service" "web" {
-  name    = "web-service"
-  plan    = "starter"
-  region  = "ohio"
+  name   = "web-service"
+  plan   = "0.5c-512mb"
+  region = "ohio"
   runtime_source = {
     image = {
       image_url = "docker.io/library/nginx",

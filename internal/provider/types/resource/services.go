@@ -6,6 +6,7 @@ import (
 
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/objectdefault"
 
+	"terraform-provider-render/internal/client"
 	"terraform-provider-render/internal/provider/common"
 	"terraform-provider-render/internal/provider/common/validators"
 
@@ -65,8 +66,8 @@ var CronJobSchedule = schema.StringAttribute{
 
 var Plan = schema.StringAttribute{
 	Required:            true,
-	Description:         "Plan to use for the service. Must be one of starter, standard, pro, pro_plus, pro_max, pro_ultra, or a custom plan.",
-	MarkdownDescription: "Plan to use for the service. Must be one of `starter`, `standard`, `pro`, `pro_plus`, `pro_max`, `pro_ultra`, or a custom plan.",
+	Description:         "Plan to use for the service. Must be one of " + common.EnumList(client.PaidPlanValues()) + ", or a custom plan.",
+	MarkdownDescription: "Plan to use for the service. Must be one of " + common.EnumListMarkdown(client.PaidPlanValues()) + ", or a custom plan.",
 }
 
 var RegionValidator = stringvalidator.OneOf(

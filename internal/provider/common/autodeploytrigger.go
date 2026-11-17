@@ -1,11 +1,12 @@
 package common
 
 import (
+	"terraform-provider-render/internal/client/autodeploy"
+
 	"github.com/hashicorp/terraform-plugin-framework/types"
-	"terraform-provider-render/internal/client"
 )
 
-func AutoDeployTriggerToString(trigger *client.AutoDeployTrigger) types.String {
+func AutoDeployTriggerToString(trigger *autodeploy.AutoDeployTrigger) types.String {
 	if trigger == nil {
 		return types.StringNull()
 	}
@@ -13,22 +14,22 @@ func AutoDeployTriggerToString(trigger *client.AutoDeployTrigger) types.String {
 	return types.StringValue(string(*trigger))
 }
 
-func StringToAutoDeployTrigger(strTrigger types.String) *client.AutoDeployTrigger {
+func StringToAutoDeployTrigger(strTrigger types.String) *autodeploy.AutoDeployTrigger {
 	if strTrigger.IsNull() || strTrigger.IsUnknown() {
 		return nil
 	}
 
-	trigger := client.AutoDeployTrigger(strTrigger.ValueString())
+	trigger := autodeploy.AutoDeployTrigger(strTrigger.ValueString())
 	return &trigger
 }
 
 func BoolToAutoDeployTriggerString(autoDeploy bool) types.String {
 	if autoDeploy {
-		return types.StringValue(string(client.AutoDeployTriggerCommit))
+		return types.StringValue(string(autodeploy.Commit))
 	}
-	return types.StringValue(string(client.AutoDeployTriggerOff))
+	return types.StringValue(string(autodeploy.Off))
 }
 
-func AutoDeployTriggerToBool(trigger client.AutoDeployTrigger) bool {
-	return trigger != client.AutoDeployTriggerOff
+func AutoDeployTriggerToBool(trigger autodeploy.AutoDeployTrigger) bool {
+	return trigger != autodeploy.Off
 }
