@@ -109,6 +109,11 @@ func (r *envGroupLinkResource) Read(ctx context.Context, req resource.ReadReques
 	}
 
 	envGroup, err := r.getEnvGroup(ctx, id)
+	if common.IsNotFoundErr(err) {
+		common.EmitNotFoundWarning(id, &resp.Diagnostics)
+		resp.State.RemoveResource(ctx)
+		return
+	}
 	if err != nil {
 		resp.Diagnostics.AddError("unable to get environment group", err.Error())
 		return
@@ -125,17 +130,21 @@ func (r *envGroupLinkResource) Read(ctx context.Context, req resource.ReadReques
 }
 
 func (r *envGroupLinkResource) getEnvGroup(ctx context.Context, id string) (*client.EnvGroup, error) {
-	envGroupLinkResp, err := r.client.RetrieveEnvGroupWithResponse(ctx, id)
+	envGroupResp, err := r.client.RetrieveEnvGroup(ctx, id)
+	if err != nil {
+		return nil, err
+	}
+	defer func() { _ = envGroupResp.Body.Close() }()
+
+	var envGroup client.EnvGroup
+	err = common.Get(func() (*http.Response, error) {
+		return envGroupResp, nil
+	}, &envGroup)
 	if err != nil {
 		return nil, err
 	}
 
-	if envGroupLinkResp.StatusCode() != 200 {
-		return nil, fmt.Errorf("unexpected status: %s", envGroupLinkResp.Status())
-	}
-
-	envGroupLink := envGroupLinkResp.JSON200
-	return envGroupLink, nil
+	return &envGroup, nil
 }
 
 func (r *envGroupLinkResource) Update(ctx context.Context, req resource.UpdateRequest, resp *resource.UpdateResponse) {
