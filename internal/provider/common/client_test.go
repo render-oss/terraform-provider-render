@@ -2,6 +2,7 @@ package common_test
 
 import (
 	"context"
+	"encoding/json"
 	"net/http"
 	"testing"
 
@@ -194,5 +195,79 @@ func TestUpdateService(t *testing.T) {
 		require.NoError(t, err)
 
 		assert.False(t, deployCalled, "it should not deploy the service")
+	})
+}
+
+func TestCreateService(t *testing.T) {
+	envID := "evm-some-environment"
+
+	newAPI := func(t *testing.T, createdEnvID *string, sent *client.ServicePOST, moved *bool) *client.ClientWithResponses {
+		t.Helper()
+		server := th.NewMockRenderAPI(map[string]http.HandlerFunc{
+			"/services": func(resp http.ResponseWriter, req *http.Request) {
+				require.NoError(t, json.NewDecoder(req.Body).Decode(sent))
+				resp.WriteHeader(http.StatusCreated)
+				th.StaticResponse(map[string]any{
+					"service": client.Service{Id: "some-service-id", EnvironmentId: createdEnvID},
+				})(resp, req)
+			},
+			"/environments/" + envID + "/resources": func(resp http.ResponseWriter, req *http.Request) {
+				*moved = true
+				resp.WriteHeader(http.StatusOK)
+			},
+			"/services/some-service-id/env-vars":                        th.StaticResponse([]struct{}{}),
+			"/services/some-service-id/secret-files":                    th.StaticResponse([]struct{}{}),
+			"/notification-settings/overrides/services/some-service-id": th.StaticResponse(struct{}{}),
+		})
+		t.Cleanup(server.Close)
+		c, err := client.NewClientWithResponses(server.URL)
+		require.NoError(t, err)
+		return c
+	}
+
+	t.Run("it creates the service in its environment in one request", func(t *testing.T) {
+		var sent client.ServicePOST
+		var moved bool
+		c := newAPI(t, &envID, &sent, &moved)
+
+		wrapped, err := common.CreateService(context.Background(), c, common.CreateServiceReq{
+			Service:       client.ServicePOST{Name: "some-service"},
+			EnvironmentID: &envID,
+		})
+		require.NoError(t, err)
+
+		require.NotNil(t, sent.EnvironmentId)
+		assert.Equal(t, envID, *sent.EnvironmentId)
+		assert.False(t, moved, "it should not add the service to the environment separately")
+		assert.Equal(t, envID, *wrapped.EnvironmentId)
+	})
+
+	t.Run("it adds the service to the environment when the create response omits it", func(t *testing.T) {
+		var sent client.ServicePOST
+		var moved bool
+		c := newAPI(t, nil, &sent, &moved)
+
+		wrapped, err := common.CreateService(context.Background(), c, common.CreateServiceReq{
+			Service:       client.ServicePOST{Name: "some-service"},
+			EnvironmentID: &envID,
+		})
+		require.NoError(t, err)
+
+		assert.True(t, moved, "it should add the service to the environment")
+		assert.Equal(t, envID, *wrapped.EnvironmentId)
+	})
+
+	t.Run("it leaves a service without an environment alone", func(t *testing.T) {
+		var sent client.ServicePOST
+		var moved bool
+		c := newAPI(t, nil, &sent, &moved)
+
+		_, err := common.CreateService(context.Background(), c, common.CreateServiceReq{
+			Service: client.ServicePOST{Name: "some-service"},
+		})
+		require.NoError(t, err)
+
+		assert.Nil(t, sent.EnvironmentId)
+		assert.False(t, moved)
 	})
 }
